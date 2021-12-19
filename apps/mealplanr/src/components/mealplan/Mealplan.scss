@@ -1,0 +1,97 @@
+/** 
+ * @Desc: List of 7 weekdays and selected recipes. Has a button that expands and fills content-area
+ * @Occures: 1 time on {Plan meals}-subpage
+ * @Behavior: 2 column-grid to align header and button, rest spans both columns. Is contained within a [Container]
+ * @Media: None
+ */
+#mealplan {
+
+	.selectionarea {
+
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		overflow-y: hidden;
+		height: max-content;
+		
+		padding-block: 0;
+		max-height: 0;
+		transition: max-height .5s, padding .2s;
+		
+		&.open {
+			
+			padding: 20px;
+			max-height: 800px;
+			transition: max-height .5s, padding .2s;
+
+		}
+
+		> div:nth-of-type(1) {
+
+			width: 100%;
+			min-width: 300px;
+			max-width: 600px;
+			margin: auto;
+			overflow: hidden;
+
+			> div p { width: max-content; }
+
+		}
+
+		> div:nth-of-type(2) {
+
+			justify-items: center;
+			display: grid;
+			width: 380px;
+			margin-top: 20px;
+
+		}
+
+		> div:nth-of-type(3) {
+
+			height: 100px;
+
+			.big.button {
+
+				max-width: 350px;
+				width: 80%;
+				background-color: var(--joyfull);
+				filter: var(--shadow);
+				border-radius: var(--br);
+				color: var(--bright);
+				margin-block: 30px 10px;
+				margin-inline: auto;
+				padding: 15px;
+				height: 20px;
+				text-align: center;
+				font-size: large;
+				filter: var(--shadow);
+				transition: .5s filter, .4s margin;
+
+				&:hover {
+
+					margin-top: 35px;
+					filter: none;
+
+				}
+
+			}
+
+		}
+
+	}
+
+	.plans {
+
+		grid-column: span 2;
+		display: grid;
+		grid-template-columns: 0 repeat(7, 150px) 30px;
+		grid-gap: 20px;
+		padding: 20px 40px;
+		overflow-x: scroll;
+		height: 390px;
+		align-content: center;
+
+	}
+
+}

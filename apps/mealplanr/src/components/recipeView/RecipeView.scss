@@ -1,0 +1,30 @@
+/** 
+ * @Desc: Container for listing all recipes
+ * @Occures: Once on {Browse recipes} and {My collection}
+ * @Behavior: Should follow the width of [Container] but allow downward expansion
+ * @Media: None
+ */
+#browse,
+#collection {
+
+	width: -moz-available;
+
+	.selectionarea {
+
+		grid-template-columns: minmax(200px, 3fr) 1fr 1fr;
+		margin-block: 20px 40px;
+
+		.search {
+
+			width: calc(100% - 40px);
+			margin-inline: 20px;
+
+			.normal { width: 100%; }
+
+			> :not(.normal) { width: 200px; }
+
+		}
+
+	}
+
+}

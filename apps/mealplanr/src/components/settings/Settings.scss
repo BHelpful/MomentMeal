@@ -1,0 +1,302 @@
+  /** 
+ * @Desc: Loats of input and buttons in two parts ({selectionarea})
+ * @Occures: Once at {Settings}
+ * @Behavior: Static layout with flex-warp for small content area, constrained to its current content area.
+ * @Media: (vw <= 930px): Put all cells in one column
+ */
+  #settings {
+  
+  .selectionarea:nth-child(3) {
+    
+    grid-template-columns: repeat(4, 25%);
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    
+    > div {
+
+      width: 100%;
+
+      &:first-child { width: 80%; }
+
+      &:nth-child(3) {
+
+        height: 100%;
+
+        > .button {
+        
+          align-self: center;
+          background-color: var(--joyfull);
+          color: var(--bright);
+          padding: 5px;
+          border-radius: var(--br);
+          width: 130px;
+          text-align: center;
+          filter: var(--shadow);
+          margin: 10px auto;
+
+        }
+
+        > div:first-child {
+        
+          filter: var(--shadow);
+          border-radius: var(--br);
+          background-color: var(--faded);
+          max-height: 250px;
+          margin: 20px auto;
+          aspect-ratio: 1/1;
+          
+          .image {
+          
+            width: 100%;
+            display: block;
+            height: 100%;
+            aspect-ratio: 1/1;
+            background-image: url("../../assets/Duck.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: invert(1) var(--shadow);
+          
+          }
+          
+        }
+
+      }
+
+    }
+
+    > div:nth-child(2) {
+
+      margin: auto;
+      width: calc(100% - 20px);
+      display: inline-grid;
+      justify-items: center;
+      
+    }
+
+    .button.field:not(.vertical) {
+
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+
+      span {
+        
+        height: 2em;
+        align-items: center;
+        margin-right: 10px;
+        margin: 5px auto;
+
+        img {
+
+          height: 100%;
+          margin-right: 10px;
+          padding: 5px;
+          background-color: white;
+          border-radius: var(--br);
+
+        }
+
+      }
+
+      > input { margin: auto; }
+
+    }
+
+  }
+
+  .selectionarea:nth-child(5) {
+
+    > div {
+
+      min-width: min-content;
+      padding: 5px;
+
+      justify-items: center;
+      display: grid;
+      
+      &:last-child {
+
+        grid-template-columns: 60px calc(100% - 60px);
+        grid-auto-rows: min-content;
+        grid-gap: 5px;
+
+        p, label, input { height: 1em; margin: 5px auto;}
+        p:first-of-type { margin-block: 20px; }
+        label:nth-of-type(4) { margin-block: 40px 20px; }
+
+        > :first-child,
+        > :nth-child(8) { grid-column: span 2; }
+
+        > :nth-child(9) {
+        
+          grid-column: span 2;
+          width: 100%;
+          display: grid;
+          grid-template-columns: calc(100% - 40px) 30px;
+          height: 30px;
+          grid-gap: 10px;
+
+          .button {
+
+            display: block;
+            background-color: var(--bright);
+            border-radius: var(--br);
+            text-align: center;
+            padding-top: .5em;
+
+          }
+
+        }
+
+      }
+
+      .search {
+
+        .bar {
+
+          min-width: 220px;
+          width: auto;
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+#ThemePreview {
+
+  position: absolute;
+  bottom: 100px;
+  z-index: 10;
+  justify-self: center;
+  margin-right: 40px;
+  
+  
+  > :first-child {
+    
+    padding: 15px;
+    display: grid;
+    grid-template-rows: min-content auto;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 10px 0;
+    position: relative;
+    width: 300px;
+    background-color: var(--joyfull);
+    border-radius: var(--br);
+    filter: var(--shadow);
+
+    .dpwshade {
+
+      grid-column: span 8;
+      background-color: var(--bgcolor);
+      margin: 0!important;
+
+      &.dpwshade, div, input { 
+
+        margin: 15px;
+        height: auto;
+        border-radius: var(--br);
+        display: grid;
+        align-content: center;
+
+        div { filter: var(--shadow); }
+
+      }
+
+      .dpwbackground {
+
+        background-color: var(--bright);
+
+        .dpwselectionarea {
+
+          background-color: var(--light);
+          grid-template-columns: 65% 35%;
+          grid-template-rows: 40px 40px;
+
+          .dpwarea {
+
+            background-color: var(--faded);
+            grid-row: span 2;
+            margin-right: 10px;
+            padding: 10px;
+            word-break: normal;
+            font-size: 10px;
+            color: var(--gray);
+            
+          }
+          
+          .dpwfield { 
+            
+            background-color: var(--accent);
+            align-self: end;
+            margin-left: 0;
+            border: 0;
+            font-size: 8px;
+            padding: 5px 10px;
+            height: 10px;
+            width: calc(100% - 35px);
+            color: var(--bright);
+
+          }
+
+          .dpwbutton {
+
+            background-color: var(--joyfull);
+            margin-top: 5px;
+            margin-left: 0;
+            color: var(--bright);
+            font-size: 8px;
+            text-align: center;
+
+          }
+
+        }
+
+      }
+
+    }
+
+    .themecolor {
+
+      display: block;
+      width: 30px;
+      height: 30px;
+      justify-self: center;
+      align-self: center;
+      border-radius: 5px 10px;
+      border-width: 2px;
+      border-style: solid;
+      border-color: white;
+    }
+
+
+  }
+    
+  &.hidden { display: none; }
+
+}
+
+@media (max-width: 930px) {
+  
+  #settings {
+
+    .selectionarea {
+
+      grid-template-columns: repeat(1, minmax(200px, 1fr));
+  
+      > div { min-width: 100%; }
+    
+    }
+
+    .selectionarea:last-child {
+
+      > div { margin: 0 100%!important; }
+  
+    }
+  
+  }
+
+}

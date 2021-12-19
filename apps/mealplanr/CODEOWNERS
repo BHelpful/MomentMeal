@@ -1,0 +1,11 @@
+# Global codeowners
+* @BHelpful/Mealplanr
+
+# Owns scss files
+*.scss @BHelpful/Front-end-design
+
+# Owns all in the app folder
+/app/ @BHelpful/Reactjs
+
+# Owns the cypress folder (this overrules the rule before as it comes later)
+/app/cypress/ @BHelpful/Cypress

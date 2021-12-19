@@ -1,0 +1,216 @@
+/** 
+ * @Desc: Navigation bar in left side of page
+ * @Occures: Always once
+ * @Behavior: If window-width allows; manipulates page content area on expansion and contraction 
+ * @Media (vw < 1000px): Fixed to the top-right corner (will no longer manipulate page content area, but float over)
+ */
+#navbar {
+
+	color: var(--bright);
+	width: var(--nav-min);
+	height: 100vh;
+	transition: 0.5s width;
+	border-color: inherit;
+	border-radius: 0 var(--br) var(--br) 0;
+	filter: var(--shadow);
+	display: block;
+	left: 0;
+	top: 0;
+	position: sticky;
+	background-color: var(--joyfull);
+	align-self: baseline;
+
+	& p {
+
+		margin: 0;
+		align-self: center;
+		font-weight: 400;
+		overflow: hidden;
+		text-overflow: clip;
+		white-space: nowrap;
+
+	}
+
+	.top {
+		
+		height: 80px;
+		display: grid;
+		align-items: center;
+		grid-template-columns: minmax(0px, 65px) minmax(3px, 350px) 45px;
+		margin: 0 16px;
+
+		.logo.icon {
+			
+			width: auto;
+			height: 65px;
+			background-image: url("../../assets/mealplanr.svg");
+			filter: hue-rotate(calc((var(--c) - 230) * 1deg));		// Offset by icons hue and convert to deg
+			background-color: var(--bright);
+			border-radius: var(--br);
+			background-position: center;
+			background-size: 65px 65px;
+
+		}
+
+		p {
+
+			font-weight: 700;
+			padding-left: 14px;
+			
+		}
+
+		.burger.icon {
+			
+			width: 2em;
+			height: 3em;
+			background-repeat: no-repeat;
+			background-position: center;
+			filter: invert(100%);
+			background-image: url("../../assets/Bar.svg");
+
+		}
+
+	}
+
+	.items {
+
+		height: calc(100vh - 175px);
+		max-height: 400px;
+		display: grid;
+
+		.bar {
+
+			margin: auto 10px;
+			width: auto;
+			height: auto;
+			display: grid;
+			align-items: center;
+			grid-template-columns: minmax(60px, 85px) auto;
+			border-color: inherit;
+			border-radius: var(--br);
+			transition: 1s background-color, 0.25s filter, 1s color;
+			background-color: transparent;
+			
+			&.selected { 	background-color: var(--accent); }
+			
+			&:hover {
+
+				background-color: var(--bright);
+				filter: var(--shadow);
+				color: var(--dark);
+
+				.icon { filter: invert(0%); }
+
+			}
+
+			p {
+				
+				width: auto;
+				opacity: 0;
+				transition: 1s opacity;
+				
+			}
+
+			.icon {
+
+				width: 60px;
+				height: 60px;
+				background-size: contain;
+				filter: invert(100%);
+				transition: 1s filter;
+
+				&.nbi0 { background-image: url("../../assets/Cheklist.svg"); 	}
+				&.nbi1 { background-image: url("../../assets/Lup.svg"); 			}
+				&.nbi2 { background-image: url("../../assets/Bookmark.svg"); 	}
+				&.nbi3 { background-image: url("../../assets/Ulist.svg"); 		}
+				&.nbi4 { background-image: url("../../assets/Cog.svg"); 			}
+
+			}
+
+		}
+
+	}
+
+	.bottom {
+
+		padding: 0 16px;
+		border-color: inherit;
+		border-radius: 0 0 var(--br) 0;
+		width: auto;
+		height: 95px;
+		display: grid;
+		align-items: center;
+		grid-gap: 0;
+		grid-template-columns: minmax(0px, 65px) minmax(0px, 350px) 45px;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		background-color: var(--accent);
+
+		.profile.image {
+
+			display: block;
+			width: auto;
+			height: 65px;
+
+		}
+
+		.logout.icon {
+
+			display: block;
+			width: auto;
+			height: 45px;
+			filter: invert(100%);
+			background-image: url("../../assets/Logout.svg");
+			background-color: var(--i-accent);
+
+		}
+		
+		p {
+
+			margin: 0 14px;
+			font-weight: 700;
+
+		}
+		
+		&.loggedout {
+
+			width: calc(100% - 32px);
+			margin: 0;
+			align-items: center;
+			justify-content: center;
+			
+			.login.icon {
+
+				width: 45px;
+				height: 45px;
+				filter: invert(100%);
+				background-image: url("../../assets/Key.svg");
+				background-color: var(--i-accent);
+				
+			}
+
+		}
+
+	}
+
+	&.wide {
+		
+		width: var(--nav-max);
+
+		.bar p { opacity: 1; }
+
+	}
+
+}
+
+@media (max-width: 1000px) {
+	
+	#navbar {
+
+		position: fixed;
+		z-index: 99;
+
+	}
+
+}

@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+:root {
+
+	/*
+	Standard colors                         Inverted colors */
+	--c: 			 210;													--i: calc((var(--c) + 180) % 360);
+	//Exposure (lightness/darkness)
+	--e:			0%;
+
+	--joyfull:  hsl(var(--c),  80%,  65%);	--i-joyfull:	hsl(var(--i),  80%,  35%);
+	--accent:   hsl(var(--c),  60%,  70%);	--i-accent: 	hsl(var(--i),  60%,  30%);
+	--faded:    hsl(var(--c),  40%,  85%);	--i-faded: 		hsl(var(--i),  40%,  15%);
+	--light:    hsl(var(--c),  20%,  max( 90% - var(--e), -1*( 90% - var(--e))));
+	--i-light: 	hsl(var(--i),  20%,  max( 10% - var(--e), -1*( 10% - var(--e))));
+
+												//abs(x) = max(x, -1 * x)
+	--bgcolor:  hsl(0, 0%, max( 90% - var(--e), -1*( 90% - var(--e))));
+	--bright:   hsl(0, 0%, max(100% - var(--e), -1*(100% - var(--e))));
+	--gray:     hsl(0, 0%, max( 33% - var(--e), -1*( 33% - var(--e))));
+	--dark:     hsl(0, 0%, max(  0% - var(--e), -1*(  0% - var(--e))));
+
+	--meat:     hsl(  0,  53%,  70%);
+	--diray:		hsl( 50,  53%,  70%);
+	--salad:    hsl(100,  53%,  70%);
+	--vegan:    hsl(150,  53%,  70%);
+	--fish:     hsl(200,  53%,  70%);
+	--exotic:   hsl(250,  53%,  70%);
+
+	//Special / gradient colors
+	--rainbow: linear-gradient( 40deg, rgba(255,0,0,1) 			5%, rgba(255,128,0,1)		19%, rgba(255,255,0,1)	50%, rgba(0,255,0,1) 60%, rgba(0,255,255,1) 70%, rgba(115,0,255,1) 80%, rgba(255,0,255,1) 90%);
+	--gold: 	 linear-gradient(130deg, rgba(255,184,0,1) 	 35%, rgba(250,213,75,1) 	55%, rgba(255,66,37,1) 100%);
+	--silver:  linear-gradient(250deg, rgba(200,200,200,1) 35%, rgba(240,240,240,1) 55%, rgba(60,60,60,1)  100%);
+	--bronze:  linear-gradient(150deg, rgba(166,89,0,1)		 33%, rgba(255,166,0,1) 	72%, rgba(223,96,0,1)  100%);
+
+	--br: 15px;
+	--shadow: drop-shadow(4px 4px 4px hsla(0, 0%, 0%, 0.25));
+
+	--text-size: 21px;
+
+	--nav-min: 80px;
+	--nav-max: 350px;
+}
+
+div:not(*),
+img,
+label,
+.item,
+.button,
+.amount,
+.day,
+.recipe :not(p) { user-select: none; }
+
+/** 
+ * @Desc: Window content area
+ * @Occures: Once
+ * @Behavior: Splits content area into [Navbar] and page content
+ * @Media(vw <= 1000px): Allows [Navbar] to float over content
+ */
+#app {
+
+	position: fixed;
+	display: grid;
+	grid-template-columns: min-content auto;
+	justify-items: center;
+	align-items: center;
+	overflow-x: hidden;
+	height: 100vh;
+	width: 100vw;
+	background-color: var(--bgcolor);
+	color: var(--gray);
+	font-family: Montserrat;
+	font-size: var(--text-size);
+	font-weight: 400;
+	overflow-y: scroll;
+
+	/* Global classes for background coloring */
+	.meat 		{ background-color: var(--meat); 		}
+	.diray 	  { background-color: var(--diray);   }
+	.salad 		{ background-color: var(--salad); 	}
+	.vegan 		{ background-color: var(--vegan); 	}
+	.fish 		{ background-color: var(--fish); 		}
+	.exotic 	{ background-color: var(--exotic); 	}
+
+	.rainbow 	{ font-weight: 600; background: var(--rainbow);	}
+	.gold 		{ font-weight: 600; background: var(--gold);		}
+
+}
+
+@media (max-width: 1000px) {
+
+	#app {
+
+		grid-template-columns: auto;
+		
+		> div:last-child { margin-left: calc(var(--nav-min) + 80px); }
+		
+	}
+	
+}

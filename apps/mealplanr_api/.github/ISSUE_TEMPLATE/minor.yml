@@ -1,0 +1,84 @@
+name: Minor
+description: Create a minor feature
+title: "[Minor]: "
+labels: [MINOR]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for creating a new minor feature to improve our product!
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Short description of the feature
+      placeholder: "Describe the feature"
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: The criteria for which the feature will be accepted in a Pull Request.
+      placeholder: The implementation should have ...
+      value: |
+        - [ ]
+    validations:
+      required: true
+  - type: textarea
+    id: comments-questions
+    attributes:
+      label: Comments / questions
+      description: Any comments or questions relating the story.
+      placeholder: We should devide this into sub-tasks...
+  - type: textarea
+    id: dor-dod
+    attributes:
+      label: Definition of ready/done (DOR/DOD) [DONT CHANGE THE CONTENT]
+      description: This field is not to be changed!
+      value: |
+        #### Definition of ready
+        - [ ] DOR
+            <details>
+            <summary>Description</summary>
+
+            ```
+            - Acceptance criteria written and reviewed by QA, PM and SE
+            - Behaviour scenarios written
+            - Estimated and appropriately scoped
+            ```
+
+            </details>
+
+        #### Definition of done
+        - [ ] DOD
+            <details>
+            <summary>Description</summary>
+
+            ```
+            - Test complete
+                - Merged to master
+                - Unit tests on all new code (80% coverage)
+                - Integration tests for endpoints / web sockets
+            - Code complete
+                - Peer reviewed (1 person/people)
+                - Follows BHelpful code standards / versioning guidelines
+                - No commented out code or TODOs
+                - TSLint / SonarCloud exceptions have explicit explanations
+            - Verified by QA
+                - Functionally manually verified on a setup like the actual setup
+                - QA verifies test coverage aligns with master test plan
+            - Documentation of tech debt
+            - Persistent technical documentation updated / written
+                - Ready is updated / written
+            ```
+
+            </details>
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/BHelpful/Mealplanr-api/blob/master/docs/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

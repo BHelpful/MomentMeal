@@ -1,0 +1,4 @@
+gitSafeReplacementChar: '-'
+autoCloseIssue: false
+openDraftPR: false
+copyIssueLabelsToPR: true

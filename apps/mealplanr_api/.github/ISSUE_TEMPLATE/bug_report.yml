@@ -1,0 +1,56 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: actual-behaviour
+    attributes:
+      label: Actual behaviour
+      description: What happened, that should not have happened?
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behaviour
+    attributes:
+      label: Expected behaviour
+      description: What should have happened?
+      placeholder: When x the program should y
+    validations:
+      required: true
+  - type: dropdown
+    id: bug-location
+    attributes:
+      label: Origin of the bug or security woundability
+      multiple: true
+      options:
+        - Code scanning
+        - Depencency vulnerability
+        - Browser
+        - Postman
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: textarea
+    id: attatchments
+    attributes:
+      label: Attatchments
+      description: Please attatch links, images, and videos/GIFs to paint a better picture of the bug.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/BHelpful/Mealplanr-api/blob/master/docs/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
