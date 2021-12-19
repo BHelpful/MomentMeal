@@ -4,7 +4,7 @@
 ## Linter GitHub Actions ##
 ###########################
 ###########################
-name: Lint Code Base
+name: Lint mealplanr Code Base
 
 #
 # Documentation:
@@ -16,14 +16,16 @@ name: Lint Code Base
 # Start the job on all push #
 #############################
 on:
-  push:
-    branches-ignore: [master]
-    # Remove the line above to run when pushing to master
+  # push:
+  #   branches-ignore: [master]
+  #   # Remove the line above to run when pushing to master
   pull_request:
     branches: [master]
+    paths:
+      - "apps/mealplanr/**"
 
 ###############
-# Set the Job # 
+# Set the Job #
 ###############
 jobs:
   build:
@@ -59,7 +61,7 @@ jobs:
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Self hosted deploy server cleanup, should ALWAYS run independent to result 
+      # Self hosted deploy server cleanup, should ALWAYS run independent to result
       - name: Cleanup
         if: ${{ always() }}
         run: docker ps -q | xargs -n 1 -P 8 -I {} docker stop {}

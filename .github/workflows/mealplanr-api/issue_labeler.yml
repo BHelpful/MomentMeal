@@ -1,4 +1,4 @@
-name: "Set Issue Label"
+name: "Set Issue Label for mealplanr-api"
 on:
   issues:
     types: [opened, edited]

@@ -4,7 +4,7 @@
 ## Linter GitHub Actions ##
 ###########################
 ###########################
-name: Lint Code Base
+name: Lint mealplanr-api Code Base
 
 #
 # Documentation:
@@ -16,11 +16,13 @@ name: Lint Code Base
 # Start the job on all push #
 #############################
 on:
-  push:
-    branches-ignore: [master]
-    # Remove the line above to run when pushing to master
+  # push:
+  #   branches-ignore: [master]
+  #   # Remove the line above to run when pushing to master
   pull_request:
     branches: [master]
+    paths:
+      - 'apps/mealplanr-api/**'
 
 ###############
 # Set the Job #

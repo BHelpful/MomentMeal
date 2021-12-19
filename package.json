@@ -3,10 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve",
-    "start:mealplanr": "nx run-many --target=serve --projects=mealplanr,mealplanr-api",
-    "build": "nx build",
-    "test": "nx test"
+    "start:mealplanr": "nx run-many --target=serve --projects=mealplanr,mealplanr-api"
   },
   "private": true,
   "dependencies": {

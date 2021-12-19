@@ -1,6 +1,6 @@
-name: Add Issue to project
+name: Add PR to project
 on:
-  issues:
+  pull_request:
     types: [opened]
 
 jobs:
@@ -30,19 +30,19 @@ jobs:
             }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
           echo 'PROJECT_ID='$(jq '.data.organization.projectNext.id' project_data.json) >> $GITHUB_ENV
           echo 'DATE_FIELD_ID='$(jq '.data.organization.projectNext.fields.nodes[] | select(.name== "Date posted") | .id' project_data.json) >> $GITHUB_ENV
-      - name: Add Issue to project
+      - name: Add PR to project
         env:
           GITHUB_TOKEN: ${{secrets.MY_GITHUB_TOKEN}}
-          ISSUE_ID: ${{ github.event.issue.node_id }}
+          PR_ID: ${{ github.event.pull_request.node_id }}
         run: |
           item_id="$( gh api graphql --header 'GraphQL-Features: projects_next_graphql' -f query='
-            mutation($project:ID!, $issue:ID!) {
-              addProjectNextItem(input: {projectId: $project, contentId: $issue}) {
+            mutation($project:ID!, $pr:ID!) {
+              addProjectNextItem(input: {projectId: $project, contentId: $pr}) {
                 projectNextItem {
                   id
                 }
               }
-            }' -f project=$PROJECT_ID -f issue=$ISSUE_ID --jq '.data.addProjectNextItem.projectNextItem.id')"
+            }' -f project=$PROJECT_ID -f pr=$PR_ID --jq '.data.addProjectNextItem.projectNextItem.id')"
           echo 'ITEM_ID='$item_id >> $GITHUB_ENV
       - name: Get date
         run: echo "DATE=$(date +"%Y-%m-%d")" >> $GITHUB_ENV
@@ -69,7 +69,9 @@ jobs:
                 }
               }
             }' -f project=$PROJECT_ID -f item=$ITEM_ID -f date_field=$DATE_FIELD_ID -f date_value=$DATE --silent
-      # Self hosted deploy server cleanup, should ALWAYS run independent to result
+
+      
+      # Self hosted deploy server cleanup, should ALWAYS run independent to result 
       - name: Cleanup
         if: ${{ always() }}
         run: docker ps -q | xargs -n 1 -P 8 -I {} docker stop {}

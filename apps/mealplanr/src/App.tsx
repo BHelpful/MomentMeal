@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './reducers';
 import { checkForUser, createUser, userLogin } from './reducers/session';
@@ -20,7 +19,7 @@ const user = {
 };
 
 function App() {
-	// Get relavant values in store
+	// Get relevant values in store
 	const navIndex: number = useSelector((state: RootState) => state.navState.index);
 	const userPopup = useSelector((state: RootState) => state.navState.userpopup);
 	const navCollapsed = useSelector((state: RootState) => state.navState.collapsed);
