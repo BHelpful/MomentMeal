@@ -1,0 +1,73 @@
+{
+  "root": "apps/mealplanr",
+  "sourceRoot": "apps/mealplanr/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/mealplanr",
+        "index": "apps/mealplanr/src/index.html",
+        "baseHref": "/",
+        "main": "apps/mealplanr/src/index.tsx",
+        "polyfills": "apps/mealplanr/src/polyfills.ts",
+        "tsConfig": "apps/mealplanr/tsconfig.app.json",
+        "assets": [
+          "apps/mealplanr/src/assets"
+        ],
+        "styles": ["apps/mealplanr/src/index.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/mealplanr/src/environments/environment.ts",
+              "with": "apps/mealplanr/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "mealplanr:build",
+        "hmr": true,
+        "proxyConfig": "apps/mealplanr/proxy.conf.json"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "mealplanr:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/mealplanr/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/mealplanr"],
+      "options": {
+        "jestConfig": "apps/mealplanr/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

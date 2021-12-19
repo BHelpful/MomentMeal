@@ -1,2 +1,0 @@
-cd ./api
-yarn start

@@ -1,4 +1,6 @@
-import config from '../config.json';
+// import config from '../config.json';
+const config = require("../config.json");
+
 import { get } from 'lodash';
 
 const THEME = 'THEME';

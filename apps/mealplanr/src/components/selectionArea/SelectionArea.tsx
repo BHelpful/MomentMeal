@@ -74,7 +74,7 @@ interface ListingProps {
 
 // Creates a list wrapper for Item
 class Listing extends Component<ListingProps> {
-	render () {
+	override render () {
 		const {name, drag, children} = this.props;
 		if (drag) return (
 			<>
@@ -475,7 +475,7 @@ interface ButtonFieldProps {
 
 // Creates a area for buttons, to arrange them
 class ButtonField extends Component<ButtonFieldProps> {
-	render() {
+	override render() {
 		const {decription, vertical, danger, children} = this.props;
 
 		return (
@@ -509,7 +509,7 @@ interface GuideProps {
 
 // Creates a list to hold Steps
 class Guide extends Component<GuideProps> {
-	render() {
+	override render() {
 		const {title, children} = this.props;
 
 		return (
@@ -528,7 +528,7 @@ interface SelectionAreaProps {
 
 // Creates the box around buttons/search/other selections
 class SelectionArea extends Component<SelectionAreaProps> {
-	render() {
+	override render() {
 		const { cln, columns, children } = { cln: null, ...this.props };
 		return (
 			<div

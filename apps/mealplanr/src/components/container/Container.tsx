@@ -8,7 +8,7 @@ interface ContainerProps {
 
 // Creates a container-wrapper, which holds page content
 class Container extends Component<ContainerProps> {
-	render() {
+	override render() {
 		const { id, className, children } = {className: '', ...this.props};
 		return (
 			<div id={id} className={"container "+className}>

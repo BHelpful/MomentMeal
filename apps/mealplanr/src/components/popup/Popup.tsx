@@ -10,7 +10,7 @@ interface PopupProps {
 
 //Creates a popup container
  class Popup extends Component<PopupProps> {
-  render() {
+  override render() {
     const {type, children, dispatch, navCollapsed} = this.props;
     return (
       <div className={"popup"} onClick={() => dispatch(setUserPopup(0))}>
