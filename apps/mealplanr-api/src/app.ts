@@ -67,7 +67,7 @@ app.use(compression());
 app.use(express.static(__dirname + '/public', { maxAge: 31557600 }));
 
 const allowedOrigins = [
-	'http://localhost:3000',
+	'http://localhost:4200',
 	'http://localhost',
 	'http://bhelpful.net',
 	'http://bhelpful.net:3000',
