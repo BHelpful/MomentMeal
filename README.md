@@ -1,3 +1,4 @@
+[![CodeQL](https://github.com/BHelpful/BHelpful/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BHelpful/BHelpful/actions/workflows/codeql-analysis.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=BHelpful_BHelpful&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=BHelpful_BHelpful)
 [![CodeScene Code Health](https://codescene.io/projects/21818/status-badges/code-health)](https://codescene.io/projects/21818)
 [![CodeScene System Mastery](https://codescene.io/projects/21818/status-badges/system-mastery)](https://codescene.io/projects/21818)
