@@ -10,17 +10,19 @@ import { applyMiddleware, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 function configureStore(preloadedState: any) {
-	const middlewares = [thunkMiddleware];
-	const middlewareEnhancer = applyMiddleware(...middlewares);
+  const middlewares = [thunkMiddleware];
+  const middlewareEnhancer = applyMiddleware(...middlewares);
   const enhancers = [middlewareEnhancer];
-	const composedEnhancers = composeWithDevTools(...enhancers); // removed: { trace: true, traceLimit: 25 }
-	// Combine all parts
+  const composedEnhancers = composeWithDevTools(...enhancers); // removed: { trace: true, traceLimit: 25 }
+  // Combine all parts
   return createStore(rootReducer, preloadedState, composedEnhancers);
 }
 
 // Load or set default state based on localstoarge
 const localState = localStorage.getItem('reduxState');
-const persistedState = localState ? JSON.parse(localState) : {reducers: rootReducer}
+const persistedState = localState
+  ? JSON.parse(localState)
+  : { reducers: rootReducer };
 const store = configureStore(persistedState);
 
 store.subscribe(() => {
@@ -28,13 +30,13 @@ store.subscribe(() => {
 });
 
 ReactDOM.render(
-	<React.StrictMode>
-		{/* Uses provider to procide access to the store from any component App and within App */}
-		<Provider store={store}>
-			<App />
-		</Provider>
-	</React.StrictMode>,
-	document.getElementById('root')
+  <React.StrictMode>
+    {/* Uses provider to procide access to the store from any component App and within App */}
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

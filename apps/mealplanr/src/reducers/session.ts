@@ -1,9 +1,7 @@
-// import config from '../config.json';
-// import * as config from "../config.json";
-const config = require("../config.json");
 import { get } from 'lodash';
 import { setUserPopup } from './navState';
 
+const { NX_MP_API_URI } = process.env;
 const USER_EXISTS = 'USER_EXISTS';
 const ERROR = 'ERROR';
 const CREATED_USER = 'CREATED_USER';
@@ -95,11 +93,11 @@ const sessionReducer = (
 	},
 	action: ActionType
 ) => {
-	let newstate: any = {}
+	const newstate: any = {};
 	switch (action.type) {
 		case USER_EXISTS:
 			newstate.created = true;
-			return Object.assign({...state, ...newstate});
+			return Object.assign({ ...state, ...newstate });
 
 		case CREATED_USER:
 			newstate.user = get(action.payload, 'user');
@@ -107,8 +105,9 @@ const sessionReducer = (
 			newstate.isLoggedIn = true;
 			newstate.refresh = get(action.payload, 'refresh');
 			newstate.authorization = get(action.payload, 'authorization');
-			if (get(action.payload, 'informationFillded')) newstate.informationFillded = true;
-			return Object.assign({...state, ...newstate});
+			if (get(action.payload, 'informationFillded'))
+				newstate.informationFillded = true;
+			return Object.assign({ ...state, ...newstate });
 
 		case LOGIN:
 			newstate.user = get(action.payload, 'user');
@@ -116,26 +115,27 @@ const sessionReducer = (
 			newstate.isLoggedIn = true;
 			newstate.refresh = get(action.payload, 'refresh');
 			newstate.authorization = get(action.payload, 'authorization');
-			if (get(action.payload, 'informationFillded')) newstate.informationFillded = true;
-			return Object.assign({...state, ...newstate });
+			if (get(action.payload, 'informationFillded'))
+				newstate.informationFillded = true;
+			return Object.assign({ ...state, ...newstate });
 
 		case LOGOUT:
 			newstate.isLoggedIn = false;
-			return Object.assign({...state, ...newstate});
+			return Object.assign({ ...state, ...newstate });
 
 		case ERROR:
-			newstate.errorMessage = String(action.payload)
-			return Object.assign({...state, ...newstate});
+			newstate.errorMessage = String(action.payload);
+			return Object.assign({ ...state, ...newstate });
 
 		default:
-			return Object.assign({...state, ...newstate});
+			return Object.assign({ ...state, ...newstate });
 	}
 };
 
 export const checkForUser = (email: string) => {
 	return async function (dispatch: Function, getState: Function) {
 		const user = await fetch(
-			`${config.apiUrl}/users/exists/?userMail=${email}`,
+			`${NX_MP_API_URI}/users/exists/?userMail=${email}`,
 			{
 				method: 'GET',
 			}
@@ -162,7 +162,7 @@ export const createUser = (
 	passwordConfirmation: string
 ) => {
 	return async function (dispatch: Function, getState: Function) {
-		const userResponse = await fetch(`${config.apiUrl}/users`, {
+		const userResponse = await fetch(`${NX_MP_API_URI}/users`, {
 			body: JSON.stringify({
 				email: email,
 				password: password,
@@ -173,7 +173,7 @@ export const createUser = (
 		});
 
 		if (userResponse.status === 200) {
-			const sessionResponse = await fetch(`${config.apiUrl}/sessions`, {
+			const sessionResponse = await fetch(`${NX_MP_API_URI}/sessions`, {
 				body: JSON.stringify({
 					email: email,
 					password: password,
@@ -188,21 +188,11 @@ export const createUser = (
 				dispatch(userLogin(email, password));
 				if (user.name) {
 					dispatch(
-						createdUser(
-							user,
-							true,
-							session.refreshToken,
-							session.accessToken
-						)
+						createdUser(user, true, session.refreshToken, session.accessToken)
 					);
 				} else {
 					dispatch(
-						createdUser(
-							user,
-							false,
-							session.refreshToken,
-							session.accessToken
-						)
+						createdUser(user, false, session.refreshToken, session.accessToken)
 					);
 				}
 			} else {
@@ -218,7 +208,7 @@ export const createUser = (
 
 export const userLogin = (email: string, password: string) => {
 	return async function (dispatch: Function, getState: Function) {
-		const sessionResponse = await fetch(`${config.apiUrl}/sessions`, {
+		const sessionResponse = await fetch(`${NX_MP_API_URI}/sessions`, {
 			body: JSON.stringify({
 				email: email,
 				password: password,
@@ -228,7 +218,7 @@ export const userLogin = (email: string, password: string) => {
 		});
 		if (sessionResponse.status === 200) {
 			const session = await sessionResponse.json();
-			const userResponse = await fetch(`${config.apiUrl}/users/`, {
+			const userResponse = await fetch(`${NX_MP_API_URI}/users/`, {
 				headers: {
 					'Content-Type': 'application/json',
 					'x-refresh': session.refreshToken,
@@ -242,21 +232,11 @@ export const userLogin = (email: string, password: string) => {
 				dispatch(setUserPopup(0));
 				if (user.name) {
 					dispatch(
-						logIn(
-							user,
-							true,
-							session.refreshToken,
-							session.accessToken
-						)
+						logIn(user, true, session.refreshToken, session.accessToken)
 					);
 				} else {
 					dispatch(
-						logIn(
-							user,
-							false,
-							session.refreshToken,
-							session.accessToken
-						)
+						logIn(user, false, session.refreshToken, session.accessToken)
 					);
 				}
 			} else {
@@ -272,7 +252,7 @@ export const userLogin = (email: string, password: string) => {
 
 export const userLogout = (refresh: string, authorization: string) => {
 	return async function (dispatch: Function, getState: Function) {
-		const sessionResponse = await fetch(`${config.apiUrl}/sessions`, {
+		const sessionResponse = await fetch(`${NX_MP_API_URI}/sessions`, {
 			headers: {
 				'Content-Type': 'application/json',
 				'x-refresh': refresh,

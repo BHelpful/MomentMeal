@@ -1,28 +1,21 @@
-// import config from '../config.json';
-const config = require("../config.json");
-
 import { get } from 'lodash';
 
+const { NX_MP_API_URI } = process.env;
 const THEME = 'THEME';
 
 // Function definitions - Defining what parameters and the object structure
-const theme = (
-	hue: number,
-	shade: number,
-) => {
+const theme = (hue: number, shade: number) => {
 	return {
 		type: THEME,
 		payload: {
 			hue: hue,
-			shade: shade
+			shade: shade,
 		},
 	};
 };
 
 // Defining the type of the action in order for the reducer to know the content of the action
-type ActionType = ReturnType<
-	| typeof theme
->;
+type ActionType = ReturnType<typeof theme>;
 
 interface themeType {
 	hue: any;
@@ -34,28 +27,29 @@ interface themeType {
 const themeReducer = (
 	state: themeType = {
 		hue: 0,
-		shade: 0
+		shade: 0,
 	},
 	action: ActionType
 ) => {
-	let newstate: any = {}
+	let newstate: any = {};
 	switch (action.type) {
 		case THEME:
 			newstate.hue = get(action.payload, 'hue');
 			newstate.shade = get(action.payload, 'shade');
-			return Object.assign({...state, ...newstate});
+			return Object.assign({ ...state, ...newstate });
 
 		default:
-			return Object.assign({...state, ...newstate});
+			return Object.assign({ ...state, ...newstate });
 	}
 };
 
 export const getTheme = () => {
 	return async function (dispatch: Function, getState: Function) {
 		const email = getState().session.user.email;
-		const {refresh, authorization} = getState().session;
+		const { refresh, authorization } = getState().session;
 		const themeResponse = await fetch(
-			`${config.apiUrl}/users/?userMail=${email}`, {
+			`${NX_MP_API_URI}/users/?userMail=${email}`,
+			{
 				headers: {
 					'Content-Type': 'application/json',
 					'x-refresh': refresh,
@@ -67,7 +61,7 @@ export const getTheme = () => {
 
 		if (themeResponse.status === 200) {
 			const themedata = await themeResponse.json();
-			var [hue, shade] = themedata.options.theme.split(", ");
+			var [hue, shade] = themedata.options.theme.split(', ');
 			dispatch(theme(hue, shade));
 		} else {
 			// Error handling
@@ -75,21 +69,18 @@ export const getTheme = () => {
 	};
 };
 
-export const setTheme = (
-	password: string,
-	thue: number,
-	tshade: number
-) => {
+export const setTheme = (password: string, thue: number, tshade: number) => {
 	return async function (dispatch: Function, getState: Function) {
 		const email = getState().session.user.email;
-		const {refresh, authorization} = getState().session;
+		const { refresh, authorization } = getState().session;
 		const themeResponse: any = await fetch(
-			`${config.apiUrl}/users/?userMail=${email}`, {
+			`${NX_MP_API_URI}/users/?userMail=${email}`,
+			{
 				body: JSON.stringify({
 					password: password,
 					options: {
 						theme: `${thue}, ${tshade}`,
-					}
+					},
 				}),
 				headers: {
 					'Content-Type': 'application/json',
@@ -102,7 +93,7 @@ export const setTheme = (
 
 		if (themeResponse.status === 200) {
 			const themedata = await themeResponse.json();
-			var [hue, shade] = themedata.options.theme.split(", ");
+			var [hue, shade] = themedata.options.theme.split(', ');
 			dispatch(theme(hue, shade));
 		} else {
 			// Error handling
