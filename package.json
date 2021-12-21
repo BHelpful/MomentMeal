@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@nrwl/cli": "13.3.9",
-    "@nrwl/cypress": "13.3.9",
+    "@nrwl/cypress": "13.3.11",
     "@nrwl/eslint-plugin-nx": "13.3.9",
     "@nrwl/express": "13.3.9",
     "@nrwl/jest": "13.3.9",
