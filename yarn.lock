@@ -1744,6 +1744,26 @@
     yargs "15.4.1"
     yargs-parser "20.0.0"
 
+"@nrwl/cypress@13.3.11":
+  version "13.3.11"
+  resolved "https://registry.yarnpkg.com/@nrwl/cypress/-/cypress-13.3.11.tgz#a1be418d2557c516629115bf5734eb25912699df"
+  integrity sha512-9ts5r6ZU1Xejox6/KqOCWgTPQNnHiTFiKjiT1Dw5m+Hz9qUW2qc1v9dwww/nk3SxG1j1hHqOAYzwXFtjkR3/bg==
+  dependencies:
+    "@cypress/webpack-preprocessor" "^5.9.1"
+    "@nrwl/devkit" "13.3.11"
+    "@nrwl/linter" "13.3.11"
+    "@nrwl/workspace" "13.3.11"
+    chalk "4.1.0"
+    enhanced-resolve "^5.8.3"
+    fork-ts-checker-webpack-plugin "6.2.10"
+    rxjs "^6.5.4"
+    ts-loader "^9.2.6"
+    tsconfig-paths "^3.9.0"
+    tsconfig-paths-webpack-plugin "3.4.1"
+    tslib "^2.3.0"
+    webpack-node-externals "^3.0.0"
+    yargs-parser "20.0.0"
+
 "@nrwl/cypress@13.3.9":
   version "13.3.9"
   resolved "https://registry.yarnpkg.com/@nrwl/cypress/-/cypress-13.3.9.tgz#51905f6e63ac0099abfb687e613d454aebc31f80"
@@ -1855,6 +1875,20 @@
     "@nrwl/workspace" "13.3.9"
     chalk "4.1.0"
     js-tokens "^4.0.0"
+
+"@nrwl/linter@13.3.11":
+  version "13.3.11"
+  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-13.3.11.tgz#d9b76859edd71a76a5493e14424303c4d0c42845"
+  integrity sha512-EFOLy7bc9feaF+mtyEkxDtj4NuuqKSgh5KPksVAQAuMMR7wzb3ueyvseeWVo8N6vLddrAFJfKIY54wtJOykkRw==
+  dependencies:
+    "@nrwl/devkit" "13.3.11"
+    "@nrwl/jest" "13.3.11"
+    "@phenomnomnominal/tsquery" "4.1.1"
+    eslint "8.2.0"
+    glob "7.1.4"
+    minimatch "3.0.4"
+    tmp "~0.2.1"
+    tslib "^2.3.0"
 
 "@nrwl/linter@13.3.9":
   version "13.3.9"
@@ -2081,6 +2115,37 @@
     webpack-sources "^3.0.2"
     webpack-subresource-integrity "^1.5.2"
     worker-plugin "3.2.0"
+
+"@nrwl/workspace@13.3.11":
+  version "13.3.11"
+  resolved "https://registry.yarnpkg.com/@nrwl/workspace/-/workspace-13.3.11.tgz#8a14d08f68b0186c8c9d2a23c70a431381a924f8"
+  integrity sha512-HKxr8159wihBWJ2/ZjMsKiCKS8R4jaoYlRRdbw1+3MpHdGdFKhSj8FfPBPK/H3xnDbuku/Edk41UVT5Fzb04OA==
+  dependencies:
+    "@nrwl/cli" "13.3.11"
+    "@nrwl/devkit" "13.3.11"
+    "@nrwl/jest" "13.3.11"
+    "@nrwl/linter" "13.3.11"
+    "@parcel/watcher" "2.0.4"
+    chalk "4.1.0"
+    chokidar "^3.5.1"
+    cosmiconfig "^4.0.0"
+    dotenv "~10.0.0"
+    enquirer "~2.3.6"
+    flat "^5.0.2"
+    fs-extra "^9.1.0"
+    glob "7.1.4"
+    ignore "^5.0.4"
+    minimatch "3.0.4"
+    npm-run-all "^4.1.5"
+    npm-run-path "^4.0.1"
+    open "^7.4.2"
+    rxjs "^6.5.4"
+    semver "7.3.4"
+    strip-ansi "6.0.0"
+    tmp "~0.2.1"
+    tslib "^2.3.0"
+    yargs "15.4.1"
+    yargs-parser "20.0.0"
 
 "@nrwl/workspace@13.3.9":
   version "13.3.9"
