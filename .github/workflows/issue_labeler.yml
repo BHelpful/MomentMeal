@@ -102,8 +102,13 @@ jobs:
           keywords: '["Controller","controller"]'
           labels: '["Controller"]'
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: Naturalclar/issue-action@v1.0.0
+        with:
+          keywords: '["MealPlanr"]'
+          labels: '["MealPlanr"]'
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      # Self hosted deploy server cleanup, should ALWAYS run independent to result 
+      # Self hosted deploy server cleanup, should ALWAYS run independent to result
       - name: Cleanup
         if: ${{ always() }}
         run: docker ps -q | xargs -n 1 -P 8 -I {} docker stop {}

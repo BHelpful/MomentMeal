@@ -8,6 +8,15 @@ body:
       value: |
         Thanks for taking the time to fill out this bug report!
   - type: dropdown
+    id: project
+    attributes:
+      label: Project/Library/Tool
+      description: The Project/Library/Tool in the monorepo that this issue is relevant for
+      options:
+        - MealPlanr
+    validations:
+      required: true
+  - type: dropdown
     id: priority
     attributes:
       label: Priority

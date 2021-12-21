@@ -7,6 +7,15 @@ body:
     attributes:
       value: |
         Thanks for creating a new minor feature to improve our product!
+  - type: dropdown
+    id: project
+    attributes:
+      label: Project/Library/Tool
+      description: The Project/Library/Tool in the monorepo that this issue is relevant for
+      options:
+        - MealPlanr
+    validations:
+      required: true
   - type: textarea
     id: description
     attributes:
@@ -29,7 +38,6 @@ body:
       placeholder: The implementation should have ...
       value: |
         - [ ] 
-        - [ ]
     validations:
       required: true
   - type: textarea
@@ -41,7 +49,7 @@ body:
   - type: textarea
     id: dor-dod
     attributes:
-      label: Definition of ready/done (DOR/DOD) [DONT CHANGE THE CONTENT]
+      label: Definition of ready/done (DOR/DOD) [DON'T CHANGE THE CONTENT]
       description: This field is not to be changed!
       value: |
         #### Definition of ready
@@ -51,7 +59,7 @@ body:
 
             ```
             - Acceptance criteria written and reviewed by QA, PM and SE
-            - Behaviour scenarios written
+            - Behavior scenarios written
             - Signed off UX
             - Estimated and appropriately scoped
             ```
@@ -73,7 +81,7 @@ body:
                 - Peer reviewed (1 person/people)
                 - Follows BHelpful code standards / versioning guidelines
                 - No commented out code or TODOs
-                - TSLint / Sonarqube exceptions have explicit explanations
+                - Linting / Sonarcloud exceptions have explicit explanations
             - Verified by QA
                 - Functionally manually verified on a setup like the actual setup
                 - QA verifies test coverage aligns with master test plan
