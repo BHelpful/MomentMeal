@@ -1,9 +1,7 @@
 name: Add Issue to project
 on:
-  workflow_run:
-    workflows: ["Set Issue Label for projects"]
-    types:
-      - completed
+  issues:
+    types: [opened]
 
 jobs:
   add_item_to_project:
