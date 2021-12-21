@@ -5,20 +5,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
-import rootReducer from './reducers';
+import rootReducer, { RootState } from './reducers';
 import { applyMiddleware, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-function configureStore(preloadedState: any) {
-  const middlewares = [thunkMiddleware];
-  const middlewareEnhancer = applyMiddleware(...middlewares);
+function configureStore(preloadedState: RootState) {
+  const middleware = [thunkMiddleware];
+  const middlewareEnhancer = applyMiddleware(...middleware);
   const enhancers = [middlewareEnhancer];
   const composedEnhancers = composeWithDevTools(...enhancers); // removed: { trace: true, traceLimit: 25 }
   // Combine all parts
   return createStore(rootReducer, preloadedState, composedEnhancers);
 }
 
-// Load or set default state based on localstoarge
+// Load or set default state based on local storage
 const localState = localStorage.getItem('reduxState');
 const persistedState = localState
   ? JSON.parse(localState)
@@ -31,7 +31,7 @@ store.subscribe(() => {
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* Uses provider to procide access to the store from any component App and within App */}
+    {/* Uses provider to provide access to the store from any component App and within App */}
     <Provider store={store}>
       <App />
     </Provider>
