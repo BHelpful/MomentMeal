@@ -1,7 +1,9 @@
 name: Add PR to project
 on:
-  pull_request:
-    types: [opened]
+  workflow_run:
+    workflows: ["Link Issue to PR"]
+    types:
+      - completed
 
 jobs:
   add_item_to_project:

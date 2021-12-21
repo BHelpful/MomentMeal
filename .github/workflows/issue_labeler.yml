@@ -1,4 +1,4 @@
-name: "Set Issue Label for mealplanr"
+name: "Set Issue Label"
 on:
   issues:
     types: [opened, edited]
@@ -101,11 +101,6 @@ jobs:
         with:
           keywords: '["Controller","controller"]'
           labels: '["Controller"]'
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - uses: Naturalclar/issue-action@v1.0.0
-        with:
-          keywords: '["MealPlanr"]'
-          labels: '["MealPlanr"]'
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
       # Self hosted deploy server cleanup, should ALWAYS run independent to result
