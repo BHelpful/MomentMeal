@@ -13,7 +13,6 @@ interface NewArticleSchemaOptions {
 	mp_mpapi_uri: string;
 	mpapi_salt_worker_factor: number;
 	mpapi_rsa_private_key: string;
-	nx_cloud_auth_token: string;
 }
 
 export default async function (tree: Tree, schema: NewArticleSchemaOptions) {
@@ -52,7 +51,6 @@ export default async function (tree: Tree, schema: NewArticleSchemaOptions) {
 			mp_mpapi_uri: schema.mp_mpapi_uri,
 			mpapi_salt_worker_factor: schema.mpapi_salt_worker_factor,
 			mpapi_rsa_private_key: schema.mpapi_rsa_private_key,
-			nx_cloud_auth_token: schema.nx_cloud_auth_token,
 			template: '',
 		}
 	);
