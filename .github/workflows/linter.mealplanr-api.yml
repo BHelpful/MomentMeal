@@ -16,8 +16,10 @@ name: Lint mealplanr-api Code Base
 # Start the job on all push #
 #############################
 on:
-  # push:
-  #   branches-ignore: [master]
+  push:
+    branches-ignore: [master]
+    paths:
+      - 'apps/mealplanr-api/**'
   #   # Remove the line above to run when pushing to master
   pull_request:
     branches: [master]
