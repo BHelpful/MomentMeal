@@ -1,8 +1,8 @@
 {
-  "version": 2,
-  "projects": {
-    "mealplanr": "apps/mealplanr",
-    "mealplanr-api": "apps/mealplanr-api",
-    "mealplanr-e2e": "apps/mealplanr-e2e"
-  }
+	"version": 2,
+	"projects": {
+		"mealplanr": "apps/mealplanr",
+		"mealplanr-api": "apps/mealplanr-api",
+		"mealplanr-e2e": "apps/mealplanr-e2e"
+	}
 }
