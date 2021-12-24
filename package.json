@@ -8,7 +8,7 @@
   "private": true,
   "dependencies": {
     "core-js": "^3.6.5",
-    "regenerator-runtime": "0.13.7",
+    "regenerator-runtime": "0.13.9",
     "tslib": "^2.0.0",
     "hot": "^0.0.7",
     "react": "^17.0.2",
