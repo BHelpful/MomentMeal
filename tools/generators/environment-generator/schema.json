@@ -1,0 +1,44 @@
+{
+	"$schema": "http://json-schema.org/schema",
+	"cli": "nx",
+	"$id": "environment-generator",
+	"type": "object",
+	"properties": {
+		"mpapi_port": {
+			"type": "string",
+			"description": "Port of the MealPlanr API",
+			"default": "1337",
+			"x-prompt": "What's the Port of the MealPlanr API?"
+		},
+		"mpapi_host": {
+			"type": "string",
+			"description": "Host of the MealPlanr API",
+			"default": "localhost",
+			"x-prompt": "What's the Host of the MealPlanr API?"
+		},
+		"mpapi_db_uri": {
+			"type": "string",
+			"description": "Mongoose database URI of the MealPlanr API",
+			"default": "mongodb://localhost:27017/mealplanr",
+			"x-prompt": "What's the Mongoose database URI of the MealPlanr API?"
+		},
+		"mp_mpapi_uri": {
+			"type": "string",
+			"description": "MealPlanr API URI",
+			"default": "http://localhost:1337",
+			"x-prompt": "What's the MealPlanr API URI?"
+		},
+		"mpapi_salt_worker_factor": {
+			"type": "string",
+			"description": "MealPlanr API salt worker factor",
+			"default": 10,
+			"x-prompt": "What's the MealPlanr API salt worker factor?"
+		},
+		"mpapi_rsa_private_key": {
+			"type": "string",
+			"description": "A RSA private key for the MealPlanr API",
+			"x-prompt": "What's the RSA private key for the MealPlanr API?"
+		}
+	},
+	"required": []
+}

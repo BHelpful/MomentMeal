@@ -1,12 +1,13 @@
 {
-  "name": "bhelpful",
-  "version": "0.0.0",
-  "license": "MIT",
-  "scripts": {
-    "start:mealplanr": "nx run-many --target=serve --projects=mealplanr,mealplanr-api"
-  },
-  "private": true,
-  "dependencies": {
+	"name": "bhelpful",
+	"version": "0.0.0",
+	"license": "MIT",
+	"scripts": {
+		"start:mealplanr": "nx run-many --target=serve --projects=mealplanr,mealplanr-api",
+		"gen:env": "nx workspace-generator environment-generator"
+	},
+	"private": true,
+	"dependencies": {
     "core-js": "^3.6.5",
     "regenerator-runtime": "0.13.9",
     "tslib": "^2.0.0",
@@ -50,6 +51,7 @@
     "@types/redux-thunk": "^2.1.0",
     "@nrwl/cli": "13.3.9",
     "@nrwl/cypress": "13.4.1",
+		"@nrwl/devkit": "13.4.1",
     "@nrwl/eslint-plugin-nx": "13.4.1",
     "@nrwl/express": "13.3.9",
     "@nrwl/jest": "13.3.11",
@@ -107,9 +109,9 @@
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
   },
-  "config": {
-    "mongodbMemoryServer": {
-      "version": "4.2.3"
-    }
-  }
+	"config": {
+		"mongodbMemoryServer": {
+			"version": "4.2.3"
+		}
+	}
 }
