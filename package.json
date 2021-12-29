@@ -83,7 +83,7 @@
     "@bahmutov/add-typescript-to-cypress": "^2.1.2",
     "@types/redux-storage": "^4.1.0",
     "@types/redux-storage-engine-localstorage": "^1.1.1",
-    "cypress": "^7.7.0",
+    "cypress": "^9.2.0",
     "redux-devtools-extension": "^2.13.9",
     "webpack": "^5.44.0",
     "@types/jest": "^27.0.2",
