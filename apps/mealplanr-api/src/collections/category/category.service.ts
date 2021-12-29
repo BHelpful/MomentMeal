@@ -4,7 +4,11 @@ import {
 	UpdateQuery,
 	QueryOptions,
 } from 'mongoose';
-import categoryModel, { CategoryDocument } from './category.model';
+import { populateDocumentResponse } from '../../utils/populate.utils';
+import categoryModel, {
+	CategoryDocument,
+	categoryModelRefs,
+} from './category.model';
 const sanitize = require('mongo-sanitize');
 
 /**
@@ -18,7 +22,13 @@ export async function createCategory(
 ) {
 	try {
 		body = sanitize(body);
-		return await categoryModel.create(body);
+
+		const category = await categoryModel.create(body);
+
+		return await populateDocumentResponse(
+			category,
+			categoryModelRefs
+		).execPopulate();
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -37,7 +47,11 @@ export async function findCategory(
 ) {
 	try {
 		query = sanitize(query);
-		return await categoryModel.findOne(query, {}, options);
+
+		return populateDocumentResponse(
+			categoryModel.findOne(query, {}, options),
+			categoryModelRefs
+		).exec();
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -59,7 +73,7 @@ export async function findAndUpdateCategory(
 	try {
 		query = sanitize(query);
 		update = sanitize(update);
-		return await categoryModel.findOneAndUpdate(query, update, options);
+		return categoryModel.findOneAndUpdate(query, update, options);
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -74,7 +88,7 @@ export async function findAndUpdateCategory(
 export async function deleteCategory(query: FilterQuery<CategoryDocument>) {
 	try {
 		query = sanitize(query);
-		return await categoryModel.deleteOne(query);
+		return categoryModel.deleteOne(query);
 	} catch (error) {
 		throw new Error(error as string);
 	}

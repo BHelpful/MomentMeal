@@ -28,7 +28,7 @@ export type swaggerObjectParamType = {
  * @returns {any} Swagger object
  */
 export function getSwaggerObject(param: swaggerObjectParamType): any {
-	let obj: any = { crud: {} };
+	const obj: any = { crud: {} };
 	obj.crud = {
 		...{
 			summary: param.summary,
@@ -63,7 +63,7 @@ export function getSwaggerObject(param: swaggerObjectParamType): any {
 		});
 
 		// Copy object to avoid mutating original
-		let tempModel = JSON.parse(JSON.stringify(param.body.model));
+		const tempModel = JSON.parse(JSON.stringify(param.body.model));
 
 		tempModel.properties = remIdAndTimestampFromProp(tempModel.properties);
 

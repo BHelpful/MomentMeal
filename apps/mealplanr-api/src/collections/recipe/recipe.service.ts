@@ -18,7 +18,7 @@ export async function createRecipe(body: DocumentDefinition<RecipeDocument>) {
 	try {
 		body = sanitize(body);
 
-		let recipe = await recipeModel.create(body);
+		const recipe = await recipeModel.create(body);
 
 		return await populateDocumentResponse(
 			recipe,
@@ -42,10 +42,8 @@ export async function findRecipe(
 ) {
 	try {
 		query = sanitize(query);
-		let promisedRecipe = recipeModel.findOne(query, {}, options);
-
-		return await populateDocumentResponse(
-			promisedRecipe,
+		return populateDocumentResponse(
+			recipeModel.findOne(query, {}, options),
 			recipeModelRefs
 		).exec();
 	} catch (error) {
@@ -61,7 +59,7 @@ export async function findRecipe(
  * @param options - options for the findOne function from mongoose
  * @returns a recipe document
  */
-export async function findAndUpdateRecipe(
+export function findAndUpdateRecipe(
 	query: FilterQuery<RecipeDocument>,
 	update: UpdateQuery<RecipeDocument>,
 	options: QueryOptions
@@ -69,7 +67,7 @@ export async function findAndUpdateRecipe(
 	try {
 		query = sanitize(query);
 		update = sanitize(update);
-		return await recipeModel.findOneAndUpdate(query, update, options);
+		return recipeModel.findOneAndUpdate(query, update, options);
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -81,10 +79,10 @@ export async function findAndUpdateRecipe(
  * @param query - a query object that will be used to find a recipe from the DB
  * @returns a recipe document
  */
-export async function deleteRecipe(query: FilterQuery<RecipeDocument>) {
+export function deleteRecipe(query: FilterQuery<RecipeDocument>) {
 	try {
 		query = sanitize(query);
-		return await recipeModel.deleteOne(query);
+		return recipeModel.deleteOne(query);
 	} catch (error) {
 		throw new Error(error as string);
 	}

@@ -3,7 +3,7 @@ import { Query } from 'mongoose';
 // TODO: add correct type to param
 export function getDocumentRefs(
 	mongooseSchema: any,
-	nestedPath: string = ''
+	nestedPath = ''
 ): string[] {
 	let refs: string[] = [];
 
@@ -21,7 +21,7 @@ export function getDocumentRefs(
 }
 
 function getDocumentRefNames(path: any, key: string, nestedPath: string) {
-	let refs: string[] = [];
+	const refs: string[] = [];
 	for (const prop in path) {
 		// if the prop has options and one of the options is a reference to another document
 		if (prop === 'options' && path[prop].ref) {
