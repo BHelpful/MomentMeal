@@ -1594,15 +1594,15 @@
     ts-node "^9.1.1"
     tsconfig-paths "^3.9.0"
 
-"@nrwl/express@13.3.9":
-  version "13.3.9"
-  resolved "https://registry.yarnpkg.com/@nrwl/express/-/express-13.3.9.tgz#0fdd6da7fb47c567f40d16bb602490b28c456a48"
-  integrity sha512-jdkqVN7r0vEn9WghVecJAweLxRuYrQEEmwFasJv4dSsNLT5/AN6dqGiNGtWFObFKgb3Q1Ta5iMQDZNr7aHA0Og==
+"@nrwl/express@13.4.1":
+  version "13.4.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/express/-/express-13.4.1.tgz#01fac51d7742beb8dd7f5aa0fc89b8e696fb4908"
+  integrity sha512-Y6EDVk8fa2FL8/QJN2yl2w6+ZkT3ZmD2WTqCqVgHH5mWu31yiH5V9rzqOlmVBtVEgqOCf7cUcC2AfIAzhuiKBA==
   dependencies:
-    "@nrwl/devkit" "13.3.9"
-    "@nrwl/jest" "13.3.9"
-    "@nrwl/node" "13.3.9"
-    "@nrwl/workspace" "13.3.9"
+    "@nrwl/devkit" "13.4.1"
+    "@nrwl/jest" "13.4.1"
+    "@nrwl/node" "13.4.1"
+    "@nrwl/workspace" "13.4.1"
 
 "@nrwl/jest@13.3.11":
   version "13.3.11"
@@ -1720,35 +1720,6 @@
     minimatch "3.0.4"
     tmp "~0.2.1"
     tslib "^2.3.0"
-
-"@nrwl/node@13.3.9":
-  version "13.3.9"
-  resolved "https://registry.yarnpkg.com/@nrwl/node/-/node-13.3.9.tgz#da0df14b6da7bc0aa405569a0ef3de9c2b9d9564"
-  integrity sha512-bXFL1VzX68hhnrp4LcDR6mKxk9XNe4Ud+vUq1o+NtWCl64IlNebSNtNEqx+qiIMBbYdqDrLPJZJ4bfEg9FrgDA==
-  dependencies:
-    "@nrwl/devkit" "13.3.9"
-    "@nrwl/jest" "13.3.9"
-    "@nrwl/linter" "13.3.9"
-    "@nrwl/workspace" "13.3.9"
-    chalk "4.1.0"
-    copy-webpack-plugin "^9.0.1"
-    enhanced-resolve "^5.8.3"
-    fork-ts-checker-webpack-plugin "6.2.10"
-    fs-extra "^9.1.0"
-    glob "7.1.4"
-    license-webpack-plugin "2.3.15"
-    rxjs "^6.5.4"
-    rxjs-for-await "0.0.2"
-    source-map-support "0.5.19"
-    tree-kill "1.2.2"
-    ts-loader "^9.2.6"
-    ts-node "~9.1.1"
-    tsconfig-paths "^3.9.0"
-    tsconfig-paths-webpack-plugin "3.4.1"
-    tslib "^2.3.0"
-    webpack "^5.58.1"
-    webpack-merge "^5.8.0"
-    webpack-node-externals "^3.0.0"
 
 "@nrwl/node@13.4.1":
   version "13.4.1"
