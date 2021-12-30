@@ -1,11 +1,43 @@
 import {
 	DocumentDefinition,
 	FilterQuery,
+	Query,
 	QueryOptions,
 	UpdateQuery,
 } from 'mongoose';
 import userModel, { UserDocument } from './user.model';
 import sanitize = require('mongo-sanitize');
+
+function populateUser(model: Query<any, any> | UserDocument) {
+	return model
+		.populate({
+			path: 'collectionId',
+			populate: {
+				path: 'ingredients.ingredientId',
+				populate: { path: 'typeId' },
+			},
+		})
+		.populate('options.storesId')
+		.populate('plan.recipesId')
+		.populate('availableIngredientsId')
+		.populate({
+			path: 'availableIngredientsId',
+			populate: { path: 'typeId' },
+		})
+		.populate({
+			path: 'shoppingList.ingredients.ingredientId',
+			populate: { path: 'typeId' },
+		})
+		.populate('shoppingList.ingredients.storeId')
+		.populate('planId')
+		.populate({
+			path: 'plan.recipesId',
+			populate: {
+				path: 'ingredients.ingredientId',
+				populate: { path: 'typeId' },
+			},
+		});
+}
 
 /**
  * This function is used to create a new user.
@@ -24,34 +56,7 @@ export async function createUser(input: DocumentDefinition<UserDocument>) {
 	try {
 		input = sanitize(input);
 
-		return (await userModel.create(input))
-			.populate({
-				path: 'collectionId',
-				populate: {
-					path: 'ingredients.ingredientId',
-					populate: { path: 'typeId' },
-				},
-			})
-			.populate('options.storesId')
-			.populate('plan.recipesId')
-			.populate('availableIngredientsId')
-			.populate({
-				path: 'availableIngredientsId',
-				populate: { path: 'typeId' },
-			})
-			.populate({
-				path: 'shoppingList.ingredients.ingredientId',
-				populate: { path: 'typeId' },
-			})
-			.populate('shoppingList.ingredients.storeId')
-			.populate('planId')
-			.populate({
-				path: 'plan.recipesId',
-				populate: {
-					path: 'ingredients.ingredientId',
-					populate: { path: 'typeId' },
-				},
-			});
+		return populateUser(await userModel.create(input));
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -67,36 +72,7 @@ export async function findUser(query: FilterQuery<UserDocument>) {
 	try {
 		query = sanitize(query);
 
-		// TODO: Finish implementing this manually for all other collections
-		return userModel
-			.findOne(query)
-			.populate({
-				path: 'collectionId',
-				populate: {
-					path: 'ingredients.ingredientId',
-					populate: { path: 'typeId' },
-				},
-			})
-			.populate('options.storesId')
-			.populate('plan.recipesId')
-			.populate('availableIngredientsId')
-			.populate({
-				path: 'availableIngredientsId',
-				populate: { path: 'typeId' },
-			})
-			.populate({
-				path: 'shoppingList.ingredients.ingredientId',
-				populate: { path: 'typeId' },
-			})
-			.populate('shoppingList.ingredients.storeId')
-			.populate('planId')
-			.populate({
-				path: 'plan.recipesId',
-				populate: {
-					path: 'ingredients.ingredientId',
-					populate: { path: 'typeId' },
-				},
-			});
+		return populateUser(userModel.findOne(query));
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -118,34 +94,7 @@ export async function findAndUpdateUser(
 	try {
 		query = sanitize(query);
 		update = sanitize(update);
-		return userModel
-			.findOneAndUpdate(query, update, options)
-			.populate({
-				path: 'collectionId',
-				populate: {
-					path: 'ingredients.ingredientId',
-					populate: { path: 'typeId' },
-				},
-			})
-			.populate('options.storesId')
-			.populate('plan.recipesId')
-			.populate('availableIngredientsId')
-			.populate({
-				path: 'availableIngredientsId',
-				populate: { path: 'typeId' },
-			})
-			.populate({
-				path: 'shoppingList.ingredients.ingredientId',
-				populate: { path: 'typeId' },
-			})
-			.populate('shoppingList.ingredients.storeId')
-			.populate({
-				path: 'plan.recipesId',
-				populate: {
-					path: 'ingredients.ingredientId',
-					populate: { path: 'typeId' },
-				},
-			});
+		return populateUser(userModel.findOneAndUpdate(query, update, options));
 	} catch (error) {
 		throw new Error(error as string);
 	}

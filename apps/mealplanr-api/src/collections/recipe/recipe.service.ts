@@ -3,9 +3,27 @@ import {
 	FilterQuery,
 	UpdateQuery,
 	QueryOptions,
+	Query,
 } from 'mongoose';
 import recipeModel, { RecipeDocument } from './recipe.model';
 import sanitize = require('mongo-sanitize');
+
+function populateRecipe(model: Query<any, any> | RecipeDocument) {
+	return model
+		.populate('categoriesId')
+		.populate('creatorId')
+		.populate({
+			path: 'ingredients.ingredientId',
+			populate: { path: 'typeId' },
+		})
+		.populate({
+			path: 'sidedishesId',
+			populate: {
+				path: 'ingredients.ingredientId',
+				populate: { path: 'typeId' },
+			},
+		});
+}
 
 /**
  * This function will create a new recipe for a user and return the recipe
@@ -17,20 +35,7 @@ export async function createRecipe(body: DocumentDefinition<RecipeDocument>) {
 	try {
 		body = sanitize(body);
 
-		return (await recipeModel.create(body))
-			.populate('categoriesId')
-			.populate('creatorId')
-			.populate({
-				path: 'ingredients.ingredientId',
-				populate: { path: 'typeId' },
-			})
-			.populate({
-				path: 'sidedishesId',
-				populate: {
-					path: 'ingredients.ingredientId',
-					populate: { path: 'typeId' },
-				},
-			});
+		return populateRecipe(await recipeModel.create(body));
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -49,21 +54,7 @@ export async function findRecipe(
 ) {
 	try {
 		query = sanitize(query);
-		return recipeModel
-			.findOne(query, {}, options)
-			.populate('categoriesId')
-			.populate('creatorId')
-			.populate({
-				path: 'ingredients.ingredientId',
-				populate: { path: 'typeId' },
-			})
-			.populate({
-				path: 'sidedishesId',
-				populate: {
-					path: 'ingredients.ingredientId',
-					populate: { path: 'typeId' },
-				},
-			});
+		return populateRecipe(recipeModel.findOne(query, {}, options));
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -85,21 +76,7 @@ export function findAndUpdateRecipe(
 	try {
 		query = sanitize(query);
 		update = sanitize(update);
-		return recipeModel
-			.findOneAndUpdate(query, update, options)
-			.populate('categoriesId')
-			.populate('creatorId')
-			.populate({
-				path: 'ingredients.ingredientId',
-				populate: { path: 'typeId' },
-			})
-			.populate({
-				path: 'sidedishesId',
-				populate: {
-					path: 'ingredients.ingredientId',
-					populate: { path: 'typeId' },
-				},
-			});
+		return populateRecipe(recipeModel.findOneAndUpdate(query, update, options));
 	} catch (error) {
 		throw new Error(error as string);
 	}
