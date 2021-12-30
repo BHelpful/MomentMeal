@@ -11,7 +11,6 @@ import {
 } from '../documents';
 import { RecipeDocument } from '../recipe/recipe.model';
 import { IngredientDocument } from '../ingredient/ingredient.model';
-import { getDocumentRefs } from '../../utils/populate.utils';
 
 export interface UserDocument extends Document {
 	_id: string;
@@ -100,7 +99,6 @@ UserSchema.methods.comparePassword = async function (
 	return bcrypt.compare(candidatePassword, user.password).catch((e) => false);
 };
 
-export const userModelRefs = getDocumentRefs(UserSchema);
 
 const userModel = model<UserDocument>('users', UserSchema);
 

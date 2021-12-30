@@ -1,5 +1,4 @@
 import { Schema, Document, model } from 'mongoose';
-import { getDocumentRefs } from '../../utils/populate.utils';
 import m2s = require('mongoose-to-swagger');
 
 export interface CategoryDocument extends Document {
@@ -21,8 +20,6 @@ export const CategorySchema = new Schema({
 			'The type of category (can have multiple e.g. spicy, appetizer ...)',
 	},
 });
-
-export const categoryModelRefs = getDocumentRefs(CategorySchema);
 
 const categoryModel = model<CategoryDocument>('categories', CategorySchema);
 
