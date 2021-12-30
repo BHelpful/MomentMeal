@@ -4,10 +4,8 @@ import {
 	QueryOptions,
 	UpdateQuery,
 } from 'mongoose';
-import userModel, { UserDocument, userModelRefs } from './user.model';
+import userModel, { UserDocument } from './user.model';
 import sanitize = require('mongo-sanitize');
-import { populateDocumentResponse } from '../../utils/populate.utils';
-import log from '../../logger';
 
 /**
  * This function is used to create a new user.
@@ -26,9 +24,34 @@ export async function createUser(input: DocumentDefinition<UserDocument>) {
 	try {
 		input = sanitize(input);
 
-		const user = await userModel.create(input);
-
-		return await populateDocumentResponse(user, userModelRefs).execPopulate();
+		return (await userModel.create(input))
+			.populate({
+				path: 'collectionId',
+				populate: {
+					path: 'ingredients.ingredientId',
+					populate: { path: 'typeId' },
+				},
+			})
+			.populate('options.storesId')
+			.populate('plan.recipesId')
+			.populate('availableIngredientsId')
+			.populate({
+				path: 'availableIngredientsId',
+				populate: { path: 'typeId' },
+			})
+			.populate({
+				path: 'shoppingList.ingredients.ingredientId',
+				populate: { path: 'typeId' },
+			})
+			.populate('shoppingList.ingredients.storeId')
+			.populate('planId')
+			.populate({
+				path: 'plan.recipesId',
+				populate: {
+					path: 'ingredients.ingredientId',
+					populate: { path: 'typeId' },
+				},
+			});
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -44,8 +67,7 @@ export async function findUser(query: FilterQuery<UserDocument>) {
 	try {
 		query = sanitize(query);
 
-
-		// TODO: Finish implementing this manually for this and all collections
+		// TODO: Finish implementing this manually for all other collections
 		return userModel
 			.findOne(query)
 			.populate({
@@ -58,9 +80,23 @@ export async function findUser(query: FilterQuery<UserDocument>) {
 			.populate('options.storesId')
 			.populate('plan.recipesId')
 			.populate('availableIngredientsId')
-			.populate('availableIngredientsId.ingredientId')
-			.populate('shoppingList.storeId')
-			.populate('planId');
+			.populate({
+				path: 'availableIngredientsId',
+				populate: { path: 'typeId' },
+			})
+			.populate({
+				path: 'shoppingList.ingredients.ingredientId',
+				populate: { path: 'typeId' },
+			})
+			.populate('shoppingList.ingredients.storeId')
+			.populate('planId')
+			.populate({
+				path: 'plan.recipesId',
+				populate: {
+					path: 'ingredients.ingredientId',
+					populate: { path: 'typeId' },
+				},
+			});
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -82,7 +118,34 @@ export async function findAndUpdateUser(
 	try {
 		query = sanitize(query);
 		update = sanitize(update);
-		return await userModel.findOneAndUpdate(query, update, options);
+		return userModel
+			.findOneAndUpdate(query, update, options)
+			.populate({
+				path: 'collectionId',
+				populate: {
+					path: 'ingredients.ingredientId',
+					populate: { path: 'typeId' },
+				},
+			})
+			.populate('options.storesId')
+			.populate('plan.recipesId')
+			.populate('availableIngredientsId')
+			.populate({
+				path: 'availableIngredientsId',
+				populate: { path: 'typeId' },
+			})
+			.populate({
+				path: 'shoppingList.ingredients.ingredientId',
+				populate: { path: 'typeId' },
+			})
+			.populate('shoppingList.ingredients.storeId')
+			.populate({
+				path: 'plan.recipesId',
+				populate: {
+					path: 'ingredients.ingredientId',
+					populate: { path: 'typeId' },
+				},
+			});
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -97,7 +160,7 @@ export async function findAndUpdateUser(
 export async function deleteUser(query: FilterQuery<UserDocument>) {
 	try {
 		query = sanitize(query);
-		return await userModel.deleteOne(query);
+		return userModel.deleteOne(query);
 	} catch (error) {
 		throw new Error(error as string);
 	}

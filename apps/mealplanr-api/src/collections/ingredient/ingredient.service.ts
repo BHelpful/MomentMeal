@@ -4,12 +4,8 @@ import {
 	UpdateQuery,
 	QueryOptions,
 } from 'mongoose';
-import ingredientModel, {
-	IngredientDocument,
-	ingredientModelRefs,
-} from './ingredient.model';
+import ingredientModel, { IngredientDocument } from './ingredient.model';
 import sanitize = require('mongo-sanitize');
-import { populateDocumentResponse } from '../../utils/populate.utils';
 
 /**
  * This function will create a new ingredient for a user and return the ingredient
@@ -23,12 +19,7 @@ export async function createIngredient(
 	try {
 		body = sanitize(body);
 
-		const ingredient = await ingredientModel.create(body);
-
-		return await populateDocumentResponse(
-			ingredient,
-			ingredientModelRefs
-		).execPopulate();
+		return (await ingredientModel.create(body)).populate('typeId');
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -48,10 +39,7 @@ export async function findIngredient(
 	try {
 		query = sanitize(query);
 
-		return populateDocumentResponse(
-			ingredientModel.findOne(query, {}, options),
-			ingredientModelRefs
-		).exec();
+		return ingredientModel.findOne(query, {}, options).populate('typeId');
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -73,7 +61,9 @@ export async function findAndUpdateIngredient(
 	try {
 		query = sanitize(query);
 		update = sanitize(update);
-		return await ingredientModel.findOneAndUpdate(query, update, options);
+		return ingredientModel
+			.findOneAndUpdate(query, update, options)
+			.populate('typeId');
 	} catch (error) {
 		throw new Error(error as string);
 	}

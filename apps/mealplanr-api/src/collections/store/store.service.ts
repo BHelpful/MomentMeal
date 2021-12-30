@@ -5,7 +5,7 @@ import {
 	QueryOptions,
 } from 'mongoose';
 import storeModel, { StoreDocument } from './store.model';
-const sanitize = require('mongo-sanitize');
+import sanitize = require('mongo-sanitize');
 
 /**
  * This function will create a new store for a user and return the store
@@ -35,7 +35,7 @@ export async function findStore(
 ) {
 	try {
 		query = sanitize(query);
-		return await storeModel.findOne(query, {}, options);
+		return storeModel.findOne(query, {}, options);
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -57,7 +57,7 @@ export async function findAndUpdateStore(
 	try {
 		query = sanitize(query);
 		update = sanitize(update);
-		return await storeModel.findOneAndUpdate(query, update, options);
+		return storeModel.findOneAndUpdate(query, update, options);
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -72,7 +72,7 @@ export async function findAndUpdateStore(
 export async function deleteStore(query: FilterQuery<StoreDocument>) {
 	try {
 		query = sanitize(query);
-		return await storeModel.deleteOne(query);
+		return storeModel.deleteOne(query);
 	} catch (error) {
 		throw new Error(error as string);
 	}

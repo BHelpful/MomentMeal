@@ -4,8 +4,7 @@ import {
 	UpdateQuery,
 	QueryOptions,
 } from 'mongoose';
-import { populateDocumentResponse } from '../../utils/populate.utils';
-import recipeModel, { RecipeDocument, recipeModelRefs } from './recipe.model';
+import recipeModel, { RecipeDocument } from './recipe.model';
 import sanitize = require('mongo-sanitize');
 
 /**
@@ -18,12 +17,20 @@ export async function createRecipe(body: DocumentDefinition<RecipeDocument>) {
 	try {
 		body = sanitize(body);
 
-		const recipe = await recipeModel.create(body);
-
-		return await populateDocumentResponse(
-			recipe,
-			recipeModelRefs
-		).execPopulate();
+		return (await recipeModel.create(body))
+			.populate('categoriesId')
+			.populate('creatorId')
+			.populate({
+				path: 'ingredients.ingredientId',
+				populate: { path: 'typeId' },
+			})
+			.populate({
+				path: 'sidedishesId',
+				populate: {
+					path: 'ingredients.ingredientId',
+					populate: { path: 'typeId' },
+				},
+			});
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -42,10 +49,21 @@ export async function findRecipe(
 ) {
 	try {
 		query = sanitize(query);
-		return populateDocumentResponse(
-			recipeModel.findOne(query, {}, options),
-			recipeModelRefs
-		).exec();
+		return recipeModel
+			.findOne(query, {}, options)
+			.populate('categoriesId')
+			.populate('creatorId')
+			.populate({
+				path: 'ingredients.ingredientId',
+				populate: { path: 'typeId' },
+			})
+			.populate({
+				path: 'sidedishesId',
+				populate: {
+					path: 'ingredients.ingredientId',
+					populate: { path: 'typeId' },
+				},
+			});
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -67,7 +85,21 @@ export function findAndUpdateRecipe(
 	try {
 		query = sanitize(query);
 		update = sanitize(update);
-		return recipeModel.findOneAndUpdate(query, update, options);
+		return recipeModel
+			.findOneAndUpdate(query, update, options)
+			.populate('categoriesId')
+			.populate('creatorId')
+			.populate({
+				path: 'ingredients.ingredientId',
+				populate: { path: 'typeId' },
+			})
+			.populate({
+				path: 'sidedishesId',
+				populate: {
+					path: 'ingredients.ingredientId',
+					populate: { path: 'typeId' },
+				},
+			});
 	} catch (error) {
 		throw new Error(error as string);
 	}

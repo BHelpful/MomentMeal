@@ -4,11 +4,7 @@ import {
 	UpdateQuery,
 	QueryOptions,
 } from 'mongoose';
-import { populateDocumentResponse } from '../../utils/populate.utils';
-import categoryModel, {
-	CategoryDocument,
-	categoryModelRefs,
-} from './category.model';
+import categoryModel, { CategoryDocument } from './category.model';
 import sanitize = require('mongo-sanitize');
 
 /**
@@ -23,13 +19,7 @@ export async function createCategory(
 	try {
 		body = sanitize(body);
 
-		const category = await categoryModel.create(body);
-
-		// populate the response in case type of category later becomes a collection itself.
-		return await populateDocumentResponse(
-			category,
-			categoryModelRefs
-		).execPopulate();
+		return await categoryModel.create(body);
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -49,10 +39,7 @@ export async function findCategory(
 	try {
 		query = sanitize(query);
 
-		return populateDocumentResponse(
-			categoryModel.findOne(query, {}, options),
-			categoryModelRefs
-		).exec();
+		return categoryModel.findOne(query, {}, options);
 	} catch (error) {
 		throw new Error(error as string);
 	}
