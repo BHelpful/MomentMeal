@@ -9,7 +9,6 @@ export interface IngredientDocument extends Document {
 	typeId: CategoryDocument['_id'];
 	season: string;
 	diet: [string];
-	alternativesId: [IngredientDocument['_id']];
 }
 export const IngredientSchema = new Schema({
 	name: {
@@ -33,11 +32,6 @@ export const IngredientSchema = new Schema({
 		type: [String],
 		required: true,
 		description: 'The diet of the ingredient e.g. vegetarian',
-	},
-	alternativesId: {
-		type: [Schema.Types.ObjectId],
-		ref: 'ingredients',
-		description: 'The alternatives of the ingredient',
 	},
 });
 

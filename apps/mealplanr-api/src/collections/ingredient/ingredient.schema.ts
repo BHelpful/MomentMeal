@@ -7,7 +7,6 @@ const payload = {
 		typeId: string(),
 		season: string(),
 		diet: array().of(string()),
-		alternativesId: array().of(string()),
 	}),
 };
 

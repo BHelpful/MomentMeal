@@ -7,6 +7,7 @@ import {
 import userModel, { UserDocument, userModelRefs } from './user.model';
 import sanitize = require('mongo-sanitize');
 import { populateDocumentResponse } from '../../utils/populate.utils';
+import log from '../../logger';
 
 /**
  * This function is used to create a new user.
@@ -42,11 +43,24 @@ export async function createUser(input: DocumentDefinition<UserDocument>) {
 export async function findUser(query: FilterQuery<UserDocument>) {
 	try {
 		query = sanitize(query);
-		
-		return populateDocumentResponse(
-			userModel.findOne(query).lean(), // lean() is used to return a plain javascript object instead of a mongoose document
-			userModelRefs
-		).exec();
+
+
+		// TODO: Finish implementing this manually for this and all collections
+		return userModel
+			.findOne(query)
+			.populate({
+				path: 'collectionId',
+				populate: {
+					path: 'ingredients.ingredientId',
+					populate: { path: 'typeId' },
+				},
+			})
+			.populate('options.storesId')
+			.populate('plan.recipesId')
+			.populate('availableIngredientsId')
+			.populate('availableIngredientsId.ingredientId')
+			.populate('shoppingList.storeId')
+			.populate('planId');
 	} catch (error) {
 		throw new Error(error as string);
 	}
