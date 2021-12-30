@@ -3,6 +3,7 @@ import { UserDocument } from '../user/user.model';
 const m2s = require('mongoose-to-swagger');
 
 export interface SessionDocument extends Document {
+	_id: string;
 	userId: UserDocument['_id'];
 	valid: boolean;
 	userAgent: string;

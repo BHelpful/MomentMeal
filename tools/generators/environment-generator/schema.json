@@ -7,7 +7,7 @@
 		"mpapi_port": {
 			"type": "string",
 			"description": "Port of the MealPlanr API",
-			"default": "1337",
+			"default": "3333",
 			"x-prompt": "What's the Port of the MealPlanr API?"
 		},
 		"mpapi_host": {
@@ -25,7 +25,7 @@
 		"mp_mpapi_uri": {
 			"type": "string",
 			"description": "MealPlanr API URI",
-			"default": "http://localhost:1337",
+			"default": "http://localhost:3333",
 			"x-prompt": "What's the MealPlanr API URI?"
 		},
 		"mpapi_salt_worker_factor": {

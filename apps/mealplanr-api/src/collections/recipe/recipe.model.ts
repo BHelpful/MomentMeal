@@ -12,6 +12,7 @@ import { IngredientDocument } from '../ingredient/ingredient.model';
 import { UserDocument } from '../user/user.model';
 
 export interface RecipeDocument extends Document {
+	_id: string;
 	recipeId: string;
 	public: boolean;
 	categoriesId: [CategoryDocument['_id']];

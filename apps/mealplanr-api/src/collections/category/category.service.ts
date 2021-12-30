@@ -9,7 +9,7 @@ import categoryModel, {
 	CategoryDocument,
 	categoryModelRefs,
 } from './category.model';
-const sanitize = require('mongo-sanitize');
+import sanitize = require('mongo-sanitize');
 
 /**
  * This function will create a new category for a user and return the category
@@ -25,6 +25,7 @@ export async function createCategory(
 
 		const category = await categoryModel.create(body);
 
+		// populate the response in case type of category later becomes a collection itself.
 		return await populateDocumentResponse(
 			category,
 			categoryModelRefs

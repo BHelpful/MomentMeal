@@ -4,8 +4,12 @@ import {
 	UpdateQuery,
 	QueryOptions,
 } from 'mongoose';
-import ingredientModel, { IngredientDocument } from './ingredient.model';
-const sanitize = require('mongo-sanitize');
+import ingredientModel, {
+	IngredientDocument,
+	ingredientModelRefs,
+} from './ingredient.model';
+import sanitize = require('mongo-sanitize');
+import { populateDocumentResponse } from '../../utils/populate.utils';
 
 /**
  * This function will create a new ingredient for a user and return the ingredient
@@ -18,7 +22,13 @@ export async function createIngredient(
 ) {
 	try {
 		body = sanitize(body);
-		return await ingredientModel.create(body);
+
+		const ingredient = await ingredientModel.create(body);
+
+		return await populateDocumentResponse(
+			ingredient,
+			ingredientModelRefs
+		).execPopulate();
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -37,7 +47,11 @@ export async function findIngredient(
 ) {
 	try {
 		query = sanitize(query);
-		return await ingredientModel.findOne(query, {}, options);
+
+		return populateDocumentResponse(
+			ingredientModel.findOne(query, {}, options),
+			ingredientModelRefs
+		).exec();
 	} catch (error) {
 		throw new Error(error as string);
 	}

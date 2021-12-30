@@ -1,8 +1,9 @@
 import { Schema, Document, model } from 'mongoose';
 import { getDocumentRefs } from '../../utils/populate.utils';
-const m2s = require('mongoose-to-swagger');
+import m2s = require('mongoose-to-swagger');
 
 export interface CategoryDocument extends Document {
+	_id: string;
 	name: string;
 	type: [string];
 }

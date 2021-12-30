@@ -1,8 +1,10 @@
 import { Schema, Document, model } from 'mongoose';
 import { CategoryDocument } from '../category/category.model';
 import * as m2s from 'mongoose-to-swagger';
+import { getDocumentRefs } from '../../utils/populate.utils';
 
 export interface IngredientDocument extends Document {
+	_id: string;
 	name: string;
 	typeId: CategoryDocument['_id'];
 	season: string;
@@ -38,6 +40,8 @@ export const IngredientSchema = new Schema({
 		description: 'The alternatives of the ingredient',
 	},
 });
+
+export const ingredientModelRefs = getDocumentRefs(IngredientSchema);
 
 const ingredientModel = model<IngredientDocument>(
 	'ingredients',

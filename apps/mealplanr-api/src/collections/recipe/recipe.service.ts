@@ -6,7 +6,7 @@ import {
 } from 'mongoose';
 import { populateDocumentResponse } from '../../utils/populate.utils';
 import recipeModel, { RecipeDocument, recipeModelRefs } from './recipe.model';
-const sanitize = require('mongo-sanitize');
+import sanitize = require('mongo-sanitize');
 
 /**
  * This function will create a new recipe for a user and return the recipe

@@ -2,6 +2,7 @@ import { Schema, Document, model } from 'mongoose';
 const m2s = require('mongoose-to-swagger');
 
 export interface StoreDocument extends Document {
+	_id: string;
 	name: string;
 }
 export const StoreSchema = new Schema({
