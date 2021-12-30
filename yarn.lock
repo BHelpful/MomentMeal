@@ -1506,26 +1506,6 @@
     webpack-node-externals "^3.0.0"
     yargs-parser "20.0.0"
 
-"@nrwl/cypress@13.3.9":
-  version "13.3.9"
-  resolved "https://registry.yarnpkg.com/@nrwl/cypress/-/cypress-13.3.9.tgz#51905f6e63ac0099abfb687e613d454aebc31f80"
-  integrity sha512-pj5ZjCzIsE3mXOZWi1HmAG55CuFhXpXvoSUfYTURxNjayy6H9OPaJz2Y2FJirxMEprz4BA2tM876e5dCaPf/4A==
-  dependencies:
-    "@cypress/webpack-preprocessor" "^5.9.1"
-    "@nrwl/devkit" "13.3.9"
-    "@nrwl/linter" "13.3.9"
-    "@nrwl/workspace" "13.3.9"
-    chalk "4.1.0"
-    enhanced-resolve "^5.8.3"
-    fork-ts-checker-webpack-plugin "6.2.10"
-    rxjs "^6.5.4"
-    ts-loader "^9.2.6"
-    tsconfig-paths "^3.9.0"
-    tsconfig-paths-webpack-plugin "3.4.1"
-    tslib "^2.3.0"
-    webpack-node-externals "^3.0.0"
-    yargs-parser "20.0.0"
-
 "@nrwl/cypress@13.4.1":
   version "13.4.1"
   resolved "https://registry.yarnpkg.com/@nrwl/cypress/-/cypress-13.4.1.tgz#2f1005363343c1778b3c22926c4303616482c446"
@@ -1667,17 +1647,21 @@
     chalk "4.1.0"
     js-tokens "^4.0.0"
 
-"@nrwl/js@13.3.9":
-  version "13.3.9"
-  resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-13.3.9.tgz#911a8beb6c5926d79825cefbc813a74119cf431e"
-  integrity sha512-JvfZlPQM4Jupj5ZUUg1rWUUaKoxUD3xO4ho138QuO4tRllRl+G5Bmz6nXsaM1oGjkVnVCAlcRUMKPfzSqZOakg==
+"@nrwl/js@13.4.1":
+  version "13.4.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-13.4.1.tgz#ec54d6c7a2d888fa363dfb0b7b383193f36e6502"
+  integrity sha512-EnHPCmKH02LlX+NxS0A3g0uWZI03qUCoaXnliVVa3Mtwdd0J3XXifbYRiUUB7yPHtggwzqH4WS7SSjsSNjmjlw==
   dependencies:
-    "@nrwl/devkit" "13.3.9"
-    "@nrwl/jest" "13.3.9"
-    "@nrwl/linter" "13.3.9"
-    "@nrwl/workspace" "13.3.9"
+    "@nrwl/devkit" "13.4.1"
+    "@nrwl/jest" "13.4.1"
+    "@nrwl/linter" "13.4.1"
+    "@nrwl/workspace" "13.4.1"
     chalk "4.1.0"
     js-tokens "^4.0.0"
+    rxjs "^6.5.4"
+    rxjs-for-await "0.0.2"
+    source-map-support "0.5.19"
+    tree-kill "1.2.2"
 
 "@nrwl/linter@13.3.11":
   version "13.3.11"
@@ -1952,10 +1936,10 @@
     webpack-subresource-integrity "^1.5.2"
     worker-plugin "3.2.0"
 
-"@nrwl/web@13.3.9":
-  version "13.3.9"
-  resolved "https://registry.yarnpkg.com/@nrwl/web/-/web-13.3.9.tgz#6bbc18ad0277893b20d446d93a850881889c56b7"
-  integrity sha512-jjUHPQuD4GfaoWjkPQrGt/PcH/WTJRfF3LBUW/wWj8AKi2bHTiHaqgQ4K9h4KuXDV5aBOuvIac1GWX8T185h7A==
+"@nrwl/web@13.4.1":
+  version "13.4.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/web/-/web-13.4.1.tgz#494300b02583b7b7156f86910f1a567d27a9e5af"
+  integrity sha512-81Sc1Q8jBW4dI6sO1JCPA0wjG7P8pk7rwjpTfGtMnR/nVeNj6+iMuuxoFuQuPHDESRv9wBmRDBJqXrPqorW1Gg==
   dependencies:
     "@babel/core" "^7.15.0"
     "@babel/plugin-proposal-class-properties" "^7.14.5"
@@ -1965,12 +1949,12 @@
     "@babel/preset-env" "^7.15.0"
     "@babel/preset-typescript" "^7.15.0"
     "@babel/runtime" "^7.14.8"
-    "@nrwl/cypress" "13.3.9"
-    "@nrwl/devkit" "13.3.9"
-    "@nrwl/jest" "13.3.9"
-    "@nrwl/js" "13.3.9"
-    "@nrwl/linter" "13.3.9"
-    "@nrwl/workspace" "13.3.9"
+    "@nrwl/cypress" "13.4.1"
+    "@nrwl/devkit" "13.4.1"
+    "@nrwl/jest" "13.4.1"
+    "@nrwl/js" "13.4.1"
+    "@nrwl/linter" "13.4.1"
+    "@nrwl/workspace" "13.4.1"
     "@pmmmwh/react-refresh-webpack-plugin" "^0.5.1"
     "@rollup/plugin-babel" "^5.3.0"
     "@rollup/plugin-commonjs" "^20.0.0"
@@ -2051,37 +2035,6 @@
     "@nrwl/devkit" "13.3.11"
     "@nrwl/jest" "13.3.11"
     "@nrwl/linter" "13.3.11"
-    "@parcel/watcher" "2.0.4"
-    chalk "4.1.0"
-    chokidar "^3.5.1"
-    cosmiconfig "^4.0.0"
-    dotenv "~10.0.0"
-    enquirer "~2.3.6"
-    flat "^5.0.2"
-    fs-extra "^9.1.0"
-    glob "7.1.4"
-    ignore "^5.0.4"
-    minimatch "3.0.4"
-    npm-run-all "^4.1.5"
-    npm-run-path "^4.0.1"
-    open "^7.4.2"
-    rxjs "^6.5.4"
-    semver "7.3.4"
-    strip-ansi "6.0.0"
-    tmp "~0.2.1"
-    tslib "^2.3.0"
-    yargs "15.4.1"
-    yargs-parser "20.0.0"
-
-"@nrwl/workspace@13.3.9":
-  version "13.3.9"
-  resolved "https://registry.yarnpkg.com/@nrwl/workspace/-/workspace-13.3.9.tgz#c4fbfef9760caafe77636233b19a43aaafa194f1"
-  integrity sha512-oIVZVDbW/YmTwqWkYNax4etaJjV7RLDO9vIEWZIDEpyBnLK0DYPEqckCEkBXOzjL2En+xq/+BjwmRiIjr36miA==
-  dependencies:
-    "@nrwl/cli" "13.3.9"
-    "@nrwl/devkit" "13.3.9"
-    "@nrwl/jest" "13.3.9"
-    "@nrwl/linter" "13.3.9"
     "@parcel/watcher" "2.0.4"
     chalk "4.1.0"
     chokidar "^3.5.1"
@@ -4312,12 +4265,7 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001251, caniuse-lite@^1.0.30001272, caniuse-lite@^1.0.30001286:
-  version "1.0.30001291"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001291.tgz#08a8d2cfea0b2cf2e1d94dd795942d0daef6108c"
-  integrity sha512-roMV5V0HNGgJ88s42eE70sstqGW/gwFndosYrikHthw98N5tLnOTxFqMLQjZVRxTWFlJ4rn+MsgXrR7MDPY4jA==
-
-caniuse-lite@^1.0.30001291:
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001251, caniuse-lite@^1.0.30001272, caniuse-lite@^1.0.30001286, caniuse-lite@^1.0.30001291:
   version "1.0.30001294"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001294.tgz#4849f27b101fd59ddee3751598c663801032533d"
   integrity sha512-LiMlrs1nSKZ8qkNhpUf5KD0Al1KCBE3zaT7OLOwEkagXMEDij98SiOovn9wxVGQpklk9vVC/pUSqgYmkmKOS8g==
@@ -11427,17 +11375,10 @@ rollup-pluginutils@^2.8.2:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@^2.43.1:
+rollup@^2.43.1, rollup@^2.56.2:
   version "2.62.0"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.62.0.tgz#9e640b419fc5b9e0241844f6d55258bd79986ecc"
   integrity sha512-cJEQq2gwB0GWMD3rYImefQTSjrPYaC6s4J9pYqnstVLJ1CHa/aZNVkD4Epuvg4iLeMA4KRiq7UM7awKK6j7jcw==
-  optionalDependencies:
-    fsevents "~2.3.2"
-
-rollup@^2.56.2:
-  version "2.61.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.61.1.tgz#1a5491f84543cf9e4caf6c61222d9a3f8f2ba454"
-  integrity sha512-BbTXlEvB8d+XFbK/7E5doIcRtxWPRiqr0eb5vQ0+2paMM04Ye4PZY5nHOQef2ix24l/L0SpLd5hwcH15QHPdvA==
   optionalDependencies:
     fsevents "~2.3.2"
 
@@ -11521,19 +11462,10 @@ sass-loader@^12.2.0, sass-loader@^12.3.0:
     klona "^2.0.4"
     neo-async "^2.6.2"
 
-sass@^1.35.2:
+sass@^1.35.2, sass@^1.42.1:
   version "1.45.1"
   resolved "https://registry.yarnpkg.com/sass/-/sass-1.45.1.tgz#fa03951f924d1ba5762949567eaf660e608a1ab0"
   integrity sha512-pwPRiq29UR0o4X3fiQyCtrESldXvUQAAE0QmcJTpsI4kuHHcLzZ54M1oNBVIXybQv8QF2zfkpFcTxp8ta97dUA==
-  dependencies:
-    chokidar ">=3.0.0 <4.0.0"
-    immutable "^4.0.0"
-    source-map-js ">=0.6.2 <2.0.0"
-
-sass@^1.42.1:
-  version "1.45.0"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.45.0.tgz#192ede1908324bb293a3e403d1841dbcaafdd323"
-  integrity sha512-ONy5bjppoohtNkFJRqdz1gscXamMzN3wQy1YH9qO2FiNpgjLhpz/IPRGg0PpCjyz/pWfCOaNEaiEGCcjOFAjqw==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
