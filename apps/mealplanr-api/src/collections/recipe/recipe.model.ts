@@ -1,7 +1,7 @@
 import { Schema, Document, model } from 'mongoose';
 import { nanoid } from 'nanoid';
 import { getDocumentRefs } from '../../utils/populate.utils';
-const m2s = require('mongoose-to-swagger');
+import m2s = require('mongoose-to-swagger');
 import { CategoryDocument } from '../category/category.model';
 import {
 	IngredientListSubschema,

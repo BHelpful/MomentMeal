@@ -4,8 +4,9 @@ import {
 	QueryOptions,
 	UpdateQuery,
 } from 'mongoose';
-import userModel, { UserDocument } from './user.model';
-const sanitize = require('mongo-sanitize');
+import userModel, { UserDocument, userModelRefs } from './user.model';
+import sanitize = require('mongo-sanitize');
+import { populateDocumentResponse } from '../../utils/populate.utils';
 
 /**
  * This function is used to create a new user.
@@ -23,7 +24,10 @@ const sanitize = require('mongo-sanitize');
 export async function createUser(input: DocumentDefinition<UserDocument>) {
 	try {
 		input = sanitize(input);
-		return await userModel.create(input);
+
+		const user = await userModel.create(input);
+
+		return await populateDocumentResponse(user, userModelRefs).execPopulate();
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -38,7 +42,11 @@ export async function createUser(input: DocumentDefinition<UserDocument>) {
 export async function findUser(query: FilterQuery<UserDocument>) {
 	try {
 		query = sanitize(query);
-		return await userModel.findOne(query).lean();
+		
+		return populateDocumentResponse(
+			userModel.findOne(query).lean(), // lean() is used to return a plain javascript object instead of a mongoose document
+			userModelRefs
+		).exec();
 	} catch (error) {
 		throw new Error(error as string);
 	}
