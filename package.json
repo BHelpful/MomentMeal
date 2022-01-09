@@ -47,7 +47,7 @@
   "devDependencies": {
     "@neuralegion/cypress-har-generator": "^5.2.3",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/user-event": "^12.1.10",
+    "@testing-library/user-event": "^13.5.0",
     "@types/redux-thunk": "^2.1.0",
     "@nrwl/cli": "13.3.9",
     "@nrwl/cypress": "13.4.1",
@@ -64,7 +64,7 @@
     "@nrwl/workspace": "13.4.1",
     "@testing-library/react": "12.1.2",
     "@testing-library/react-hooks": "7.0.2",
-    "@types/react": "17.0.30",
+    "@types/react": "17.0.38",
     "@types/react-dom": "17.0.11",
     "@typescript-eslint/eslint-plugin": "~5.3.0",
     "@typescript-eslint/parser": "~5.3.0",
