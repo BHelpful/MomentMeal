@@ -47,7 +47,7 @@
   "devDependencies": {
     "@neuralegion/cypress-har-generator": "^5.2.3",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/user-event": "^12.1.10",
+    "@testing-library/user-event": "^13.5.0",
     "@types/redux-thunk": "^2.1.0",
     "@nrwl/cli": "13.3.9",
     "@nrwl/cypress": "13.4.1",
