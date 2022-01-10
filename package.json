@@ -79,7 +79,7 @@
     "jest": "27.4.5",
     "prettier": "^2.3.1",
     "react-test-renderer": "17.0.2",
-    "ts-jest": "27.0.5",
+    "ts-jest": "27.1.2",
     "@bahmutov/add-typescript-to-cypress": "^2.1.2",
     "@types/redux-storage": "^4.1.0",
     "@types/redux-storage-engine-localstorage": "^1.1.1",
