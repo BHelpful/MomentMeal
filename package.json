@@ -59,7 +59,7 @@
     "@nrwl/node": "13.4.1",
     "@nrwl/nx-cloud": "latest",
     "@nrwl/react": "13.4.1",
-    "@nrwl/tao": "13.4.1",
+    "@nrwl/tao": "13.4.3",
     "@nrwl/web": "13.4.1",
     "@nrwl/workspace": "13.4.1",
     "@testing-library/react": "12.1.2",
