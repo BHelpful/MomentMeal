@@ -70,13 +70,13 @@ type ActionType = ReturnType<
 >;
 
 interface sessionType {
-	user: any;
-	created: boolean;
-	isLoggedIn: boolean;
-	informationFillded: boolean;
-	refresh: string;
-	authorization: string;
-	errorMessage: string;
+	user?: any;
+	created?: boolean;
+	isLoggedIn?: boolean;
+	informationFillded?: boolean;
+	refresh?: string;
+	authorization?: string;
+	errorMessage?: string;
 }
 
 // Defining the reducer, which contains the functionality for each of the functions defined above
@@ -93,7 +93,7 @@ const sessionReducer = (
 	},
 	action: ActionType
 ) => {
-	const newstate: any = {};
+	const newstate: sessionType = {};
 	switch (action.type) {
 		case USER_EXISTS:
 			newstate.created = true;
@@ -133,7 +133,7 @@ const sessionReducer = (
 };
 
 export const checkForUser = (email: string) => {
-	return async function (dispatch: Function, getState: Function) {
+	return async function (dispatch: (arg: unknown)=>void, getState: (arg: unknown)=>void) {
 		const user = await fetch(
 			`${NX_MP_API_URI}/users/exists/?userMail=${email}`,
 			{
@@ -161,7 +161,7 @@ export const createUser = (
 	password: string,
 	passwordConfirmation: string
 ) => {
-	return async function (dispatch: Function, getState: Function) {
+	return async function (dispatch: (arg: unknown)=>void, getState: (arg: unknown)=>void) {
 		const userResponse = await fetch(`${NX_MP_API_URI}/users`, {
 			body: JSON.stringify({
 				email: email,
@@ -207,7 +207,7 @@ export const createUser = (
 };
 
 export const userLogin = (email: string, password: string) => {
-	return async function (dispatch: Function, getState: Function) {
+	return async function (dispatch: (arg: unknown)=>void, getState: (arg: unknown)=>void) {
 		const sessionResponse = await fetch(`${NX_MP_API_URI}/sessions`, {
 			body: JSON.stringify({
 				email: email,
@@ -251,7 +251,7 @@ export const userLogin = (email: string, password: string) => {
 };
 
 export const userLogout = (refresh: string, authorization: string) => {
-	return async function (dispatch: Function, getState: Function) {
+	return async function (dispatch: (arg: unknown)=>void, getState: (arg: unknown)=>void) {
 		const sessionResponse = await fetch(`${NX_MP_API_URI}/sessions`, {
 			headers: {
 				'Content-Type': 'application/json',

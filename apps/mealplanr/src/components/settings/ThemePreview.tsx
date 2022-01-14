@@ -37,17 +37,17 @@ const DOMStringMapToObj = (dsm: DOMStringMap) => {
   return obj;
 }
 
-const handleThemeHover = (e: any) => {
-  const sc = DOMStringMapToObj(e.target.dataset);
+const handleThemeHover = (e: React.MouseEvent) => {
+  const sc = DOMStringMapToObj((e.target as HTMLDivElement).dataset);
   setcolor(sc.base, sc.shade);
 }
 
-const handleThemeHoverOut = (e: any) => {
+const handleThemeHoverOut = (e: React.MouseEvent) => {
   setcolor(prevcolor.base, prevcolor.shade);
 }
 
-const handleThemeClick = (dispatch: any) => (e: any) => {
-  const sc = DOMStringMapToObj(e.target.dataset);
+const handleThemeClick = (dispatch: any) => (e: React.MouseEvent) => {
+  const sc = DOMStringMapToObj((e.target as HTMLDivElement).dataset);
   prevcolor.base = sc.base;
   prevcolor.shade = sc.shade;
   setcolor(sc.base, sc.shade);
@@ -56,7 +56,7 @@ const handleThemeClick = (dispatch: any) => (e: any) => {
 
   const password = "123456";
 
-  e.target.classList.add("selected");
+  (e.target as HTMLDivElement).classList.add("selected");
   dispatch(setTheme(password, sc.base, sc.shade));
 }
 

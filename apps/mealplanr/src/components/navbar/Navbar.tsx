@@ -46,7 +46,7 @@ export default function Navbar() {
 			</div>
 			<div className="items">
 				{//Map the names and routes to an element each
-				navbarlist.map((data: any, index: number) => (
+				navbarlist.map((data: {title: string}, index: number) => (
 					<div
 						key={index.toString()}
 						className={'bar' + (navIndex === index ? ' selected' : '')}

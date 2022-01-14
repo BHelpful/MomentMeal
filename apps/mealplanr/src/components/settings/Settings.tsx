@@ -8,7 +8,7 @@ const prevcolor = {
   shade: Number(document.documentElement.style.getPropertyValue('--e').replace(/%/, ""))
 };
 
-const setcolor = (obj: any) => {
+const setcolor = (obj: {base: number, shade: number}) => {
   const {base, shade} = obj;
   document.documentElement.style.setProperty('--c', base.toString());
   document.documentElement.style.setProperty('--e', shade+"%");

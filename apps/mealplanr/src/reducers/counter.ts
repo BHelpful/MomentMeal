@@ -1,11 +1,11 @@
 // Function definitions - Defining what parameters and the object structure
-export const increment = (nr: number = 0) => {
+export const increment = (nr = 0) => {
 	return {
 		type: 'INCREMENT',
 		payload: nr,
 	};
 };
-export const decrement = (nr: number = 0) => {
+export const decrement = (nr = 0) => {
 	return {
 		type: 'DECREMENT',
 		payload: nr,

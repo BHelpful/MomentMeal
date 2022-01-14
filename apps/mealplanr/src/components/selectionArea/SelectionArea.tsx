@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, DragEventHandler, KeyboardEventHandler, MouseEventHandler, useState } from 'react';
 import './SelectionArea.scss';
 
 interface QuantityPorps {
@@ -36,34 +36,34 @@ export function Quantaty(props: QuantityPorps) {
 }
 
 /* DRAG AND DROP HANDLES FOR Item */
-var dragSrcEl: any;
-const handleDragStart = (evt: any) => {
-  evt.target.style.opacity = '0.4';
-  dragSrcEl = evt.target;
+let dragSrcEl: HTMLDivElement;
+const handleDragStart = (evt: React.DragEvent<HTMLDivElement>) => {
+	dragSrcEl = evt.target as HTMLDivElement;
+  dragSrcEl.style.opacity = '0.4';
   evt.dataTransfer.effectAllowed = 'move';
-  evt.dataTransfer.setData('text/html', evt.target.innerHTML);
+  evt.dataTransfer.setData('text/html', dragSrcEl.innerHTML);
 };
-const handleDragEnter = (evt: any) => evt.target.classList.add('over');
-const handleDragLeave = (evt: any) => {
+const handleDragEnter = (evt: React.DragEvent<HTMLDivElement>) => (evt.target as HTMLDivElement).classList.add('over');
+const handleDragLeave = (evt: React.DragEvent<HTMLDivElement>) => {
   evt.stopPropagation();
-  evt.target.classList.remove('over');
+  (evt.target as HTMLDivElement).classList.remove('over');
 };
-const handleDragOver = (evt: any) => {
+const handleDragOver = (evt: React.DragEvent<HTMLDivElement>) => {
   evt.preventDefault();
   evt.dataTransfer.dropEffect = 'move';
   return false;
 };
-const handleDragDrop = (evt: any) => {
+const handleDragDrop = (evt: React.DragEvent<HTMLDivElement>) => {
   if (dragSrcEl !== this) {
-    dragSrcEl.innerHTML = evt.target.innerHTML;
-    evt.target.innerHTML = evt.dataTransfer.getData('text/html');
+    dragSrcEl.innerHTML = (evt.target as HTMLDivElement).innerHTML;
+    (evt.target as HTMLDivElement).innerHTML = evt.dataTransfer.getData('text/html');
   }
   return false;
 }
-const handleDragEnd = (evt: any) => {
-  var listItens = document.querySelectorAll('.draggable');
-  [].forEach.call(listItens, (item: any) => item.classList.remove('over'));
-  evt.target.style.opacity = '1';
+const handleDragEnd = (evt: React.DragEvent<HTMLDivElement>) => {
+  const listItens = document.querySelectorAll('.draggable');
+  [].forEach.call(listItens, (item: HTMLDivElement) => item.classList.remove('over'));
+  (evt.target as HTMLDivElement).style.opacity = '1';
 }
 /* END OF DRAG AND DROP HANDLES FOR Item */
 
@@ -129,10 +129,12 @@ export function Item(props: ItemProps) {
 }
 
 // Function to handle click on remove icon on tag
-const handleTagRemove = (evt: any) => evt.target.parentElement.remove();
+const handleTagRemove = (evt: React.MouseEvent<HTMLDivElement>) => {
+	((evt.target as HTMLDivElement).parentElement as HTMLDivElement).remove();
+}
 // Function to handle click on tag text
-const toggleTag = (evt: any) => {
-	const elem = evt.target;
+const toggleTag = (evt: React.MouseEvent<HTMLDivElement>) => {
+	const elem = evt.target as HTMLDivElement;
 	const old = elem.classList[0] || "include";
 	elem.classList.remove(old);
 	elem.classList.add(old==="include" ? "exclude" : "include");
@@ -146,27 +148,31 @@ interface TagProps {
 	nonremovable?: boolean
 }
 
+const noOnclick: MouseEventHandler<HTMLParagraphElement|HTMLLabelElement> = () => undefined;
+const noOnkey: KeyboardEventHandler<HTMLInputElement> = () => undefined;
+
 // Function to create a tag
 export function Tag(props: TagProps) {
 	const { type, name, toggleable, nonremovable } = props;
 	return <div className={'tag ' + type}>
-					<p onClick={toggleable?toggleTag:()=>{}}>{name}</p>
-					<span className={nonremovable?'':'removal'} onClick={nonremovable?()=>{}:handleTagRemove}></span>
+					<p onClick={toggleable?toggleTag:noOnclick}>{name}</p>
+					<span className={nonremovable?'':'removal'} onClick={nonremovable?noOnclick:handleTagRemove}></span>
 				</div>;
 }
 
 // Handle to toggle dropdown state
-const toggleDropdown = (toggle = true) => (evt: any) => {
+const toggleDropdown = (toggle = true) => (evt: React.MouseEvent<HTMLDivElement>|React.FocusEvent<HTMLDivElement>) => {
 	evt.preventDefault();
-	if(!toggle || evt.target.classList.contains('open')) {
-		evt.target.classList.remove('open');
+	const target = evt.target as HTMLDivElement;
+	if(!toggle || target.classList.contains('open')) {
+		target.classList.remove('open');
 	} else {
-		evt.target.classList.add('open');
+		target.classList.add('open');
 	}
 }
 
 // Manipulate ONLY the first letter to be uppercase
-const toFirstUpperCase = (v: string) => v.replace(/(\w)(.*)/, (...args: any[]) => args[1].toUpperCase()+args[2]);
+const toFirstUpperCase = (v: string) => v.replace(/(\w)(.*)/, (...args: string[]) => args[1].toUpperCase()+args[2]);
 
 /* GET DATA FROM API */
 const lookupType = (name: string) => {
@@ -179,21 +185,26 @@ const lookupType = (name: string) => {
 
 interface KeyboardEventWithData extends KeyboardEvent {
 	data?: HTMLElement;
+}interface KeyboardEventWithDataReact<T> extends React.KeyboardEvent<T> {
+	data?: HTMLElement;
 }
 
+interface variabel extends Object {
+	neededtotrickts?: null;
+}
 // Get the name of a variable name as a string
-const varToString = (varObj: any) => (Object.keys(varObj)[0]).toString();
+const varToString = (varObj: variabel) => (Object.keys(varObj)[0]).toString();
 
 // Unused <- undefined
-const handleSubmit = (evt: any) => 0;
+const handleSubmit = (evt: React.FormEvent) => 0;
 
 // Handle to execute on keypress on a searchbar
-const handleKeyDown = (createTag: any, tags: any) => (evt: any) => {
+const handleKeyDown = (createTag: any, tags: {name: string, type: string}[]) => (evt: KeyboardEventWithDataReact<HTMLDivElement>) => {
 	// Checks for enter or a comma
 	if(evt.key === 'Enter' || evt.key === ",") {
 		const target: any = evt.target||evt.data;
 		evt.preventDefault();
-		const elem = target.parentElement.nextElementSibling;
+		const elem = (target.parentElement as HTMLDivElement).nextElementSibling as HTMLDivElement;
 		const newTaglist = tags;
 		if(elem.classList.contains('tags')) {
 			const v = target.value;
@@ -202,14 +213,20 @@ const handleKeyDown = (createTag: any, tags: any) => (evt: any) => {
 			// Empty tag list
 			target.value = '';
 			// Fill populate list with updatede values
-			createTag(newTaglist.filter((v:any,i:number,a:any)=>a.findIndex((t:any)=>(t.name === v.name))===i));
+			createTag(
+				newTaglist.filter(
+					(v:any,i:number,a:any)=>a.findIndex(
+						(t:any)=>(t.name === v.name)
+					)===i
+				)
+			);
 		}
 	}
 };
 
 // Yeild function to generate id's with format: AA, BA, CA, ...
 function* HTMLIDgenerator(): Generator<string> {
-	var n = Math.ceil(Math.random() * 63);
+	let n = Math.ceil(Math.random() * 63);
 	while (++n) yield (String.fromCharCode((n % 26) + 64) + String.fromCharCode(Math.floor(n / 26) + 64));
 }
 
@@ -224,11 +241,12 @@ const generateHTMLID = (): string => {
 const handleMouseDown = (dropdown: boolean, createTag?:any, tags?:any) => (evt: any) => {
 	const parent = evt.target.parentElement;
 	parent.classList.remove("open");
-	const elem: any = document.getElementById(parent.dataset.for);
+	const elem = document.getElementById(parent.dataset.for) as HTMLInputElement;
+	if(!elem) return;
 	elem.value = evt.target.innerHTML;
 	elem.classList.remove("open");
 	if(!dropdown && createTag && tags) {
-		var ke: KeyboardEventWithData = new KeyboardEvent('keydown', {key: ','});
+		const ke: any = new KeyboardEvent('keydown', {key: ','}); //There is no KeyboardEvent with constructor in react, but using any ts magically allows it
 		ke.data = elem;
 		handleKeyDown(createTag, tags)(ke);
 	}
@@ -255,8 +273,8 @@ function Search(props: SearchProps) {
 					id={generateHTMLID()}
 					onClick={toggleDropdown()}
 					onBlur={toggleDropdown(false)}
-					onChange={(evt:any)=>evt.preventDefault()}
-					onKeyDown={taglist ? handleKeyDown(createTag, tags):()=>{}}
+					onChange={(evt:React.ChangeEvent)=>evt.preventDefault()}
+					onKeyDown={taglist ? handleKeyDown(createTag, tags):noOnkey}
 					placeholder={decription}
 					list={datalist?varToString(datalist):''}/>
 				{datalist ?
@@ -264,7 +282,7 @@ function Search(props: SearchProps) {
 						{datalist.map((v: string, i: number) => (<div key={i} onMouseDown={handleMouseDown(dropdown, createTag, tags)}>{v}</div>))}
 					</div>
 				: ''}
-				<label htmlFor={getHTMLID.slice(-1)[0]} onClick={type!=="dropdown"?handleSubmit:()=>{}}></label>
+				<label htmlFor={getHTMLID.slice(-1)[0]} onClick={type!=="dropdown"?handleSubmit:noOnclick}></label>
 			</div>
 			{taglist ? <div className="tags list">
 				{tags.length > 0 ? tags.map((v, i) => (<Tag key={i} name={v.name} type={v.type} toggleable={toggleable} />)) : ''}
@@ -310,7 +328,7 @@ const weekdaysNamesArr = (len = 2, uppercase = true, offset = 1) => {
 
 // Rotate-right a list
 const weekdaysAvailArr = (arr: any, offset: number) => {
-	arr.forEach((v: number, i: number) => {
+	arr.forEach((v: unknown, i: number) => {
 		arr[((i + offset) % 7) + 7] = arr[i];
 		if (i === 6) {
 			for (let i = 0; i < 7; i++) arr[i] = arr[i + 7];
@@ -342,20 +360,20 @@ interface WeekdaysProps {
 }
 
 // Handle to toggle weekday selection
-const handleWeekSelection = (evt: any) => {
-	const elem = evt.target;
+const handleWeekSelection = (evt: React.MouseEvent<HTMLDivElement>) => {
+	const elem = evt.target as HTMLDivElement;
 	if(!elem.classList.contains("unavailable")) {
 		const old = elem.classList.contains("available") ? "available" : "selected"
 		elem.classList.remove(old);
 		elem.classList.add(old==="available" ? "selected" : "available");
-		const distantSibling: any  = document.getElementsByClassName(elem.id)[0];
+		const distantSibling = document.getElementsByClassName(elem.id)[0] as HTMLElement;
 		if(distantSibling) {
 			if(old==="available") {
 				distantSibling.classList.remove("unavailable");
-				distantSibling.children[1].disabled = false;
+				(distantSibling.children[1] as HTMLInputElement).disabled = false;
 			} else {
 				distantSibling.classList.add("unavailable");
-				distantSibling.children[1].disabled = true;
+				(distantSibling.children[1] as HTMLInputElement).disabled = true;
 			}
 		}
 	}
@@ -451,18 +469,19 @@ interface TextFieldProps {
 
 // Creates a textbox, that can be used as search or input
 export function TextField(props: TextFieldProps) {
-	const {large, decription, placeholder, submitBtnText} = props;
+	const {large, placeholder, submitBtnText} = props;
+	const decription = props.decription ? `<p>${props.decription}</p>` : null;
 	if(large) return (
 		<div className={"text field large"}>
-			{ decription ? <p>{decription}</p> : <></> }
+			{ decription }
 			<textarea placeholder={placeholder?placeholder:''}></textarea>
-			{ submitBtnText ? <input value={submitBtnText} /> : <></> }
+			{ submitBtnText ? <input value={submitBtnText} /> : null }
 		</div>
 	); else return (
 		<div className={"text field"}>
-			{ decription ? <p>{decription}</p> : <></> }
+			{ decription }
 			<input type={"text"} placeholder={placeholder?placeholder:''}></input>
-			{ submitBtnText ? <input value={submitBtnText} /> : <></> }
+			{ submitBtnText ? <input value={submitBtnText} /> : null }
 		</div>
 	);
 }

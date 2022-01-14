@@ -30,8 +30,8 @@ function App() {
 	((hue: number) => document.documentElement.style.setProperty('--c', String(hue)))(theme.hue);
 
 	// Event handlers to change the global object, then use that value in store on a submit
-	const updateDataEmail = (e: any) => { user.email = e.target.value };
-	const updateDataPass = (e: any) => { user.pass = e.target.value };
+	const updateDataEmail = (e: React.ChangeEvent<HTMLInputElement>) => { user.email = e.target.value };
+	const updateDataPass = (e: React.ChangeEvent<HTMLInputElement>) => { user.pass = e.target.value };
 
 	return (
 		<div id="app">
@@ -52,9 +52,9 @@ function App() {
 						<p>Email not known, enter verification code from mail</p>
 						<input type={"text"} placeholder="222444" value={""} />
 						<div onClick={() => {dispatch(createUser(user.email, user.pass, user.pass))}}>Login</div>
-					</> : <></> }
+					</> : null }
 				</Popup>
-			: <></> }
+			: null }
 			<Navbar />
 			{!isLoggedIn /* ---- Page-select for not-yet-logged-in-users ---- */
 				? {
