@@ -12,7 +12,7 @@ const privateKey = process.env.PRIVATE_KEY as string;
  * @param options - a set of options from the JWT library (SignOptions)
  * @returns a JWT token
  */
-export function sign(object: Object, options?: jwt.SignOptions | undefined) {
+export function sign(object: string | object | Buffer, options?: jwt.SignOptions | undefined) {
 	return jwt.sign(object, privateKey, options);
 }
 
@@ -32,7 +32,7 @@ export function decode(token: string) {
 
 		// if the token is valid, returns the decoded object
 		return { valid: true, expired: false, decoded };
-	} catch (error: any) {
+	} catch (error) {
 		// if the token is invalid, returns with a null object
 		return {
 			valid: false,

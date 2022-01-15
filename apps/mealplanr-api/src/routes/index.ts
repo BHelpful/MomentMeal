@@ -18,19 +18,41 @@ export type swaggerObjectParamType = {
 	queryId: QueryId;
 	body: RequiredModel;
 	respondObject: RequiredModel;
-	invalidResponses: any;
+	invalidResponses: ResponseType;
 };
+
+interface ResponseType {
+	[index: string]: {
+		description: string;
+		schema?: string[];
+	}
+}
+
+interface crudtype {
+	summary: string;
+	description: string;
+	tags: string[];
+	produces: string[];
+	parameters: unknown[];
+	responses: ResponseType[];
+}
+interface swaggerObject {
+	crud: crudtype
+	get?: crudtype;
+	post?: crudtype;
+	put?: crudtype;
+	delete?: crudtype;
+}
 
 /**
  * @description Generates a swagger object for a given CRUD method
  * @brief The "_id" of the object and all sub-objects is being removed from the swagger object in the method
  * @param {swaggerObjectParamType} param
- * @returns {any} Swagger object
+ * @returns {swaggerObject} Swagger object
  */
-export function getSwaggerObject(param: swaggerObjectParamType): any {
-	let obj: any = { crud: {} };
-	obj.crud = {
-		...{
+export function getSwaggerObject(param: swaggerObjectParamType): swaggerObject {
+	const obj: swaggerObject = {
+		crud: {
 			summary: param.summary,
 			description: param.description,
 			tags: [param.tag],
@@ -63,7 +85,7 @@ export function getSwaggerObject(param: swaggerObjectParamType): any {
 		});
 
 		// Copy object to avoid mutating original
-		let tempModel = JSON.parse(JSON.stringify(param.body.model));
+		const tempModel = JSON.parse(JSON.stringify(param.body.model));
 
 		tempModel.properties = remIdAndTimestampFromProp(tempModel.properties);
 

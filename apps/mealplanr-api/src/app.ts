@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 require('dotenv').config();
 import * as express from 'express';
 import { serve, setup } from 'swagger-ui-express';
@@ -90,7 +91,7 @@ app.use(
 );
 
 // defining the parsed swagger file in order to be able to add to it
-var parsedSwaggerDoc = JSON.parse(JSON.stringify(swaggerDocument));
+const parsedSwaggerDoc = JSON.parse(JSON.stringify(swaggerDocument));
 
 // Adding mongoose models to swagger docs
 parsedSwaggerDoc.definitions.Ingredient = ingredientSM;

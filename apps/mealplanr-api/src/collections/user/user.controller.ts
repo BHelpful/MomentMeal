@@ -6,7 +6,6 @@ import {
 	findAndUpdateUser,
 	findUser,
 } from './user.service';
-import log from '../../logger';
 import * as bcrypt from 'bcrypt';
 
 /**

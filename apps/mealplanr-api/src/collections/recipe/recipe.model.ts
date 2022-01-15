@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { Schema, Document, model } from 'mongoose';
 import { nanoid } from 'nanoid';
 import { getDocumentRefs } from '../../utils/populate.utils';

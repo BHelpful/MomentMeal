@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { LeanDocument, FilterQuery, UpdateQuery } from 'mongoose';
 import { get, omit } from 'lodash';
 import userModel, { UserDocument } from '../user/user.model';

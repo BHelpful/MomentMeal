@@ -1,4 +1,5 @@
-import { Schema, Document, model, HookNextFunction } from 'mongoose';
+/* eslint-disable @typescript-eslint/no-var-requires */
+import { Schema, Document, model, HookNextFunction, SchemaType, Model } from 'mongoose';
 const m2s = require('mongoose-to-swagger');
 import * as bcrypt from 'bcrypt';
 import {
@@ -12,6 +13,12 @@ import {
 import { RecipeDocument } from '../recipe/recipe.model';
 import { IngredientDocument } from '../ingredient/ingredient.model';
 import { getDocumentRefs } from '../../utils/populate.utils';
+
+interface mongooseSchemaType extends Schema<Document<any, any, any>, Model<Document<any, any, any>, any, any>, undefined, Record<string, any>> {
+	paths: {
+		schema?: SchemaType;
+	};
+};
 
 export interface UserDocument extends Document {
 	name: string;
@@ -27,7 +34,7 @@ export interface UserDocument extends Document {
 	updatedAt: Date;
 	comparePassword(candidatePassword: string): Promise<boolean>;
 }
-const UserSchema = new Schema(
+const UserSchema: mongooseSchemaType = new Schema(
 	{
 		name: { type: String, description: 'Name of the user' },
 		email: {
@@ -63,7 +70,7 @@ const UserSchema = new Schema(
 // we need to get user's password into a hash before it is added to the database
 // this is done in the model using the bcrypt
 UserSchema.pre('save', async function (next: HookNextFunction) {
-	let user = this as UserDocument;
+	const user = this as UserDocument;
 
 	// only hash the password if it has been modified (or is new)
 	if (!user.isModified('password')) return next();
@@ -96,7 +103,7 @@ UserSchema.methods.comparePassword = async function (
 ) {
 	const user = this as UserDocument;
 
-	return bcrypt.compare(candidatePassword, user.password).catch((e) => false);
+	return bcrypt.compare(candidatePassword, user.password).catch(() => false);
 };
 
 export const userModelRefs = getDocumentRefs(UserSchema);

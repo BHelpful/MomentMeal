@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import {
 	DocumentDefinition,
 	FilterQuery,
@@ -18,7 +19,7 @@ export async function createRecipe(body: DocumentDefinition<RecipeDocument>) {
 	try {
 		body = sanitize(body);
 
-		let recipe = await recipeModel.create(body);
+		const recipe = await recipeModel.create(body);
 
 		return await populateDocumentResponse(
 			recipe,
@@ -42,7 +43,7 @@ export async function findRecipe(
 ) {
 	try {
 		query = sanitize(query);
-		let promisedRecipe = recipeModel.findOne(query, {}, options);
+		const promisedRecipe = recipeModel.findOne(query, {}, options);
 
 		return await populateDocumentResponse(
 			promisedRecipe,
