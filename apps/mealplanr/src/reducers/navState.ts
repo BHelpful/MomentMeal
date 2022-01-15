@@ -33,7 +33,7 @@ const navStateReduser = (
 	state: navStateInterface = { collapsed: false, index: 0, userpopup: 0 },
 	action: ActionType
 ) => {
-	const newstate: any = {};
+	const newstate: navStateInterface = { collapsed: false, index: 0, userpopup: 0 };
 	switch (action.type) {
 		case 'TOGGLE':
 			newstate.collapsed = !state.collapsed;

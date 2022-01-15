@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+import { RootState } from '.';
 import { setUserPopup } from './navState';
 
 const { NX_MP_API_URI } = process.env;
@@ -22,7 +23,7 @@ const setErrMsg = (err: string) => {
 	};
 };
 const createdUser = (
-	user: any,
+	user: typeof get,
 	informationFillded: boolean,
 	refresh: string,
 	authorization: string
@@ -38,7 +39,7 @@ const createdUser = (
 	};
 };
 const logIn = (
-	user: any,
+	user: typeof get,
 	informationFillded: boolean,
 	refresh: string,
 	authorization: string
@@ -70,7 +71,7 @@ type ActionType = ReturnType<
 >;
 
 interface sessionType {
-	user?: any;
+	user?: typeof get;
 	created?: boolean;
 	isLoggedIn?: boolean;
 	informationFillded?: boolean;
@@ -83,7 +84,7 @@ interface sessionType {
 // using action.type to identify the function.
 const sessionReducer = (
 	state: sessionType = {
-		user: {},
+		user: {} as typeof get,
 		created: false,
 		isLoggedIn: false,
 		informationFillded: false,
@@ -133,7 +134,7 @@ const sessionReducer = (
 };
 
 export const checkForUser = (email: string) => {
-	return async function (dispatch: (arg: unknown)=>void, getState: (arg: unknown)=>void) {
+	return async function (dispatch: (arg: unknown)=>void, getState: ()=>RootState) {
 		const user = await fetch(
 			`${NX_MP_API_URI}/users/exists/?userMail=${email}`,
 			{
@@ -161,7 +162,7 @@ export const createUser = (
 	password: string,
 	passwordConfirmation: string
 ) => {
-	return async function (dispatch: (arg: unknown)=>void, getState: (arg: unknown)=>void) {
+	return async function (dispatch: (arg: unknown)=>void, getState: ()=>RootState) {
 		const userResponse = await fetch(`${NX_MP_API_URI}/users`, {
 			body: JSON.stringify({
 				email: email,
@@ -207,7 +208,7 @@ export const createUser = (
 };
 
 export const userLogin = (email: string, password: string) => {
-	return async function (dispatch: (arg: unknown)=>void, getState: (arg: unknown)=>void) {
+	return async function (dispatch: (arg: unknown)=>void, getState: RootState) {
 		const sessionResponse = await fetch(`${NX_MP_API_URI}/sessions`, {
 			body: JSON.stringify({
 				email: email,

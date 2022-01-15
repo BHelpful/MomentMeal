@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+import { RootState } from '.';
 
 const { NX_MP_API_URI } = process.env;
 const THEME = 'THEME';
@@ -31,7 +32,7 @@ const themeReducer = (
 	},
 	action: ActionType
 ) => {
-	const newstate: any = {};
+	const newstate = {hue: 0, shade: 0};
 	switch (action.type) {
 		case THEME:
 			newstate.hue = get(action.payload, 'hue');
@@ -44,7 +45,7 @@ const themeReducer = (
 };
 
 export const getTheme = () => {
-	return async function (dispatch: (state: ActionType)=>void, getState: ()=>any) {
+	return async function (dispatch: (state: ActionType)=>void, getState: ()=>RootState) {
 		const email = getState().session.user.email;
 		const { refresh, authorization } = getState().session;
 		const themeResponse = await fetch(
@@ -70,7 +71,7 @@ export const getTheme = () => {
 };
 
 export const setTheme = (password: string, thue: number, tshade: number) => {
-	return async function (dispatch: (state: ActionType)=>void, getState: ()=>any) {
+	return async function (dispatch: (state: ActionType)=>void, getState: ()=>RootState) {
 		const email = getState().session.user.email;
 		const { refresh, authorization } = getState().session;
 		const themeResponse: Response = await fetch(

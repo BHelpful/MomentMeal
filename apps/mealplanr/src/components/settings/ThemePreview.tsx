@@ -1,3 +1,4 @@
+import { isNumber } from 'lodash';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setTheme } from '../../reducers/theme';
@@ -31,33 +32,36 @@ const setcolor = (base: number, shade: number) => {
   document.documentElement.style.setProperty('--e', shade+"%");
 };
 
+interface DOMObjectMapType<T> {
+  [key: string]: T;
+}
 const DOMStringMapToObj = (dsm: DOMStringMap) => {
-  const obj: any = {};
-  Object.keys(dsm).forEach((k: string) => obj[k] = dsm[k]);
+  const obj: DOMObjectMapType<unknown> = {};
+  Object.keys(dsm).forEach((k: string) => obj[k] = isNumber(dsm[k]) ? Number(dsm[k]) : dsm[k]);
   return obj;
 }
 
 const handleThemeHover = (e: React.MouseEvent) => {
-  const sc = DOMStringMapToObj((e.target as HTMLDivElement).dataset);
-  setcolor(sc.base, sc.shade);
+  const sc = DOMStringMapToObj((e.target as HTMLDivElement).dataset) as DOMObjectMapType<number>;
+  setcolor(sc['base'], sc['shade']);
 }
 
 const handleThemeHoverOut = (e: React.MouseEvent) => {
   setcolor(prevcolor.base, prevcolor.shade);
 }
 
-const handleThemeClick = (dispatch: any) => (e: React.MouseEvent) => {
-  const sc = DOMStringMapToObj((e.target as HTMLDivElement).dataset);
-  prevcolor.base = sc.base;
-  prevcolor.shade = sc.shade;
-  setcolor(sc.base, sc.shade);
+const handleThemeClick = (dispatch: (arg: unknown)=>void) => (e: React.MouseEvent) => {
+  const sc = DOMStringMapToObj((e.target as HTMLDivElement).dataset) as DOMObjectMapType<number>;
+  prevcolor.base = sc['base'];
+  prevcolor.shade = sc['shade'];
+  setcolor(prevcolor.base, prevcolor.shade);
   const allPallets = document.getElementsByClassName("themecolor");
   for(let i = 0; i < allPallets.length; i++) allPallets[i].classList.remove("selected");
 
   const password = "123456";
 
   (e.target as HTMLDivElement).classList.add("selected");
-  dispatch(setTheme(password, sc.base, sc.shade));
+  dispatch(setTheme(password, prevcolor.base, prevcolor.shade));
 }
 
 export default function ThemePreview () {

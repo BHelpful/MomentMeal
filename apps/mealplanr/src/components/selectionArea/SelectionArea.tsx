@@ -1,4 +1,4 @@
-import React, { Component, DragEventHandler, KeyboardEventHandler, MouseEventHandler, useState } from 'react';
+import React, { Component, Dispatch, DragEventHandler, KeyboardEventHandler, MouseEventHandler, useState } from 'react';
 import './SelectionArea.scss';
 
 interface QuantityPorps {
@@ -187,6 +187,12 @@ interface KeyboardEventWithData extends KeyboardEvent {
 	data?: HTMLElement;
 }interface KeyboardEventWithDataReact<T> extends React.KeyboardEvent<T> {
 	data?: HTMLElement;
+
+	locale: string;
+	nativeEvent: KeyboardEvent;
+	isDefaultPrevented: () => boolean;
+	isPropagationStopped: () => boolean;
+	persist: () => void;
 }
 
 interface variabel extends Object {
@@ -199,10 +205,10 @@ const varToString = (varObj: variabel) => (Object.keys(varObj)[0]).toString();
 const handleSubmit = (evt: React.FormEvent) => 0;
 
 // Handle to execute on keypress on a searchbar
-const handleKeyDown = (createTag: any, tags: {name: string, type: string}[]) => (evt: KeyboardEventWithDataReact<HTMLDivElement>) => {
+const handleKeyDown = (createTag: createTagType, tags: {name: string, type: string}[]) => (evt: KeyboardEventWithDataReact<HTMLDivElement>) => {
 	// Checks for enter or a comma
 	if(evt.key === 'Enter' || evt.key === ",") {
-		const target: any = evt.target||evt.data;
+		const target = (evt.target||evt.data) as HTMLInputElement;
 		evt.preventDefault();
 		const elem = (target.parentElement as HTMLDivElement).nextElementSibling as HTMLDivElement;
 		const newTaglist = tags;
@@ -215,8 +221,8 @@ const handleKeyDown = (createTag: any, tags: {name: string, type: string}[]) => 
 			// Fill populate list with updatede values
 			createTag(
 				newTaglist.filter(
-					(v:any,i:number,a:any)=>a.findIndex(
-						(t:any)=>(t.name === v.name)
+					(v:TagType,i:number,a:TagType[])=>a.findIndex(
+						(t:TagType)=>(t.name === v.name)
 					)===i
 				)
 			);
@@ -238,17 +244,20 @@ const generateHTMLID = (): string => {
 }
 
 // Handle for clicking on search bar with dropdown menu
-const handleMouseDown = (dropdown: boolean, createTag?:any, tags?:any) => (evt: any) => {
-	const parent = evt.target.parentElement;
-	parent.classList.remove("open");
-	const elem = document.getElementById(parent.dataset.for) as HTMLInputElement;
-	if(!elem) return;
-	elem.value = evt.target.innerHTML;
-	elem.classList.remove("open");
-	if(!dropdown && createTag && tags) {
-		const ke: any = new KeyboardEvent('keydown', {key: ','}); //There is no KeyboardEvent with constructor in react, but using any ts magically allows it
-		ke.data = elem;
-		handleKeyDown(createTag, tags)(ke);
+const handleMouseDown = (dropdown: boolean, createTag?:createTagType, tags?:TagType[]) => (evt: React.MouseEvent) => {
+	const child = evt.target as HTMLDivElement;
+	if(child.parentElement) {
+		const parent = child.parentElement;
+		parent.classList.remove("open");
+		const elem = document.getElementById(parent.dataset['for'] as string) as HTMLInputElement;
+		if(!elem) return;
+		elem.value = child.innerHTML;
+		elem.classList.remove("open");
+		if(!dropdown && createTag && tags) {
+			const ke: KeyboardEventWithDataReact<HTMLDivElement> = (new KeyboardEvent('keydown', {key: ','})) as any; //There is no KeyboardEvent with constructor in react, but using 'any' ts magically allows it
+			ke.data = elem;
+			handleKeyDown(createTag, tags)(ke);
+		}
 	}
 }
 
@@ -258,6 +267,16 @@ interface SearchProps {
 	type?: string;
 	datalist?: Array<string>;
 	toggleable?: boolean;
+}
+
+type createTagType = React.Dispatch<React.SetStateAction<{
+	name: string;
+	type: string;
+}[]>>;
+
+interface TagType {
+	name: string;
+	type: string;
 }
 
 // Creates a search-bar, either with or without tags
@@ -327,8 +346,8 @@ const weekdaysNamesArr = (len = 2, uppercase = true, offset = 1) => {
 };
 
 // Rotate-right a list
-const weekdaysAvailArr = (arr: any, offset: number) => {
-	arr.forEach((v: unknown, i: number) => {
+const weekdaysAvailArr = (arr: Array<number|string|null>, offset: number) => {
+	arr.forEach((v: number|string|null, i: number) => {
 		arr[((i + offset) % 7) + 7] = arr[i];
 		if (i === 6) {
 			for (let i = 0; i < 7; i++) arr[i] = arr[i + 7];
@@ -393,7 +412,7 @@ export function WeekdaysButtons(props: WeekdaysProps) {
 		offset
 	); /* Fetch from database */
 
-	selected.forEach((v: number, i: number) => {
+	selected.forEach((v: number|string|null, i: number) => {
 		switch (v) {
 			case -1: selected[i] = 'unavailable'; break;
 			case 0: selected[i] = 'available'; break;
@@ -443,7 +462,7 @@ export function WeekdaysDropdown(props: WeekdaysProps) {
 						<select
 							className="dropdownbox"
 							disabled={!selected[index] ?? false}
-							defaultValue={selected[index]}
+							defaultValue={selected[index]??undefined}
 						>
 							{[null, 'A', 'M', 'D', 'AM', 'MD', 'AD', 'AMD'].map(
 								(v: string | null, i) => (
