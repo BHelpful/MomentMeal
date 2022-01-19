@@ -1,5 +1,5 @@
 
-import { Schema, Document, model, HookNextFunction } from 'mongoose';
+import { Schema, Document, model } from 'mongoose';
 const m2s = require('mongoose-to-swagger');
 import * as bcrypt from 'bcrypt';
 import {
@@ -63,7 +63,7 @@ const UserSchema = new Schema(
 
 // we need to get user's password into a hash before it is added to the database
 // this is done in the model using the bcrypt
-UserSchema.pre('save', async function (next: HookNextFunction) {
+UserSchema.pre('save', async function (next) {
 	const user = this as UserDocument;
 
 	// only hash the password if it has been modified (or is new)

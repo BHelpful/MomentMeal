@@ -4,7 +4,7 @@ export type crudMethods = 'get' | 'post' | 'put' | 'delete';
 export type QueryId = { required: boolean; id?: string };
 export type RequiredModel = {
 	required: boolean;
-	model?: unknown;
+	model?: any;
 	omit?: string[];
 };
 
