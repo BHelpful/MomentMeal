@@ -26,7 +26,7 @@ export async function validatePassword({
 }: {
 	email: UserDocument['email'];
 	password: string;
-}) {
+}): Promise<any> {
 	email = sanitize(email);
 	const user = await userModel.findOne({ email: email });
 

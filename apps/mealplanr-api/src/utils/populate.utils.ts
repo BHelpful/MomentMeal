@@ -21,7 +21,7 @@ export function getDocumentRefs(
 }
 
 function getDocumentRefNames(path: SchemaType, key: string, nestedPath: string) {
-	let refs: string[];
+	const refs: string[] = [];
 	for (const prop in path) {
 		// if the prop has options and one of the options is a reference to another document
 		if (prop === 'options' && path[prop].ref) {
@@ -32,7 +32,7 @@ function getDocumentRefNames(path: SchemaType, key: string, nestedPath: string) 
 }
 
 export function populateDocumentResponse(
-	model: Query<never,never>|never,
+	model: Query<any,any>|any,
 	userModelRefs: string[]
 ) {
 	userModelRefs.forEach((ref: string) => {
