@@ -124,34 +124,36 @@ export function Recipe(props: RecipeProps) {
 	const {type, Id, At, personal} = {At: null, ...props};
 	const {Images, Title, Decs, Time, Rating, Ratings, category} = recipeInfo(Id);
 
+	let body = null;
+	if(Id !== -1) body =
+		<>
+			<div className="rimage shadow">
+				{	personal ? <span className={"options"}></span> : null }
+				<img src={"/temp/recipe_"+Id+"_0.jpg"} data-images={Images} onError={handleAltImg} alt="" onLoad={handleNextImage}></img>
+			</div>
+			<h3>{Title}</h3>
+			<p>{Decs}</p>
+			{ type === 'tall' ?
+				<div className="time">
+					<span>{At??'00:00'}</span>
+				</div>
+			:
+				<>
+					<div className="timebox">
+						<div className="time icon"></div>
+						<span>{Time.value + ' ' + Time.unit}.</span>
+					</div>
+					<div className="ratingbox">{Ratings} votes</div>
+					<div>
+						<span className="rating icon" style={{width: (Rating/Ratings/5*100)+"%"}}></span>
+					</div>
+				</>
+			}
+		</>;
+
 	return (
 		<div className={type + ' recipe ' + (Id !== -1 ? category : 'empty')} id={Id+''} onClick={() => console.log('Clicked recipe')}>
-			{ Id !== -1 ?
-				<>
-					<div className="rimage shadow">
-						{	personal ? <span className={"options"}></span> : null }
-						<img src={"/temp/recipe_"+Id+"_0.jpg"} data-images={Images} onError={handleAltImg} alt="" onLoad={handleNextImage}></img>
-					</div>
-					<h3>{Title}</h3>
-					<p>{Decs}</p>
-					{ type === 'tall' ?
-						<div className="time">
-							<span>{At??'00:00'}</span>
-						</div>
-					:
-						<>
-							<div className="timebox">
-								<div className="time icon"></div>
-								<span>{Time.value + ' ' + Time.unit}.</span>
-							</div>
-							<div className="ratingbox">{Ratings} votes</div>
-							<div>
-								<span className="rating icon" style={{width: (Rating/Ratings/5*100)+"%"}}></span>
-							</div>
-						</>
-					}
-				</>
-			:
+			{ body ??
 				<>
 					<h3>Add recipe</h3>
 					<p>+</p>
@@ -176,8 +178,8 @@ export default function Recipes(props: RecipesProps) {
 	if(mealFrom === 'plan')
 		return (
 			<>
-				{data.map((recipes: RecipesType, index: number) => (
-					<Recipe key={index} type={'tall'} Id={recipes.recipeId} At={recipes.time} personal={true} />
+				{data.map((recipesitem: RecipesType, index: number) => (
+					<Recipe key={index} type={'tall'} Id={recipesitem.recipeId} At={recipesitem.time} personal={true} />
 				))}
 			</>
 		);
@@ -191,8 +193,8 @@ export default function Recipes(props: RecipesProps) {
 						<p>+</p>
 					</div>
 				) : ''}
-				{data.map((recipes: RecipesType, index: number) => (
-					<Recipe key={index} type={'wide'} Id={recipes.recipeId} personal={mealFrom==='personal'} />
+				{data.map((recipesitem: RecipesType, index: number) => (
+					<Recipe key={index} type={'wide'} Id={recipesitem.recipeId} personal={mealFrom==='personal'} />
 				))}
 			</>
 		);
