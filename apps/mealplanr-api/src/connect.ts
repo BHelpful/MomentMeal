@@ -1,7 +1,6 @@
 import { connect, disconnect } from 'mongoose';
 import log from './logger';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-const dbUri = process.env.DB_URI as string;
 let mongod: MongoMemoryServer;
 
 /**
@@ -12,7 +11,7 @@ let mongod: MongoMemoryServer;
  * It logs on success and on connection error.
  */
 export async function connectDB() {
-	if ((process.env.NODE_ENV as string) === 'test') {
+	if (process.env.NODE_ENV === 'test') {
 		// In test environment, we don't want to connect to the real DB.
 		mongod = await MongoMemoryServer.create();
 		const uri = mongod.getUri();
@@ -29,7 +28,7 @@ export async function connectDB() {
 			});
 	} else {
 		// If not in test environment, connect to the database
-		await connect(dbUri, {
+		await connect(process.env.DB_URI, {
 			useNewUrlParser: true,
 			useCreateIndex: true,
 			useUnifiedTopology: true,

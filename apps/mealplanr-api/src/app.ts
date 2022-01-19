@@ -3,7 +3,6 @@ import * as express from 'express';
 import { serve, setup } from 'swagger-ui-express';
 import * as cors from 'cors';
 import { deserializeUser } from './middleware';
-// import * as swaggerDocument from './swagger.json';
 const swaggerDocument = require('./swagger.json');
 import { categorySM } from './collections/category/category.model';
 import { ingredientSM } from './collections/ingredient/ingredient.model';
@@ -64,7 +63,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 
 // assigning app-wide cache settings
-app.use(express.static(__dirname + '/public', { maxAge: 31557600 }));
+app.use(express.static(`${__dirname}/public`, { maxAge: 31557600 }));
 
 const allowedOrigins = [
 	'http://localhost:4200',
