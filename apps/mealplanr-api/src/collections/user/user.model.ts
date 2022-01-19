@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { Schema, Document, model, HookNextFunction, SchemaType, Model } from 'mongoose';
+
+import { Schema, Document, model, HookNextFunction } from 'mongoose';
 const m2s = require('mongoose-to-swagger');
 import * as bcrypt from 'bcrypt';
 import {
@@ -13,12 +13,6 @@ import {
 import { RecipeDocument } from '../recipe/recipe.model';
 import { IngredientDocument } from '../ingredient/ingredient.model';
 import { getDocumentRefs } from '../../utils/populate.utils';
-
-interface mongooseSchemaType extends Schema<Document<any, any, any>, Model<Document<any, any, any>, any, any>, undefined, Record<string, any>> {
-	paths: {
-		schema?: SchemaType;
-	};
-};
 
 export interface UserDocument extends Document {
 	name: string;
@@ -34,7 +28,7 @@ export interface UserDocument extends Document {
 	updatedAt: Date;
 	comparePassword(candidatePassword: string): Promise<boolean>;
 }
-const UserSchema: mongooseSchemaType = new Schema(
+const UserSchema = new Schema(
 	{
 		name: { type: String, description: 'Name of the user' },
 		email: {

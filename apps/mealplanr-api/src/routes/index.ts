@@ -4,7 +4,7 @@ export type crudMethods = 'get' | 'post' | 'put' | 'delete';
 export type QueryId = { required: boolean; id?: string };
 export type RequiredModel = {
 	required: boolean;
-	model?: any;
+	model?: never;
 	omit?: string[];
 };
 
@@ -20,38 +20,38 @@ export type swaggerObjectParamType = {
 	respondObject: RequiredModel;
 	invalidResponses: ResponseType;
 };
-
+//Type of array with decription and schema
 interface ResponseType {
 	[index: string]: {
 		description: string;
-		schema?: string[];
+		schema?: unknown;
 	}
 }
 
-interface crudtype {
+interface Crudtype {
 	summary: string;
 	description: string;
 	tags: string[];
 	produces: string[];
 	parameters: unknown[];
-	responses: ResponseType[];
+	responses: ResponseType;
 }
-interface swaggerObject {
-	crud: crudtype
-	get?: crudtype;
-	post?: crudtype;
-	put?: crudtype;
-	delete?: crudtype;
+interface SwaggerObject {
+	crud: Crudtype
+	get?: Crudtype;
+	post?: Crudtype;
+	put?: Crudtype;
+	delete?: Crudtype;
 }
 
 /**
  * @description Generates a swagger object for a given CRUD method
  * @brief The "_id" of the object and all sub-objects is being removed from the swagger object in the method
  * @param {swaggerObjectParamType} param
- * @returns {swaggerObject} Swagger object
+ * @returns {SwaggerObject} Swagger object
  */
-export function getSwaggerObject(param: swaggerObjectParamType): swaggerObject {
-	const obj: swaggerObject = {
+export function getSwaggerObject(param: swaggerObjectParamType): SwaggerObject {
+	const obj: SwaggerObject = {
 		crud: {
 			summary: param.summary,
 			description: param.description,

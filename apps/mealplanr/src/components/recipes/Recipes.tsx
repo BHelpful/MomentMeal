@@ -1,21 +1,19 @@
-
-import { ReactEventHandler } from 'react';
 import './Recipes.scss';
 
 /* GET DATA FROM API */
-interface recepieType {
+interface RecipesType {
 	recipeId: number;
 	time?: string;
 }
-interface recepieListType extends Array<recepieType> {
-	[key: number]: recepieType;
+interface RecipesListType extends Array<RecipesType> {
+	[key: number]: RecipesType;
 }
 
-interface mealplanType extends Array<recepieType> {
-	[key: number]: recepieType;
+interface MealplanType extends Array<RecipesType> {
+	[key: number]: RecipesType;
 }
 
-const mealPlan: mealplanType = [
+const mealPlan: MealplanType = [
 	{ recipeId: -			 1, time: ''	},
 	{ recipeId:   252816, time: '18:00' },
 	{ recipeId:  3500346, time: '16:45' },
@@ -25,14 +23,14 @@ const mealPlan: mealplanType = [
 	{ recipeId: -			 1, time: '' },
 ];
 
-const recipes: recepieListType = [
+const recipes: RecipesListType = [
 	{ recipeId: 2102013 },
 	{ recipeId: 2340076 },
 	{ recipeId: 2500023 },
 	{ recipeId: 3500346 }
 ];
 
-const myRecipes: recepieListType = [
+const myRecipes: RecipesListType = [
 	{ recipeId: 3500346, }
 ];
 /*END OF GET DATA FROM API*/
@@ -97,8 +95,8 @@ function handleAltImg(e: React.SyntheticEvent<HTMLImageElement, Event>) {
 	ptarget.classList.remove("shadow"); // Shadow is applied to the path of svg - we do not want that
 }
 
-// create datasetcycleimg interface to include images in the html elements dataset list
-interface datasetcycleimg extends HTMLImageElement {
+// create Datasetcycleimg interface to include images in the html elements dataset list
+interface Datasetcycleimg extends HTMLImageElement {
 	dataset: {
 		images: string;
 	};
@@ -106,7 +104,7 @@ interface datasetcycleimg extends HTMLImageElement {
 
 // Cycle images
 function handleNextImage(e: React.SyntheticEvent<HTMLImageElement, Event>) {
-	const target = e.target as datasetcycleimg;
+	const target = e.target as Datasetcycleimg;
 	const ptarget = target.parentElement as HTMLDivElement;
 	if(!ptarget.classList.contains("shadow")) return; // If no shadow, placeholder is used - no images at all
 	const max = Number(target.dataset.images); // Data-tag containing amount of images assoatiated
@@ -178,8 +176,8 @@ export default function Recipes(props: RecipesProps) {
 	if(mealFrom === 'plan')
 		return (
 			<>
-				{data.map((data: recepieType, index: number) => (
-					<Recipe key={index} type={'tall'} Id={data.recipeId} At={data.time} personal={true} />
+				{data.map((recipes: RecipesType, index: number) => (
+					<Recipe key={index} type={'tall'} Id={recipes.recipeId} At={recipes.time} personal={true} />
 				))}
 			</>
 		);
@@ -193,8 +191,8 @@ export default function Recipes(props: RecipesProps) {
 						<p>+</p>
 					</div>
 				) : ''}
-				{data.map((data: recepieType, index: number) => (
-					<Recipe key={index} type={'wide'} Id={data.recipeId} personal={mealFrom==='personal'} />
+				{data.map((recipes: RecipesType, index: number) => (
+					<Recipe key={index} type={'wide'} Id={recipes.recipeId} personal={mealFrom==='personal'} />
 				))}
 			</>
 		);

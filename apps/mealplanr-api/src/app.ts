@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 require('dotenv').config();
 import * as express from 'express';
 import { serve, setup } from 'swagger-ui-express';

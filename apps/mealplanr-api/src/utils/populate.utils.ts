@@ -1,15 +1,8 @@
-import { Query, Schema, Document, Model, SchemaType } from 'mongoose';
-import { RecipeDocument } from '../collections/recipe/recipe.model';
-
-interface mongooseSchemaType extends Schema<Document<unknown, unknown, unknown>, Model<Document<unknown, unknown, unknown>, unknown, unknown>, undefined, Record<string, unknown>> {
-	paths: {
-		schema?: SchemaType;
-	};
-};
+import { Query, SchemaType } from 'mongoose';
 
 // TODO: add correct type to param
 export function getDocumentRefs(
-	mongooseSchema: mongooseSchemaType,
+	mongooseSchema,
 	nestedPath = ''
 ): string[] {
 	let refs: string[] = [];
@@ -39,7 +32,7 @@ function getDocumentRefNames(path: SchemaType, key: string, nestedPath: string) 
 }
 
 export function populateDocumentResponse(
-	model: Query<any,any>|any,
+	model: Query<never,never>|never,
 	userModelRefs: string[]
 ) {
 	userModelRefs.forEach((ref: string) => {

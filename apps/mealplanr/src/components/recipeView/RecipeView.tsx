@@ -11,7 +11,7 @@ interface RecipeViewProps {
 	personal?: boolean,
 }
 
-// Creates a list of available recepies
+// Creates a list of available Recipess
 export default function RecipeView(props: RecipeViewProps) {
 	const {personal} = {personal: false, ...props};
 	return (

@@ -1,4 +1,4 @@
-import React, { Component, Dispatch, DragEventHandler, KeyboardEventHandler, MouseEventHandler, useState } from 'react';
+import React, { Component, KeyboardEventHandler, MouseEventHandler, useState } from 'react';
 import './SelectionArea.scss';
 
 interface QuantityPorps {
@@ -195,11 +195,11 @@ interface KeyboardEventWithData extends KeyboardEvent {
 	persist: () => void;
 }
 
-interface variabel extends Object {
+interface Variabel extends Object {
 	neededtotrickts?: null;
 }
 // Get the name of a variable name as a string
-const varToString = (varObj: variabel) => (Object.keys(varObj)[0]).toString();
+const varToString = (varObj: Variabel) => (Object.keys(varObj)[0]).toString();
 
 // Unused <- undefined
 const handleSubmit = (evt: React.FormEvent) => 0;
@@ -213,17 +213,17 @@ const handleKeyDown = (createTag: createTagType, tags: {name: string, type: stri
 		const elem = (target.parentElement as HTMLDivElement).nextElementSibling as HTMLDivElement;
 		const newTaglist = tags;
 		if(elem.classList.contains('tags')) {
-			const v = target.value;
+			const val = target.value;
 			// Add new tag if matches requirements
-			if(v.match(/(\w{2,} ?)+/)) newTaglist.push({"name": toFirstUpperCase(v), "type": lookupType(v)});
+			if(val.match(/(\w{2,} ?)+/)) newTaglist.push({"name": toFirstUpperCase(val), "type": lookupType(val)});
 			// Empty tag list
 			target.value = '';
 			// Fill populate list with updatede values
 			createTag(
 				newTaglist.filter(
-					(v:TagType,i:number,a:TagType[])=>a.findIndex(
-						(t:TagType)=>(t.name === v.name)
-					)===i
+					(v: TagType, i: number, a: TagType[]) => a.findIndex(
+						(t: TagType) => (t.name === v.name)
+					) === i
 				)
 			);
 		}
@@ -254,7 +254,7 @@ const handleMouseDown = (dropdown: boolean, createTag?:createTagType, tags?:TagT
 		elem.value = child.innerHTML;
 		elem.classList.remove("open");
 		if(!dropdown && createTag && tags) {
-			const ke: KeyboardEventWithDataReact<HTMLDivElement> = (new KeyboardEvent('keydown', {key: ','})) as any; //There is no KeyboardEvent with constructor in react, but using 'any' ts magically allows it
+			const ke: KeyboardEventWithDataReact<HTMLDivElement> = (new KeyboardEvent('keydown', {key: ','})) as never; //There is no KeyboardEvent with constructor in react, but using 'any' ts magically allows it
 			ke.data = elem;
 			handleKeyDown(createTag, tags)(ke);
 		}
@@ -345,9 +345,10 @@ const weekdaysNamesArr = (len = 2, uppercase = true, offset = 1) => {
 	return parsed;
 };
 
+type WeekdaysType = number|string|null;
 // Rotate-right a list
-const weekdaysAvailArr = (arr: Array<number|string|null>, offset: number) => {
-	arr.forEach((v: number|string|null, i: number) => {
+const weekdaysAvailArr = (arr: WeekdaysType[], offset: number) => {
+	arr.forEach((v: WeekdaysType, i: number) => {
 		arr[((i + offset) % 7) + 7] = arr[i];
 		if (i === 6) {
 			for (let i = 0; i < 7; i++) arr[i] = arr[i + 7];
@@ -412,7 +413,7 @@ export function WeekdaysButtons(props: WeekdaysProps) {
 		offset
 	); /* Fetch from database */
 
-	selected.forEach((v: number|string|null, i: number) => {
+	selected.forEach((v: WeekdaysType, i: number) => {
 		switch (v) {
 			case -1: selected[i] = 'unavailable'; break;
 			case 0: selected[i] = 'available'; break;
