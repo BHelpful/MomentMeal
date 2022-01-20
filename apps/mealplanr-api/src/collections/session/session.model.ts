@@ -1,4 +1,3 @@
-
 import { Schema, Document, model } from 'mongoose';
 import { UserDocument } from '../user/user.model';
 const m2s = require('mongoose-to-swagger');
