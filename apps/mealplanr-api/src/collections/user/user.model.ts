@@ -11,9 +11,9 @@ import {
 } from '../documents';
 import { RecipeDocument } from '../recipe/recipe.model';
 import { IngredientDocument } from '../ingredient/ingredient.model';
-import { getDocumentRefs } from '../../utils/populate.utils';
 
 export interface UserDocument extends Document {
+	_id: string;
 	name: string;
 	email: string;
 	password: string;
@@ -70,7 +70,7 @@ UserSchema.pre('save', async function (next) {
 
 	// Random additional data
 	const salt = await bcrypt.genSalt(
-		parseInt(process.env.SALT_WORKER_FACTOR as string, 10)
+		parseInt(process.env.SALT_WORKER_FACTOR, 10)
 	);
 
 	const hash = bcrypt.hashSync(user.password, salt);
@@ -99,7 +99,6 @@ UserSchema.methods.comparePassword = async function (
 	return bcrypt.compare(candidatePassword, user.password).catch(() => false);
 };
 
-export const userModelRefs = getDocumentRefs(UserSchema);
 
 const userModel = model<UserDocument>('users', UserSchema);
 

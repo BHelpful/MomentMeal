@@ -4,7 +4,7 @@ import userModel, { UserDocument } from '../user/user.model';
 import sessionModel, { SessionDocument } from './session.model';
 import { sign, decode } from '../../utils/jwt.utils';
 import { findUser } from '../user/user.service';
-const sanitize = require('mongo-sanitize');
+import sanitize = require('mongo-sanitize');
 
 /**
  * This function validates a password based on a unuiqe email.
@@ -57,7 +57,7 @@ export async function validatePassword({
  */
 export async function createSession(userId: string, userAgent: string) {
 	userId = sanitize(userId);
-	const session = await sessionModel.create({ userId: userId, userAgent });
+	const session = await sessionModel.create({ userId, userAgent });
 
 	return session.toJSON();
 }

@@ -3,10 +3,27 @@ import {
 	FilterQuery,
 	UpdateQuery,
 	QueryOptions,
+	Query,
 } from 'mongoose';
-import { populateDocumentResponse } from '../../utils/populate.utils';
-import recipeModel, { RecipeDocument, recipeModelRefs } from './recipe.model';
-const sanitize = require('mongo-sanitize');
+import recipeModel, { RecipeDocument } from './recipe.model';
+import sanitize = require('mongo-sanitize');
+
+function populateRecipe(model: Query<any, any> | RecipeDocument) {
+	return model
+		.populate('categoriesId')
+		.populate('creatorId')
+		.populate({
+			path: 'ingredients.ingredientId',
+			populate: { path: 'typeId' },
+		})
+		.populate({
+			path: 'sidedishesId',
+			populate: {
+				path: 'ingredients.ingredientId',
+				populate: { path: 'typeId' },
+			},
+		});
+}
 
 /**
  * This function will create a new recipe for a user and return the recipe
@@ -18,12 +35,7 @@ export async function createRecipe(body: DocumentDefinition<RecipeDocument>) {
 	try {
 		body = sanitize(body);
 
-		const recipe = await recipeModel.create(body);
-
-		return await populateDocumentResponse(
-			recipe,
-			recipeModelRefs
-		).execPopulate();
+		return populateRecipe(await recipeModel.create(body));
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -42,12 +54,7 @@ export async function findRecipe(
 ) {
 	try {
 		query = sanitize(query);
-		const promisedRecipe = recipeModel.findOne(query, {}, options);
-
-		return await populateDocumentResponse(
-			promisedRecipe,
-			recipeModelRefs
-		).exec();
+		return populateRecipe(recipeModel.findOne(query, {}, options));
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -61,7 +68,7 @@ export async function findRecipe(
  * @param options - options for the findOne function from mongoose
  * @returns a recipe document
  */
-export async function findAndUpdateRecipe(
+export function findAndUpdateRecipe(
 	query: FilterQuery<RecipeDocument>,
 	update: UpdateQuery<RecipeDocument>,
 	options: QueryOptions
@@ -69,7 +76,7 @@ export async function findAndUpdateRecipe(
 	try {
 		query = sanitize(query);
 		update = sanitize(update);
-		return await recipeModel.findOneAndUpdate(query, update, options);
+		return populateRecipe(recipeModel.findOneAndUpdate(query, update, options));
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -81,10 +88,10 @@ export async function findAndUpdateRecipe(
  * @param query - a query object that will be used to find a recipe from the DB
  * @returns a recipe document
  */
-export async function deleteRecipe(query: FilterQuery<RecipeDocument>) {
+export function deleteRecipe(query: FilterQuery<RecipeDocument>) {
 	try {
 		query = sanitize(query);
-		return await recipeModel.deleteOne(query);
+		return recipeModel.deleteOne(query);
 	} catch (error) {
 		throw new Error(error as string);
 	}

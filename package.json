@@ -99,6 +99,7 @@
 		"eslint-plugin-react-hooks": "4.3.0",
 		"jest": "27.4.5",
 		"nodemon": "^2.0.12",
+		"npkill": "^0.8.3",
 		"prettier": "^2.3.1",
 		"react-test-renderer": "17.0.2",
 		"redux-devtools-extension": "^2.13.9",
