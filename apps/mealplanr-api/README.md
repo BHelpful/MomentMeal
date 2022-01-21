@@ -1,9 +1,4 @@
 # Mealplanr-API
-[![CircleCI](https://circleci.com/gh/BHelpful/Mealplanr-api/tree/master.svg?style=svg)](https://circleci.com/gh/BHelpful/Mealplanr-api/tree/master) 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=BHelpful_Mealplanr-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=BHelpful_Mealplanr-api)
-[![CodeScene Code Health](https://codescene.io/projects/19881/status-badges/code-health)](https://codescene.io/projects/19881)
-[![CodeScene System Mastery](https://codescene.io/projects/19881/status-badges/system-mastery)](https://codescene.io/projects/19881)
-
 
 ---
 
