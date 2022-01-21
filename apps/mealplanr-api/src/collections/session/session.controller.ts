@@ -35,7 +35,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
 
 	// create refresh token
 	const refreshToken = sign(session, {
-		expiresIn: process.env.REFRESH_TOKEN_TTL as string, // 1 year
+		expiresIn: process.env.REFRESH_TOKEN_TTL, // 1 year
 	});
 
 	// send refresh & access token back
@@ -73,7 +73,7 @@ export async function invalidateUserSessionHandler(
 export async function getUserSessionsHandler(req: Request, res: Response) {
 	const userId = get(req, 'user._id');
 
-	const sessions = await findSessions({ userId: userId, valid: true });
+	const sessions = await findSessions({ userId, valid: true });
 
 	return res.send(sessions);
 }

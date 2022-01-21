@@ -1,11 +1,43 @@
 import {
 	DocumentDefinition,
 	FilterQuery,
+	Query,
 	QueryOptions,
 	UpdateQuery,
 } from 'mongoose';
 import userModel, { UserDocument } from './user.model';
-const sanitize = require('mongo-sanitize');
+import sanitize = require('mongo-sanitize');
+
+function populateUser(model: Query<any, any> | UserDocument) {
+	return model
+		.populate({
+			path: 'collectionId',
+			populate: {
+				path: 'ingredients.ingredientId',
+				populate: { path: 'typeId' },
+			},
+		})
+		.populate('options.storesId')
+		.populate('plan.recipesId')
+		.populate('availableIngredientsId')
+		.populate({
+			path: 'availableIngredientsId',
+			populate: { path: 'typeId' },
+		})
+		.populate({
+			path: 'shoppingList.ingredients.ingredientId',
+			populate: { path: 'typeId' },
+		})
+		.populate('shoppingList.ingredients.storeId')
+		.populate('planId')
+		.populate({
+			path: 'plan.recipesId',
+			populate: {
+				path: 'ingredients.ingredientId',
+				populate: { path: 'typeId' },
+			},
+		});
+}
 
 /**
  * This function is used to create a new user.
@@ -23,7 +55,8 @@ const sanitize = require('mongo-sanitize');
 export async function createUser(input: DocumentDefinition<UserDocument>) {
 	try {
 		input = sanitize(input);
-		return await userModel.create(input);
+
+		return populateUser(await userModel.create(input));
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -38,7 +71,8 @@ export async function createUser(input: DocumentDefinition<UserDocument>) {
 export async function findUser(query: FilterQuery<UserDocument>) {
 	try {
 		query = sanitize(query);
-		return await userModel.findOne(query).lean();
+
+		return populateUser(userModel.findOne(query));
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -60,7 +94,7 @@ export async function findAndUpdateUser(
 	try {
 		query = sanitize(query);
 		update = sanitize(update);
-		return await userModel.findOneAndUpdate(query, update, options);
+		return populateUser(userModel.findOneAndUpdate(query, update, options));
 	} catch (error) {
 		throw new Error(error as string);
 	}
@@ -75,7 +109,7 @@ export async function findAndUpdateUser(
 export async function deleteUser(query: FilterQuery<UserDocument>) {
 	try {
 		query = sanitize(query);
-		return await userModel.deleteOne(query);
+		return userModel.deleteOne(query);
 	} catch (error) {
 		throw new Error(error as string);
 	}

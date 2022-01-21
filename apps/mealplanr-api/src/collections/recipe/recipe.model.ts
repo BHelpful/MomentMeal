@@ -1,7 +1,6 @@
 import { Schema, Document, model } from 'mongoose';
 import { nanoid } from 'nanoid';
-import { getDocumentRefs } from '../../utils/populate.utils';
-const m2s = require('mongoose-to-swagger');
+import m2s = require('mongoose-to-swagger');
 import { CategoryDocument } from '../category/category.model';
 import {
 	IngredientListSubschema,
@@ -12,6 +11,7 @@ import { IngredientDocument } from '../ingredient/ingredient.model';
 import { UserDocument } from '../user/user.model';
 
 export interface RecipeDocument extends Document {
+	_id: string;
 	recipeId: string;
 	public: boolean;
 	categoriesId: [CategoryDocument['_id']];
@@ -104,8 +104,6 @@ export const RecipeSchema = new Schema(
 	},
 	{ timestamps: true }
 );
-
-export const recipeModelRefs = getDocumentRefs(RecipeSchema);
 
 const recipeModel = model<RecipeDocument>('recipes', RecipeSchema);
 

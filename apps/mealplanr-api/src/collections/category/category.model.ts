@@ -1,7 +1,8 @@
 import { Schema, Document, model } from 'mongoose';
-const m2s = require('mongoose-to-swagger');
+import m2s = require('mongoose-to-swagger');
 
 export interface CategoryDocument extends Document {
+	_id: string;
 	name: string;
 	type: [string];
 }

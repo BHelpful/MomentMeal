@@ -1,5 +1,5 @@
-import { Schema, Document, model, HookNextFunction } from 'mongoose';
-const m2s = require('mongoose-to-swagger');
+import { Schema, Document, model } from 'mongoose';
+import m2s = require('mongoose-to-swagger');
 import * as bcrypt from 'bcrypt';
 import {
 	PlanDocument,
@@ -11,9 +11,9 @@ import {
 } from '../documents';
 import { RecipeDocument } from '../recipe/recipe.model';
 import { IngredientDocument } from '../ingredient/ingredient.model';
-import { getDocumentRefs } from '../../utils/populate.utils';
 
 export interface UserDocument extends Document {
+	_id: string;
 	name: string;
 	email: string;
 	password: string;
@@ -62,15 +62,15 @@ const UserSchema = new Schema(
 
 // we need to get user's password into a hash before it is added to the database
 // this is done in the model using the bcrypt
-UserSchema.pre('save', async function (next: HookNextFunction) {
-	let user = this as UserDocument;
+UserSchema.pre('save', async function (next) {
+	const user = this as UserDocument;
 
 	// only hash the password if it has been modified (or is new)
 	if (!user.isModified('password')) return next();
 
 	// Random additional data
 	const salt = await bcrypt.genSalt(
-		parseInt(process.env.SALT_WORKER_FACTOR as string, 10)
+		parseInt(process.env.SALT_WORKER_FACTOR, 10)
 	);
 
 	const hash = bcrypt.hashSync(user.password, salt);
@@ -99,7 +99,6 @@ UserSchema.methods.comparePassword = async function (
 	return bcrypt.compare(candidatePassword, user.password).catch((e) => false);
 };
 
-export const userModelRefs = getDocumentRefs(UserSchema);
 
 const userModel = model<UserDocument>('users', UserSchema);
 
