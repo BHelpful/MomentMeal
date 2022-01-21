@@ -14,16 +14,18 @@ const storesSuggestions = [ 'Rema1000', 'Fakta', 'Bilka', 'Meny', 'Netto', 'Supe
 const categorySuggestions = [ 'Spice', 'Asian', 'Indian', 'American', 'Traditional', 'Nordic' ];
 /* END OF GET DATA FROM API */
 
-var menustate = 0
-const toggleCreateMenu = (evt: any) => {
+let menustate = 0
+const toggleCreateMenu = (evt: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
 	menustate++;
 	menustate %= 2;
+	const target = evt.target as HTMLDivElement;
+	const nexttarget = target.nextElementSibling as HTMLDivElement;
 	if(menustate) {
-		evt.target.innerHTML = "Cancel";
-		evt.target.nextSibling.classList.add("open");
+		target.innerHTML = "Cancel";
+		nexttarget.classList.add("open");
 	} else {
-		evt.target.innerHTML = "Create";
-		evt.target.nextSibling.classList.remove("open");
+		target.innerHTML = "Create";
+		nexttarget.classList.remove("open");
 	}
 }
 

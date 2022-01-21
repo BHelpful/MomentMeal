@@ -5,13 +5,13 @@ export const setNavCollapsed = () => {
 		payload: 0,
 	};
 };
-export const setNavIndex = (index: number = 0) => {
+export const setNavIndex = (index = 0) => {
 	return {
 		type: 'PAGE',
 		payload: index,
 	};
 };
-export const setUserPopup = (index: number = 0) => {
+export const setUserPopup = (index = 0) => {
 	return {
 		type: 'POPUP',
 		payload: index,
@@ -33,7 +33,7 @@ const navStateReduser = (
 	state: navStateInterface = { collapsed: false, index: 0, userpopup: 0 },
 	action: ActionType
 ) => {
-	let newstate: any = {};
+	const newstate: navStateInterface = { collapsed: false, index: 0, userpopup: 0 };
 	switch (action.type) {
 		case 'TOGGLE':
 			newstate.collapsed = !state.collapsed;

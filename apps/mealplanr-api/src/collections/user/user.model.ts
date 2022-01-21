@@ -1,5 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
-import m2s = require('mongoose-to-swagger');
+const m2s = require('mongoose-to-swagger');
 import * as bcrypt from 'bcrypt';
 import {
 	PlanDocument,
@@ -96,7 +96,7 @@ UserSchema.methods.comparePassword = async function (
 ) {
 	const user = this as UserDocument;
 
-	return bcrypt.compare(candidatePassword, user.password).catch((e) => false);
+	return bcrypt.compare(candidatePassword, user.password).catch(() => false);
 };
 
 

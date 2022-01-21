@@ -1,7 +1,19 @@
 import './Recipes.scss';
 
 /* GET DATA FROM API */
-const mealPlan = [
+interface RecipesType {
+	recipeId: number;
+	time?: string;
+}
+interface RecipesListType extends Array<RecipesType> {
+	[key: number]: RecipesType;
+}
+
+interface MealplanType extends Array<RecipesType> {
+	[key: number]: RecipesType;
+}
+
+const mealPlan: MealplanType = [
 	{ recipeId: -			 1, time: ''	},
 	{ recipeId:   252816, time: '18:00' },
 	{ recipeId:  3500346, time: '16:45' },
@@ -11,14 +23,14 @@ const mealPlan = [
 	{ recipeId: -			 1, time: '' },
 ];
 
-const recipes = [
+const recipes: RecipesListType = [
 	{ recipeId: 2102013 },
 	{ recipeId: 2340076 },
 	{ recipeId: 2500023 },
 	{ recipeId: 3500346 }
 ];
 
-const myRecipes = [
+const myRecipes: RecipesListType = [
 	{ recipeId: 3500346, }
 ];
 /*END OF GET DATA FROM API*/
@@ -76,18 +88,29 @@ const recipeInfo = (id: number) => {
 };
 
 // Handle to set placholder image when src is unavailable
-function handleAltImg(e: any) {
-	e.target.src='/alt.png';
-	e.target.parentNode.classList.remove("shadow"); // Shadow is applied to the path of svg - we do not want that
+function handleAltImg(e: React.SyntheticEvent<HTMLImageElement, Event>) {
+	const target = e.target as HTMLImageElement;
+	const ptarget = target.parentElement as HTMLDivElement;
+	target.src='/alt.png';
+	ptarget.classList.remove("shadow"); // Shadow is applied to the path of svg - we do not want that
+}
+
+// create Datasetcycleimg interface to include images in the html elements dataset list
+interface Datasetcycleimg extends HTMLImageElement {
+	dataset: {
+		images: string;
+	};
 }
 
 // Cycle images
-function handleNextImage(e: any) {
-	if(!e.target.parentElement.classList.contains("shadow")) return; // If no shadow, placeholder is used - no images at all
-	const max = e.target.dataset.images; // Data-tag containing amount of images assoatiated
-	const [id, current] = e.target.src.replace(/http:\/\/localhost:3000\/temp\/recipe_(\d+)_(\d+).jpg/,"$1,$2").split(","); // get current values
+function handleNextImage(e: React.SyntheticEvent<HTMLImageElement, Event>) {
+	const target = e.target as Datasetcycleimg;
+	const ptarget = target.parentElement as HTMLDivElement;
+	if(!ptarget.classList.contains("shadow")) return; // If no shadow, placeholder is used - no images at all
+	const max = Number(target.dataset.images); // Data-tag containing amount of images assoatiated
+	const [id, current] = target.src.replace(/http:\/\/localhost:3000\/temp\/recipe_(\d+)_(\d+).jpg/,"$1,$2").split(","); // get current values
 	const next = (Number(current) + 1) % max; // Add one and loop in case of overflow
-	setTimeout(() => {e.target.src = "/temp/recipe_"+id+"_"+next+".jpg"}, 5000); // Wait 5s. Changing src will call onload causing chain reaction to trigger function again
+	setTimeout(() => {target.src = "/temp/recipe_"+id+"_"+next+".jpg"}, 5000); // Wait 5s. Changing src will call onload causing chain reaction to trigger function again
 };
 
 interface RecipeProps {
@@ -101,20 +124,21 @@ export function Recipe(props: RecipeProps) {
 	const {type, Id, At, personal} = {At: null, ...props};
 	const {Images, Title, Decs, Time, Rating, Ratings, category} = recipeInfo(Id);
 
-	return (
-		<div className={type + ' recipe ' + (Id !== -1 ? category : 'empty')} id={Id+''} onClick={() => console.log('Clicked recipe')}>
-			{ Id !== -1 ? <>
-				<div className="rimage shadow">
-					{	personal ? <span className={"options"}></span> : <></> }
-					<img src={"/temp/recipe_"+Id+"_0.jpg"} data-images={Images} onError={handleAltImg} alt="" onLoad={handleNextImage}></img>
+	let body = null;
+	if(Id !== -1) body =
+		<>
+			<div className="rimage shadow">
+				{	personal ? <span className={"options"}></span> : null }
+				<img src={"/temp/recipe_"+Id+"_0.jpg"} data-images={Images} onError={handleAltImg} alt="" onLoad={handleNextImage}></img>
+			</div>
+			<h3>{Title}</h3>
+			<p>{Decs}</p>
+			{ type === 'tall' ?
+				<div className="time">
+					<span>{At??'00:00'}</span>
 				</div>
-				<h3>{Title}</h3>
-				<p>{Decs}</p>
-				{ type === 'tall' ? <>
-					<div className="time">
-						<span>{At??'00:00'}</span>
-					</div>
-				</> : <>
+			:
+				<>
 					<div className="timebox">
 						<div className="time icon"></div>
 						<span>{Time.value + ' ' + Time.unit}.</span>
@@ -123,11 +147,18 @@ export function Recipe(props: RecipeProps) {
 					<div>
 						<span className="rating icon" style={{width: (Rating/Ratings/5*100)+"%"}}></span>
 					</div>
-				</> }
-			</> : <>
-				<h3>Add recipe</h3>
-				<p>+</p>
-			</> }
+				</>
+			}
+		</>;
+
+	return (
+		<div className={type + ' recipe ' + (Id !== -1 ? category : 'empty')} id={Id+''} onClick={() => console.log('Clicked recipe')}>
+			{ body ??
+				<>
+					<h3>Add recipe</h3>
+					<p>+</p>
+				</>
+			}
 		</div>
 	);
 }
@@ -147,8 +178,8 @@ export default function Recipes(props: RecipesProps) {
 	if(mealFrom === 'plan')
 		return (
 			<>
-				{data.map((data: any, index: number) => (
-					<Recipe key={index} type={'tall'} Id={data.recipeId} At={data.time} personal={true} />
+				{data.map((recipesitem: RecipesType, index: number) => (
+					<Recipe key={index} type={'tall'} Id={recipesitem.recipeId} At={recipesitem.time} personal={true} />
 				))}
 			</>
 		);
@@ -162,8 +193,8 @@ export default function Recipes(props: RecipesProps) {
 						<p>+</p>
 					</div>
 				) : ''}
-				{data.map((data: any, index: number) => (
-					<Recipe key={index} type={'wide'} Id={data.recipeId} personal={mealFrom==='personal'} />
+				{data.map((recipesitem: RecipesType, index: number) => (
+					<Recipe key={index} type={'wide'} Id={recipesitem.recipeId} personal={mealFrom==='personal'} />
 				))}
 			</>
 		);

@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+import { RootState } from '.';
 
 const { NX_MP_API_URI } = process.env;
 const THEME = 'THEME';
@@ -18,8 +19,8 @@ const theme = (hue: number, shade: number) => {
 type ActionType = ReturnType<typeof theme>;
 
 interface themeType {
-	hue: any;
-	shade: any;
+	hue: number;
+	shade: number;
 }
 
 // Defining the reducer, which contains the functionality for each of the functions defined above
@@ -31,7 +32,7 @@ const themeReducer = (
 	},
 	action: ActionType
 ) => {
-	let newstate: any = {};
+	const newstate = {hue: 0, shade: 0};
 	switch (action.type) {
 		case THEME:
 			newstate.hue = get(action.payload, 'hue');
@@ -44,7 +45,7 @@ const themeReducer = (
 };
 
 export const getTheme = () => {
-	return async function (dispatch: Function, getState: Function) {
+	return async function (dispatch: (state: ActionType)=>void, getState: ()=>RootState) {
 		const email = getState().session.user.email;
 		const { refresh, authorization } = getState().session;
 		const themeResponse = await fetch(
@@ -61,7 +62,7 @@ export const getTheme = () => {
 
 		if (themeResponse.status === 200) {
 			const themedata = await themeResponse.json();
-			var [hue, shade] = themedata.options.theme.split(', ');
+			const [hue, shade] = themedata.options.theme.split(', ');
 			dispatch(theme(hue, shade));
 		} else {
 			// Error handling
@@ -70,10 +71,10 @@ export const getTheme = () => {
 };
 
 export const setTheme = (password: string, thue: number, tshade: number) => {
-	return async function (dispatch: Function, getState: Function) {
+	return async function (dispatch: (state: ActionType)=>void, getState: ()=>RootState) {
 		const email = getState().session.user.email;
 		const { refresh, authorization } = getState().session;
-		const themeResponse: any = await fetch(
+		const themeResponse: Response = await fetch(
 			`${NX_MP_API_URI}/users/?userMail=${email}`,
 			{
 				body: JSON.stringify({
@@ -93,7 +94,7 @@ export const setTheme = (password: string, thue: number, tshade: number) => {
 
 		if (themeResponse.status === 200) {
 			const themedata = await themeResponse.json();
-			var [hue, shade] = themedata.options.theme.split(', ');
+			const [hue, shade] = themedata.options.theme.split(', ');
 			dispatch(theme(hue, shade));
 		} else {
 			// Error handling

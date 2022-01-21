@@ -24,7 +24,7 @@ export async function connectDB() {
 				log.info('Mock connection success');
 			})
 			.catch((error) => {
-				log.error('Error in mock connecting', error);
+				log.error(error, 'Error in mock connecting');
 			});
 	} else {
 		// If not in test environment, connect to the database
@@ -37,7 +37,7 @@ export async function connectDB() {
 				log.info('Connection success');
 			})
 			.catch((error) => {
-				log.error('Error in connecting', error);
+				log.error(error, 'Error in connecting');
 			});
 	}
 }

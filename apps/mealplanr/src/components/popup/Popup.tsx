@@ -3,9 +3,9 @@ import { setUserPopup } from '../../reducers/navState';
 import './Popup.scss';
 
 interface PopupProps {
-  type: string,
-  dispatch: Function,
-  navCollapsed: boolean,
+  type: string;
+  dispatch: (type: unknown) => void;
+  navCollapsed: boolean;
 }
 
 //Creates a popup container

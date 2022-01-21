@@ -1,4 +1,4 @@
-import { object, string, boolean, array, number } from 'yup';
+import { object, string } from 'yup';
 
 // schema for store
 const payload = {
