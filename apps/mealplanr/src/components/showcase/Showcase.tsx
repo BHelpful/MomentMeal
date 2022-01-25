@@ -11,7 +11,7 @@ export default function Showcase () {
         <div>
           <h2>Title</h2>
           <div>
-            <span>Time</span>
+            <span className={"estimatedtime"}>Time</span>
             <div className={"tags list"}>
               <Tag type={"none"} name={"Main course"}/>
               <Tag type={"none"} name={"Launch"}/>
