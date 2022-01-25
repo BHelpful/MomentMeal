@@ -50,6 +50,7 @@ import ingredientRouter, {
 const compression = require('compression');
 
 const app = express();
+app.disable("x-powered-by");
 
 // this will attach the user to every single request
 // that comes into the application
@@ -65,12 +66,7 @@ app.use(compression());
 // assigning app-wide cache settings
 app.use(express.static(`${__dirname}/public`, { maxAge: 31557600 }));
 
-const allowedOrigins = [
-	'http://localhost:4200',
-	'http://localhost',
-	'http://bhelpful.net',
-	'http://bhelpful.net:3000',
-];
+const allowedOrigins = ['http://localhost:4200', 'http://localhost'];
 app.use(
 	cors({
 		origin: function (origin, callback) {
