@@ -6,6 +6,7 @@ on:
 jobs:
   add_item_to_project:
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - name: Get project data
         env:
