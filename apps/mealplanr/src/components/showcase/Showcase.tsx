@@ -15,7 +15,6 @@ export default function Showcase () {
             <div className={"tags list"}>
               <Tag type={"none"} name={"Main course"}/>
               <Tag type={"none"} name={"Launch"}/>
-
             </div>
             </div>
           <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda odio blanditiis, fugit recusandae itaque quis aut iusto eos id optio eligendi quas ad, magni dolorem dolore numquam? Animi, dolore in?</p>
