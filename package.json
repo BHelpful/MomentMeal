@@ -48,7 +48,7 @@
 		"@neuralegion/cypress-har-generator": "^5.2.3",
 		"@nrwl/cli": "13.3.9",
 		"@nrwl/cypress": "13.4.1",
-		"@nrwl/devkit": "13.4.1",
+		"@nrwl/devkit": "13.5.3",
 		"@nrwl/eslint-plugin-nx": "13.4.6",
 		"@nrwl/express": "13.5.2",
 		"@nrwl/jest": "13.5.3",
