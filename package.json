@@ -77,7 +77,7 @@
 		"@types/mongodb-memory-server": "^2.3.0",
 		"@types/nanoid": "^3.0.0",
 		"@types/node": "^17.0.10",
-		"@types/pino": "^6.3.9",
+		"@types/pino": "^7.0.5",
 		"@types/react": "17.0.38",
 		"@types/react-dom": "17.0.11",
 		"@types/redux-storage": "^4.1.0",
