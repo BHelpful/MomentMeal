@@ -1,4 +1,5 @@
 import './Recipes.scss';
+import altIMG from '/public/alt.png';
 
 /* GET DATA FROM API */
 interface RecipesType {
@@ -91,7 +92,7 @@ const recipeInfo = (id: number) => {
 function handleAltImg(e: React.SyntheticEvent<HTMLImageElement, Event>) {
 	const target = e.target as HTMLImageElement;
 	const ptarget = target.parentElement as HTMLDivElement;
-	target.src='/alt.png';
+	target.src = altIMG;
 	ptarget.classList.remove("shadow"); // Shadow is applied to the path of svg - we do not want that
 }
 
