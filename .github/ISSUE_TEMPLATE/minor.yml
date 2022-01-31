@@ -47,52 +47,6 @@ body:
       label: Comments / questions
       description: Any comments or questions relating the story.
       placeholder: We should devide this into sub-tasks...
-  - type: textarea
-    id: dor-dod
-    attributes:
-      label: Definition of ready/done (DOR/DOD) [DON'T CHANGE THE CONTENT]
-      description: This field is not to be changed!
-      value: |
-        #### Definition of ready
-        - [ ] DOR
-            <details>
-            <summary>Description</summary>
-
-            ```
-            - Acceptance criteria written and reviewed by QA, PM and SE
-            - Behavior scenarios written
-            - Signed off UX
-            - Estimated and appropriately scoped
-            ```
-
-            </details>
-
-        #### Definition of done
-        - [ ] DOD
-            <details>
-            <summary>Description</summary>
-
-            ```
-            - Test complete
-                - Merged to master
-                - Unit tests on all new code (80% coverage)
-                - Integration tests for endpoints / web sockets
-                - End-to-end or integration tests verifying acceptance criteria
-            - Code complete
-                - Peer reviewed (1 person/people)
-                - Follows BHelpful code standards / versioning guidelines
-                - No commented out code or TODOs
-                - Linting / Sonarcloud exceptions have explicit explanations
-            - Verified by QA
-                - Functionally manually verified on a setup like the actual setup
-                - QA verifies test coverage aligns with master test plan
-            - Verified by UX and product owner / verified by the team
-            - Documentation of tech debt
-            - Persistent technical documentation updated / written
-                - Ready is updated / written
-            ```
-
-            </details>
   - type: checkboxes
     id: terms
     attributes:
