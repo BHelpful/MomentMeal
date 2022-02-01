@@ -9,7 +9,7 @@ These are the steps to setup the backend to run the application.
 To get started, you need to have the following programs installed:
 - [MongoDB](https://docs.mongodb.com/drivers/node/current/quick-start/)
 - Node (Read the link to install MongoDB for guide to install Node)
-  - [Yarn package manager](https://yarnpkg.com/cli/install)
+  - [Yarn package manager](https://yarnpkg.com/getting-started/install)
 
 ## Installation
 
