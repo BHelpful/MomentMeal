@@ -50,11 +50,14 @@ export async function createRecipe(body: DocumentDefinition<RecipeDocument>) {
  */
 export async function findRecipe(
 	query: FilterQuery<RecipeDocument>,
+	limit = 1,
 	options: QueryOptions = { lean: true }
 ) {
 	try {
 		query = sanitize(query);
-		return populateRecipe(recipeModel.findOne(query, {}, options));
+
+		if (isNaN(limit)) limit = 100;
+		return populateRecipe(recipeModel.find(query, {}, options).limit(limit));
 	} catch (error) {
 		throw new Error(error as string);
 	}
