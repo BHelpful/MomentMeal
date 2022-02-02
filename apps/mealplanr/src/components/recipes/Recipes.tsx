@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { CategoryType } from '../../services/MP-API/categories';
 import { getRecipe, getRecipes, getRecipesPlan, MealplanType, recipeDefaults, RecipesType } from '../../services/MP-API/recipes';
+import { useDispatch } from 'react-redux';
+import { setNavIndex, setPage } from '../../reducers/navState';
+import { pages } from '../../utils/pages';
 import './Recipes.scss';
 import altIMG from '/public/alt.png';
 
@@ -25,7 +28,9 @@ function handleNextImage(e: React.SyntheticEvent<HTMLImageElement, Event>) {
 	const pTarget = target.parentElement as HTMLDivElement;
 	if(!pTarget.classList.contains("shadow")) return; // If no shadow, placeholder is used - no images at all
 	const max = Number(target.dataset.images); // Data-tag containing amount of images assoatiated
-	const [id, current] = target.src.replace(/http:\/\/localhost:3000\/temp\/recipe_(\d+)_(\d+).jpg/,"$1,$2").split(","); // get current values
+	const [id, current] = target.src
+		.replace(/http:\/\/localhost:3000\/temp\/recipe_(\d+)_(\d+).jpg/, '$1,$2')
+		.split(','); // get current values
 	const next = (Number(current) + 1) % max; // Add one and loop in case of overflow
 	setTimeout(() => {target.src = `/temp/recipe_${id}_${next}.jpg`}, 5000); // Wait 5s. Changing src will call onload causing chain reaction to trigger function again
 }
@@ -91,10 +96,11 @@ export function Recipe(props: RecipeProps) {
 
 interface RecipesProps {
 	showAddOwn?: 'true' | 'false';
-	mealFrom: 'personal'|'plan'|'public';
+	mealFrom: 'personal' | 'plan' | 'public';
 }
 
 export default function Recipes(props: RecipesProps) {
+	const dispatch = useDispatch();
 	const showAddOwn = props.showAddOwn === 'true' || false;
 	const {mealFrom} = props;
 	const displayAmount = 10;
@@ -115,7 +121,10 @@ export default function Recipes(props: RecipesProps) {
 		return (
 			<>
 				{showAddOwn ? (
-					<div className="empty">
+					<div
+						className="empty"
+						onClick={() => dispatch(setPage(pages.CREATE_RECIPE))}
+					>
 						<h3>Add your own</h3>
 						<p>+</p>
 					</div>
