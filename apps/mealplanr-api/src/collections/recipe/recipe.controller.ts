@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { get } from 'lodash';
-import log from '../../logger';
 import {
 	createRecipe,
 	findRecipe,
@@ -71,7 +70,6 @@ export async function getRecipeHandler(req: Request, res: Response) {
 	creatorId = creatorId ? { creatorId } : {};
 
 	const query = { ...recipeId, ...creatorId };
-	log.info(query);
 	const recipe = await findRecipe(query, limit);
 
 	if (!recipe) {
