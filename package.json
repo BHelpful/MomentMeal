@@ -41,7 +41,7 @@
 		"tslib": "^2.0.0",
 		"tunnel-ssh": "^4.1.4",
 		"typescript": "^4.3.5",
-		"web-vitals": "^1.0.1",
+		"web-vitals": "^2.1.4",
 		"yup": "^0.32.9"
 	},
 	"devDependencies": {
@@ -55,7 +55,7 @@
 		"@nrwl/linter": "13.7.2",
 		"@nrwl/node": "13.7.2",
 		"@nrwl/nx-cloud": "latest",
-		"@nrwl/react": "13.4.1",
+		"@nrwl/react": "13.7.2",
 		"@nrwl/tao": "13.6.1",
 		"@nrwl/web": "13.3.9",
 		"@nrwl/workspace": "13.7.1",
