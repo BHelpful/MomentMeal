@@ -64,13 +64,15 @@ export async function getRecipeHandler(req: Request, res: Response) {
 	let recipeId = get(req, 'query.recipeId');
 	let creatorId = get(req, 'query.creatorId');
 	let limit = get(req, 'query.limit');
+	let skip = get(req, 'query.skip');
 	limit = Math.min(Math.max(parseInt(limit), 1), 100);
+	skip = Math.min(Math.max(parseInt(skip), 0), 1000);
 
 	recipeId = recipeId ? { recipeId } : {};
 	creatorId = creatorId ? { creatorId } : {};
 
 	const query = { ...recipeId, ...creatorId };
-	const recipe = await findRecipe(query, limit);
+	const recipe = await findRecipe(query, {limit, skip});
 
 	if (!recipe) {
 		return res.status(404).send('No such recipe exists');
