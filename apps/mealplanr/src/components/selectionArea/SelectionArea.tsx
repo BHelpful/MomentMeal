@@ -490,7 +490,7 @@ interface TextFieldProps {
 // Creates a textbox, that can be used as search or input
 export function TextField(props: TextFieldProps) {
 	const {large, placeholder, submitBtnText} = props;
-	const decription = props.decription ? `<p>${props.decription}</p>` : null;
+	const decription = props.decription ? `${props.decription}` : null;
 	if(large) return (
 		<div className={"text field large"}>
 			{ decription }
