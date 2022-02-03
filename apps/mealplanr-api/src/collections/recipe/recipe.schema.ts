@@ -14,17 +14,13 @@ const payload = {
 			.of(
 				object({
 					ingredientId: string().required('Ingredient is required'),
-					amount: number().required(
-						'Amount of ingredient is required'
-					),
+					amount: number().required('Amount of ingredient is required'),
 					unit: string().required('Unit of ingredient is required'),
 				})
 			)
 			.required('Ingredients are required'),
 		preparation: array().of(string()),
-		instructions: array()
-			.of(string())
-			.required('Instructions are required'),
+		instructions: array().of(string()).required('Instructions are required'),
 		servings: number().required('Servings are required'),
 		sidedishesId: array().of(string()),
 	}),
@@ -32,7 +28,10 @@ const payload = {
 
 const query = {
 	query: object({
-		recipeId: string().required('recipeId is required'),
+		recipeId: string(),
+		creatorId: string(),
+		limit: number(),
+		skip: number(),
 	}),
 };
 

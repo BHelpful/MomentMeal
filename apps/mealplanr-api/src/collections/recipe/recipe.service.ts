@@ -54,7 +54,12 @@ export async function findRecipe(
 ) {
 	try {
 		query = sanitize(query);
-		return populateRecipe(recipeModel.findOne(query, {}, options));
+
+		// Sort the collection to make sure it is the same recipes, that gets served. 
+		// The sort should be done on the client side in the future, but this is a fallback.
+		options = { sort: { _id: 1 }, ...options };
+
+		return populateRecipe(recipeModel.find(query, {}, options));
 	} catch (error) {
 		throw new Error(error as string);
 	}
