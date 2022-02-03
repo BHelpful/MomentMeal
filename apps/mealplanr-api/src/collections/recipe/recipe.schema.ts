@@ -31,6 +31,7 @@ const query = {
 		recipeId: string(),
 		creatorId: string(),
 		limit: number(),
+		skip: number(),
 	}),
 };
 
