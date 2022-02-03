@@ -1,92 +1,58 @@
+import { useEffect, useState } from 'react';
 import './Recipes.scss';
 import altIMG from '/public/alt.png';
 
-/* GET DATA FROM API */
+const { NX_MP_API_URI } = process.env;
+
 interface RecipesType {
-	recipeId: number;
-	time?: string;
+	__v: number;
+	_id: string;
+	categoriesId: Array<string>;
+	createdAt: string;
+	creatorId: string;
+	description: string;
+	estimate: Array<string>;
+	images: Array<string>;
+	ingredients: Array<never>;
+	instructions: Array<string>;
+	preparation: Array<string>;
+	public: boolean;
+	rating: Array<number>;
+	recipeId: string;
+	servings: number;
+	sidedishesId: Array<string>;
+	title: string;
+	updatedAt: string;
 }
 interface RecipesListType extends Array<RecipesType> {
 	[key: number]: RecipesType;
 }
 
-interface MealplanType extends Array<RecipesType> {
-	[key: number]: RecipesType;
+interface MealplanType extends RecipesType {
+	time: string
+}
+interface MealplanListType extends Array<MealplanType> {
+	[key: number]: MealplanType;
 }
 
-const mealPlan: MealplanType = [
-	{ recipeId: -			 1, time: ''	},
-	{ recipeId:   252816, time: '18:00' },
-	{ recipeId:  3500346, time: '16:45' },
-	{ recipeId: -			 1, time: '' },
-	{ recipeId: -			 1, time: '' },
-	{ recipeId: -			 1, time: '' },
-	{ recipeId: -			 1, time: '' },
-];
+const getRecipes = async (amount: number, offset: number, setList: React.Dispatch<React.SetStateAction<RecipesListType>>) =>
+	fetch(`${NX_MP_API_URI}/recipes?limit=${amount}&skip=${offset}`, {method: 'GET'})
+		.then(response => response.json())
+		.then(setList)
+		.catch((e)=>console.log(e));
 
-const recipes: RecipesListType = [
-	{ recipeId: 2102013 },
-	{ recipeId: 2340076 },
-	{ recipeId: 2500023 },
-	{ recipeId: 3500346 }
-];
+const getRecipe = (id: string, setCrecipe: React.Dispatch<React.SetStateAction<RecipesType>>) =>
+	fetch(`${NX_MP_API_URI}/recipes?recipeId=${id}`, {method: 'GET'})
+		.then(response => response.json())
+		.then((jsonData: RecipesListType) => setCrecipe(jsonData[0]))
+		.catch((e)=>console.log(e));
 
-const myRecipes: RecipesListType = [
-	{ recipeId: 3500346, }
-];
-/*END OF GET DATA FROM API*/
 
-/*FUNCTION SHOULD FETCH FROM DATABASE INSTEAD*/
-// Function to get the recipe information from the id
-const recipeInfo = (id: number) => {
-	switch (id) {
-		case 252816: return {
-			Title: 'Pyttipanna',
-			Decs: 'Pytt i panna, also pytt i panne, pytt i panne, pyttipannu, is a culinary dish consisting of chopped meat, potatoes, and onions fried, similar to a hash',
-			Images: 0,
-			Time: { value: 15, unit: 'min' },
-			Ratings: 233,
-			Rating: 700,
-			category: 'meat',
-		};
-		case 3500346: return {
-			Title: 'Tomatobeef',
-			Decs: 'Greek originated totato-based beef.',
-			Images: 2,
-			Time: { value: 2, unit: 'hr' },
-			Ratings: 1,
-			Rating: 5,
-			category: 'vegan',
-		};
-		case 2340076: return {
-			Title: 'Appel pie',
-			Decs: 'This is a sweet, tart and delicious apple pie. Guaranteed to please. Be sure to use Granny Smith apples since they work the best.',
-			Images: 0,
-			Time: { value: 1, unit: 'hr' },
-			Ratings: 997,
-			Rating: 3267,
-			category: 'diray',
-		}
-		case 2500023: return {
-			Title: 'Watermelon salad',
-			Decs: 'Salad form the troppes.',
-			Images: 0,
-			Time: { value: 10, unit: 'min' },
-			Ratings: 769,
-			Rating: 900,
-			category: 'salad',
-		}
-		default: return {
-			Title: 'Placeholder',
-			Decs: 'Decsripe the recipe',
-			Images: 0,
-			Time: {value: -1, unit: 'min'},
-			Rating: 0,
-			Ratings: 0,
-			category: 'meat',
-		};
-	}
-};
+const recipesPlan = (amount: number, offset: number): MealplanListType => {
+	return new Array(7).fill({
+		__v: 0, _id: "string", categoriesId: [""], createdAt: "", creatorId: "", description: "", estimate: [""], images: [""], ingredients: [], instructions: [""], preparation: [""], public: false, rating: [0], recipeId: "", servings: 0,sidedishesId: [""], title: "", updatedAt: "",
+	});
+}
 
 // Handle to set placholder image when src is unavailable
 function handleAltImg(e: React.SyntheticEvent<HTMLImageElement, Event>) {
@@ -116,44 +82,51 @@ function handleNextImage(e: React.SyntheticEvent<HTMLImageElement, Event>) {
 
 interface RecipeProps {
 	type: 'wide'|'tall',
-	Id: number,
+	recipeId: string,
 	At?: string,
 	personal: boolean,
 }
 
 export function Recipe(props: RecipeProps) {
-	const {type, Id, At, personal} = {At: null, ...props};
-	const {Images, Title, Decs, Time, Rating, Ratings, category} = recipeInfo(Id);
+	const {type, recipeId, At, personal} = {At: null, ...props};
+	const [crecipe, setCrecipe] = useState<RecipesType>({
+		__v: 0, _id: "string", categoriesId: [""], createdAt: "", creatorId: "", description: "", estimate: [""], images: [""], ingredients: [], instructions: [""], preparation: [""], public: false, rating: [0], recipeId: "", servings: 0,sidedishesId: [""], title: "", updatedAt: "",
+	});
 
+	useEffect(()=>{
+		getRecipe(recipeId, setCrecipe);
+	}, [recipeId]);
+
+	const {categoriesId, images, title, description, rating, estimate} = crecipe;
 	let body = null;
-	if(Id !== -1) body =
-		<>
-			<div className="rimage shadow">
-				{	personal ? <span className={"options"}></span> : null }
-				<img src={"/temp/recipe_"+Id+"_0.jpg"} data-images={Images} onError={handleAltImg} alt="" onLoad={handleNextImage}></img>
+	if(recipeId !== "") body = 
+	<>
+		<div className="rimage shadow">
+			{	personal ? <span className={"options"}></span> : null }
+			<img src={`data:image/jpeg;base64,${images[0]}`} onError={handleAltImg} alt="" onLoad={handleNextImage}></img>
+		</div>
+		<h3>{title}</h3>
+		<p>{description}</p>
+		{ type === 'tall' ?
+			<div className="time">
+				<span>{At??'00:00'}</span>
 			</div>
-			<h3>{Title}</h3>
-			<p>{Decs}</p>
-			{ type === 'tall' ?
-				<div className="time">
-					<span>{At??'00:00'}</span>
+		:
+			<>
+				<div className="timebox">
+					<div className="time icon"></div>
+					<span>{estimate[0]}.</span>
 				</div>
-			:
-				<>
-					<div className="timebox">
-						<div className="time icon"></div>
-						<span>{Time.value + ' ' + Time.unit}.</span>
-					</div>
-					<div className="ratingbox">{Ratings} votes</div>
-					<div>
-						<span className="rating icon" style={{width: (Rating/Ratings/5*100)+"%"}}></span>
-					</div>
-				</>
-			}
-		</>;
+				<div className="ratingbox">{rating[0]} votes</div>
+				<div>
+					<span className="rating icon" style={{width: (rating[0]/rating[1]/5*100)+"%"}}></span>
+				</div>
+			</>
+		}
+	</>;
 
 	return (
-		<div className={type + ' recipe ' + (Id !== -1 ? category : 'empty')} id={Id+''} onClick={() => console.log('Clicked recipe')}>
+		<div className={type + ' recipe ' + (recipeId !== categoriesId.join(" ") ? "" : 'empty')} id={recipeId+''} onClick={() => console.log('Clicked recipe')}>
 			{ body ??
 				<>
 					<h3>Add recipe</h3>
@@ -172,20 +145,25 @@ interface RecipesProps {
 export default function Recipes(props: RecipesProps) {
 	const showAddOwn = props.showAddOwn === 'true' || false;
 	const {mealFrom} = props;
-	const data = mealFrom === 'personal' ? myRecipes :
-								mealFrom === 'plan' ? mealPlan :
-									recipes;
+	const displayAmount = 10;
+	const [list, setList] = useState<RecipesListType>([{
+		__v: 0, _id: "string", categoriesId: [""], createdAt: "", creatorId: "", description: "", estimate: [""], images: [""], ingredients: [], instructions: [""], preparation: [""], public: false, rating: [0], recipeId: "", servings: 0,sidedishesId: [""], title: "", updatedAt: "",
+	}]);
+	
+	useEffect(()=>{
+		getRecipes(displayAmount, 0, setList);
+	}, []);
 
 	if(mealFrom === 'plan')
 		return (
 			<>
-				{data.map((recipesitem: RecipesType, index: number) => (
-					<Recipe key={index} type={'tall'} Id={recipesitem.recipeId} At={recipesitem.time} personal={true} />
+				{recipesPlan(displayAmount, 0).map((recipesitem: MealplanType, index: number) => (
+					<Recipe key={index} type={'tall'} recipeId={recipesitem.recipeId} At={recipesitem.time} personal={true} />
 				))}
 			</>
 		);
 	
-	else
+	else 
 		return (
 			<>
 				{showAddOwn ? (
@@ -194,10 +172,9 @@ export default function Recipes(props: RecipesProps) {
 						<p>+</p>
 					</div>
 				) : ''}
-				{data.map((recipesitem: RecipesType, index: number) => (
-					<Recipe key={index} type={'wide'} Id={recipesitem.recipeId} personal={mealFrom==='personal'} />
-				))}
+				{list.map((recipesitem: RecipesType, index: number) => 
+					<Recipe key={index} type={'wide'} recipeId={recipesitem.recipeId} personal={mealFrom==='personal'} />
+				)}
 			</>
 		);
-	
 }
