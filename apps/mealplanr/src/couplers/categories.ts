@@ -7,13 +7,13 @@ export const categoryDefaults = {
     name: "empty",
 }
 
-export type categoryType = typeof categoryDefaults;
+export type CategoryType = typeof categoryDefaults;
 
-export interface categoryListType extends Array<categoryType> {
-  [key: number]: categoryType;
+export interface CategoryListType extends Array<CategoryType> {
+  [key: number]: CategoryType;
 }
 
-export const getCategory = async (id: string, setCategoryData: React.Dispatch<React.SetStateAction<categoryType>>) => {
+export const getCategory = async (id: string, setCategoryData: React.Dispatch<React.SetStateAction<CategoryType>>) => {
   if(id === "") return setCategoryData({...categoryDefaults, name: "empty"});
 	console.log(id);
   
@@ -22,5 +22,5 @@ export const getCategory = async (id: string, setCategoryData: React.Dispatch<Re
 		.then(setCategoryData)
 		.catch((e)=>console.error(e));
   }
-export const getCategories = async (ids: Array<string>, setCategoriesData: React.Dispatch<React.SetStateAction<categoryType>>) =>
+export const getCategories = async (ids: Array<string>, setCategoriesData: React.Dispatch<React.SetStateAction<CategoryType>>) =>
   ids.map((id: string, index: number) => getCategory(id, setCategoriesData));

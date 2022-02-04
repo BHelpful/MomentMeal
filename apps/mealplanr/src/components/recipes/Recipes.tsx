@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { categoryDefaults, categoryListType, categoryType, getCategories } from '../../couplers/categories';
-import { getRecipe, getRecipes, getRecipesPlan, MealplanType, recipeDefaults, RecipesListType, RecipesType } from '../../couplers/recipes';
+import { CategoryType } from '../../couplers/categories';
+import { getRecipe, getRecipes, getRecipesPlan, MealplanType, recipeDefaults, RecipesType } from '../../couplers/recipes';
 import './Recipes.scss';
 import altIMG from '/public/alt.png';
 
@@ -46,7 +46,7 @@ export function Recipe(props: RecipeProps) {
 	const {categoriesId, images, title, description, rating, estimate} = recipeData;
 
 	const categoriesData: Array<string> = [];
-	categoriesId.forEach((category: categoryType, index: number) => 
+	categoriesId.forEach((category: CategoryType, index: number) => 
 		categoriesData[index] = (category.name.toLowerCase()));
 	
 
