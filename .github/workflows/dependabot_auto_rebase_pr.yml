@@ -1,7 +1,22 @@
 name: rebase pull requests
 on:
   push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+    types: [closed]
+
 jobs:
+  wait_for_changes:
+    name: Wait for changes to get into the repo
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sleep for 15 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: "15s"
   auto-rebase:
     name: rebase dependabot PRs
     runs-on: ubuntu-latest
