@@ -8,15 +8,12 @@ permissions:
   contents: write
 
 jobs:
-  dependabot:
+  Enable_auto_merge_pr:
     runs-on: ubuntu-latest
-    # Checking the actor will prevent your Action run failing on Dependabot
-    # PRs but also ensures that it only does not work for Dependabot PRs.
-    if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       # Finally, this sets the PR to allow auto-merging for patch and minor
       # updates if all checks pass
-      - name: Enable auto-merge for Dependabot PRs
+      - name: Enable auto-merge for PRs
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}

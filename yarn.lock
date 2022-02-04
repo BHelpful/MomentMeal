@@ -1222,7 +1222,7 @@
     jest-util "^27.4.2"
     slash "^3.0.0"
 
-"@jest/core@^27.4.5", "@jest/core@^27.4.7":
+"@jest/core@^27.4.7":
   version "27.4.7"
   resolved "https://registry.yarnpkg.com/@jest/core/-/core-27.4.7.tgz#84eabdf42a25f1fa138272ed229bcf0a1b5e6913"
   integrity sha512-n181PurSJkVMS+kClIFSX/LLvw9ExSb+4IMtD6YnfxZVerw9ANYtW0bPrm0MJu2pfe9SY9FJ9FtQ+MdZkrZwjg==
@@ -1596,6 +1596,25 @@
     webpack-node-externals "^3.0.0"
     yargs-parser "20.0.0"
 
+"@nrwl/cypress@13.7.2":
+  version "13.7.2"
+  resolved "https://registry.yarnpkg.com/@nrwl/cypress/-/cypress-13.7.2.tgz#de402a843a2a84620d856a2254b0a78b862404a2"
+  integrity sha512-cBssMuISzD4ruU0/0dD91i382sQGNUV5ulq2q4dKzOv+dTsm1sbr5merya8jJvsnS7RrRVfXSPOJCjG9sz8JPw==
+  dependencies:
+    "@cypress/webpack-preprocessor" "^5.9.1"
+    "@nrwl/devkit" "13.7.2"
+    "@nrwl/linter" "13.7.2"
+    "@nrwl/workspace" "13.7.2"
+    chalk "4.1.0"
+    enhanced-resolve "^5.8.3"
+    fork-ts-checker-webpack-plugin "6.2.10"
+    rxjs "^6.5.4"
+    ts-loader "^9.2.6"
+    tsconfig-paths "^3.9.0"
+    tsconfig-paths-webpack-plugin "3.5.2"
+    tslib "^2.3.0"
+    webpack-node-externals "^3.0.0"
+
 "@nrwl/devkit@13.3.9":
   version "13.3.9"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.3.9.tgz#bc246803a95f75dfa60affce1f46b197e736cede"
@@ -1788,23 +1807,6 @@
     rxjs "^6.5.4"
     tslib "^2.3.0"
 
-"@nrwl/jest@13.7.1":
-  version "13.7.1"
-  resolved "https://registry.yarnpkg.com/@nrwl/jest/-/jest-13.7.1.tgz#451c402ea8010d21015a773b3ce8bb55e7801f32"
-  integrity sha512-slsEaPaxythqME3BLeiUPk1obx8IpsgsDF/layg0y3+uKXpcs2feBoE+PQEJS5aM8lrdfhx28rxZ0X94d2+vDw==
-  dependencies:
-    "@jest/reporters" "27.2.2"
-    "@jest/test-result" "27.2.2"
-    "@nrwl/devkit" "13.7.1"
-    chalk "4.1.0"
-    identity-obj-proxy "3.0.0"
-    jest-config "27.2.2"
-    jest-resolve "27.2.2"
-    jest-util "27.2.0"
-    resolve.exports "1.1.0"
-    rxjs "^6.5.4"
-    tslib "^2.3.0"
-
 "@nrwl/jest@13.7.2":
   version "13.7.2"
   resolved "https://registry.yarnpkg.com/@nrwl/jest/-/jest-13.7.2.tgz#30f5520813a2ed3b2bca8436e3dbcf2d642c5a5f"
@@ -1896,17 +1898,6 @@
   dependencies:
     "@nrwl/devkit" "13.6.1"
     "@nrwl/jest" "13.6.1"
-    "@phenomnomnominal/tsquery" "4.1.1"
-    tmp "~0.2.1"
-    tslib "^2.3.0"
-
-"@nrwl/linter@13.7.1":
-  version "13.7.1"
-  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-13.7.1.tgz#dad363709d30a82d74d0d211790b3c867e14e8ac"
-  integrity sha512-j4vk0O3WqWwXMJnX78B97irZmce1aQblWI/3N45MsrUjYjb2Ow3mGGs2GZMZv5aiOnijpERb3Pl80UaLm9Vo0Q==
-  dependencies:
-    "@nrwl/devkit" "13.7.1"
-    "@nrwl/jest" "13.7.1"
     "@phenomnomnominal/tsquery" "4.1.1"
     tmp "~0.2.1"
     tslib "^2.3.0"
@@ -2467,37 +2458,6 @@
     minimatch "3.0.4"
     npm-run-path "^4.0.1"
     open "^7.4.2"
-    rxjs "^6.5.4"
-    semver "7.3.4"
-    tmp "~0.2.1"
-    tslib "^2.3.0"
-    yargs "15.4.1"
-    yargs-parser "20.0.0"
-
-"@nrwl/workspace@13.7.1":
-  version "13.7.1"
-  resolved "https://registry.yarnpkg.com/@nrwl/workspace/-/workspace-13.7.1.tgz#49f0ccfa9aba7e81de021e871a49a9b4f3f72b49"
-  integrity sha512-lJ3xHBAPNYP3yvl4NwGATfv8BveCeniB9YdEut82E3CgJEpIgB5cJatw1ZjTYnHxDqPmdIJ8GS9i0B7BmYt8Ew==
-  dependencies:
-    "@nrwl/cli" "13.7.1"
-    "@nrwl/devkit" "13.7.1"
-    "@nrwl/jest" "13.7.1"
-    "@nrwl/linter" "13.7.1"
-    "@parcel/watcher" "2.0.4"
-    chalk "4.1.0"
-    chokidar "^3.5.1"
-    cli-cursor "3.1.0"
-    cli-spinners "2.6.1"
-    dotenv "~10.0.0"
-    enquirer "~2.3.6"
-    figures "3.2.0"
-    flat "^5.0.2"
-    fs-extra "^9.1.0"
-    glob "7.1.4"
-    ignore "^5.0.4"
-    minimatch "3.0.4"
-    npm-run-path "^4.0.1"
-    open "^8.4.0"
     rxjs "^6.5.4"
     semver "7.3.4"
     tmp "~0.2.1"
@@ -5924,7 +5884,7 @@ dotenv-expand@^5.1.0:
   resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-5.1.0.tgz#3fbaf020bfd794884072ea26b1e9791d45a629f0"
   integrity sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==
 
-dotenv@*:
+dotenv@*, dotenv@^16.0.0:
   version "16.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.0.tgz#c619001253be89ebb638d027b609c75c26e47411"
   integrity sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==
@@ -8092,7 +8052,7 @@ jest-circus@^27.2.2, jest-circus@^27.4.6:
     stack-utils "^2.0.3"
     throat "^6.0.1"
 
-jest-cli@^27.4.5, jest-cli@^27.4.7:
+jest-cli@^27.4.7:
   version "27.4.7"
   resolved "https://registry.yarnpkg.com/jest-cli/-/jest-cli-27.4.7.tgz#d00e759e55d77b3bcfea0715f527c394ca314e5a"
   integrity sha512-zREYhvjjqe1KsGV15mdnxjThKNDgza1fhDT+iUsXWLCq3sxe9w5xnvyctcYVT5PcdLSjv7Y5dCwTS3FCF1tiuw==
@@ -8530,16 +8490,7 @@ jest-worker@^27.0.2, jest-worker@^27.2.2, jest-worker@^27.3.1, jest-worker@^27.4
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-jest@27.4.5:
-  version "27.4.5"
-  resolved "https://registry.yarnpkg.com/jest/-/jest-27.4.5.tgz#66e45acba44137fac26be9d3cc5bb031e136dc0f"
-  integrity sha512-uT5MiVN3Jppt314kidCk47MYIRilJjA/l2mxwiuzzxGUeJIvA8/pDaJOAX5KWvjAo7SCydcW0/4WEtgbLMiJkg==
-  dependencies:
-    "@jest/core" "^27.4.5"
-    import-local "^3.0.2"
-    jest-cli "^27.4.5"
-
-jest@^27.4.3:
+jest@27.4.7, jest@^27.4.3:
   version "27.4.7"
   resolved "https://registry.yarnpkg.com/jest/-/jest-27.4.7.tgz#87f74b9026a1592f2da05b4d258e57505f28eca4"
   integrity sha512-8heYvsx7nV/m8m24Vk26Y87g73Ba6ueUd0MWed/NXMhSZIm62U/llVbS0PJe1SHunbyXjJ/BqG1z9bFjGUIvTg==

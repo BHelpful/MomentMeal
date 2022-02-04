@@ -1,7 +1,9 @@
 name: rebase pull requests
 on:
   push:
-    branches: [ master, dev]
+    branches:
+      - master
+
 jobs:
   auto-rebase:
     name: rebase dependabot PRs
