@@ -19,7 +19,27 @@
 
 			border: 3px dashed var(--gray);
 			border-radius: var(--br);
-			
+
+			// Recipies that has not loaded correctly
+			&:not(:first-child) {
+
+				background-color: red;
+
+				&::after {
+
+					content: "Error loading recipe";
+					color: white;
+					margin-top: 100px;
+
+				}
+
+				* {
+
+					display: none;
+
+				}
+
+			}
 			
 		}
 		
@@ -69,13 +89,8 @@
 		&.wide,
 		&.tall {
 
-			justify-self: center;
-			align-self: center;
-			background-image: url("../../assets/boubbles.jpg");
-			background-position: center;
-			background-size: 500%;
-
 			&.empty {
+
 
 				&:hover {
 
@@ -136,6 +151,10 @@
 
 			height: 270px;
 			width: 250px;
+
+			justify-self: center;
+			align-self: center;
+
 			
 			&:not(.empty) {
 
@@ -234,6 +253,12 @@
 
 			height: 350px;
 			width: 130px;
+
+			justify-self: center;
+			align-self: center;
+			background-image: url("../../assets/boubbles.jpg");
+			background-position: center;
+			background-size: 500%;
 
 			&:not(.empty) {
 
