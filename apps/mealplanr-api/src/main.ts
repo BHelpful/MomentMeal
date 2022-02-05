@@ -1,7 +1,8 @@
 import log from './logger';
-import { connection } from 'mongoose';
+import { connection, mongo } from 'mongoose';
 import app from './app';
 import { connectDB } from './connect';
+import Grid = require('gridfs-stream');
 
 // gets items from default config file
 const port: number = parseInt(process.env.PORT as string, 10) || 3000;
@@ -14,6 +15,11 @@ const db = connection;
 connectDB().then(() => {
 	app.listen(port, host, () => {
 		log.info(`Server is running at http://${host}:${port}/`);
+
+		db.once('open', function () {
+			const gfs = Grid(db.db, mongo);
+			gfs.collection('files');
+		});
 
 		db.on('error', (err) => {
 			log.error(err);
