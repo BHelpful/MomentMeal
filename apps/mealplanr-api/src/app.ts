@@ -71,7 +71,8 @@ const allowedOrigins = [
 	'http://localhost:3333',
 	'http://127.0.0.1:4200', //MongoDB on linux systems don't like localhost
 	'http://127.0.0.1:3333',
-	'*'
+	'https://bhelpful.net',
+	'https://dev.bhelpful.net',
 ];
 app.use(
 	// use cors to allow port 4200 and 3333 to access the API
