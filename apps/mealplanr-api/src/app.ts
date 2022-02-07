@@ -73,6 +73,7 @@ const allowedOrigins = [
 	'http://127.0.0.1:3333',
 	'https://bhelpful.net',
 	'https://dev.bhelpful.net',
+	'.bhelpful.pages.dev', // Wildcard for cloudflare branch deploys
 ];
 app.use(
 	// use cors to allow port 4200 and 3333 to access the API
