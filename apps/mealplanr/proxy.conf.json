@@ -1,10 +1,11 @@
 {
-  "/": {
-    "target":"http://localhost:4200/mealplanr"
-  },
   "/api": {
     "target": "http://127.0.0.1:3333",
     "secure": false
+  },
+  "/mealplanr-api": {
+    "target":"https://127.0.0.1:3333",
+    "secure": true
   },
   "/mealplanr-api-api": {
     "target": "http://127.0.0.1:3333",
