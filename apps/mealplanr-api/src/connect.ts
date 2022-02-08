@@ -28,7 +28,7 @@ export async function connectDB() {
 			});
 	} else {
 		// If not in test environment, connect to the database
-		await connect(process.env.DB_URI, {
+		await connect(process.env.DB_URI as string, {
 			useNewUrlParser: true,
 			useCreateIndex: true,
 			useUnifiedTopology: true,

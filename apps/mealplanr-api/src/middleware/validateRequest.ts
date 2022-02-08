@@ -27,7 +27,7 @@ const validate =
 			});
 
 			return next();
-		} catch (e) {
+		} catch (e: any) {
 			log.error(e);
 			// sets status to 400 (Bad Request)
 			return res.status(400).send(e.errors);

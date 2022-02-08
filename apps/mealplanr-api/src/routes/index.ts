@@ -25,7 +25,7 @@ interface ResponseType {
 	[index: string]: {
 		description: string;
 		schema?: unknown;
-	}
+	};
 }
 
 interface Crudtype {
@@ -37,7 +37,7 @@ interface Crudtype {
 	responses: ResponseType;
 }
 interface SwaggerObject {
-	crud: Crudtype
+	crud?: Crudtype;
 	get?: Crudtype;
 	post?: Crudtype;
 	put?: Crudtype;
@@ -67,7 +67,7 @@ export function getSwaggerObject(param: swaggerObjectParamType): SwaggerObject {
 		},
 	};
 
-	if (param.queryId.required) {
+	if (param.queryId.required && obj?.crud?.parameters)
 		obj.crud.parameters.push({
 			name: param.queryId.id,
 			in: 'query',
@@ -75,7 +75,6 @@ export function getSwaggerObject(param: swaggerObjectParamType): SwaggerObject {
 			required: true,
 			type: 'string',
 		});
-	}
 
 	param.body.omit = param.body?.omit ?? [];
 	if (param.body.required && param.body?.omit) {
@@ -89,13 +88,14 @@ export function getSwaggerObject(param: swaggerObjectParamType): SwaggerObject {
 
 		tempModel.properties = remIdAndTimestampFromProp(tempModel.properties);
 
-		obj.crud.parameters.push({
-			name: 'body',
-			in: 'body',
-			description: `Create ${param.item} body object`,
-			required: true,
-			schema: omit(tempModel, param.body.omit),
-		});
+		if (obj?.crud?.parameters)
+			obj.crud.parameters.push({
+				name: 'body',
+				in: 'body',
+				description: `Create ${param.item} body object`,
+				required: true,
+				schema: omit(tempModel, param.body.omit),
+			});
 	}
 
 	param.respondObject.omit = param.respondObject?.omit ?? [];
@@ -103,14 +103,15 @@ export function getSwaggerObject(param: swaggerObjectParamType): SwaggerObject {
 		param.respondObject.omit.forEach((part, index, theArray) => {
 			theArray[index] = `properties.${part}`;
 		});
-		obj.crud.responses['200'].schema = omit(
-			param.respondObject.model,
-			param.respondObject.omit
-		);
+		if (obj?.crud?.responses)
+			obj.crud.responses['200'].schema = omit(
+				param.respondObject.model,
+				param.respondObject.omit
+			);
 	}
 
 	if (param.requiresUser) {
-		obj.crud.parameters.push(
+		obj?.crud?.parameters.push(
 			{
 				in: 'header',
 				name: 'x-refresh',

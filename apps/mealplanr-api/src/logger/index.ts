@@ -1,4 +1,4 @@
-import * as logger from 'pino';
+import logger from 'pino';
 import * as dayjs from 'dayjs';
 
 /**

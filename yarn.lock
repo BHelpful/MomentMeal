@@ -3020,6 +3020,13 @@
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.0.tgz#23509ebc1fa32f1b4d50d6a66c4032d5b8eaabdc"
   integrity sha512-/ceqdqeRraGolFTcfoXNiqjyQhZzbINDngeoAq9GoHa8PPK1yNzTaxWjA6BFWp5Ua9JpXEMSS4s5i9tS0hOJtw==
 
+"@types/compression@^1.7.2":
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/@types/compression/-/compression-1.7.2.tgz#7cc1cdb01b4730eea284615a68fc70a2cdfd5e71"
+  integrity sha512-lwEL4M/uAGWngWFLSG87ZDr2kLrbuR8p7X+QZB1OQlT+qkHsCPDVFnHPyXf4Vyl4yDDorNY+mAhosxkCvppatg==
+  dependencies:
+    "@types/express" "*"
+
 "@types/config@^0.0.41":
   version "0.0.41"
   resolved "https://registry.yarnpkg.com/@types/config/-/config-0.0.41.tgz#c8237ab09730380801f3643beaefa077ca5f3c28"
@@ -3132,6 +3139,14 @@
   dependencies:
     "@types/node" "*"
 
+"@types/gridfs-stream@^0.5.35":
+  version "0.5.35"
+  resolved "https://registry.yarnpkg.com/@types/gridfs-stream/-/gridfs-stream-0.5.35.tgz#17a1723c03f5dee00b7e42afbf9e8fb4ce7b553d"
+  integrity sha512-hdolPqhgT/w/wmz1FjGH4hUzZ01UoO+2m5NPptrEA+0tQzX4/xqqIapc/XUb+yHaILcI7XtinhOTtPmiQB1Fgw==
+  dependencies:
+    "@types/mongodb" "^3.6.20"
+    "@types/node" "*"
+
 "@types/hoist-non-react-statics@^3.3.0":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
@@ -3216,6 +3231,11 @@
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-9.1.0.tgz#baf17ab2cca3fcce2d322ebc30454bff487efad5"
   integrity sha512-QCWHkbMv4Y5U9oW10Uxbr45qMMSzl4OzijsozynUAgx3kEHUdXB00udx2dWDQ7f2TU2a2uuiFaRZjCe3unPpeg==
 
+"@types/mongo-sanitize@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@types/mongo-sanitize/-/mongo-sanitize-1.0.1.tgz#3b3457f713f69377103df427c1cd89daf53daa64"
+  integrity sha512-xh7/jNaerAu4rlOoGd+2S0D+rSbQyni58+uSuNbay0ynIaifKZBOKPRMY7Ti/ekqaX8IqX4XAbkq2uMZKpdiig==
+
 "@types/mongodb-memory-server@^2.3.0":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@types/mongodb-memory-server/-/mongodb-memory-server-2.3.0.tgz#da9dc2c9ab52d936d28c04d519d6a4a380c922ef"
@@ -3223,7 +3243,7 @@
   dependencies:
     mongodb-memory-server "*"
 
-"@types/mongodb@^3.5.25", "@types/mongodb@^3.5.27":
+"@types/mongodb@^3.5.25", "@types/mongodb@^3.5.27", "@types/mongodb@^3.6.20":
   version "3.6.20"
   resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.6.20.tgz#b7c5c580644f6364002b649af1c06c3c0454e1d2"
   integrity sha512-WcdpPJCakFzcWWD9juKoZbRtQxKIMYF/JIAM4JrNHrMcnJL6/a2NWjXxW7fo9hxboxxkg+icff8d7+WIEvKgYQ==
