@@ -1,9 +1,10 @@
-require('dotenv').config();
+import 'dotenv/config';
 import * as express from 'express';
 import { serve, setup } from 'swagger-ui-express';
 import * as cors from 'cors';
+import * as compression from 'compression';
 import { deserializeUser } from './middleware';
-const swaggerDocument = require('./swagger.json');
+import * as swaggerDocument from './swagger.json';
 import { categorySM } from './collections/category/category.model';
 import { ingredientSM } from './collections/ingredient/ingredient.model';
 import { recipeSM } from './collections/recipe/recipe.model';
@@ -47,10 +48,9 @@ import ingredientRouter, {
 	ingredientsPut,
 } from './routes/ingredients';
 
-const compression = require('compression');
 
 const app = express();
-app.disable("x-powered-by");
+app.disable('x-powered-by');
 
 // this will attach the user to every single request
 // that comes into the application
@@ -64,7 +64,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 
 // assigning app-wide cache settings
-app.use(express.static(`${__dirname}/public`, { maxAge: 31557600 }));
+app.use(express.static(`${__dirname}/public`, { maxAge: 31_557_600 }));
 
 const allowedOrigins = [
 	'http://localhost:4200',
@@ -86,13 +86,13 @@ app.use(
 			if (allowedOrigins.indexOf(origin) === -1) {
 				const msg =
 					'The CORS policy for this site does not ' +
-					'allow access from origin ' + origin;
+					'allow access from origin ' +
+					origin;
 				console.error(new Error(msg));
 				return callback(new Error(msg), false);
-				
 			}
 			return callback(null, true);
-		}
+		},
 	})
 );
 
