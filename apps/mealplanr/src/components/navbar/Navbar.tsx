@@ -1,10 +1,16 @@
 import React from 'react';
-import { setNavIndex, setNavCollapsed, setUserPopup } from '../../reducers/navState';
+import {
+	setNavIndex,
+	setNavCollapsed,
+	setUserPopup,
+	setPage,
+} from '../../reducers/navState';
 
 import './Navbar.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducers';
 import { userLogout } from '../../reducers/session';
+import { pages } from '../../utils/pages';
 //import { user } from "path/to/user";    // TODO: Create and import user object
 
 /* GET DATA FROM API */
@@ -17,21 +23,27 @@ const user = {
 
 // The names and routes of navbar elements
 const navbarlist = [
-	{ title: 'Plan meals', 			url: '/plan' },
-	{ title: 'Browse recipes', 	url: '/browse' },
-	{ title: 'My collection', 	url: '/collection' },
-	{ title: 'Shopping list', 	url: '/list' },
-	{ title: 'Settings', 				url: '/settings' },
-	{ title: 'Test', 						url: '/test' },
+	{ title: 'Plan meals', page: pages.MEAL_PLAN },
+	{ title: 'Browse recipes', page: pages.RECIPE_VIEW },
+	{ title: 'My collection', page: pages.RECIPE_VIEW_PERSONAL },
+	{ title: 'Shopping list', page: pages.PAGE_NOT_FOUND },
+	{ title: 'Settings', page: pages.SETTINGS },
+	{ title: 'Test', page: pages.PAGE_NOT_FOUND },
 ];
 
 // Creates the navbar
 export default function Navbar() {
 	const navIndex = useSelector((state: RootState) => state.navState.index);
-	const navCollapsed = useSelector((state: RootState) => state.navState.collapsed);
-	const isLoggedIn = useSelector((state: RootState) => state.session.isLoggedIn);
+	const navCollapsed = useSelector(
+		(state: RootState) => state.navState.collapsed
+	);
+	const isLoggedIn = useSelector(
+		(state: RootState) => state.session.isLoggedIn
+	);
 	const refresh = useSelector((state: RootState) => state.session.refresh);
-	const authorization = useSelector((state: RootState) => state.session.authorization);
+	const authorization = useSelector(
+		(state: RootState) => state.session.authorization
+	);
 	const dispatch = useDispatch();
 
 	return (
@@ -45,40 +57,49 @@ export default function Navbar() {
 				></div>
 			</div>
 			<div className="items">
-				{//Map the names and routes to an element each
-				navbarlist.map((data: {title: string}, index: number) => (
-					<div
-						key={index.toString()}
-						className={'bar' + (navIndex === index ? ' selected' : '')}
-						onClick={() => dispatch(setNavIndex(index))}
-					>
-						<div className={'icon nbi' + index}></div>
-						<p>{data.title}</p>
-					</div>
-				))}
+				{
+					//Map the names and routes to an element each
+					navbarlist.map(
+						(data: { title: string; page: string }, index: number) => (
+							<div
+								key={index.toString()}
+								className={'bar' + (navIndex === index ? ' selected' : '')}
+								onClick={() => {
+									dispatch(setNavIndex(index));
+									dispatch(setPage(data.page));
+								}}
+							>
+								<div className={'icon nbi' + index}></div>
+								<p>{data.title}</p>
+							</div>
+						)
+					)
+				}
 			</div>
-			{//Determin the content at bottom of navbar based on login-state
-			isLoggedIn ? (
-				<div className="bottom loggedin">
-					<div className="profile image" data-img={user.image}></div>
-					<p>{user.firstname} {user.lastname}</p>
-					<div
-						className="logout icon"
-						onClick={() =>
-							dispatch(userLogout(refresh, authorization))
-						}
-					></div>
-				</div>
-			) : (
-				<div className="bottom loggedout">
-					<div className="profile image"></div>
-					<p>Log in / Sign up</p>
-					<div
-						className="login icon"
-						onClick={() => dispatch(setUserPopup(1))}
-					></div>
-				</div>
-			)}
+			{
+				//Determin the content at bottom of navbar based on login-state
+				isLoggedIn ? (
+					<div className="bottom loggedin">
+						<div className="profile image" data-img={user.image}></div>
+						<p>
+							{user.firstname} {user.lastname}
+						</p>
+						<div
+							className="logout icon"
+							onClick={() => dispatch(userLogout(refresh, authorization))}
+						></div>
+					</div>
+				) : (
+					<div className="bottom loggedout">
+						<div className="profile image"></div>
+						<p>Log in / Sign up</p>
+						<div
+							className="login icon"
+							onClick={() => dispatch(setUserPopup(1))}
+						></div>
+					</div>
+				)
+			}
 		</div>
 	);
 }
