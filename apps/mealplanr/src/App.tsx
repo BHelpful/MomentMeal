@@ -3,13 +3,7 @@ import { RootState } from './reducers';
 import { checkForUser, createUser, userLogin } from './reducers/session';
 import './App.scss';
 import Navbar from './components/navbar/Navbar';
-import Container from './components/container/Container';
-import Mealplan from './components/mealplan/Mealplan';
-import RecipeView from './components/recipeView/RecipeView';
-import Settings from './components/settings/Settings';
 import Popup from './components/popup/Popup';
-import Showcase from './components/showcase/Showcase';
-import CreateRecipe from './components/createRecipe/CreateRecipe';
 import { pageContent } from './utils/pages';
 
 const user = {

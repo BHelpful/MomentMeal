@@ -9,7 +9,7 @@ import {
 	RecipesType,
 } from '../../services/MP-API/recipes';
 import { useDispatch } from 'react-redux';
-import { setNavIndex, setPage } from '../../reducers/navState';
+import { setPage } from '../../reducers/navState';
 import { pages } from '../../utils/pages';
 import './Recipes.scss';
 import altIMG from '/public/alt.png';

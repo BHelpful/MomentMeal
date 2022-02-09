@@ -14,10 +14,10 @@ export enum pages {
 	SETTINGS = 'SETTINGS',
 	PAGE_NOT_FOUND = '404',
 }
-interface dictType {
+interface PageContentType {
 	[index: string]: JSX.Element;
 }
-export const pageContent: dictType = {};
+export const pageContent: PageContentType = {};
 pageContent[pages.CREATE_RECIPE] = <CreateRecipe></CreateRecipe>;
 pageContent[pages.MEAL_PLAN] = <Mealplan></Mealplan>;
 pageContent[pages.RECIPE_VIEW] = <RecipeView></RecipeView>;
