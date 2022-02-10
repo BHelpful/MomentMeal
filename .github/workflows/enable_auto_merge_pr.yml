@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   Enable_auto_merge_pr:
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       # Finally, this sets the PR to allow auto-merging for patch and minor
