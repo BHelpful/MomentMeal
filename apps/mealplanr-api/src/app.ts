@@ -47,12 +47,7 @@ import ingredientRouter, {
 	ingredientsPost,
 	ingredientsPut,
 } from './routes/ingredients';
-import fileRouter, {
-	filesDelete,
-	filesGet,
-	filesPost,
-	filesPut,
-} from './routes/files';
+import fileRouter, { filesDelete, filesGet, filesPost } from './routes/files';
 import { fileSM } from './collections/file/file.model';
 
 const app = express();
@@ -167,9 +162,10 @@ parsedSwaggerDoc.paths['/ingredients'] = {
 };
 
 app.use('/files', fileRouter);
-parsedSwaggerDoc.paths['/files'] = {
+parsedSwaggerDoc.paths['/files/upload'] = {
 	...filesPost,
-	...filesPut,
+};
+parsedSwaggerDoc.paths['/files/:filename'] = {
 	...filesGet,
 	...filesDelete,
 };

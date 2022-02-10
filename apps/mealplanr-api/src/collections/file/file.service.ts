@@ -1,7 +1,6 @@
 import {
 	DocumentDefinition,
 	FilterQuery,
-	UpdateQuery,
 	QueryOptions,
 } from 'mongoose';
 import fileModel, { FileDocument } from './file.model';
@@ -13,9 +12,7 @@ import sanitize = require('mongo-sanitize');
  * @param body - The body of the file (based on the fileModel)
  * @returns a file document
  */
-export async function createFile(
-	body: DocumentDefinition<FileDocument>
-) {
+export async function createFile(body: DocumentDefinition<FileDocument>) {
 	try {
 		body = sanitize(body);
 
@@ -40,28 +37,6 @@ export async function findFile(
 		query = sanitize(query);
 
 		return fileModel.findOne(query, {}, options);
-	} catch (error) {
-		throw new Error(error as string);
-	}
-}
-
-/**
- * This function will find, update and return a file
- *
- * @param query - a query object that will be used to find a file from the DB
- * @param update - a query object that will be used to specify the update
- * @param options - options for the findOne function from mongoose
- * @returns a file document
- */
-export async function findAndUpdateFile(
-	query: FilterQuery<FileDocument>,
-	update: UpdateQuery<FileDocument>,
-	options: QueryOptions
-) {
-	try {
-		query = sanitize(query);
-		update = sanitize(update);
-		return fileModel.findOneAndUpdate(query, update, options);
 	} catch (error) {
 		throw new Error(error as string);
 	}

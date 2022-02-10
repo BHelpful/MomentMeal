@@ -22,11 +22,6 @@ export const getFileSchema = object({
 	...query,
 });
 
-export const updateFileSchema = object({
-	...query,
-	...payload,
-});
-
 export const deleteFileSchema = object({
 	...query,
 });

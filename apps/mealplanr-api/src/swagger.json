@@ -1,33 +1,32 @@
 {
 	"swagger": "2.0",
 	"info": {
-			"description": "This is a simple example NodeJS API project to demonstrate Swagger Documentation",
-			"version": "1.0.0",
-			"title": "MealPlanr API",
-			"contact": {
-					"email": "abc@gmail.com"
-			},
-			"license": {
-					"name": "Apache 2.0",
-					"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-			}
+		"description": "This is a simple example NodeJS API project to demonstrate Swagger Documentation",
+		"version": "1.0.0",
+		"title": "MealPlanr API",
+		"contact": {
+			"email": "admin@bhelpful.net"
+		},
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+		}
 	},
 	"schemes": ["http"],
-	"host": "localhost:1337",
+	"host": "localhost:3333",
 	"basePath": "/",
-	"paths" : {}, 
+	"paths": {},
 	"definitions": {
-			"InvalidResponse": {
-					"type": "object",
-					"properties": {
-							"statusCode": {
-									"type": "string"
-							},
-							"message": {
-									"type": "string"
-							}
-					}
-
+		"InvalidResponse": {
+			"type": "object",
+			"properties": {
+				"statusCode": {
+					"type": "string"
+				},
+				"message": {
+					"type": "string"
+				}
 			}
+		}
 	}
 }

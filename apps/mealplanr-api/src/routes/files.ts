@@ -4,23 +4,21 @@ import {
 	createFileHandler,
 	deleteFileHandler,
 	getFileHandler,
-	updateFileHandler,
 } from '../collections/file/file.controller';
 import { fileSM } from '../collections/file/file.model';
 import {
 	createFileSchema,
 	deleteFileSchema,
 	getFileSchema,
-	updateFileSchema,
 } from '../collections/file/file.schema';
-import { requiresUser, validateRequest } from '../middleware';
+import { requiresUser, validateRequest, uploadFiles } from '../middleware';
 
 const router = Router();
 
 // Create a new file
 router.post(
-	'/',
-	[requiresUser, validateRequest(createFileSchema)],
+	'/upload',
+	[requiresUser, validateRequest(createFileSchema), uploadFiles],
 	createFileHandler
 );
 export const filesPost = {
@@ -47,46 +45,6 @@ export const filesPost = {
 			},
 			'403': {
 				description: 'User not logged in',
-			},
-			'409': {
-				description: 'File already exists',
-			},
-		},
-	}),
-};
-
-// Update a file
-router.put(
-	'/',
-	[requiresUser, validateRequest(updateFileSchema)],
-	updateFileHandler
-);
-export const filesPut = {
-	...getSwaggerObject({
-		CRUD: 'put',
-		item: 'file',
-		tag: 'files',
-		summary: 'Update file',
-		description: 'Updates a file that is globally available',
-		requiresUser: true,
-		queryId: { required: true, id: 'fileId' },
-		body: {
-			required: true,
-			model: fileSM,
-		},
-		respondObject: {
-			required: true,
-			model: fileSM,
-		},
-		invalidResponses: {
-			'400': {
-				description: 'Bad Request',
-			},
-			'403': {
-				description: 'User not logged in',
-			},
-			'404': {
-				description: 'No such file exists',
 			},
 			'409': {
 				description: 'File already exists',

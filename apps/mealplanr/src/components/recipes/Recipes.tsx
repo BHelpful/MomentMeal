@@ -69,7 +69,7 @@ export function Recipe(props: RecipeProps) {
 			(categoriesData[index] = category.name.toLowerCase())
 	);
 
-	let body = null;
+	let body: JSX.Element | null = null;
 	if (recipeId !== '')
 		body = (
 			<>
@@ -112,7 +112,7 @@ export function Recipe(props: RecipeProps) {
 				categoriesData.length > 0 ? categoriesData.join(' ') : 'empty'
 			}`}
 			id={recipeId}
-			onClick={() => dispatch(setPage(pages.SHOWCASE))}
+			onClick={() => (body ? dispatch(setPage(pages.SHOWCASE)) : null)} // TODO: Add dispatch to open recipe select popover in stead of null
 		>
 			{body ?? (
 				<>
