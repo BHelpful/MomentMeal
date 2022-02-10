@@ -47,7 +47,13 @@ import ingredientRouter, {
 	ingredientsPost,
 	ingredientsPut,
 } from './routes/ingredients';
-
+import fileRouter, {
+	filesDelete,
+	filesGet,
+	filesPost,
+	filesPut,
+} from './routes/files';
+import { fileSM } from './collections/file/file.model';
 
 const app = express();
 app.disable('x-powered-by');
@@ -106,6 +112,7 @@ parsedSwaggerDoc.definitions.Session = sessionSM;
 parsedSwaggerDoc.definitions.Store = storeSM;
 parsedSwaggerDoc.definitions.Recipe = recipeSM;
 parsedSwaggerDoc.definitions.User = userSM;
+parsedSwaggerDoc.definitions.File = fileSM;
 
 // This is where the basic routes are defined
 // (for each route the different methods will be added to the swagger file)
@@ -157,6 +164,14 @@ parsedSwaggerDoc.paths['/ingredients'] = {
 	...ingredientsPut,
 	...ingredientsGet,
 	...ingredientsDelete,
+};
+
+app.use('/files', fileRouter);
+parsedSwaggerDoc.paths['/files'] = {
+	...filesPost,
+	...filesPut,
+	...filesGet,
+	...filesDelete,
 };
 
 // set up the Swagger UI

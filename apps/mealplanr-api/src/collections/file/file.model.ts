@@ -21,7 +21,7 @@ export const FileSchema = new Schema({
 	},
 });
 
-const fileModel = model<FileDocument>('categories', FileSchema);
+const fileModel = model<FileDocument>('files', FileSchema);
 
 export const fileSM = m2s(fileModel);
 

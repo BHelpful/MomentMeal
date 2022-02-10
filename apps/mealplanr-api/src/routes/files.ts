@@ -23,11 +23,11 @@ router.post(
 	[requiresUser, validateRequest(createFileSchema)],
 	createFileHandler
 );
-export const categoriesPost = {
+export const filesPost = {
 	...getSwaggerObject({
 		CRUD: 'post',
 		item: 'file',
-		tag: 'categories',
+		tag: 'files',
 		summary: 'Create new file',
 		description:
 			'Creates a new file to be used in settings and for mealplans and shoppinglist',
@@ -61,11 +61,11 @@ router.put(
 	[requiresUser, validateRequest(updateFileSchema)],
 	updateFileHandler
 );
-export const categoriesPut = {
+export const filesPut = {
 	...getSwaggerObject({
 		CRUD: 'put',
 		item: 'file',
-		tag: 'categories',
+		tag: 'files',
 		summary: 'Update file',
 		description: 'Updates a file that is globally available',
 		requiresUser: true,
@@ -97,11 +97,11 @@ export const categoriesPut = {
 
 // Get a file
 router.get('/', [validateRequest(getFileSchema)], getFileHandler);
-export const categoriesGet = {
+export const filesGet = {
 	...getSwaggerObject({
 		CRUD: 'get',
 		item: 'file',
-		tag: 'categories',
+		tag: 'files',
 		summary: 'Get a file',
 		description: 'Get a file based on the fileId',
 		requiresUser: false,
@@ -130,11 +130,11 @@ router.delete(
 	[requiresUser, validateRequest(deleteFileSchema)],
 	deleteFileHandler
 );
-export const categoriesDelete = {
+export const filesDelete = {
 	...getSwaggerObject({
 		CRUD: 'delete',
 		item: 'file',
-		tag: 'categories',
+		tag: 'files',
 		summary: 'Delete a file',
 		description: 'Delete a file based on the fileId',
 		requiresUser: true,

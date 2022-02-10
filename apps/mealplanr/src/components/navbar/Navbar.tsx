@@ -58,10 +58,6 @@ export default function Navbar() {
 			page: pageShow(pages.PAGE_NOT_FOUND, pages.PAGE_NOT_FOUND),
 		},
 		{ title: 'Settings', page: pageShow(pages.SETTINGS, pages.PAGE_NOT_FOUND) },
-		{
-			title: 'Test',
-			page: pageShow(pages.PAGE_NOT_FOUND, pages.PAGE_NOT_FOUND),
-		},
 	];
 
 	return (
@@ -107,6 +103,7 @@ export default function Navbar() {
 							onClick={() => {
 								dispatch(userLogout(refresh, authorization));
 								dispatch(setPage(pages.PAGE_NOT_FOUND));
+								dispatch(setNavIndex(0));
 							}}
 						></div>
 					</div>
