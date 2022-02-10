@@ -1,11 +1,11 @@
-const util = require('util');
-const multer = require('multer');
-const { GridFsStorage } = require('multer-gridfs-storage');
+import util = require('util');
+import multer = require('multer');
+import { GridFsStorage } from 'multer-gridfs-storage';
 
 const storage = new GridFsStorage({
-	url: process.env.DB_URI,
+	url: process.env.DB_URI as string,
 	options: { useNewUrlParser: true, useUnifiedTopology: true },
-	file: (req: any, file: { mimetype: string; originalname: any; }) => {
+	file: (req: any, file: { mimetype: string; originalname: any }) => {
 		const match = ['image/png', 'image/jpeg'];
 
 		if (match.indexOf(file.mimetype) === -1) {
