@@ -56,7 +56,7 @@
 		"@nrwl/node": "13.7.2",
 		"@nrwl/nx-cloud": "latest",
 		"@nrwl/react": "13.4.1",
-		"@nrwl/tao": "13.7.2",
+		"@nrwl/tao": "13.8.0",
 		"@nrwl/web": "13.8.0",
 		"@nrwl/workspace": "13.7.2",
 		"@testing-library/jest-dom": "^5.11.4",
