@@ -52,6 +52,7 @@ interface RecipeProps {
 }
 
 export function Recipe(props: RecipeProps) {
+	const dispatch = useDispatch();
 	const { type, recipeId, At, personal } = { At: null, ...props };
 
 	const [recipeData, setRecipeData] = useState(recipeDefaults);
@@ -111,7 +112,7 @@ export function Recipe(props: RecipeProps) {
 				categoriesData.length > 0 ? categoriesData.join(' ') : 'empty'
 			}`}
 			id={recipeId}
-			onClick={() => console.log('Clicked recipe')}
+			onClick={() => dispatch(setPage(pages.SHOWCASE))}
 		>
 			{body ?? (
 				<>

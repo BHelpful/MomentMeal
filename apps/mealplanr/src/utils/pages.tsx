@@ -18,12 +18,12 @@ interface PageContentType {
 	[index: string]: JSX.Element;
 }
 export const pageContent: PageContentType = {};
-pageContent[pages.CREATE_RECIPE] = <CreateRecipe></CreateRecipe>;
-pageContent[pages.MEAL_PLAN] = <Mealplan></Mealplan>;
-pageContent[pages.RECIPE_VIEW] = <RecipeView></RecipeView>;
-pageContent[pages.RECIPE_VIEW_PERSONAL] = <RecipeView personal></RecipeView>;
-pageContent[pages.SHOWCASE] = <Showcase></Showcase>;
-pageContent[pages.SETTINGS] = <Settings></Settings>;
+pageContent[pages.CREATE_RECIPE] = <CreateRecipe />;
+pageContent[pages.MEAL_PLAN] = <Mealplan />;
+pageContent[pages.RECIPE_VIEW] = <RecipeView />;
+pageContent[pages.RECIPE_VIEW_PERSONAL] = <RecipeView personal />;
+pageContent[pages.SHOWCASE] = <Showcase />;
+pageContent[pages.SETTINGS] = <Settings />;
 pageContent[pages.PAGE_NOT_FOUND] = (
 	<Container>
 		<h1>404 Error</h1>

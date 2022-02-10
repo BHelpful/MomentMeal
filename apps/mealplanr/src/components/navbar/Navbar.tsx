@@ -21,16 +21,6 @@ const user = {
 };
 /* END OF GET DATA FROM API */
 
-// The names and routes of navbar elements
-const navbarlist = [
-	{ title: 'Plan meals', page: pages.MEAL_PLAN },
-	{ title: 'Browse recipes', page: pages.RECIPE_VIEW },
-	{ title: 'My collection', page: pages.RECIPE_VIEW_PERSONAL },
-	{ title: 'Shopping list', page: pages.PAGE_NOT_FOUND },
-	{ title: 'Settings', page: pages.SETTINGS },
-	{ title: 'Test', page: pages.PAGE_NOT_FOUND },
-];
-
 // Creates the navbar
 export default function Navbar() {
 	const navIndex = useSelector((state: RootState) => state.navState.index);
@@ -45,6 +35,34 @@ export default function Navbar() {
 		(state: RootState) => state.session.authorization
 	);
 	const dispatch = useDispatch();
+
+	const pageShow = (pageLoggedIn: string, pageLoggedOut: string) =>
+		isLoggedIn ? pageLoggedIn : pageLoggedOut;
+
+	// The names and routes of navbar elements
+	const navbarlist = [
+		{
+			title: 'Plan meals',
+			page: pageShow(pages.MEAL_PLAN, pages.PAGE_NOT_FOUND),
+		},
+		{
+			title: 'Browse recipes',
+			page: pageShow(pages.RECIPE_VIEW, pages.PAGE_NOT_FOUND),
+		},
+		{
+			title: 'My collection',
+			page: pageShow(pages.RECIPE_VIEW_PERSONAL, pages.PAGE_NOT_FOUND),
+		},
+		{
+			title: 'Shopping list',
+			page: pageShow(pages.PAGE_NOT_FOUND, pages.PAGE_NOT_FOUND),
+		},
+		{ title: 'Settings', page: pageShow(pages.SETTINGS, pages.PAGE_NOT_FOUND) },
+		{
+			title: 'Test',
+			page: pageShow(pages.PAGE_NOT_FOUND, pages.PAGE_NOT_FOUND),
+		},
+	];
 
 	return (
 		<div id="navbar" className={navCollapsed ? 'thin' : 'wide'}>
@@ -86,7 +104,10 @@ export default function Navbar() {
 						</p>
 						<div
 							className="logout icon"
-							onClick={() => dispatch(userLogout(refresh, authorization))}
+							onClick={() => {
+								dispatch(userLogout(refresh, authorization));
+								dispatch(setPage(pages.PAGE_NOT_FOUND));
+							}}
 						></div>
 					</div>
 				) : (

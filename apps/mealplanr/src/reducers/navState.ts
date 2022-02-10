@@ -42,15 +42,7 @@ interface navStateInterface {
 
 // Defining the reducer, which contains the functionality for each of the functions defined above
 // using action.type to identify the function.
-const navStateReduser = (
-	state: navStateInterface = {
-		collapsed: false,
-		index: 0,
-		userpopup: 0,
-		page: '',
-	},
-	action: ActionType
-) => {
+const navStateReduser = (state: navStateInterface, action: ActionType) => {
 	const newstate: navStateInterface = {
 		...state,
 	};

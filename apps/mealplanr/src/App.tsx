@@ -4,7 +4,8 @@ import { checkForUser, createUser, userLogin } from './reducers/session';
 import './App.scss';
 import Navbar from './components/navbar/Navbar';
 import Popup from './components/popup/Popup';
-import { pageContent } from './utils/pages';
+import { pageContent, pages } from './utils/pages';
+import { setPage } from './reducers/navState';
 
 const user = {
 	id: 9272,
@@ -16,7 +17,9 @@ const user = {
 function App() {
 	// Get relevant values in store
 	const page: string = useSelector((state: RootState) => state.navState.page);
-	const userPopup = useSelector((state: RootState) => state.navState.userpopup);
+	const userPopup: number = useSelector(
+		(state: RootState) => state.navState.userpopup
+	);
 	const navCollapsed = useSelector(
 		(state: RootState) => state.navState.collapsed
 	);
@@ -36,13 +39,14 @@ function App() {
 
 	return (
 		<div id="app">
-			{userPopup !== 0 ? (
-				<Popup
-					type={'userpopup'}
-					navCollapsed={navCollapsed}
-					dispatch={dispatch}
-				>
-					{userPopup === 1 ? (
+			{{
+				0: null,
+				1: (
+					<Popup
+						type={'userpopup'}
+						navCollapsed={navCollapsed}
+						dispatch={dispatch}
+					>
 						<>
 							<h1>Login/Signup</h1>
 							<p>
@@ -59,7 +63,14 @@ function App() {
 								Check email
 							</div>
 						</>
-					) : userPopup === 2 ? (
+					</Popup>
+				),
+				2: (
+					<Popup
+						type={'userpopup'}
+						navCollapsed={navCollapsed}
+						dispatch={dispatch}
+					>
 						<>
 							<h1>Login</h1>
 							<p>Mail known, enter password</p>
@@ -69,11 +80,23 @@ function App() {
 								onChange={updateDataPass}
 								value={''}
 							/>
-							<div onClick={() => dispatch(userLogin(user.email, user.pass))}>
+							<div
+								onClick={() => {
+									dispatch(userLogin(user.email, user.pass));
+									dispatch(setPage(pages.MEAL_PLAN));
+								}}
+							>
 								Login
 							</div>
 						</>
-					) : userPopup === 3 ? (
+					</Popup>
+				),
+				3: (
+					<Popup
+						type={'userpopup'}
+						navCollapsed={navCollapsed}
+						dispatch={dispatch}
+					>
 						<>
 							<h1>Signup</h1>
 							<p>Email not known, enter verification code from mail</p>
@@ -86,9 +109,9 @@ function App() {
 								Login
 							</div>
 						</>
-					) : null}
-				</Popup>
-			) : null}
+					</Popup>
+				),
+			}[userPopup] /* In case of no result matching (default to): */ || null}
 			<Navbar />
 			{pageContent[page]}
 		</div>
