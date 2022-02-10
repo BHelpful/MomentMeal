@@ -2,12 +2,7 @@ name: Enable auto merge PR
 
 on:
   pull_request:
-    branches: [master]
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - ready_for_review
+    types: [review_requested, ready_for_review]
 
 permissions:
   pull-requests: write
@@ -16,7 +11,6 @@ permissions:
 jobs:
   Enable_auto_merge_pr:
     runs-on: ubuntu-latest
-    if: ${{ !github.event.pull_request.draft }}
     steps:
       # Finally, this sets the PR to allow auto-merging for patch and minor
       # updates if all checks pass
