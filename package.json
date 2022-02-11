@@ -98,7 +98,7 @@
 		"eslint-plugin-jsx-a11y": "6.5.1",
 		"eslint-plugin-react": "7.26.1",
 		"eslint-plugin-react-hooks": "4.3.0",
-		"jest": "27.4.7",
+		"jest": "27.5.1",
 		"nodemon": "^2.0.12",
 		"npkill": "^0.8.3",
 		"prettier": "^2.3.1",
