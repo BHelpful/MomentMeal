@@ -1,0 +1,15 @@
+name: MealPlanr_Test_Applications
+on:
+  pull_request:
+    branches: [master]
+jobs:
+  build:
+    name: Test MealPlanr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Dependencies
+        run: yarn install
+      - name: Build
+        run: yarn test:mp
