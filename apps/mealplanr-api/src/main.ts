@@ -1,5 +1,5 @@
 import log from './logger';
-import { connection, mongo } from 'mongoose';
+import { connection } from 'mongoose';
 import app from './app';
 import { connectDB } from './connect';
 import Grid = require('gridfs-stream');

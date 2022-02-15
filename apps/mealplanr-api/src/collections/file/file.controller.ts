@@ -1,6 +1,4 @@
 import { Request, Response } from 'express';
-import { get } from 'lodash';
-import { findFile, deleteFile } from './file.service';
 import { connection, mongo } from 'mongoose';
 import Grid = require('gridfs-stream');
 import log from '../../logger';
