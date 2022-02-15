@@ -112,7 +112,7 @@ export function Recipe(props: RecipeProps) {
 				categoriesData.length > 0 ? categoriesData.join(' ') : 'empty'
 			}`}
 			id={recipeId}
-			onClick={() => (body ? dispatch(setPage(pages.SHOWCASE)) : null)} // TODO: Add dispatch to open recipe select popover in stead of null
+			onClick={() => (body ? dispatch(setPage(pages.SHOWCASE)) : null)} // Add dispatch to open recipe select popover in stead of null
 		>
 			{body ?? (
 				<>

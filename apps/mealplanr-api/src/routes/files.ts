@@ -54,7 +54,7 @@ export const filesPost = {
 };
 
 // Get a file
-router.get('/', [validateRequest(getFileSchema)], getFileHandler);
+router.get('/:filename', [validateRequest(getFileSchema)], getFileHandler);
 export const filesGet = {
 	...getSwaggerObject({
 		CRUD: 'get',
@@ -84,7 +84,7 @@ export const filesGet = {
 
 // Delete a file
 router.delete(
-	'/',
+	'/:filename',
 	[requiresUser, validateRequest(deleteFileSchema)],
 	deleteFileHandler
 );

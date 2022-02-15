@@ -16,11 +16,6 @@ connectDB().then(() => {
 	app.listen(port, host, () => {
 		log.info(`Server is running at http://${host}:${port}/`);
 
-		db.once('open', function () {
-			const gfs = Grid(db.db, mongo);
-			gfs.collection('files');
-		});
-
 		db.on('error', (err) => {
 			log.error(err);
 			// exit the process with a failure

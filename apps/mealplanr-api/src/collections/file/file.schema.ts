@@ -18,10 +18,6 @@ export const createFileSchema = object({
 	...payload,
 });
 
-export const getFileSchema = object({
-	...query,
-});
+export const getFileSchema = object({});
 
-export const deleteFileSchema = object({
-	...query,
-});
+export const deleteFileSchema = object({});

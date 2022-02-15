@@ -1,6 +1,17 @@
 import { Request, Response } from 'express';
 import { get } from 'lodash';
 import { findFile, deleteFile } from './file.service';
+import { connection, mongo } from 'mongoose';
+import Grid = require('gridfs-stream');
+import log from '../../logger';
+
+const db = connection;
+let gfs: Grid.Grid;
+
+db.once('open', function () {
+	gfs = Grid(db.db, mongo);
+	gfs.collection('photos');
+});
 
 /**
  * This function is used to request the creation of a new file.
@@ -15,7 +26,7 @@ export async function createFileHandler(req: Request, res: Response) {
 	const host: string = (process.env.HOST as string) || 'localhost';
 
 	if (req.file === undefined)
-		return res.status(400).send('you must select a file.');
+		return res.status(400).send('You must select a file to send.');
 	const imgUrl = `http://${host}:${port}/files/${req.file.filename}`;
 	return res.send(imgUrl);
 }
@@ -28,14 +39,16 @@ export async function createFileHandler(req: Request, res: Response) {
  * @returns a response with the file.
  */
 export async function getFileHandler(req: Request, res: Response) {
-	const fileId = get(req, 'query.fileId');
-	const file = await findFile({ _id: fileId });
-
-	if (!file) {
+	try {
+		log.info(req.params.filename);
+		const file = await gfs.files.findOne({ filename: req.params.filename });
+		if (!file) throw new Error('File not found');
+		const readStream = gfs.createReadStream(file.filename);
+		return readStream.pipe(res);
+	} catch (error) {
+		log.error(error);
 		return res.status(404).send('No such file exists');
 	}
-
-	return res.send(file);
 }
 
 /**
@@ -46,15 +59,13 @@ export async function getFileHandler(req: Request, res: Response) {
  * @returns a response with status 200 if successful
  */
 export async function deleteFileHandler(req: Request, res: Response) {
-	const fileId = get(req, 'query.fileId');
-
-	const file = await findFile({ _id: fileId });
-
-	if (!file) {
-		return res.status(404).send('No such file exists');
+	try {
+		const file = await gfs.files.findOne({ filename: req.params.filename });
+		if (!file) return res.status(404).send('No such file exists');
+		await gfs.files.deleteOne({ filename: req.params.filename });
+		return res.send('success');
+	} catch (error) {
+		console.log(error);
+		return res.status(400).send('An error occurred.');
 	}
-
-	await deleteFile({ _id: fileId });
-
-	return res.sendStatus(200);
 }
