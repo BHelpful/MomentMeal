@@ -1971,15 +1971,15 @@
     tmp "~0.2.1"
     tslib "^2.3.0"
 
-"@nrwl/node@13.7.2":
-  version "13.7.2"
-  resolved "https://registry.yarnpkg.com/@nrwl/node/-/node-13.7.2.tgz#07a808c174e1632926d9fc7cc554bc9336227b93"
-  integrity sha512-eS1WrngJp6xMr0CHxPqgHelr8sx4B0n1T18wviNyQSz0zYmDBeu+sMBugsyw0lPIf+5Ha9OBJFACJkWcWV7Oow==
+"@nrwl/node@13.7.3":
+  version "13.7.3"
+  resolved "https://registry.yarnpkg.com/@nrwl/node/-/node-13.7.3.tgz#06a8c535190663cf48f1dd35bd86a015e485de23"
+  integrity sha512-NcLYqG0JcXMsCs8UVXvu2r2lkFonywfqBAWZsIeQWn9xoH1WSqzvHMiuWySFg4ltN/MpQ8hTGvrQlt83fwRJ/Q==
   dependencies:
-    "@nrwl/devkit" "13.7.2"
-    "@nrwl/jest" "13.7.2"
-    "@nrwl/linter" "13.7.2"
-    "@nrwl/workspace" "13.7.2"
+    "@nrwl/devkit" "13.7.3"
+    "@nrwl/jest" "13.7.3"
+    "@nrwl/linter" "13.7.3"
+    "@nrwl/workspace" "13.7.3"
     chalk "4.1.0"
     copy-webpack-plugin "^9.0.1"
     enhanced-resolve "^5.8.3"
@@ -2001,15 +2001,15 @@
     webpack-merge "^5.8.0"
     webpack-node-externals "^3.0.0"
 
-"@nrwl/node@13.7.3":
-  version "13.7.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/node/-/node-13.7.3.tgz#06a8c535190663cf48f1dd35bd86a015e485de23"
-  integrity sha512-NcLYqG0JcXMsCs8UVXvu2r2lkFonywfqBAWZsIeQWn9xoH1WSqzvHMiuWySFg4ltN/MpQ8hTGvrQlt83fwRJ/Q==
+"@nrwl/node@13.8.1":
+  version "13.8.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/node/-/node-13.8.1.tgz#78b99b6bafe72b63ad0cf308f2bf0ccd05e0a423"
+  integrity sha512-D1ZjBV1gAr+CIu4h9fWlazAqeFBg1iAtBsVgzszn6iizaw3y66wq7oknZUozP4uALvkFdK2q+qLEwAsGrZBCyg==
   dependencies:
-    "@nrwl/devkit" "13.7.3"
-    "@nrwl/jest" "13.7.3"
-    "@nrwl/linter" "13.7.3"
-    "@nrwl/workspace" "13.7.3"
+    "@nrwl/devkit" "13.8.1"
+    "@nrwl/jest" "13.8.1"
+    "@nrwl/linter" "13.8.1"
+    "@nrwl/workspace" "13.8.1"
     chalk "4.1.0"
     copy-webpack-plugin "^9.0.1"
     enhanced-resolve "^5.8.3"
