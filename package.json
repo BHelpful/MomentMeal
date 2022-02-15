@@ -3,8 +3,12 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
+		"start:mp": "nx run-many --target=serve --projects=mealplanr,mealplanr-api",
+		"test": "nx run-many --target=test --projects=mealplanr,mealplanr-api",
+		"test:mp": "nx run-many --target=test --projects=mealplanr,mealplanr-api",
 		"build": "nx run-many --target=build --projects=mealplanr,mealplanr-api",
 		"start:mealplanr": "nx run-many --target=serve --projects=mealplanr,mealplanr-api",
+		"build:mp": "nx run-many --target=build --projects=mealplanr,mealplanr-api",
 		"gen:env": "nx workspace-generator environment-generator"
 	},
 	"private": true,
