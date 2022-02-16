@@ -1,6 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
 import { UserDocument } from '../user/user.model';
-import m2s = require('mongoose-to-swagger');
 
 export interface SessionDocument extends Document {
 	_id: string;
@@ -34,7 +33,5 @@ const SessionSchema = new Schema(
 );
 
 const sessionModel = model<SessionDocument>('session', SessionSchema);
-
-export const sessionSM = m2s(sessionModel);
 
 export default sessionModel;

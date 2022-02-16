@@ -1,5 +1,4 @@
 import { Schema, Document, model } from 'mongoose';
-import m2s = require('mongoose-to-swagger');
 
 export interface CategoryDocument extends Document {
 	_id: string;
@@ -22,7 +21,5 @@ export const CategorySchema = new Schema({
 });
 
 const categoryModel = model<CategoryDocument>('categories', CategorySchema);
-
-export const categorySM = m2s(categoryModel);
 
 export default categoryModel;

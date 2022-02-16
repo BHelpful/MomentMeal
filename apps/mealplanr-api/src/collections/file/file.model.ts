@@ -1,5 +1,4 @@
 import { Schema, Document, model } from 'mongoose';
-import m2s = require('mongoose-to-swagger');
 
 export interface FileDocument extends Document {
 	_id: string;
@@ -23,6 +22,5 @@ export const FileSchema = new Schema({
 
 const fileModel = model<FileDocument>('files', FileSchema);
 
-export const fileSM = m2s(fileModel);
 
 export default fileModel;

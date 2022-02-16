@@ -1,54 +1,15 @@
 import 'dotenv/config';
 import * as express from 'express';
-import { serve, setup } from 'swagger-ui-express';
 import * as cors from 'cors';
 import * as compression from 'compression';
 import { deserializeUser } from './middleware';
-import * as swaggerDocument from './swagger.json';
-import { categorySM } from './collections/category/category.model';
-import { ingredientSM } from './collections/ingredient/ingredient.model';
-import { recipeSM } from './collections/recipe/recipe.model';
-import { sessionSM } from './collections/session/session.model';
-import { storeSM } from './collections/store/store.model';
-import { userSM } from './collections/user/user.model';
-import usersRouter, {
-	usersDelete,
-	usersExistsGet,
-	usersGet,
-	usersPost,
-	usersPut,
-} from './routes/users';
-import sessionsRouter, {
-	sessionsPost,
-	sessionsGet,
-	sessionsDelete,
-} from './routes/sessions';
-import recipeRouter, {
-	recipesDelete,
-	recipesGet,
-	recipesPost,
-	recipesPut,
-} from './routes/recipes';
-import storeRouter, {
-	storesDelete,
-	storesGet,
-	storesPost,
-	storesPut,
-} from './routes/stores';
-import categoryRouter, {
-	categoriesDelete,
-	categoriesGet,
-	categoriesPost,
-	categoriesPut,
-} from './routes/categories';
-import ingredientRouter, {
-	ingredientsDelete,
-	ingredientsGet,
-	ingredientsPost,
-	ingredientsPut,
-} from './routes/ingredients';
-import fileRouter, { filesDelete, filesGet, filesPost } from './routes/files';
-import { fileSM } from './collections/file/file.model';
+import usersRouter from './routes/users';
+import sessionsRouter from './routes/sessions';
+import recipeRouter from './routes/recipes';
+import storeRouter from './routes/stores';
+import categoryRouter from './routes/categories';
+import ingredientRouter from './routes/ingredients';
+import fileRouter from './routes/files';
 
 const app = express();
 app.disable('x-powered-by');
@@ -97,80 +58,13 @@ app.use(
 	})
 );
 
-// defining the parsed swagger file in order to be able to add to it
-const parsedSwaggerDoc = JSON.parse(JSON.stringify(swaggerDocument));
-
-// Adding mongoose models to swagger docs
-parsedSwaggerDoc.definitions.Ingredient = ingredientSM;
-parsedSwaggerDoc.definitions.Category = categorySM;
-parsedSwaggerDoc.definitions.Session = sessionSM;
-parsedSwaggerDoc.definitions.Store = storeSM;
-parsedSwaggerDoc.definitions.Recipe = recipeSM;
-parsedSwaggerDoc.definitions.User = userSM;
-parsedSwaggerDoc.definitions.File = fileSM;
-
 // This is where the basic routes are defined
-// (for each route the different methods will be added to the swagger file)
 app.use('/users', usersRouter);
-parsedSwaggerDoc.paths['/users'] = {
-	...usersPost,
-	...usersGet,
-	...usersPut,
-	...usersDelete,
-};
-parsedSwaggerDoc.paths['/users/exists'] = {
-	...usersExistsGet,
-};
-
 app.use('/sessions', sessionsRouter);
-parsedSwaggerDoc.paths['/sessions'] = {
-	...sessionsPost,
-	...sessionsGet,
-	...sessionsDelete,
-};
-
 app.use('/recipes', recipeRouter);
-parsedSwaggerDoc.paths['/recipes'] = {
-	...recipesPost,
-	...recipesPut,
-	...recipesGet,
-	...recipesDelete,
-};
-
 app.use('/stores', storeRouter);
-parsedSwaggerDoc.paths['/stores'] = {
-	...storesPost,
-	...storesPut,
-	...storesGet,
-	...storesDelete,
-};
-
 app.use('/categories', categoryRouter);
-parsedSwaggerDoc.paths['/categories'] = {
-	...categoriesPost,
-	...categoriesPut,
-	...categoriesGet,
-	...categoriesDelete,
-};
-
 app.use('/ingredients', ingredientRouter);
-parsedSwaggerDoc.paths['/ingredients'] = {
-	...ingredientsPost,
-	...ingredientsPut,
-	...ingredientsGet,
-	...ingredientsDelete,
-};
-
 app.use('/files', fileRouter);
-parsedSwaggerDoc.paths['/files/upload'] = {
-	...filesPost,
-};
-parsedSwaggerDoc.paths['/files/:filename'] = {
-	...filesGet,
-	...filesDelete,
-};
-
-// set up the Swagger UI
-app.use('/api-docs', serve, setup(parsedSwaggerDoc));
 
 export default app;

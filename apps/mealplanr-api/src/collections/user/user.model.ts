@@ -1,5 +1,4 @@
 import { Schema, Document, model } from 'mongoose';
-const m2s = require('mongoose-to-swagger');
 import * as bcrypt from 'bcrypt';
 import {
 	PlanDocument,
@@ -49,8 +48,7 @@ const UserSchema = new Schema(
 		availableIngredientsId: {
 			type: [Schema.Types.ObjectId],
 			ref: 'ingredients',
-			description:
-				'List of ingredients already available to the user at home',
+			description: 'List of ingredients already available to the user at home',
 		},
 		shoppingList: {
 			type: ShoppingListSubschema,
@@ -99,9 +97,6 @@ UserSchema.methods.comparePassword = async function (
 	return bcrypt.compare(candidatePassword, user.password).catch(() => false);
 };
 
-
 const userModel = model<UserDocument>('users', UserSchema);
-
-export const userSM = m2s(userModel);
 
 export default userModel;
