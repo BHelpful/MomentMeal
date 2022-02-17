@@ -4,40 +4,47 @@ import {
 	UpdateQuery,
 	QueryOptions,
 } from 'mongoose';
-import storeModel, { StoreDocument } from './store.model';
+import storeModel, {
+	Store,
+	StoreCreationParams,
+	StoreDocument,
+} from './store.model';
 import sanitize = require('mongo-sanitize');
+import log from '../../logger';
 
-/**
- * This function will create a new store for a user and return the store
- *
- * @param body - The body of the store (based on the storeModel)
- * @returns a store document
- */
-export async function createStore(body: DocumentDefinition<StoreDocument>) {
-	try {
+export class StoresService {
+	/**
+	 * This function will create a new store for a user and return the store
+	 *
+	 * @param body - The body of the store (based on the storeModel)
+	 * @returns a store document
+	 */
+	public create(body: StoreCreationParams): Promise<StoreDocument> {
 		body = sanitize(body);
-		return await storeModel.create(body);
-	} catch (error) {
-		throw new Error(error as string);
+		return storeModel.create(body);
 	}
-}
 
-/**
- * This function will find a store and return it
- *
- * @param query - a query object that will be used to find a store from the DB
- * @param options - options for the findOne function from mongoose
- * @returns a store document
- */
-export async function findStore(
-	query: FilterQuery<StoreDocument>,
-	options: QueryOptions = { lean: true }
-) {
-	try {
-		query = sanitize(query);
-		return storeModel.findOne(query, {}, options);
-	} catch (error) {
-		throw new Error(error as string);
+	public get(_id: string): Promise<StoreDocument | null> {
+		return this.findStore({ _id });
+	}
+
+	/**
+	 * This function will find a store and return it
+	 *
+	 * @param query - a query object that will be used to find a store from the DB
+	 * @param options - options for the findOne function from mongoose
+	 * @returns a store document
+	 */
+	private async findStore(
+		query: FilterQuery<StoreDocument>,
+		options: QueryOptions = { lean: true }
+	) {
+		try {
+			query = sanitize(query);
+			return storeModel.findOne(query, {}, options);
+		} catch (error) {
+			throw new Error(error as string);
+		}
 	}
 }
 

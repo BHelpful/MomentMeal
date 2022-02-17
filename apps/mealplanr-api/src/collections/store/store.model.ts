@@ -1,9 +1,10 @@
 import { Schema, Document, model } from 'mongoose';
 
-export interface StoreDocument extends Document {
-	_id: string;
+export interface Store {
 	name: string;
 }
+export interface StoreDocument extends Store, Document {}
+
 export const StoreSchema = new Schema({
 	name: {
 		type: String,
@@ -12,6 +13,8 @@ export const StoreSchema = new Schema({
 		description: 'Store name',
 	},
 });
+
+export type StoreCreationParams = Pick<Store, 'name'>;
 
 const storeModel = model<StoreDocument>('stores', StoreSchema);
 

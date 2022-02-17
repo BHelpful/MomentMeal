@@ -1,15 +1,24 @@
 import 'dotenv/config';
-import * as express from 'express';
-import * as cors from 'cors';
-import * as compression from 'compression';
+import express, {
+	Response as ExResponse,
+	Request as ExRequest,
+	NextFunction,
+} from 'express';
+import { ValidateError } from 'tsoa';
+import cors from 'cors';
+import compression from 'compression';
 import { deserializeUser } from './middleware';
 import usersRouter from './routes/users';
 import sessionsRouter from './routes/sessions';
 import recipeRouter from './routes/recipes';
-import storeRouter from './routes/stores';
 import categoryRouter from './routes/categories';
 import ingredientRouter from './routes/ingredients';
 import fileRouter from './routes/files';
+import bodyParser from 'body-parser';
+import { RegisterRoutes } from './routes';
+import * as swaggerJson from './swagger.json';
+import * as swaggerUI from 'swagger-ui-express';
+import log from './logger';
 
 const app = express();
 app.disable('x-powered-by');
@@ -58,11 +67,48 @@ app.use(
 	})
 );
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+RegisterRoutes(app);
+app.use(
+	['/openapi', '/docs', '/swagger'],
+	swaggerUI.serve,
+	swaggerUI.setup(swaggerJson)
+);
+
+app.use(function notFoundHandler(_req, res: ExResponse) {
+  res.status(404).send({
+    message: "Not Found",
+  });
+});
+
+app.use(function errorHandler(
+	err: unknown,
+	req: ExRequest,
+	res: ExResponse,
+	next: NextFunction
+): ExResponse | void {
+	if (err instanceof ValidateError) {
+		log.error(err, `Caught Validation Error for ${req.path}:`);
+		return res.status(422).json({
+			message: 'Validation Failed',
+			details: err?.fields,
+		});
+	}
+	if (err instanceof Error) {
+		return res.status(500).json({
+			message: 'Internal Server Error',
+		});
+	}
+
+	next();
+});
+
 // This is where the basic routes are defined
 app.use('/users', usersRouter);
 app.use('/sessions', sessionsRouter);
 app.use('/recipes', recipeRouter);
-app.use('/stores', storeRouter);
 app.use('/categories', categoryRouter);
 app.use('/ingredients', ingredientRouter);
 app.use('/files', fileRouter);
