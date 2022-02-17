@@ -61,7 +61,7 @@ export function Recipe(props: RecipeProps) {
 	}, [recipeId]);
 
 	const { categoriesId, images, title, description, rating, estimate } =
-		recipeData;
+		recipeData ?? recipeDefaults;
 
 	const categoriesData: Array<string> = [];
 	categoriesId.forEach(
@@ -70,7 +70,7 @@ export function Recipe(props: RecipeProps) {
 	);
 
 	let body: JSX.Element | null = null;
-	if (recipeId !== '')
+	if (recipeId !== '' && recipeData !== recipeDefaults)
 		body = (
 			<>
 				<div className="rimage shadow">
