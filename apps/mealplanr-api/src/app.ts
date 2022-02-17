@@ -70,6 +70,14 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// This is where the basic routes are defined
+app.use('/users', usersRouter);
+app.use('/sessions', sessionsRouter);
+app.use('/recipes', recipeRouter);
+app.use('/categories', categoryRouter);
+app.use('/ingredients', ingredientRouter);
+app.use('/files', fileRouter);
+
 RegisterRoutes(app);
 app.use(
 	['/openapi', '/docs', '/swagger'],
@@ -78,9 +86,9 @@ app.use(
 );
 
 app.use(function notFoundHandler(_req, res: ExResponse) {
-  res.status(404).send({
-    message: "Not Found",
-  });
+	res.status(404).send({
+		message: 'Not Found',
+	});
 });
 
 app.use(function errorHandler(
@@ -97,6 +105,7 @@ app.use(function errorHandler(
 		});
 	}
 	if (err instanceof Error) {
+		log.error(err, `Caught Internal Server Error for ${req.path}:`);
 		return res.status(500).json({
 			message: 'Internal Server Error',
 		});
@@ -104,13 +113,5 @@ app.use(function errorHandler(
 
 	next();
 });
-
-// This is where the basic routes are defined
-app.use('/users', usersRouter);
-app.use('/sessions', sessionsRouter);
-app.use('/recipes', recipeRouter);
-app.use('/categories', categoryRouter);
-app.use('/ingredients', ingredientRouter);
-app.use('/files', fileRouter);
 
 export default app;
