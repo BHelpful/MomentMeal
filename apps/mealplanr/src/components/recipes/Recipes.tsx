@@ -61,7 +61,7 @@ export function Recipe(props: RecipeProps) {
 	}, [recipeId]);
 
 	const { categoriesId, images, title, description, rating, estimate } =
-		recipeData;
+		recipeData ?? recipeDefaults;
 
 	const categoriesData: Array<string> = [];
 	categoriesId.forEach(
@@ -69,8 +69,8 @@ export function Recipe(props: RecipeProps) {
 			(categoriesData[index] = category.name.toLowerCase())
 	);
 
-	let body = null;
-	if (recipeId !== '')
+	let body: JSX.Element | null = null;
+	if (recipeId !== '' && recipeData !== recipeDefaults)
 		body = (
 			<>
 				<div className="rimage shadow">
@@ -112,7 +112,7 @@ export function Recipe(props: RecipeProps) {
 				categoriesData.length > 0 ? categoriesData.join(' ') : 'empty'
 			}`}
 			id={recipeId}
-			onClick={() => dispatch(setPage(pages.SHOWCASE))}
+			onClick={() => (body ? dispatch(setPage(pages.SHOWCASE)) : null)} // Add dispatch to open recipe select popover in stead of null
 		>
 			{body ?? (
 				<>

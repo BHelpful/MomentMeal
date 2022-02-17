@@ -5,7 +5,6 @@ import { object, string, ref, array, bool, number, date } from 'yup';
 // that is not represented in this validation schema, it will not be validated for (of course)
 // but there will not be any error. So any exess keys will be ignored.
 
-// The schema of the body of the request will is split up in order to use it for swagger documentation in routes.ts:
 export const userCreateStructure = {
 	email: string().email('Must be a valid email').required('Email is required'),
 	password: string()

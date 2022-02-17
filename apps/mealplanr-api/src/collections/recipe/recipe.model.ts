@@ -1,6 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
 import { nanoid } from 'nanoid';
-import m2s = require('mongoose-to-swagger');
 import { CategoryDocument } from '../category/category.model';
 import {
 	IngredientListSubschema,
@@ -106,7 +105,5 @@ export const RecipeSchema = new Schema(
 );
 
 const recipeModel = model<RecipeDocument>('recipes', RecipeSchema);
-
-export const recipeSM = m2s(recipeModel);
 
 export default recipeModel;

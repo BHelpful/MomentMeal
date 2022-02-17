@@ -5,7 +5,7 @@ import './App.scss';
 import Navbar from './components/navbar/Navbar';
 import Popup from './components/popup/Popup';
 import { pageContent, pages } from './utils/pages';
-import { setPage } from './reducers/navState';
+import { setNavIndex, setPage } from './reducers/navState';
 
 const user = {
 	id: 9272,
@@ -84,6 +84,7 @@ function App() {
 								onClick={() => {
 									dispatch(userLogin(user.email, user.pass));
 									dispatch(setPage(pages.MEAL_PLAN));
+									dispatch(setNavIndex(0));
 								}}
 							>
 								Login

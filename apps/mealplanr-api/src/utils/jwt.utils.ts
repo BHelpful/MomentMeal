@@ -32,7 +32,7 @@ export function decode(token: string) {
 
 		// if the token is valid, returns the decoded object
 		return { valid: true, expired: false, decoded };
-	} catch (error) {
+	} catch (error: any) {
 		// if the token is invalid, returns with a null object
 		return {
 			valid: false,

@@ -1,5 +1,4 @@
 import { Schema, Document, model } from 'mongoose';
-import m2s = require('mongoose-to-swagger');
 
 export interface StoreDocument extends Document {
 	_id: string;
@@ -15,7 +14,5 @@ export const StoreSchema = new Schema({
 });
 
 const storeModel = model<StoreDocument>('stores', StoreSchema);
-
-export const storeSM = m2s(storeModel);
 
 export default storeModel;
