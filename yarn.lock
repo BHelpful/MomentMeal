@@ -1803,14 +1803,14 @@
     confusing-browser-globals "^1.0.9"
     tsconfig-paths "^3.9.0"
 
-"@nrwl/express@13.7.3":
-  version "13.7.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/express/-/express-13.7.3.tgz#59ddddb090c5b9b7de60b62044b3a5c580d5c927"
-  integrity sha512-Gi1e28+UeQv9gI1zAyeUIzGazUbM8bYcNuV+VF7v1lAp7urEd5tbKP9mvDjEpk+k21dcNJttrXMw3q6lN6/DuQ==
+"@nrwl/express@13.8.2":
+  version "13.8.2"
+  resolved "https://registry.yarnpkg.com/@nrwl/express/-/express-13.8.2.tgz#c71b6f43096d335c9ae12c3e48454078f2ec366b"
+  integrity sha512-FdW2SVdMSH5PSSFeAjAT8kiFj3Rz3Dw1RaOFJE66iHciIhIVGPx/io+Ohb0zFLp+3E/S2xHxB/5zTCKXpU+Yxg==
   dependencies:
-    "@nrwl/devkit" "13.7.3"
-    "@nrwl/node" "13.7.3"
-    "@nrwl/workspace" "13.7.3"
+    "@nrwl/devkit" "13.8.2"
+    "@nrwl/node" "13.8.2"
+    "@nrwl/workspace" "13.8.2"
 
 "@nrwl/jest@13.6.1":
   version "13.6.1"
@@ -1978,17 +1978,6 @@
     tmp "~0.2.1"
     tslib "^2.3.0"
 
-"@nrwl/linter@13.7.3":
-  version "13.7.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-13.7.3.tgz#2636e17f819f0d47d836d52f67cb42e19bd4d720"
-  integrity sha512-FRDPkzmycpGNm7Z5v3G4fkssTjgJ1NyeruEe+ufc9u+w4hARhZgaUCSe28J9Wtv34K18ecAeOcgTkXumZzq7Cw==
-  dependencies:
-    "@nrwl/devkit" "13.7.3"
-    "@nrwl/jest" "13.7.3"
-    "@phenomnomnominal/tsquery" "4.1.1"
-    tmp "~0.2.1"
-    tslib "^2.3.0"
-
 "@nrwl/linter@13.8.0":
   version "13.8.0"
   resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-13.8.0.tgz#3c8beec6ba5c218de531a9b4f94ba211cc561d81"
@@ -2021,36 +2010,6 @@
     "@phenomnomnominal/tsquery" "4.1.1"
     tmp "~0.2.1"
     tslib "^2.3.0"
-
-"@nrwl/node@13.7.3":
-  version "13.7.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/node/-/node-13.7.3.tgz#06a8c535190663cf48f1dd35bd86a015e485de23"
-  integrity sha512-NcLYqG0JcXMsCs8UVXvu2r2lkFonywfqBAWZsIeQWn9xoH1WSqzvHMiuWySFg4ltN/MpQ8hTGvrQlt83fwRJ/Q==
-  dependencies:
-    "@nrwl/devkit" "13.7.3"
-    "@nrwl/jest" "13.7.3"
-    "@nrwl/linter" "13.7.3"
-    "@nrwl/workspace" "13.7.3"
-    chalk "4.1.0"
-    copy-webpack-plugin "^9.0.1"
-    enhanced-resolve "^5.8.3"
-    fork-ts-checker-webpack-plugin "6.2.10"
-    fs-extra "^9.1.0"
-    glob "7.1.4"
-    license-webpack-plugin "4.0.0"
-    rxjs "^6.5.4"
-    rxjs-for-await "0.0.2"
-    source-map-support "0.5.19"
-    terser-webpack-plugin "^5.3.0"
-    tree-kill "1.2.2"
-    ts-loader "^9.2.6"
-    ts-node "~9.1.1"
-    tsconfig-paths "^3.9.0"
-    tsconfig-paths-webpack-plugin "3.5.2"
-    tslib "^2.3.0"
-    webpack "^5.58.1"
-    webpack-merge "^5.8.0"
-    webpack-node-externals "^3.0.0"
 
 "@nrwl/node@13.8.2":
   version "13.8.2"
@@ -2484,37 +2443,6 @@
     "@nrwl/devkit" "13.7.2"
     "@nrwl/jest" "13.7.2"
     "@nrwl/linter" "13.7.2"
-    "@parcel/watcher" "2.0.4"
-    chalk "4.1.0"
-    chokidar "^3.5.1"
-    cli-cursor "3.1.0"
-    cli-spinners "2.6.1"
-    dotenv "~10.0.0"
-    enquirer "~2.3.6"
-    figures "3.2.0"
-    flat "^5.0.2"
-    fs-extra "^9.1.0"
-    glob "7.1.4"
-    ignore "^5.0.4"
-    minimatch "3.0.4"
-    npm-run-path "^4.0.1"
-    open "^8.4.0"
-    rxjs "^6.5.4"
-    semver "7.3.4"
-    tmp "~0.2.1"
-    tslib "^2.3.0"
-    yargs "15.4.1"
-    yargs-parser "20.0.0"
-
-"@nrwl/workspace@13.7.3":
-  version "13.7.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/workspace/-/workspace-13.7.3.tgz#8d046009a969633357dd691096fbc01be02b23df"
-  integrity sha512-TBNcCK6U/Pnm1tRx5eqjnYFGKcUGdg8RlOwi1A3XyXgMD4BwYldQudgIsw56FQHHL6/RNb3VnNX3I2PPSbYU2w==
-  dependencies:
-    "@nrwl/cli" "13.7.3"
-    "@nrwl/devkit" "13.7.3"
-    "@nrwl/jest" "13.7.3"
-    "@nrwl/linter" "13.7.3"
     "@parcel/watcher" "2.0.4"
     chalk "4.1.0"
     chokidar "^3.5.1"
