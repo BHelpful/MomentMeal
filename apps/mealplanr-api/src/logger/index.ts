@@ -1,5 +1,5 @@
 import logger from 'pino';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 /**
  * This logger is used to log messages and displays them in the console.

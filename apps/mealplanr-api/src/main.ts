@@ -2,7 +2,6 @@ import log from './logger';
 import { connection } from 'mongoose';
 import app from './app';
 import { connectDB } from './connect';
-import Grid = require('gridfs-stream');
 
 // gets items from default config file
 const port: number = parseInt(process.env.PORT as string, 10) || 3000;
