@@ -4,7 +4,7 @@ import {
 	UpdateQuery,
 	QueryOptions,
 } from 'mongoose';
-import categoryModel, { CategoryCreationParams, CategoryDocument } from './category.model';
+import categoryModel, { CategoryCreationParams, CategoryDocument } from '../models/category.model';
 import sanitize = require('mongo-sanitize');
 
 

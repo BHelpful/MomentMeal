@@ -1,6 +1,6 @@
 import { AnySchema } from 'yup';
 import { Request, Response, NextFunction } from 'express';
-import log from '../logger';
+import log from '../log';
 
 // Acts as the middleware between a RESTful call and the execution of a command.
 // It takes a validation schema, that the body should be validated against.

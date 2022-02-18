@@ -1,5 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
-import { CategoryDocument } from '../category/category.model';
+import { CategoryDocument } from '../../models/category.model';
 
 export interface IngredientDocument extends Document {
 	_id: string;

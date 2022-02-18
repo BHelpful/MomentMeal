@@ -7,7 +7,7 @@ import {
 import storeModel, {
 	StoreCreationParams,
 	StoreDocument,
-} from './store.model';
+} from '../models/store.model';
 import sanitize = require('mongo-sanitize');
 
 export class StoresService {

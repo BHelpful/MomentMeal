@@ -12,8 +12,8 @@ import {
 	Tags,
 	TsoaResponse,
 } from 'tsoa';
-import { CategoriesService } from './category.service';
-import { CategoryCreationParams, CategoryDocument } from './category.model';
+import { CategoriesService } from '../services/category.service';
+import { CategoryCreationParams, CategoryDocument } from '../models/category.model';
 
 @Route('categories')
 @Tags("Category")

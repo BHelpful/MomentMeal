@@ -1,7 +1,7 @@
 import { Schema, Document } from 'mongoose';
 import { IngredientDocument } from './ingredient/ingredient.model';
 import { RecipeDocument } from './recipe/recipe.model';
-import { StoreDocument } from './store/store.model';
+import { StoreDocument } from '../models/store.model';
 import { UserDocument } from './user/user.model';
 
 // ! Documents------------------------------------------------------------------

@@ -1,5 +1,5 @@
 import { connect, disconnect } from 'mongoose';
-import log from './logger';
+import log from './log';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 let mongod: MongoMemoryServer;
 

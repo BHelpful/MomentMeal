@@ -1,6 +1,6 @@
 import { Schema, Document, model } from 'mongoose';
 import { nanoid } from 'nanoid';
-import { CategoryDocument } from '../category/category.model';
+import { CategoryDocument } from '../../models/category.model';
 import {
 	IngredientListSubschema,
 	RatingDocument,

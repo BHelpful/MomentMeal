@@ -12,8 +12,8 @@ import {
 	Tags,
 	TsoaResponse,
 } from 'tsoa';
-import { StoreCreationParams, StoreDocument } from './store.model';
-import { StoresService } from './store.service';
+import { StoreCreationParams, StoreDocument } from '../models/store.model';
+import { StoresService } from '../services/store.service';
 
 @Route('stores')
 @Tags("Store")

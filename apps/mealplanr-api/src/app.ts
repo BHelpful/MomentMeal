@@ -17,7 +17,7 @@ import bodyParser from 'body-parser';
 import { RegisterRoutes } from './routes';
 import * as swaggerJson from './swagger.json';
 import * as swaggerUI from 'swagger-ui-express';
-import log from './logger';
+import log from './log';
 
 const app = express();
 app.disable('x-powered-by');
