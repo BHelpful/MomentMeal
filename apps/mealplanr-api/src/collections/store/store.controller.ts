@@ -9,12 +9,14 @@ import {
 	Res,
 	Route,
 	SuccessResponse,
+	Tags,
 	TsoaResponse,
 } from 'tsoa';
 import { StoreCreationParams, StoreDocument } from './store.model';
 import { StoresService } from './store.service';
 
 @Route('stores')
+@Tags("Store")
 export class StoresController extends Controller {
 	@Get('{storeId}')
 	public async getStore(

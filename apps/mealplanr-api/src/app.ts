@@ -11,7 +11,6 @@ import { deserializeUser } from './middleware';
 import usersRouter from './routes/users';
 import sessionsRouter from './routes/sessions';
 import recipeRouter from './routes/recipes';
-import categoryRouter from './routes/categories';
 import ingredientRouter from './routes/ingredients';
 import fileRouter from './routes/files';
 import bodyParser from 'body-parser';
@@ -74,7 +73,6 @@ app.use(bodyParser.json());
 app.use('/users', usersRouter);
 app.use('/sessions', sessionsRouter);
 app.use('/recipes', recipeRouter);
-app.use('/categories', categoryRouter);
 app.use('/ingredients', ingredientRouter);
 app.use('/files', fileRouter);
 

@@ -1,9 +1,8 @@
 import { Schema, Document, model } from 'mongoose';
 
 export interface CategoryDocument extends Document {
-	_id: string;
 	name: string;
-	type: [string];
+	type: string[];
 }
 export const CategorySchema = new Schema({
 	name: {
@@ -19,6 +18,8 @@ export const CategorySchema = new Schema({
 			'The type of category (can have multiple e.g. spicy, appetizer ...)',
 	},
 });
+
+export type CategoryCreationParams = Pick<CategoryDocument, 'name' | 'type'>;
 
 const categoryModel = model<CategoryDocument>('categories', CategorySchema);
 

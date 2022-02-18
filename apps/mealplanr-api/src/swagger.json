@@ -6,18 +6,6 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"Store": {
-				"properties": {
-					"name": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"name"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"_LeanDocument__LeanDocument_T__": {
 				"properties": {},
 				"type": "object"
@@ -45,10 +33,35 @@
 			"LeanDocument_this_": {
 				"$ref": "#/components/schemas/Omit__LeanDocument_this_.Exclude_keyofDocument._id-or-id-or-__v_-or-%24isSingleNested_"
 			},
+			"CategoryDocument": {
+				"$ref": "#/components/schemas/LeanDocument_this_"
+			},
+			"Pick_CategoryDocument.name-or-type_": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"type": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name",
+					"type"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"CategoryCreationParams": {
+				"$ref": "#/components/schemas/Pick_CategoryDocument.name-or-type_"
+			},
 			"StoreDocument": {
 				"$ref": "#/components/schemas/LeanDocument_this_"
 			},
-			"Pick_Store.name_": {
+			"Pick_StoreDocument.name_": {
 				"properties": {
 					"name": {
 						"type": "string"
@@ -61,7 +74,7 @@
 				"description": "From T, pick a set of properties whose keys are in the union K"
 			},
 			"StoreCreationParams": {
-				"$ref": "#/components/schemas/Pick_Store.name_"
+				"$ref": "#/components/schemas/Pick_StoreDocument.name_"
 			}
 		},
 		"securitySchemes": {}
@@ -76,16 +89,16 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/stores/{storeId}": {
+		"/categories/{categoryId}": {
 			"get": {
-				"operationId": "GetStore",
+				"operationId": "GetCategory",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Store"
+									"$ref": "#/components/schemas/CategoryDocument"
 								}
 							}
 						}
@@ -109,6 +122,241 @@
 						}
 					}
 				},
+				"tags": [
+					"Category"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "categoryId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateCategory",
+				"responses": {
+					"200": {
+						"description": "resource updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CategoryDocument"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"reason": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"reason"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"reason": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"reason"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"reason": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"reason"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "categoryId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CategoryCreationParams"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteCategory",
+				"responses": {
+					"204": {
+						"description": "resource deleted successfully"
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"reason": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"reason"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"reason": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"reason"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "categoryId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/categories": {
+			"post": {
+				"operationId": "CreateCategory",
+				"responses": {
+					"201": {
+						"description": "resource created successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CategoryDocument"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CategoryCreationParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/stores/{storeId}": {
+			"get": {
+				"operationId": "GetStore",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreDocument"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"reason": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"reason"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Store"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -189,6 +437,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Store"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -254,6 +505,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Store"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -282,6 +536,9 @@
 						}
 					}
 				},
+				"tags": [
+					"Store"
+				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
