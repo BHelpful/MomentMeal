@@ -7,7 +7,7 @@ import {
 	ShoppingListSubschema,
 	UserOptionsDocument,
 	UserOptionsSubschema,
-} from '../documents';
+} from '../../models/subDocuments';
 import { RecipeDocument } from '../recipe/recipe.model';
 import { IngredientDocument } from '../ingredient/ingredient.model';
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { get } from 'lodash';
-import log from '../../log';
+import log from '../../config/Logger';
 import {
 	createIngredient,
 	findIngredient,

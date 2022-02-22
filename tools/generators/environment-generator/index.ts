@@ -10,7 +10,8 @@ interface NewArticleSchemaOptions {
 	mpapi_port: string;
 	mpapi_host: string;
 	mpapi_db_uri: string;
-	mp_mpapi_uri: string;
+	pino_log_level: string;
+	mp_mpapi_uri: string; 
 	mpapi_salt_worker_factor: number;
 	mpapi_rsa_private_key: string;
 }
@@ -49,6 +50,7 @@ export default async function (tree: Tree, schema: NewArticleSchemaOptions) {
 			mpapi_host: schema.mpapi_host,
 			mpapi_db_uri: schema.mpapi_db_uri,
 			mp_mpapi_uri: schema.mp_mpapi_uri,
+			pino_log_level: schema.pino_log_level,
 			mpapi_salt_worker_factor: schema.mpapi_salt_worker_factor,
 			mpapi_rsa_private_key: schema.mpapi_rsa_private_key,
 			template: '',

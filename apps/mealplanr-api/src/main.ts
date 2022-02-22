@@ -1,4 +1,4 @@
-import log from './log';
+import log from './config/Logger';
 import { connection } from 'mongoose';
 import app from './app';
 import { connectDB } from './connect';

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { connection, mongo } from 'mongoose';
 import Grid = require('gridfs-stream');
-import log from '../../log';
+import log from '../../config/Logger';
 
 const db = connection;
 let gfs: Grid.Grid;

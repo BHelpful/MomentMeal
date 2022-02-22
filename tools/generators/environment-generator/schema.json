@@ -28,6 +28,12 @@
 			"default": "http://localhost:3333",
 			"x-prompt": "What's the MealPlanr API URI?"
 		},
+		"pino_log_level": {
+			"type": "string",
+			"description": "Pino log level",
+			"default": "info",
+			"x-prompt": "What's the default log level for Pino logger?"
+		},
 		"mpapi_salt_worker_factor": {
 			"type": "string",
 			"description": "MealPlanr API salt worker factor",

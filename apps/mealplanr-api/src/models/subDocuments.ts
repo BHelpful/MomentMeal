@@ -1,8 +1,8 @@
 import { Schema, Document } from 'mongoose';
-import { IngredientDocument } from './ingredient/ingredient.model';
-import { RecipeDocument } from './recipe/recipe.model';
-import { StoreDocument } from '../models/store.model';
-import { UserDocument } from './user/user.model';
+import { IngredientDocument } from '../collections/ingredient/ingredient.model';
+import { RecipeDocument } from '../collections/recipe/recipe.model';
+import { StoreDocument } from './store.model';
+import { UserDocument } from '../collections/user/user.model';
 
 // ! Documents------------------------------------------------------------------
 // This contains the different subschemas (documents) used in the different schemas (collections) of mongoDB. E.g. the collection of a user contains a document for options.

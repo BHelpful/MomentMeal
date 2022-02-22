@@ -5,7 +5,7 @@ import {
 	IngredientListSubschema,
 	RatingDocument,
 	RatingSubschema,
-} from '../documents';
+} from '../../models/subDocuments';
 import { IngredientDocument } from '../ingredient/ingredient.model';
 import { UserDocument } from '../user/user.model';
 
