@@ -1,5 +1,5 @@
 import { connect, disconnect } from 'mongoose';
-import log from './config/Logger';
+import Logger from './config/Logger';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 let mongod: MongoMemoryServer;
 
@@ -21,10 +21,10 @@ export async function connectDB() {
 			useUnifiedTopology: true,
 		})
 			.then(() => {
-				log.info('Mock connection success');
+				Logger.info('Mock connection success');
 			})
 			.catch((error) => {
-				log.error(error, 'Error in mock connecting');
+				Logger.error(error, 'Error in mock connecting');
 			});
 	} else {
 		// If not in test environment, connect to the database
@@ -34,10 +34,10 @@ export async function connectDB() {
 			useUnifiedTopology: true,
 		})
 			.then(() => {
-				log.info('Connection success');
+				Logger.info('Connection success');
 			})
 			.catch((error) => {
-				log.error(error, 'Error in connecting');
+				Logger.error(error, 'Error in connecting');
 			});
 	}
 }

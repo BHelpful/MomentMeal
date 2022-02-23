@@ -32,7 +32,7 @@ const streams = [
  * as node.js is a single threaded environment, it is important to have a logger that is not logging to the console.
  *
  */
-const log = pinoLogger(
+export const Logger = pinoLogger(
 	{
 		base: {
 			pid: false,
@@ -44,4 +44,4 @@ const log = pinoLogger(
 	pinoMS.multistream(streams)
 );
 
-export default log;
+export default Logger;

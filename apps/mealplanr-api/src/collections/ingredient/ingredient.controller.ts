@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { get } from 'lodash';
-import log from '../../config/Logger';
+import Logger from '../../config/Logger';
 import {
 	createIngredient,
 	findIngredient,
@@ -25,7 +25,7 @@ export async function createIngredientHandler(req: Request, res: Response) {
 		const ingredient = await createIngredient({ ...body });
 		return res.send(ingredient);
 	} catch (e) {
-		log.error(e as string);
+		Logger.error(e as string);
 	}
 }
 

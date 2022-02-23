@@ -9,30 +9,38 @@ import storeModel, {
 	StoreDocument,
 } from '../models/store.model';
 import sanitize = require('mongo-sanitize');
+import { Service } from './Service';
 
-export class StoresService {
+export class StoresService extends Service<StoreDocument> {
+	public constructor() {
+		super(storeModel);
+	}
+
 	public create(body: StoreCreationParams): Promise<StoreDocument> {
 		return this.createStore(body);
 	}
 
-	public get(_id: string): Promise<StoreDocument | null> {
-		return this.findStore({ _id });
+	// public get(_id: string): Promise<StoreDocument | null> {
+	// 	return this.findStore({ _id });
+	// }
+	public get(_id: string): Promise<StoreDocument> {
+		return this.getById(_id);
 	}
 
-	public update(
-		query: FilterQuery<StoreDocument>,
-		update: UpdateQuery<StoreDocument>
-	) {
-		return this.findAndUpdateStore(query, update, {
-			new: true,
-			// This is false because setting it true deprecated https://mongoosejs.com/docs/deprecations.html#findandmodify
-			useFindAndModify: false,
-		});
-	}
+	// public update(
+	// 	query: FilterQuery<StoreDocument>,
+	// 	update: UpdateQuery<StoreDocument>
+	// ) {
+	// 	return this.findAndUpdateStore(query, update, {
+	// 		new: true,
+	// 		// This is false because setting it true deprecated https://mongoosejs.com/docs/deprecations.html#findandmodify
+	// 		useFindAndModify: false,
+	// 	});
+	// }
 
-	public delete(_id: string): Promise<StoreDocument | null> {
-		return this.deleteStore({ _id });
-	}
+	// public delete(_id: string): Promise<StoreDocument | null> {
+	// 	return this.deleteStore({ _id });
+	// }
 
 	/**
 	 * This function will create a new store for a user and return the store
