@@ -1,4 +1,4 @@
-import Logger from './config/Logger';
+import log from './config/Logger';
 import { connection } from 'mongoose';
 import app from './app';
 import { connectDB } from './connect';
@@ -13,10 +13,10 @@ const db = connection;
 // connect to the mongoDB database
 connectDB().then(() => {
 	app.listen(port, host, () => {
-		Logger.info(`Server is running at http://${host}:${port}/`);
+		log.info(`Server is running at http://${host}:${port}/`);
 
 		db.on('error', (err) => {
-			Logger.error(err);
+			log.error(err);
 			// exit the process with a failure
 			process.exit(1);
 		});

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { connection, mongo } from 'mongoose';
 import Grid = require('gridfs-stream');
-import Logger from '../../config/Logger';
+import log from '../../config/Logger';
 
 const db = connection;
 let gfs: Grid.Grid;
@@ -38,13 +38,13 @@ export async function createFileHandler(req: Request, res: Response) {
  */
 export async function getFileHandler(req: Request, res: Response) {
 	try {
-		Logger.info(req.params.filename);
+		log.info(req.params.filename);
 		const file = await gfs.files.findOne({ filename: req.params.filename });
 		if (!file) throw new Error('File not found');
 		const readStream = gfs.createReadStream(file.filename);
 		return readStream.pipe(res);
 	} catch (error) {
-		Logger.error(error);
+		log.error(error);
 		return res.status(404).send('No such file exists');
 	}
 }

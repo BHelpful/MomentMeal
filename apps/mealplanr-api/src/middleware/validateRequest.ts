@@ -1,6 +1,6 @@
 import { AnySchema } from 'yup';
 import { Request, Response, NextFunction } from 'express';
-import Logger from '../config/Logger';
+import log from '../config/Logger';
 
 // Acts as the middleware between a RESTful call and the execution of a command.
 // It takes a validation schema, that the body should be validated against.
@@ -28,7 +28,7 @@ const validate =
 
 			return next();
 		} catch (e: any) {
-			Logger.error(e);
+			log.error(e);
 			// sets status to 400 (Bad Request)
 			return res.status(400).send(e.errors);
 		}

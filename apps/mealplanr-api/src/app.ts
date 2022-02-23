@@ -17,7 +17,7 @@ import bodyParser from 'body-parser';
 import { RegisterRoutes } from './routes';
 import * as swaggerJson from './swagger.json';
 import * as swaggerUI from 'swagger-ui-express';
-import Logger from './config/Logger';
+import log from './config/Logger';
 
 const app = express();
 app.disable('x-powered-by');
@@ -96,14 +96,14 @@ app.use(function errorHandler(
 	next: NextFunction
 ): ExResponse | void {
 	if (err instanceof ValidateError) {
-		Logger.error(err, `Caught Validation Error for ${req.path}:`);
+		log.error(err, `Caught Validation Error for ${req.path}:`);
 		return res.status(422).json({
 			message: 'Validation Failed',
 			details: err?.fields,
 		});
 	}
 	if (err instanceof Error) {
-		Logger.error(err, `Caught Internal Server Error for ${req.path}:`);
+		log.error(err, `Caught Internal Server Error for ${req.path}:`);
 		return res.status(500).json({
 			message: 'Internal Server Error',
 		});

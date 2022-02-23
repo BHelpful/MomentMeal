@@ -1,76 +1,102 @@
-import { Model, Document } from 'mongoose';
-import sanitize = require('mongo-sanitize');
+import {
+	DocumentDefinition,
+	FilterQuery,
+	UpdateQuery,
+	QueryOptions,
+	Model,
+} from 'mongoose';
+import sanitize from 'mongo-sanitize';
 
-export abstract class ServiceCalls<EntityDocument> {
-	protected documentModel!: Model<EntityDocument>;
-	// TODO implement EntityType and correct formatter to return EntityType instead of EntityDocument
-	protected formatter: any = Object;
+export class ServiceCalls<EntityDocument, EntityParams> {
+	protected model: Model<EntityDocument>;
 
-	protected constructor(entityModel: Model<EntityDocument>) {
-		this.documentModel = entityModel;
+	constructor(model: Model<EntityDocument>) {
+		this.model = model;
 	}
 
-	protected async create(model: EntityDocument): Promise<EntityDocument> {
-		const document: Document = await this.documentModel.create(
-			this.cleanToSave(model)
-		);
-		return new this.formatter(document);
+	/**
+	 * This function will find an entity and return it
+	 *
+	 * @param query - a query object that will be used to find a entity from the DB
+	 * @returns an entity document
+	 */
+	public async findOne(query: FilterQuery<EntityDocument>) {
+		const document = await this.model.findOne(sanitize(query));
+		if (!document) throw new Error();
+		return document;
 	}
 
-	protected async updateOne(_id: string, model: EntityDocument): Promise<void> {
-		this.documentModel.updateOne({ _id }, this.cleanToSave(model));
+	/**
+	 * This function will create a new entity and return the entity
+	 *
+	 * @param body - The body of the entity (based on the model)
+	 * @returns a entity document
+	 */
+	public async create(body: DocumentDefinition<EntityParams>) {
+		try {
+			return await this.model.create(sanitize(body));
+		} catch (error) {
+			throw new Error(error as string);
+		}
 	}
 
-	protected async deleteOne(_id: string): Promise<{ n: number }> {
-		return this.documentModel.deleteOne({ _id });
-	}
-
-	protected async find(
+	/**
+	 * This function will find a list of entities and return them
+	 *
+	 * @param query - a query object that will be used to find a entity from the DB
+	 * @param sort - string to sort by
+	 * @param skip - amount of documents to skip
+	 * @param limit - amount of documents to limit
+	 * @returns a list of entity documents
+	 */
+	public async find(
+		query: FilterQuery<EntityDocument>,
 		sort: string,
-		query: any,
 		skip = 0,
 		limit = 250
 	): Promise<EntityDocument[]> {
-		const sortObject = sanitize(sort)
-			.split(',')
-			.reduce((acc, curr) => {
-				const [key, value] = curr.split(':');
-				(acc as any)[key] = this.sortQueryFormatter(key, value);
-				return acc;
-			}, {});
-
-		return this.documentModel
+		const sortObject = sanitize(sort);
+		return this.model
 			.find(sanitize(query))
-			.sort(Object.keys(sortObject).map((key) => [key, (sortObject as any)[key]]))
+			.sort(
+				Object.keys(sortObject).map((key) => [key, sortObject[parseInt(key)]])
+			)
 			.skip(skip)
-			.limit(limit)
-			.map((item) => new this.formatter(item));
+			.limit(limit);
 	}
 
-	protected async findOne<T>(query: any): Promise<EntityDocument> {
-		const document = this.documentModel.findOne(query);
-		if (!document) throw new Error();
-		return new this.formatter(document);
+	public async count(query: FilterQuery<EntityDocument>): Promise<number> {
+		return this.model.count(sanitize(query));
 	}
 
-	protected async count(query: any): Promise<number> {
-		return this.documentModel.count(sanitize(query));
+	public async update(
+		_id: string,
+		model: UpdateQuery<EntityDocument>,
+		options?: QueryOptions
+	) {
+		try {
+			return this.model.findOneAndUpdate({ _id }, sanitize(model), {
+				...sanitize(options),
+				new: true,
+				// This is false because setting it true deprecated https://mongoosejs.com/docs/deprecations.html#findandmodify
+				useFindAndModify: false,
+			});
+		} catch (error) {
+			throw new Error(error as string);
+		}
 	}
 
-	protected cleanToSave(entity: EntityDocument): EntityDocument {
-		const copy: EntityDocument = new this.formatter(entity);
-		const loop = (value: any): any => {
-			if (!value || typeof value !== 'object') return;
-			/** formatting logic to save goes here */
-			Object.keys(value).forEach((key) => loop(value[key]));
-		};
-		loop(copy);
-		return copy;
-	}
-
-	protected sortQueryFormatter(key: string, value: string): number | undefined {
-		if (value === 'asc') return 1;
-		if (value === 'desc') return -1;
-		return undefined; // just for static typing
+	/**
+	 * This function will find and delete an entity
+	 *
+	 * @param _id - id that will be used to find a entity from the DB
+	 * @returns a entity document
+	 */
+	public async delete(_id: string): Promise<{ n: number }> {
+		try {
+			return this.model.deleteOne({ _id });
+		} catch (error) {
+			throw new Error(error as string);
+		}
 	}
 }
