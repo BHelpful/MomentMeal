@@ -12,7 +12,7 @@ import {
 	Tags,
 	TsoaResponse,
 } from 'tsoa';
-import { StoreCreationParams, StoreDocument } from '../models/store.model';
+import { IStoreBackend } from '../models/store.model';
 import { StoresService } from '../services/store.service';
 
 @Route('stores')
@@ -22,7 +22,7 @@ export class StoresController extends Controller {
 	public async getStore(
 		@Path() storeId: string,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
-	): Promise<StoreDocument> {
+	): Promise<IStoreBackend> {
 		const storeService = new StoresService();
 		const store = await storeService.getById(storeId);
 		if (!store) {
@@ -34,21 +34,21 @@ export class StoresController extends Controller {
 	@SuccessResponse('201', 'resource created successfully')
 	@Post()
 	public async createStore(
-		@Body() requestBody: StoreCreationParams
-	): Promise<StoreDocument> {
+		@Body() requestBody: IStoreBackend
+	): Promise<IStoreBackend> {
 		this.setStatus(201); // set return status 201
-		return new StoresService().create(requestBody);
+		return new StoresService().create(requestBody) as Promise<IStoreBackend>;
 	}
 
 	@SuccessResponse('200', 'resource updated successfully')
 	@Put('{storeId}')
 	public async updateStore(
 		@Path() storeId: string,
-		@Body() requestBody: StoreCreationParams,
+		@Body() requestBody: IStoreBackend,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() alreadyExistsResponse: TsoaResponse<409, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
-	): Promise<StoreDocument> {
+	): Promise<IStoreBackend> {
 		const storeService = new StoresService();
 		const store = await storeService.getById(storeId);
 		if (!store) {

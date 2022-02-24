@@ -1,20 +1,30 @@
 import { Schema, Document, model } from 'mongoose';
 
-export interface StoreDocument extends Document {
+// Fields that exist both on the frontend and the backend
+interface IStoreShared {
 	name: string;
 }
 
-export const StoreSchema = new Schema({
+// Fields that exist only in the backend
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IStoreBackend extends IStoreShared {}
+
+// Fields that exist only in the frontend.
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IStoreFrontend extends IStoreShared {}
+
+interface IStoreDoc extends IStoreBackend, Document {}
+
+const StoreSchemaFields: Record<keyof IStoreBackend, unknown> = {
 	name: {
 		type: String,
 		required: true,
 		unique: true,
 		description: 'Store name',
 	},
-});
+};
 
-export type StoreCreationParams = Pick<StoreDocument, 'name'>;
+const StoreSchema = new Schema(StoreSchemaFields);
+const Store = model<IStoreDoc>('stores', StoreSchema);
 
-const storeModel = model<StoreDocument>('stores', StoreSchema);
-
-export default storeModel;
+export { Store, IStoreDoc, IStoreShared, IStoreBackend, IStoreFrontend };

@@ -1,10 +1,22 @@
 import { Schema, Document, model } from 'mongoose';
 
-export interface CategoryDocument extends Document {
+// Fields that exist both on the frontend and the backend
+interface ICategoryShared {
 	name: string;
 	type: string[];
 }
-export const CategorySchema = new Schema({
+
+// Fields that exist only in the backend
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface ICategoryBackend extends ICategoryShared {}
+
+// Fields that exist only in the frontend.
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface ICategoryFrontend extends ICategoryShared {}
+
+interface ICategoryDoc extends ICategoryBackend, Document {}
+
+const CategorySchemaFields: Record<keyof ICategoryBackend, unknown> = {
 	name: {
 		type: String,
 		required: true,
@@ -17,10 +29,15 @@ export const CategorySchema = new Schema({
 		description:
 			'The type of category (can have multiple e.g. spicy, appetizer ...)',
 	},
-});
+};
 
-export type CategoryCreationParams = Pick<CategoryDocument, 'name' | 'type'>;
+const CategorySchema = new Schema(CategorySchemaFields);
+const Category = model<ICategoryDoc>('categories', CategorySchema);
 
-const categoryModel = model<CategoryDocument>('categories', CategorySchema);
-
-export default categoryModel;
+export {
+	Category,
+	ICategoryDoc,
+	ICategoryShared,
+	ICategoryBackend,
+	ICategoryFrontend,
+};

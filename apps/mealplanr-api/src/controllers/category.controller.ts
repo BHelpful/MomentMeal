@@ -13,18 +13,18 @@ import {
 	TsoaResponse,
 } from 'tsoa';
 import { CategoriesService } from '../services/category.service';
-import { CategoryCreationParams, CategoryDocument } from '../models/category.model';
+import { ICategoryBackend } from '../models/category.model';
 
 @Route('categories')
-@Tags("Category")
+@Tags('Category')
 export class CategoriesController extends Controller {
 	@Get('{categoryId}')
 	public async getCategory(
 		@Path() categoryId: string,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
-	): Promise<CategoryDocument> {
+	): Promise<ICategoryBackend> {
 		const categoryService = new CategoriesService();
-		const category = await categoryService.get(categoryId);
+		const category = await categoryService.getById(categoryId);
 		if (!category) {
 			return notFoundResponse(404, { reason: 'Category not found' });
 		}
@@ -34,8 +34,8 @@ export class CategoriesController extends Controller {
 	@SuccessResponse('201', 'resource created successfully')
 	@Post()
 	public async createCategory(
-		@Body() requestBody: CategoryCreationParams
-	): Promise<CategoryDocument> {
+		@Body() requestBody: ICategoryBackend
+	): Promise<ICategoryBackend> {
 		this.setStatus(201); // set return status 201
 		return new CategoriesService().create(requestBody);
 	}
@@ -44,13 +44,13 @@ export class CategoriesController extends Controller {
 	@Put('{categoryId}')
 	public async updateCategory(
 		@Path() categoryId: string,
-		@Body() requestBody: CategoryCreationParams,
+		@Body() requestBody: ICategoryBackend,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() alreadyExistsResponse: TsoaResponse<409, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
-	): Promise<CategoryDocument> {
+	): Promise<ICategoryBackend> {
 		const categoryService = new CategoriesService();
-		const category = await categoryService.get(categoryId);
+		const category = await categoryService.getById(categoryId);
 		if (!category) {
 			return notFoundResponse(404, { reason: 'Category not found' });
 		}
@@ -60,7 +60,7 @@ export class CategoriesController extends Controller {
 		}
 
 		const updatedCategory = await categoryService.update(
-			{ _id: categoryId },
+			categoryId,
 			requestBody
 		);
 		if (!updatedCategory) {
@@ -78,13 +78,14 @@ export class CategoriesController extends Controller {
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
 	): Promise<void> {
 		const categoryService = new CategoriesService();
-		const category = await categoryService.get(categoryId);
+		const category = await categoryService.getById(categoryId);
 		if (!category) {
 			return notFoundResponse(404, { reason: 'Category not found' });
 		}
 
-		const deletedCategory = await categoryService.delete(categoryId);
-		if (!deletedCategory) {
+		try {
+			await categoryService.delete(categoryId);
+		} catch (error) {
 			return internalServerError(500, { reason: 'Failed to delete category' });
 		}
 	}

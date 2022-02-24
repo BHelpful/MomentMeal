@@ -4,10 +4,11 @@ import {
 	UpdateQuery,
 	QueryOptions,
 	Model,
+	Document,
 } from 'mongoose';
 import sanitize from 'mongo-sanitize';
 
-export class ServiceCalls<EntityDocument, EntityParams> {
+export class ServiceCalls<EntityModel, EntityDocument, EntityParams> {
 	protected model: Model<EntityDocument>;
 
 	constructor(model: Model<EntityDocument>) {
@@ -20,7 +21,9 @@ export class ServiceCalls<EntityDocument, EntityParams> {
 	 * @param query - a query object that will be used to find a entity from the DB
 	 * @returns an entity document
 	 */
-	public async findOne(query: FilterQuery<EntityDocument>) {
+	public async findOne(
+		query: FilterQuery<EntityParams>
+	): Promise<EntityDocument> {
 		const document = await this.model.findOne(sanitize(query));
 		if (!document) throw new Error();
 		return document;
@@ -32,7 +35,9 @@ export class ServiceCalls<EntityDocument, EntityParams> {
 	 * @param body - The body of the entity (based on the model)
 	 * @returns a entity document
 	 */
-	public async create(body: DocumentDefinition<EntityParams>) {
+	public async create(
+		body: FilterQuery<EntityParams>
+	): Promise<EntityDocument> {
 		try {
 			return await this.model.create(sanitize(body));
 		} catch (error) {
@@ -50,7 +55,7 @@ export class ServiceCalls<EntityDocument, EntityParams> {
 	 * @returns a list of entity documents
 	 */
 	public async find(
-		query: FilterQuery<EntityDocument>,
+		query: FilterQuery<EntityParams>,
 		sort: string,
 		skip = 0,
 		limit = 250
@@ -65,7 +70,7 @@ export class ServiceCalls<EntityDocument, EntityParams> {
 			.limit(limit);
 	}
 
-	public async count(query: FilterQuery<EntityDocument>): Promise<number> {
+	public async count(query: FilterQuery<Document>): Promise<number> {
 		return this.model.count(sanitize(query));
 	}
 
@@ -73,14 +78,14 @@ export class ServiceCalls<EntityDocument, EntityParams> {
 		_id: string,
 		model: UpdateQuery<EntityDocument>,
 		options?: QueryOptions
-	) {
+	): Promise<EntityDocument> {
 		try {
-			return this.model.findOneAndUpdate({ _id }, sanitize(model), {
+			return (await this.model.findByIdAndUpdate(_id, sanitize(model), {
 				...sanitize(options),
 				new: true,
 				// This is false because setting it true deprecated https://mongoosejs.com/docs/deprecations.html#findandmodify
 				useFindAndModify: false,
-			});
+			})) as EntityDocument;
 		} catch (error) {
 			throw new Error(error as string);
 		}

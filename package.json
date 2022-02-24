@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"scripts": {
 		"start:mp": "yarn compile:mpApiTsoa && nx run-many --target=serve --projects=mealplanr,mealplanr-api",
-		"test": "yarn compile:mpApiTsoa && nx run-many --target=test --projects=mealplanr,mealplanr-api",
+		"test": "yarn compile:mpApiTsoa && nx run-many --target=test --projects=mealplanr,mealplanr-api,mealplanr-api-util-interfaces",
 		"test:mp": "yarn compile:mpApiTsoa && nx run-many --target=test --projects=mealplanr,mealplanr-api",
 		"build": "yarn compile:mpApiTsoa && nx run-many --target=build --projects=mealplanr,mealplanr-api",
 		"build:mp": "yarn compile:mpApiTsoa && nx run-many --target=build --projects=mealplanr,mealplanr-api",

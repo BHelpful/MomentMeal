@@ -14,7 +14,11 @@
 		"skipLibCheck": true,
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
-		"paths": {},
+		"paths": {
+			"@bhelpful/mealplanr-api/util-interfaces": [
+				"libs/mealplanr-api/util-interfaces/src/index.ts"
+			]
+		},
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,

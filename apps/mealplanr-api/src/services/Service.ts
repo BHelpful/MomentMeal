@@ -1,12 +1,20 @@
-import { Model, Document, UpdateQuery } from 'mongoose';
+import { Model, Document, UpdateQuery, DocumentDefinition } from 'mongoose';
 import { PaginationModel } from '../models/PaginationModel';
 import { ServiceCalls } from './ServiceCalls';
 
-export abstract class Service<EntityDocument, EntityParams> {
-	protected serviceCalls: ServiceCalls<EntityDocument, EntityParams>;
+export abstract class Service<EntityModel, EntityDocument, EntityParams> {
+	protected serviceCalls: ServiceCalls<
+		EntityModel,
+		EntityDocument,
+		EntityParams
+	>;
 
 	constructor(model: Model<EntityDocument>) {
-		this.serviceCalls = new ServiceCalls<EntityDocument, EntityParams>(model);
+		this.serviceCalls = new ServiceCalls<
+			EntityModel,
+			EntityDocument,
+			EntityParams
+		>(model);
 	}
 
 	public async getById(_id: string): Promise<EntityDocument> {
@@ -43,7 +51,9 @@ export abstract class Service<EntityDocument, EntityParams> {
 		});
 	}
 
-	public async create(entity: EntityParams): Promise<EntityDocument> {
+	public async create(
+		entity: DocumentDefinition<EntityDocument>
+	): Promise<EntityDocument> {
 		const res = await this.serviceCalls.create(entity);
 		return this.getById((res as any)._id);
 	}
