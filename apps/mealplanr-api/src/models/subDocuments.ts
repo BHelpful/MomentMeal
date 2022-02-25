@@ -1,7 +1,7 @@
 import { Schema, Document } from 'mongoose';
 import { IngredientDocument } from '../collections/ingredient/ingredient.model';
 import { RecipeDocument } from '../collections/recipe/recipe.model';
-import { StoreDocument } from './store.model';
+import { IStoreDoc } from './store.model';
 import { UserDocument } from '../collections/user/user.model';
 
 // ! Documents------------------------------------------------------------------
@@ -34,7 +34,7 @@ export interface UserOptionsDocument extends Document {
 	country: string;
 	notifications: boolean;
 	address: UserOptionsAddressDocument;
-	storesId: [StoreDocument['_id']];
+	storesId: [IStoreDoc['_id']];
 	gCalendar: boolean;
 }
 export const UserOptionsSubschema = new Schema({
@@ -92,7 +92,7 @@ export interface IngredientListDocument extends Document {
 	ingredientId: IngredientDocument['_id'];
 	amount: number;
 	unit: string;
-	storeId: StoreDocument;
+	storeId: IStoreDoc;
 }
 export const IngredientListSubschema = new Schema({
 	ingredientId: {

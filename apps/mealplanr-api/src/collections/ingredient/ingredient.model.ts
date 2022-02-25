@@ -1,10 +1,10 @@
 import { Schema, Document, model } from 'mongoose';
-import { CategoryDocument } from '../../models/category.model';
+import { ICategoryDoc } from '../../models/category.model';
 
 export interface IngredientDocument extends Document {
 	_id: string;
 	name: string;
-	typeId: CategoryDocument['_id'];
+	typeId: ICategoryDoc['_id'];
 	season: string;
 	diet: [string];
 }

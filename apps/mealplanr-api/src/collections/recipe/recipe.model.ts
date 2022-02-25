@@ -1,6 +1,6 @@
 import { Schema, Document, model } from 'mongoose';
 import { nanoid } from 'nanoid';
-import { CategoryDocument } from '../../models/category.model';
+import { ICategoryDoc } from '../../models/category.model';
 import {
 	IngredientListSubschema,
 	RatingDocument,
@@ -13,7 +13,7 @@ export interface RecipeDocument extends Document {
 	_id: string;
 	recipeId: string;
 	public: boolean;
-	categoriesId: [CategoryDocument['_id']];
+	categoriesId: [ICategoryDoc['_id']];
 	creatorId: UserDocument['_id'];
 	title: string;
 	description: string;
