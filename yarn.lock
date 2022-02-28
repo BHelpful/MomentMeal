@@ -1649,6 +1649,17 @@
     v8-compile-cache "2.3.0"
     yargs-parser "20.0.0"
 
+"@nrwl/cli@13.8.3":
+  version "13.8.3"
+  resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-13.8.3.tgz#3b8441aa0693cae0e0027700079998c73fe46dbd"
+  integrity sha512-6+OTs9aF5GzZUSmPziCThdPw2yXqhEw6JjYjOU9OUMZP1+6nPv7mCZkl9W2f6LEm9hAWIxHC1DsUjzWhdL1VGQ==
+  dependencies:
+    "@nrwl/tao" "13.8.3"
+    chalk "4.1.0"
+    enquirer "~2.3.6"
+    v8-compile-cache "2.3.0"
+    yargs-parser "20.0.0"
+
 "@nrwl/cypress@13.7.2":
   version "13.7.2"
   resolved "https://registry.yarnpkg.com/@nrwl/cypress/-/cypress-13.7.2.tgz#de402a843a2a84620d856a2254b0a78b862404a2"
@@ -2222,6 +2233,25 @@
     ignore "^5.0.4"
     jsonc-parser "3.0.0"
     nx "13.8.2"
+    rxjs "^6.5.4"
+    rxjs-for-await "0.0.2"
+    semver "7.3.4"
+    tmp "~0.2.1"
+    tslib "^2.3.0"
+    yargs-parser "20.0.0"
+
+"@nrwl/tao@13.8.3":
+  version "13.8.3"
+  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-13.8.3.tgz#386e847af28a87850724092f7df75c7dcb53a9e8"
+  integrity sha512-zLM2uP398iLkpuTODfAaA1K7NeTGLrkVCdE7GkasrIg9dzd82Fx6k7kZnGhfVAVgfZpbXo8twKg0vdhxlJNWyA==
+  dependencies:
+    chalk "4.1.0"
+    enquirer "~2.3.6"
+    fast-glob "3.2.7"
+    fs-extra "^9.1.0"
+    ignore "^5.0.4"
+    jsonc-parser "3.0.0"
+    nx "13.8.3"
     rxjs "^6.5.4"
     rxjs-for-await "0.0.2"
     semver "7.3.4"
@@ -10294,6 +10324,13 @@ nx@13.8.2:
   integrity sha512-raCluwNq9lK1sb71omgWfgXiQS8r+mnmXraL4p4aI7P07hEer2Oo8QI9ec4KbVc04HKkLOMkzg6YkZ94Glkc/g==
   dependencies:
     "@nrwl/cli" "13.8.2"
+
+nx@13.8.3:
+  version "13.8.3"
+  resolved "https://registry.yarnpkg.com/nx/-/nx-13.8.3.tgz#2735376b25207be7580b97fdea670973491e0308"
+  integrity sha512-Y0f7xEU1r3NzxfbLiWSgRvH9sk2O4yAW4FLYMb9Bmrw5n/ZUtsofpaRuZAHJlNobhzEv0yXcGSyMYUl8NTQJlw==
+  dependencies:
+    "@nrwl/cli" "13.8.3"
 
 object-assign@^4, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
