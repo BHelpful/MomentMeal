@@ -9,7 +9,7 @@ import {
 	UserOptionsSubschema,
 } from '../../models/subDocuments';
 import { RecipeDocument } from '../recipe/recipe.model';
-import { IngredientDocument } from '../ingredient/ingredient.model';
+import { IIngredientDoc } from '../../models/ingredient.model';
 
 export interface UserDocument extends Document {
 	_id: string;
@@ -20,7 +20,7 @@ export interface UserDocument extends Document {
 	options: UserOptionsDocument;
 	plan: PlanDocument;
 	oAuth: string;
-	availableIngredientsId: [IngredientDocument['_id']];
+	availableIngredientsId: [IIngredientDoc['_id']];
 	shoppingList: ShoppingListDocument;
 	createdAt: Date;
 	updatedAt: Date;

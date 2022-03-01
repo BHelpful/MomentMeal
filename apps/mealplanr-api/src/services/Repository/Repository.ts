@@ -1,5 +1,4 @@
 import {
-	DocumentDefinition,
 	FilterQuery,
 	UpdateQuery,
 	QueryOptions,
@@ -8,7 +7,7 @@ import {
 } from 'mongoose';
 import sanitize from 'mongo-sanitize';
 
-export class ServiceCalls<EntityModel, EntityDocument, EntityParams> {
+export class Repository<EntityDocument, EntityParams> {
 	protected model: Model<EntityDocument>;
 
 	constructor(model: Model<EntityDocument>) {
@@ -74,13 +73,21 @@ export class ServiceCalls<EntityModel, EntityDocument, EntityParams> {
 		return this.model.count(sanitize(query));
 	}
 
+	/**
+	 * This function will find, update and return a entity
+	 *
+	 * @param query - a query object that will be used to find a entity from the DB
+	 * @param update - a query object that will be used to specify the update
+	 * @param options - options for the findOne function from mongoose
+	 * @returns a entity document
+	 */
 	public async update(
 		_id: string,
-		model: UpdateQuery<EntityDocument>,
+		update: UpdateQuery<EntityDocument>,
 		options?: QueryOptions
 	): Promise<EntityDocument> {
 		try {
-			return (await this.model.findByIdAndUpdate(_id, sanitize(model), {
+			return (await this.model.findByIdAndUpdate(_id, sanitize(update), {
 				...sanitize(options),
 				new: true,
 				// This is false because setting it true deprecated https://mongoosejs.com/docs/deprecations.html#findandmodify

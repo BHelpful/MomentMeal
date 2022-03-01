@@ -12,8 +12,11 @@ import {
 	Tags,
 	TsoaResponse,
 } from 'tsoa';
-import { CategoriesService } from '../services/category.service';
-import { ICategoryBackend } from '../models/category.model';
+import { CategoryService } from '../services/category.service';
+import {
+	ICategoryBackend,
+	ICategoryBackendResponse,
+} from '../models/category.model';
 
 @Route('categories')
 @Tags('Category')
@@ -22,8 +25,8 @@ export class CategoriesController extends Controller {
 	public async getCategory(
 		@Path() categoryId: string,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
-	): Promise<ICategoryBackend> {
-		const categoryService = new CategoriesService();
+	): Promise<ICategoryBackendResponse> {
+		const categoryService = new CategoryService();
 		const category = await categoryService.getById(categoryId);
 		if (!category) {
 			return notFoundResponse(404, { reason: 'Category not found' });
@@ -35,9 +38,9 @@ export class CategoriesController extends Controller {
 	@Post()
 	public async createCategory(
 		@Body() requestBody: ICategoryBackend
-	): Promise<ICategoryBackend> {
+	): Promise<ICategoryBackendResponse> {
 		this.setStatus(201); // set return status 201
-		return new CategoriesService().create(requestBody);
+		return new CategoryService().create(requestBody);
 	}
 
 	@SuccessResponse('200', 'resource updated successfully')
@@ -48,8 +51,8 @@ export class CategoriesController extends Controller {
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() alreadyExistsResponse: TsoaResponse<409, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
-	): Promise<ICategoryBackend> {
-		const categoryService = new CategoriesService();
+	): Promise<ICategoryBackendResponse> {
+		const categoryService = new CategoryService();
 		const category = await categoryService.getById(categoryId);
 		if (!category) {
 			return notFoundResponse(404, { reason: 'Category not found' });
@@ -77,7 +80,7 @@ export class CategoriesController extends Controller {
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
 	): Promise<void> {
-		const categoryService = new CategoriesService();
+		const categoryService = new CategoryService();
 		const category = await categoryService.getById(categoryId);
 		if (!category) {
 			return notFoundResponse(404, { reason: 'Category not found' });

@@ -1,4 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
+import { ResponseModel } from './util/ResponseModel';
 
 // Fields that exist both on the frontend and the backend
 interface ICategoryShared {
@@ -9,6 +10,9 @@ interface ICategoryShared {
 // Fields that exist only in the backend
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ICategoryBackend extends ICategoryShared {}
+
+// Fields that exist only in the backend responses
+interface ICategoryBackendResponse extends ICategoryBackend, ResponseModel {}
 
 // Fields that exist only in the frontend.
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -38,6 +42,7 @@ export {
 	Category,
 	ICategoryDoc,
 	ICategoryShared,
-	ICategoryBackend,
 	ICategoryFrontend,
+	ICategoryBackend,
+	ICategoryBackendResponse,
 };

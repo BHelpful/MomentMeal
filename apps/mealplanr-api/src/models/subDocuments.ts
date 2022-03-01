@@ -1,5 +1,5 @@
 import { Schema, Document } from 'mongoose';
-import { IngredientDocument } from '../collections/ingredient/ingredient.model';
+import { IIngredientDoc } from './ingredient.model';
 import { RecipeDocument } from '../collections/recipe/recipe.model';
 import { IStoreDoc } from './store.model';
 import { UserDocument } from '../collections/user/user.model';
@@ -89,7 +89,7 @@ export const PlanSubschema = new Schema({
 });
 
 export interface IngredientListDocument extends Document {
-	ingredientId: IngredientDocument['_id'];
+	ingredientId: IIngredientDoc['_id'];
 	amount: number;
 	unit: string;
 	storeId: IStoreDoc;

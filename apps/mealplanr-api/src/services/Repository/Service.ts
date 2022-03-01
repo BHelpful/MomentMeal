@@ -1,24 +1,18 @@
-import { Model, Document, UpdateQuery, DocumentDefinition } from 'mongoose';
-import { PaginationModel } from '../models/PaginationModel';
-import { ServiceCalls } from './ServiceCalls';
+import { Model, UpdateQuery, DocumentDefinition } from 'mongoose';
+import { PaginationModel } from '../../models/util/PaginationModel';
+import { Repository } from './Repository';
 
-export abstract class Service<EntityModel, EntityDocument, EntityParams> {
-	protected serviceCalls: ServiceCalls<
-		EntityModel,
-		EntityDocument,
-		EntityParams
-	>;
+export abstract class Service<EntityDocument, EntityParams, EntityResponse> {
+	protected repository: Repository<EntityDocument, EntityParams>;
 
 	constructor(model: Model<EntityDocument>) {
-		this.serviceCalls = new ServiceCalls<
-			EntityModel,
-			EntityDocument,
-			EntityParams
-		>(model);
+		this.repository = new Repository<EntityDocument, EntityParams>(model);
 	}
 
-	public async getById(_id: string): Promise<EntityDocument> {
-		return this.serviceCalls.findOne({ _id });
+	public abstract populate(document: EntityDocument): Promise<EntityResponse>;
+
+	public async getById(_id: string): Promise<EntityResponse> {
+		return this.populate(await this.repository.findOne({ _id }));
 	}
 
 	public async getPaginated(
@@ -29,8 +23,8 @@ export abstract class Service<EntityModel, EntityDocument, EntityParams> {
 		query: string
 	): Promise<PaginationModel> {
 		const skip: number = (Math.max(1, page) - 1) * limit;
-		const count = await this.serviceCalls.count(query);
-		let docs = await this.serviceCalls.find(query, sort, skip, limit);
+		const count = await this.repository.count(query);
+		let docs = await this.repository.find(query, sort, skip, limit);
 
 		const fieldArray = (fields || '')
 			.split(',')
@@ -53,21 +47,21 @@ export abstract class Service<EntityModel, EntityDocument, EntityParams> {
 
 	public async create(
 		entity: DocumentDefinition<EntityDocument>
-	): Promise<EntityDocument> {
-		const res = await this.serviceCalls.create(entity);
+	): Promise<EntityResponse> {
+		const res = await this.repository.create(entity);
 		return this.getById((res as any)._id);
 	}
 
 	public async update(
 		id: string,
 		entity: UpdateQuery<EntityDocument>
-	): Promise<EntityDocument> {
-		await this.serviceCalls.update(id, entity);
+	): Promise<EntityResponse> {
+		await this.repository.update(id, entity);
 		return this.getById(id);
 	}
 
 	public async delete(id: string): Promise<void> {
-		const res = await this.serviceCalls.delete(id);
+		const res = await this.repository.delete(id);
 		if (!res.n) throw new Error();
 	}
 }

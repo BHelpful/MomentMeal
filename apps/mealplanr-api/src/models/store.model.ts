@@ -1,4 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
+import { ResponseModel } from './util/ResponseModel';
 
 // Fields that exist both on the frontend and the backend
 interface IStoreShared {
@@ -8,6 +9,9 @@ interface IStoreShared {
 // Fields that exist only in the backend
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IStoreBackend extends IStoreShared {}
+
+// Fields that exist only in the backend responses
+interface IStoreBackendResponse extends IStoreBackend, ResponseModel {}
 
 // Fields that exist only in the frontend.
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -27,4 +31,11 @@ const StoreSchemaFields: Record<keyof IStoreBackend, unknown> = {
 const StoreSchema = new Schema(StoreSchemaFields);
 const Store = model<IStoreDoc>('stores', StoreSchema);
 
-export { Store, IStoreDoc, IStoreShared, IStoreBackend, IStoreFrontend };
+export {
+	Store,
+	IStoreDoc,
+	IStoreShared,
+	IStoreBackend,
+	IStoreBackendResponse,
+	IStoreFrontend,
+};

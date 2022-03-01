@@ -6,7 +6,7 @@ import {
 	RatingDocument,
 	RatingSubschema,
 } from '../../models/subDocuments';
-import { IngredientDocument } from '../ingredient/ingredient.model';
+import { IIngredientDoc } from '../../models/ingredient.model';
 import { UserDocument } from '../user/user.model';
 
 export interface RecipeDocument extends Document {
@@ -19,7 +19,7 @@ export interface RecipeDocument extends Document {
 	description: string;
 	estimate: [string];
 	images: [Buffer];
-	ingredients: [IngredientDocument['_id']];
+	ingredients: [IIngredientDoc['_id']];
 	preparation: [string];
 	instructions: [string];
 	rating: [RatingDocument];

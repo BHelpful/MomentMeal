@@ -12,8 +12,8 @@ import {
 	Tags,
 	TsoaResponse,
 } from 'tsoa';
-import { IStoreBackend } from '../models/store.model';
-import { StoresService } from '../services/store.service';
+import { IStoreBackend, IStoreBackendResponse } from '../models/store.model';
+import { StoreService } from '../services/store.service';
 
 @Route('stores')
 @Tags('Store')
@@ -22,8 +22,8 @@ export class StoresController extends Controller {
 	public async getStore(
 		@Path() storeId: string,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
-	): Promise<IStoreBackend> {
-		const storeService = new StoresService();
+	): Promise<IStoreBackendResponse> {
+		const storeService = new StoreService();
 		const store = await storeService.getById(storeId);
 		if (!store) {
 			return notFoundResponse(404, { reason: 'Store not found' });
@@ -35,9 +35,9 @@ export class StoresController extends Controller {
 	@Post()
 	public async createStore(
 		@Body() requestBody: IStoreBackend
-	): Promise<IStoreBackend> {
+	): Promise<IStoreBackendResponse> {
 		this.setStatus(201); // set return status 201
-		return new StoresService().create(requestBody) as Promise<IStoreBackend>;
+		return new StoreService().create(requestBody);
 	}
 
 	@SuccessResponse('200', 'resource updated successfully')
@@ -48,8 +48,8 @@ export class StoresController extends Controller {
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() alreadyExistsResponse: TsoaResponse<409, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
-	): Promise<IStoreBackend> {
-		const storeService = new StoresService();
+	): Promise<IStoreBackendResponse> {
+		const storeService = new StoreService();
 		const store = await storeService.getById(storeId);
 		if (!store) {
 			return notFoundResponse(404, { reason: 'Store not found' });
@@ -74,7 +74,7 @@ export class StoresController extends Controller {
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
 	): Promise<void> {
-		const storeService = new StoresService();
+		const storeService = new StoreService();
 		const store = await storeService.getById(storeId);
 		if (!store) {
 			return notFoundResponse(404, { reason: 'Store not found' });
