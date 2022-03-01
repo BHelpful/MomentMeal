@@ -40,9 +40,7 @@ export class IngredientsController extends Controller {
 		@Body() requestBody: IIngredientBackend
 	): Promise<IIngredientBackendResponse> {
 		this.setStatus(201); // set return status 201
-		return new IngredientService().create(
-			requestBody
-		) as Promise<IIngredientBackend>;
+		return new IngredientService().create(requestBody);
 	}
 
 	@SuccessResponse('200', 'resource updated successfully')

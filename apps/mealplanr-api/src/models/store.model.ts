@@ -34,7 +34,6 @@ const Store = model<IStoreDoc>('stores', StoreSchema);
 export {
 	Store,
 	IStoreDoc,
-	IStoreShared,
 	IStoreBackend,
 	IStoreBackendResponse,
 	IStoreFrontend,

@@ -15,6 +15,10 @@ export abstract class Service<EntityDocument, EntityParams, EntityResponse> {
 		return this.populate(await this.repository.findOne({ _id }));
 	}
 
+	public async exists(_id: string): Promise<boolean> {
+		return this.repository.exists({ _id });
+	}
+
 	public async getPaginated(
 		page: number,
 		limit: number,

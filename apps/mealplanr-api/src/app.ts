@@ -8,9 +8,6 @@ import { ValidateError } from 'tsoa';
 import cors from 'cors';
 import compression from 'compression';
 import { deserializeUser } from './middleware';
-import usersRouter from './routes/users';
-import sessionsRouter from './routes/sessions';
-import recipeRouter from './routes/recipes';
 import fileRouter from './routes/files';
 import bodyParser from 'body-parser';
 import { RegisterRoutes } from './routes';
@@ -69,9 +66,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // This is where the basic routes are defined
-app.use('/users', usersRouter);
-app.use('/sessions', sessionsRouter);
-app.use('/recipes', recipeRouter);
 app.use('/files', fileRouter);
 
 RegisterRoutes(app);
@@ -104,6 +98,7 @@ app.use(function errorHandler(
 		log.error(err, `Caught Internal Server Error for ${req.path}:`);
 		return res.status(500).json({
 			message: 'Internal Server Error',
+			details: err?.message,
 		});
 	}
 

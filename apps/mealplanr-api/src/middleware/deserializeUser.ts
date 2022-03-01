@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import { Request, Response, NextFunction } from 'express';
 import { decode } from '../utils/jwt.utils';
-import { reIssueAccessToken } from '../collections/session/session.service';
+import { SessionService } from '../services/session.service';
 
 /**
  * This function handles the access and refresh token logic
@@ -33,6 +33,7 @@ const deserializeUser = async (
 
 	// If the token is valid, then we can continue and add the decoded token to the request
 	if (decoded) {
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		req.user = decoded;
 
@@ -42,7 +43,9 @@ const deserializeUser = async (
 	// If the token is not valid, but the refresh token is,
 	// then we need to issue a new access token
 	if (expired && refreshToken) {
-		const newAccessToken = await reIssueAccessToken({ refreshToken });
+		const newAccessToken = await new SessionService().reIssueAccessToken({
+			refreshToken,
+		});
 
 		if (newAccessToken) {
 			// Add the new access token to the response header
@@ -50,6 +53,7 @@ const deserializeUser = async (
 
 			// Decode the new access token and add it to the request
 			const { decoded } = decode(newAccessToken);
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			req.user = decoded;
 		}

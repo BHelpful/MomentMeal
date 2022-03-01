@@ -15,7 +15,9 @@ export class IngredientService extends Service<
 		super(Ingredient);
 	}
 
-	public async populate(document: IIngredientDoc): Promise<IIngredientBackendResponse> {
-		return document.populate('typeId');
+	public async populate(
+		document: IIngredientDoc
+	): Promise<IIngredientBackendResponse> {
+		return document.populate('type').execPopulate();
 	}
 }

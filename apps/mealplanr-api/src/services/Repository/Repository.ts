@@ -111,4 +111,16 @@ export class Repository<EntityDocument, EntityParams> {
 			throw new Error(error as string);
 		}
 	}
+
+	/**
+	 * This function will check if entity exists
+	 *
+	 * @param identifier - id that will be used to find a entity from the DB
+	 * @returns a boolean
+	 */
+	public async exists(
+		identifier: { _id: string } | { ID: string }
+	): Promise<boolean> {
+		return this.model.exists({ identifier });
+	}
 }

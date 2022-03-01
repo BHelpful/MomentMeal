@@ -15,22 +15,22 @@ describe('POST /users', () => {
 	it('Should create a new user', async () => {
 		const res = await request(app).post('/users').send({
 			email: 'test@test.test',
-			password: '123456',
-			passwordconfirmation: '123456',
+			password: 'myPassword',
+			passwordconfirmation: 'myPassword',
 		});
 
 		const body = res.body;
-		expect(body?.hasOwnProperty('_id')).toBe(true);
-		expect(body?.hasOwnProperty('email')).toBe(true);
-		expect(body?.hasOwnProperty('createdAt')).toBe(true);
-		expect(body?.hasOwnProperty('updatedAt')).toBe(true);
+		expect(Object.prototype.hasOwnProperty.call(body, '_id')).toBe(true);
+		expect(Object.prototype.hasOwnProperty.call(body, 'email')).toBe(true);
+		expect(Object.prototype.hasOwnProperty.call(body, 'createdAt')).toBe(true);
+		expect(Object.prototype.hasOwnProperty.call(body, 'updatedAt')).toBe(true);
 	});
 
 	it('Should fail as user already exists', async () => {
 		const res = await request(app).post('/users').send({
 			email: 'test@test.test',
-			password: '123456',
-			passwordconfirmation: '123456',
+			password: 'myPassword',
+			passwordconfirmation: 'myPassword',
 		});
 
 		expect(res.body).not.toContain('_id');

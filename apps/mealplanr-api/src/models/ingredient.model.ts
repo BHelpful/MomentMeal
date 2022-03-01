@@ -56,7 +56,6 @@ const Ingredient = model<IIngredientDoc>('ingredients', IngredientSchema);
 export {
 	Ingredient,
 	IIngredientDoc,
-	IIngredientShared,
 	IIngredientBackend,
 	IIngredientBackendResponse,
 	IIngredientFrontend,

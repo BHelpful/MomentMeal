@@ -1,43 +1,54 @@
-import { Schema, Document } from 'mongoose';
-import { IIngredientDoc } from './ingredient.model';
-import { RecipeDocument } from '../collections/recipe/recipe.model';
-import { IStoreDoc } from './store.model';
-import { UserDocument } from '../collections/user/user.model';
+import { Schema } from 'mongoose';
+import {
+	IIngredientBackend,
+	IIngredientBackendResponse,
+} from './ingredient.model';
+import { IRecipeBackend, IRecipeBackendResponse } from './recipe.model';
+import { IStoreBackend, IStoreBackendResponse } from './store.model';
 
 // ! Documents------------------------------------------------------------------
 // This contains the different subschemas (documents) used in the different schemas (collections) of mongoDB. E.g. the collection of a user contains a document for options.
-export interface UserOptionsAddressDocument extends Document {
-	streetname: string;
-	housenumber: number;
-	postalcode: string;
+export interface UserOptionsAddress {
+	streetName: string;
+	houseNumber: number;
+	postalCode: string;
 }
-export const UserOptionsAddressSubschema = new Schema({
-	streetname: {
+
+export type UserOptionsAddressResponse = UserOptionsAddress;
+
+export const UserOptionsAddressSubSubSchema = new Schema({
+	streetName: {
 		type: String,
 		required: true,
 		description: 'The street name where the user lives',
 	},
-	housenumber: {
+	houseNumber: {
 		type: Number,
 		required: true,
 		description: 'The house number',
 	},
-	postalcode: {
+	postalCode: {
 		type: String,
 		required: true,
 		description: 'Postal code of the address',
 	},
 });
 
-export interface UserOptionsDocument extends Document {
+export interface UserOptions {
 	diet: string;
+	theme: string;
 	country: string;
 	notifications: boolean;
-	address: UserOptionsAddressDocument;
-	storesId: [IStoreDoc['_id']];
+	address: UserOptionsAddress;
+	stores: string | IStoreBackend[];
 	gCalendar: boolean;
 }
-export const UserOptionsSubschema = new Schema({
+export interface UserOptionsResponse extends UserOptions {
+	address: UserOptionsAddressResponse;
+	stores: IStoreBackendResponse[] | string;
+}
+
+const UserOptionsSubSchemaFields: Record<keyof UserOptions, unknown> = {
 	diet: {
 		type: String,
 		description: 'The diet of the user.',
@@ -52,13 +63,13 @@ export const UserOptionsSubschema = new Schema({
 	},
 	notifications: {
 		type: Boolean,
-		description: 'Whether or not the user wants to recieve notifications',
+		description: 'Whether or not the user wants to receive notifications',
 	},
 	address: {
-		type: UserOptionsAddressSubschema,
+		type: UserOptionsAddressSubSubSchema,
 		description: 'Address of the user',
 	},
-	storesId: {
+	stores: {
 		type: [Schema.Types.ObjectId],
 		ref: 'stores',
 		description: 'List of stores the user is wants to shop in.',
@@ -67,39 +78,50 @@ export const UserOptionsSubschema = new Schema({
 		type: Boolean,
 		description: 'Is the user subscribed to Google Calendar',
 	},
-});
+};
+export const UserOptionsSubSchema = new Schema(UserOptionsSubSchemaFields);
 
-export interface PlanDocument extends Document {
-	recipesId: [RecipeDocument['_id']];
-	datedex: Date;
+export interface Plan {
+	recipes: string[] | IRecipeBackend[];
+	dateDex: Date;
 }
-export const PlanSubschema = new Schema({
-	recipesId: {
+export interface PlanResponse extends Plan {
+	recipes: IRecipeBackendResponse[] | string[];
+}
+
+const PlanSubSchemaFields: Record<keyof Plan, unknown> = {
+	recipes: {
 		type: [Schema.Types.ObjectId],
 		ref: 'recipes',
 		required: true,
 		description: 'The recipes that are part of this plan.',
 	},
-	datedex: {
+	dateDex: {
 		type: Schema.Types.Date,
 		required: true,
 		description:
 			'The start date of the plan (this defines what the 7 days of the plan is going to be)',
 	},
-});
+};
+export const PlanSubSchema = new Schema(PlanSubSchemaFields);
 
-export interface IngredientListDocument extends Document {
-	ingredientId: IIngredientDoc['_id'];
+export interface IngredientList {
+	ingredient: string | IIngredientBackend;
 	amount: number;
 	unit: string;
-	storeId: IStoreDoc;
+	storeId: string | IStoreBackend;
 }
-export const IngredientListSubschema = new Schema({
-	ingredientId: {
+export interface IngredientListResponse extends IngredientList {
+	ingredient: IIngredientBackendResponse | string;
+	storeId: IStoreBackendResponse | string;
+}
+
+const IngredientListSubSchemaFields: Record<keyof IngredientList, unknown> = {
+	ingredient: {
 		type: Schema.Types.ObjectId,
 		ref: 'ingredients',
 		required: true,
-		description: 'ObjectId refering to ingredients',
+		description: 'ObjectId referring to ingredients',
 	},
 	amount: {
 		type: Number,
@@ -116,30 +138,41 @@ export const IngredientListSubschema = new Schema({
 		ref: 'stores',
 		description: 'The store relevant to the ingredient',
 	},
-});
+};
+export const IngredientListSubSchema = new Schema(
+	IngredientListSubSchemaFields
+);
 
-export interface ShoppingListDocument extends Document {
-	ingredients: [IngredientListDocument];
+export interface ShoppingList {
+	ingredients: IngredientList[];
 }
-export const ShoppingListSubschema = new Schema({
+
+export interface ShoppingListResponse extends ShoppingList {
+	ingredients: IngredientListResponse[];
+}
+
+const ShoppingListSubSchemaFields: Record<keyof ShoppingList, unknown> = {
 	ingredients: {
-		type: [IngredientListSubschema],
+		type: [IngredientListSubSchema],
 		required: true,
 		description: 'List of ingredients',
 	},
-});
+};
+export const ShoppingListSubSchema = new Schema(ShoppingListSubSchemaFields);
 
-export interface RatingDocument extends Document {
-	userId: UserDocument['_id'];
+export interface Rating {
+	userId: string;
 	rating: number;
 }
-export const RatingSubschema = new Schema({
+export type RatingResponse = Rating;
+
+const RatingSubSchemaFields: Record<keyof Rating, unknown> = {
 	userId: {
 		type: Schema.Types.ObjectId,
 		ref: 'users',
 		required: true,
-		description:
-			'The user who rated the recipe. (ObjectId refering to users)',
+		description: 'The user who rated the recipe. (ObjectId referring to users)',
 	},
 	rating: { type: Number, required: true, description: 'Rating from 1 to 5' },
-});
+};
+export const RatingSubSchema = new Schema(RatingSubSchemaFields);

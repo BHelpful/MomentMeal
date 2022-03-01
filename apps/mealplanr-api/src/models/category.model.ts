@@ -41,7 +41,6 @@ const Category = model<ICategoryDoc>('categories', CategorySchema);
 export {
 	Category,
 	ICategoryDoc,
-	ICategoryShared,
 	ICategoryFrontend,
 	ICategoryBackend,
 	ICategoryBackendResponse,
