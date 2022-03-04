@@ -1,3 +1,4 @@
+import { omit } from 'lodash';
 import {
 	Body,
 	Controller,
@@ -34,16 +35,9 @@ export class RecipesController extends Controller {
 	@SuccessResponse('201', 'resource created successfully')
 	@Post()
 	public async createRecipe(
-		@Body() requestBody: IRecipeBackend,
-		@Res() alreadyExistsResponse: TsoaResponse<409, { reason: string }>
+		@Body() requestBody: omit<IRecipeBackend, 'ID'>
 	): Promise<IRecipeBackendResponse> {
-		// Check that the ID is not a duplicate
-		const recipeService = new RecipeService();
-		if (await recipeService.exists(requestBody.ID as string)) {
-			return alreadyExistsResponse(409, {
-				reason: 'Recipe already exists',
-			});
-		}
+
 
 		this.setStatus(201); // set return status 201
 		return new RecipeService().create(requestBody);
@@ -53,7 +47,7 @@ export class RecipesController extends Controller {
 	@Put('{recipeId}')
 	public async updateRecipe(
 		@Path() recipeId: string,
-		@Body() requestBody: IRecipeBackend,
+		@Body() requestBody: omit<IRecipeBackend, 'ID'>,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
 	): Promise<IRecipeBackendResponse> {

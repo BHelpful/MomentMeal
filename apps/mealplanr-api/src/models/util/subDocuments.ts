@@ -2,9 +2,9 @@ import { Schema } from 'mongoose';
 import {
 	IIngredientBackend,
 	IIngredientBackendResponse,
-} from './ingredient.model';
-import { IRecipeBackend, IRecipeBackendResponse } from './recipe.model';
-import { IStoreBackend, IStoreBackendResponse } from './store.model';
+} from '../ingredient.model';
+import { IRecipeBackend, IRecipeBackendResponse } from '../recipe.model';
+import { IStoreBackend, IStoreBackendResponse } from '../store.model';
 
 // ! Documents------------------------------------------------------------------
 // This contains the different subschemas (documents) used in the different schemas (collections) of mongoDB. E.g. the collection of a user contains a document for options.

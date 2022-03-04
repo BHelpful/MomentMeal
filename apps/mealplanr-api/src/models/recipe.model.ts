@@ -8,7 +8,7 @@ import {
 	Rating,
 	RatingResponse,
 	RatingSubSchema,
-} from './subDocuments';
+} from './util/subDocuments';
 import { ResponseModel } from './util/ResponseModel';
 
 interface IRecipeShared {

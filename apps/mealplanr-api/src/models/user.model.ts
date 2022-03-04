@@ -1,4 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
+import { omit } from 'lodash';
 import * as bcrypt from 'bcrypt';
 import {
 	Plan,
@@ -10,24 +11,24 @@ import {
 	UserOptions,
 	UserOptionsResponse,
 	UserOptionsSubSchema,
-} from './subDocuments';
+} from './util/subDocuments';
 import { ResponseModel } from './util/ResponseModel';
 import { IRecipeBackend } from './recipe.model';
 import { IIngredientBackend } from './ingredient.model';
-import { NonFunctionPropertyNames } from './util/TypeSpecifier';
+import sanitize from 'mongo-sanitize';
 
 interface IUserShared {
 	name?: string;
 	email: string;
 	password?: string;
+	passwordconfirmation?: string;
 	recipeCollection?: string[] | IRecipeBackend[];
 	options?: UserOptions;
 	plan?: Plan;
 	oAuth?: string;
 	availableIngredients?: string[] | IIngredientBackend[];
 	shoppingList?: ShoppingList;
-	// TODO: Figure out how to have the function declaration in the interface
-	// comparePassword(candidatePassword: string): Promise<boolean>;
+	comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
 // Fields that exist only in the backend
@@ -49,7 +50,10 @@ interface IUserFrontend extends IUserShared {}
 
 interface IUserDoc extends IUserBackend, Document {}
 
-const UserSchemaFields: Record<keyof IUserBackend, unknown> = {
+const UserSchemaFields: Record<
+	keyof omit<IUserBackend, 'comparePassword' | "passwordconfirmation">,
+	unknown
+> = {
 	name: { type: String, description: 'Name of the user' },
 	email: {
 		type: String,
@@ -114,6 +118,7 @@ UserSchema.pre('save', async function (next) {
 UserSchema.methods.comparePassword = async function (
 	candidatePassword: string
 ) {
+	candidatePassword = sanitize(candidatePassword);
 	const user = this as IUserDoc;
 
 	return bcrypt
