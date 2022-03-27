@@ -17,14 +17,18 @@ import log from './config/Logger';
 import MongoStore from 'connect-mongo';
 import { nanoid } from 'nanoid';
 import session from 'express-session';
-import { IUserBackendResponse } from './models/user.model';
+import { IUserResponse } from './models/user.model';
+
+export interface OurSessionData {
+	user?: IUserResponse;
+	refreshToken?: string;
+	accessToken?: string;
+	err?: string;
+}
 
 declare module 'express-session' {
-	export interface SessionData {
-		user: IUserBackendResponse;
-		sessionId: string
-		err: string;
-	}
+	// eslint-disable-next-line @typescript-eslint/no-empty-interface
+	export interface SessionData extends OurSessionData {}
 }
 
 const app = express();

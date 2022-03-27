@@ -1,3 +1,8 @@
+import {
+	EmailPattern,
+	NamePattern,
+	PasswordPattern,
+} from './../utils/patternTypes';
 import { Schema, Document, model } from 'mongoose';
 import { Omit } from 'lodash';
 import * as bcrypt from 'bcrypt';
@@ -17,11 +22,10 @@ import { IRecipeBackend } from './recipe.model';
 import { IIngredientBackend } from './ingredient.model';
 import sanitize from 'mongo-sanitize';
 
-interface IUserShared {
-	name?: string;
-	email: string;
-	password?: string;
-	passwordconfirmation?: string;
+interface IUserModel {
+	name?: NamePattern;
+	email: EmailPattern;
+	password?: PasswordPattern;
 	recipeCollection?: string[] | IRecipeBackend[];
 	options?: UserOptions;
 	plan?: Plan;
@@ -31,12 +35,18 @@ interface IUserShared {
 	comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
-// Fields that exist only in the backend
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IUserBackend extends IUserShared {}
+/**
+ * User objects allow you to associate actions performed
+ * in the system with the user that performed them.
+ * The User object here requires email, password, and password confirmation.
+ */
+interface IUserPost extends IUserModel {
+	password: PasswordPattern;
+	passwordConfirmation: PasswordPattern;
+}
 
 // Fields that exist only in the backend responses
-interface IUserBackendResponse extends IUserBackend, ResponseModel {
+interface IUserResponse extends Omit<IUserModel, 'password'>, ResponseModel {
 	recipeCollection?: IRecipeBackend[] | string[];
 	options?: UserOptionsResponse;
 	plan?: PlanResponse;
@@ -44,14 +54,10 @@ interface IUserBackendResponse extends IUserBackend, ResponseModel {
 	shoppingList?: ShoppingListResponse;
 }
 
-// Fields that exist only in the frontend.
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IUserFrontend extends IUserShared {}
-
-interface IUserDoc extends IUserBackend, Document {}
+interface IUserDoc extends IUserModel, Document {}
 
 const UserSchemaFields: Record<
-	keyof Omit<IUserBackend, 'comparePassword' | 'passwordconfirmation'>,
+	keyof Omit<IUserModel, 'comparePassword' | 'passwordConfirmation'>,
 	unknown
 > = {
 	name: { type: String, description: 'Name of the user' },
@@ -128,4 +134,4 @@ UserSchema.methods.comparePassword = async function (
 
 const User = model<IUserDoc>('users', UserSchema);
 
-export { User, IUserDoc, IUserBackend, IUserBackendResponse, IUserFrontend };
+export { User, IUserDoc, IUserModel, IUserPost, IUserResponse };

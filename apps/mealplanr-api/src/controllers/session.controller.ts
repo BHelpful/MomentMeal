@@ -11,8 +11,11 @@ import {
 } from 'tsoa';
 import express from 'express';
 import { UserService } from '../services/user.service';
-import { IUserBackendResponse } from '../models/user.model';
-import { SessionData } from 'express-session';
+import { IUserResponse } from '../models/user.model';
+import { OurSessionData } from '../app';
+import { EmailPattern, PasswordPattern } from '../utils/patternTypes';
+import Logger from '../config/Logger';
+import { omit } from 'lodash';
 
 @Route('sessions')
 @Tags('Session')
@@ -25,10 +28,10 @@ export class SessionsController extends Controller {
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Body()
 		requestBody: {
-			email: string;
-			password: string;
+			email: EmailPattern;
+			password: PasswordPattern;
 		}
-	): Promise<SessionData> {
+	): Promise<OurSessionData> {
 		const user = await new UserService().validatePassword(
 			requestBody.email,
 			requestBody.password
@@ -37,24 +40,27 @@ export class SessionsController extends Controller {
 			return notFoundResponse(404, { reason: 'User not found' });
 		}
 
-		req.session.user = user as IUserBackendResponse; //THIS SETS AN OBJECT - 'USER'
-		const session = req.session.save((err) => {
+		req.session.user = user as IUserResponse; //THIS SETS AN OBJECT - 'USER'
+		req.session.accessToken = req.session.user.email;
+		req.session.refreshToken = 'someString';
+
+		let error = '';
+		req.session.save((err) => {
 			if (err) {
-				session.err = err;
+				error = err.message;
+				Logger.error(err);
 			} else {
-				return req.session.user;
+				return omit(req.session, 'user.password');
 			}
 		}); //THIS SAVES THE SESSION.
 
-		req.session.sessionId = session.id;
-
-		if (!session.user) {
+		if (!req.session.user) {
 			return internalServerError(500, {
-				reason: session.err as string,
+				reason: error,
 			});
 		} else {
 			this.setStatus(201); // set return status 201
-			return session;
+			return req.session;
 		}
 	}
 }

@@ -15,8 +15,8 @@ describe('POST /users', () => {
 	it('Should create a new user', async () => {
 		const res = await request(app).post('/users').send({
 			email: 'test@test.test',
-			password: 'myPassword',
-			passwordconfirmation: 'myPassword',
+			password: 'myPassword?1',
+			passwordConfirmation: 'myPassword?1',
 		});
 
 		const body = res.body;
@@ -30,11 +30,10 @@ describe('POST /users', () => {
 		const res = await request(app).post('/users').send({
 			email: 'test@test.test',
 			password: 'myPassword',
-			passwordconfirmation: 'myPassword',
+			passwordConfirmation: 'myPassword',
 		});
 
 		expect(res.body).not.toContain('_id');
-		expect(res.text).toBe('User already exists');
-		expect(res.status).toBe(409);
+		expect(res.status).toBe(422);
 	});
 });

@@ -12,17 +12,31 @@ import {
 	Tags,
 	TsoaResponse,
 } from 'tsoa';
-import { IUserBackend, IUserBackendResponse } from '../models/user.model';
+import { IUserModel, IUserPost, IUserResponse } from '../models/user.model';
 import { UserService } from '../services/user.service';
+import { EmailPattern } from '../utils/patternTypes';
 
 @Route('users')
 @Tags('User')
 export class UsersController extends Controller {
+	@Get('exists/{userMail}')
+	public async getUserExists(
+		@Path() userMail: EmailPattern,
+		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
+	): Promise<IUserResponse> {
+		const userService = new UserService();
+		const user = await userService.findOne({ email: userMail });
+		if (!user) {
+			return notFoundResponse(404, { reason: 'User not found' });
+		}
+		return user;
+	}
+	
 	@Get('{userId}')
 	public async getUser(
 		@Path() userId: string,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
-	): Promise<IUserBackendResponse> {
+	): Promise<IUserResponse> {
 		const userService = new UserService();
 		const user = await userService.getById(userId);
 		if (!user) {
@@ -31,11 +45,12 @@ export class UsersController extends Controller {
 		return user;
 	}
 
+
 	@SuccessResponse('201', 'resource created successfully')
 	@Post()
 	public async createUser(
-		@Body() requestBody: IUserBackend
-	): Promise<IUserBackendResponse> {
+		@Body() requestBody: IUserPost
+	): Promise<IUserResponse> {
 		this.setStatus(201); // set return status 201
 		return new UserService().create(requestBody);
 	}
@@ -44,10 +59,10 @@ export class UsersController extends Controller {
 	@Put('{userId}')
 	public async updateUser(
 		@Path() userId: string,
-		@Body() requestBody: IUserBackend,
+		@Body() requestBody: IUserModel,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
-	): Promise<IUserBackendResponse> {
+	): Promise<IUserResponse> {
 		const userService = new UserService();
 		const user = await userService.getById(userId);
 		if (!user) {

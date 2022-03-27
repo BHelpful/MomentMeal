@@ -1,22 +1,18 @@
 import { omit } from 'lodash';
 import {
-	IUserBackend,
-	IUserBackendResponse,
+	IUserResponse,
 	IUserDoc,
 	User,
+	IUserModel,
 } from '../models/user.model';
 import { Service } from './Repository/Service';
 
-export class UserService extends Service<
-	IUserDoc,
-	IUserBackend,
-	IUserBackendResponse
-> {
+export class UserService extends Service<IUserDoc, IUserModel, IUserResponse> {
 	public constructor() {
 		super(User);
 	}
 
-	public async populate(document: IUserDoc): Promise<IUserBackendResponse> {
+	public async populate(document: IUserDoc): Promise<IUserResponse> {
 		return document
 			.populate({
 				path: 'recipeCollection',
@@ -48,9 +44,11 @@ export class UserService extends Service<
 			.execPopulate();
 	}
 
-	public async validatePassword(email: string, password: string): Promise<IUserBackendResponse | boolean> {
+	public async validatePassword(
+		email: string,
+		password: string
+	): Promise<IUserResponse | boolean> {
 		const user = await super.findOne({ email });
-		console.log(user)
 
 		if (!user) {
 			return false;
