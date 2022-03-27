@@ -14,9 +14,45 @@ import { RegisterRoutes } from './routes';
 import * as swaggerJson from './swagger.json';
 import * as swaggerUI from 'swagger-ui-express';
 import log from './config/Logger';
+import MongoStore from 'connect-mongo';
+import { nanoid } from 'nanoid';
+import session from 'express-session';
+import { IUserBackendResponse } from './models/user.model';
+
+declare module 'express-session' {
+	export interface SessionData {
+		user: IUserBackendResponse;
+		sessionId: string
+		err: string;
+	}
+}
 
 const app = express();
 app.disable('x-powered-by');
+
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(
+	session({
+		secret: process.env.PRIVATE_KEY as string,
+		genid: function () {
+			return nanoid(10); // use UUIDs for session IDs
+		},
+		saveUninitialized: true,
+		cookie: { maxAge: oneDay },
+		resave: false,
+		store: MongoStore.create({
+			mongoUrl: process.env.DB_URI as string,
+			dbName: 'mealplanr',
+			touchAfter: 24 * 3600, // time period in seconds
+			ttl: 14 * 24 * 60 * 60, // = 14 days. Default,
+			autoRemove: 'interval',
+			autoRemoveInterval: 60, // In minutes.
+			crypto: {
+				secret: 'squirrel',
+			},
+		}),
+	})
+);
 
 // this will attach the user to every single request
 // that comes into the application

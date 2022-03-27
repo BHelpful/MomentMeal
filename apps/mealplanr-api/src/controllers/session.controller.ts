@@ -1,91 +1,60 @@
 import {
 	Body,
 	Controller,
-	Delete,
-	Get,
-	Path,
 	Post,
-	Put,
 	Res,
 	Route,
 	SuccessResponse,
 	Tags,
 	TsoaResponse,
+	Request,
 } from 'tsoa';
-import {
-	ISessionBackend,
-	ISessionBackendResponse,
-} from '../models/session.model';
-import { SessionService } from '../services/session.service';
+import express from 'express';
+import { UserService } from '../services/user.service';
+import { IUserBackendResponse } from '../models/user.model';
+import { SessionData } from 'express-session';
 
 @Route('sessions')
 @Tags('Session')
 export class SessionsController extends Controller {
-	@Get('{sessionId}')
-	public async getSession(
-		@Path() sessionId: string,
-		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
-	): Promise<ISessionBackendResponse> {
-		const sessionService = new SessionService();
-		const session = await sessionService.getById(sessionId);
-		if (!session) {
-			return notFoundResponse(404, { reason: 'Session not found' });
-		}
-		return session;
-	}
-
 	@SuccessResponse('201', 'resource created successfully')
 	@Post()
 	public async createSession(
-		@Body() requestBody: ISessionBackend
-	): Promise<ISessionBackendResponse> {
-		this.setStatus(201); // set return status 201
-		return new SessionService().create(requestBody);
-	}
-
-	@SuccessResponse('200', 'resource updated successfully')
-	@Put('{sessionId}')
-	public async updateSession(
-		@Path() sessionId: string,
-		@Body() requestBody: ISessionBackend,
+		@Request() req: express.Request,
+		@Res() internalServerError: TsoaResponse<500, { reason: string }>,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
-		@Res() internalServerError: TsoaResponse<500, { reason: string }>
-	): Promise<ISessionBackendResponse> {
-		const sessionService = new SessionService();
-		const session = await sessionService.getById(sessionId);
-		if (!session) {
-			return notFoundResponse(404, { reason: 'Session not found' });
+		@Body()
+		requestBody: {
+			email: string;
+			password: string;
+		}
+	): Promise<SessionData> {
+		const user = await new UserService().validatePassword(
+			requestBody.email,
+			requestBody.password
+		);
+		if (!user || user === undefined) {
+			return notFoundResponse(404, { reason: 'User not found' });
 		}
 
-		const updatedSession = await sessionService.update(sessionId, requestBody);
-		if (!updatedSession) {
+		req.session.user = user as IUserBackendResponse; //THIS SETS AN OBJECT - 'USER'
+		const session = req.session.save((err) => {
+			if (err) {
+				session.err = err;
+			} else {
+				return req.session.user;
+			}
+		}); //THIS SAVES THE SESSION.
+
+		req.session.sessionId = session.id;
+
+		if (!session.user) {
 			return internalServerError(500, {
-				reason: 'Failed to update session',
+				reason: session.err as string,
 			});
-		}
-
-		return updatedSession;
-	}
-
-	@SuccessResponse('204', 'resource deleted successfully')
-	@Delete('{sessionId}')
-	public async deleteSession(
-		@Path() sessionId: string,
-		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
-		@Res() internalServerError: TsoaResponse<500, { reason: string }>
-	): Promise<void> {
-		const sessionService = new SessionService();
-		const session = await sessionService.getById(sessionId);
-		if (!session) {
-			return notFoundResponse(404, { reason: 'Session not found' });
-		}
-
-		try {
-			await sessionService.delete(sessionId);
-		} catch (error) {
-			return internalServerError(500, {
-				reason: 'Failed to delete session',
-			});
+		} else {
+			this.setStatus(201); // set return status 201
+			return session;
 		}
 	}
 }

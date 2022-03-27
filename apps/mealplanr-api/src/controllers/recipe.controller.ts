@@ -1,4 +1,4 @@
-import { omit } from 'lodash';
+import { Omit } from 'lodash';
 import {
 	Body,
 	Controller,
@@ -35,10 +35,8 @@ export class RecipesController extends Controller {
 	@SuccessResponse('201', 'resource created successfully')
 	@Post()
 	public async createRecipe(
-		@Body() requestBody: omit<IRecipeBackend, 'ID'>
+		@Body() requestBody: Omit<IRecipeBackend, 'ID'>
 	): Promise<IRecipeBackendResponse> {
-
-
 		this.setStatus(201); // set return status 201
 		return new RecipeService().create(requestBody);
 	}
@@ -47,7 +45,7 @@ export class RecipesController extends Controller {
 	@Put('{recipeId}')
 	public async updateRecipe(
 		@Path() recipeId: string,
-		@Body() requestBody: omit<IRecipeBackend, 'ID'>,
+		@Body() requestBody: Omit<IRecipeBackend, 'ID'>,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
 	): Promise<IRecipeBackendResponse> {

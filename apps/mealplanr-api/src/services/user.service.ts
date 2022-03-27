@@ -1,3 +1,4 @@
+import { omit } from 'lodash';
 import {
 	IUserBackend,
 	IUserBackendResponse,
@@ -45,5 +46,22 @@ export class UserService extends Service<
 				},
 			})
 			.execPopulate();
+	}
+
+	public async validatePassword(email: string, password: string): Promise<IUserBackendResponse | boolean> {
+		const user = await super.findOne({ email });
+		console.log(user)
+
+		if (!user) {
+			return false;
+		}
+
+		const isValid = await user.comparePassword(password);
+
+		if (!isValid) {
+			return false;
+		}
+
+		return omit(user, 'password');
 	}
 }

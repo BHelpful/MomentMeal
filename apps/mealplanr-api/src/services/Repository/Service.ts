@@ -1,4 +1,4 @@
-import { Model, UpdateQuery, DocumentDefinition } from 'mongoose';
+import { Model, UpdateQuery, DocumentDefinition, FilterQuery } from 'mongoose';
 import { PaginationModel } from '../../models/util/PaginationModel';
 import { Repository } from './Repository';
 
@@ -13,6 +13,12 @@ export abstract class Service<EntityDocument, EntityParams, EntityResponse> {
 
 	public async getById(_id: string): Promise<EntityResponse> {
 		return this.populate(await this.repository.findOne({ _id }));
+	}
+
+	public async findOne(
+		query: FilterQuery<EntityParams>
+	): Promise<EntityResponse> {
+		return this.populate(await this.repository.findOne(query));
 	}
 
 	public async exists(_id: string): Promise<boolean> {

@@ -1,5 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
-import { omit } from 'lodash';
+import { Omit } from 'lodash';
 import * as bcrypt from 'bcrypt';
 import {
 	Plan,
@@ -51,7 +51,7 @@ interface IUserFrontend extends IUserShared {}
 interface IUserDoc extends IUserBackend, Document {}
 
 const UserSchemaFields: Record<
-	keyof omit<IUserBackend, 'comparePassword' | "passwordconfirmation">,
+	keyof Omit<IUserBackend, 'comparePassword' | 'passwordconfirmation'>,
 	unknown
 > = {
 	name: { type: String, description: 'Name of the user' },
