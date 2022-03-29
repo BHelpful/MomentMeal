@@ -3,7 +3,6 @@ import {
 	Controller,
 	Delete,
 	Get,
-	Path,
 	Post,
 	Put,
 	Query,
@@ -24,13 +23,12 @@ export class UsersExistsController extends Controller {
 	public async getUserExists(
 		@Query() userMail: EmailPattern,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
-	): Promise<IUserResponse> {
+	) {
 		const userService = new UserService();
 		const user = await userService.findOne({ email: userMail });
 		if (!user) {
 			return notFoundResponse(404, { reason: 'User not found' });
 		}
-		return user;
 	}
 }
 @Route('users')
@@ -52,10 +50,17 @@ export class UsersController extends Controller {
 	@SuccessResponse('201', 'resource created successfully')
 	@Post()
 	public async createUser(
-		@Body() requestBody: IUserPost
+		@Body() requestBody: IUserPost,
+		@Res() alreadyExistsResponse: TsoaResponse<409, { reason: string }>
 	): Promise<IUserResponse> {
+		const userService = new UserService();
+		const user = await userService.findOne({ email: requestBody.email });
+		if (user !== null) {
+			return alreadyExistsResponse(409, { reason: 'User already exists' });
+		}
+
 		this.setStatus(201); // set return status 201
-		return new UserService().create(requestBody);
+		return userService.create(requestBody);
 	}
 
 	@SuccessResponse('200', 'resource updated successfully')

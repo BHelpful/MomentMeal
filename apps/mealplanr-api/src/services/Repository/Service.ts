@@ -1,12 +1,13 @@
 import { Model, UpdateQuery, DocumentDefinition, FilterQuery } from 'mongoose';
+import Logger from '../../config/Logger';
 import { PaginationModel } from '../../models/util/PaginationModel';
 import { Repository } from './Repository';
 
-export abstract class Service<EntityDocument, EntityParams, EntityResponse> {
-	protected repository: Repository<EntityDocument, EntityParams>;
+export abstract class Service<EntityDocument, EntityModel, EntityResponse> {
+	protected repository: Repository<EntityDocument, EntityModel>;
 
 	constructor(model: Model<EntityDocument>) {
-		this.repository = new Repository<EntityDocument, EntityParams>(model);
+		this.repository = new Repository<EntityDocument, EntityModel>(model);
 	}
 
 	public abstract populate(document: EntityDocument): Promise<EntityResponse>;
@@ -16,9 +17,14 @@ export abstract class Service<EntityDocument, EntityParams, EntityResponse> {
 	}
 
 	public async findOne(
-		query: FilterQuery<EntityParams>
-	): Promise<EntityResponse> {
-		return this.populate(await this.repository.findOne(query));
+		query: FilterQuery<EntityModel>
+	): Promise<EntityResponse | null> {
+		try {
+			return this.populate(await this.repository.findOne(query));
+		} catch (error) {
+			Logger.error(error);
+			return null;
+		}
 	}
 
 	public async exists(_id: string): Promise<boolean> {
@@ -26,7 +32,7 @@ export abstract class Service<EntityDocument, EntityParams, EntityResponse> {
 	}
 
 	public async getPaginated(
-		query: FilterQuery<EntityParams>,
+		query: FilterQuery<EntityModel>,
 		limit: number,
 		page = 0,
 		fields?: string,

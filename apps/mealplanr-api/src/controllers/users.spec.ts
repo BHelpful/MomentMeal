@@ -29,11 +29,11 @@ describe('POST /users', () => {
 	it('Should fail as user already exists', async () => {
 		const res = await request(app).post('/users').send({
 			email: 'test@test.test',
-			password: 'myPassword',
-			passwordConfirmation: 'myPassword',
+			password: 'myPassword?1',
+			passwordConfirmation: 'myPassword?1',
 		});
 
 		expect(res.body).not.toContain('_id');
-		expect(res.status).toBe(422);
+		expect(res.status).toBe(409);
 	});
 });

@@ -7,7 +7,7 @@ import {
 } from 'mongoose';
 import sanitize from 'mongo-sanitize';
 
-export class Repository<EntityDocument, EntityParams> {
+export class Repository<EntityDocument, EntityModel> {
 	protected model: Model<EntityDocument>;
 
 	constructor(model: Model<EntityDocument>) {
@@ -21,10 +21,10 @@ export class Repository<EntityDocument, EntityParams> {
 	 * @returns an entity document
 	 */
 	public async findOne(
-		query: FilterQuery<EntityParams>
+		query: FilterQuery<EntityModel>
 	): Promise<EntityDocument> {
 		const document = await this.model.findOne(sanitize(query));
-		if (!document) throw new Error();
+		if (!document) throw new Error("Entity doesn't exist");
 		return document;
 	}
 
@@ -35,7 +35,7 @@ export class Repository<EntityDocument, EntityParams> {
 	 * @returns a entity document
 	 */
 	public async create(
-		body: FilterQuery<EntityParams>
+		body: FilterQuery<EntityModel>
 	): Promise<EntityDocument> {
 		try {
 			return await this.model.create(sanitize(body));
@@ -54,7 +54,7 @@ export class Repository<EntityDocument, EntityParams> {
 	 * @returns a list of entity documents
 	 */
 	public async find(
-		query: FilterQuery<EntityParams>,
+		query: FilterQuery<EntityModel>,
 		sort: string,
 		skip = 0,
 		limit = 250
