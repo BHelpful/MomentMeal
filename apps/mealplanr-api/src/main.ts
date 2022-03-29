@@ -5,7 +5,7 @@ import { connectDB } from './connect';
 
 // gets items from default config file
 const port: number = parseInt(process.env.PORT as string, 10) || 3000;
-const host: string = (process.env.HOST as string) || 'localhost';
+const host: string = (process.env.HOST as string) || '127.0.0.1';
 
 // this is used to get info on the connection to the DB.
 const db = connection;

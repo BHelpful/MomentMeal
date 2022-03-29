@@ -13,13 +13,13 @@
 		"mpapi_host": {
 			"type": "string",
 			"description": "Host of the MealPlanr API",
-			"default": "localhost",
+			"default": "127.0.0.1",
 			"x-prompt": "What's the Host of the MealPlanr API?"
 		},
 		"mpapi_db_uri": {
 			"type": "string",
 			"description": "Mongoose database URI of the MealPlanr API",
-			"default": "mongodb://localhost:27017/mealplanr",
+			"default": "mongodb://127.0.0.1:27017/mealplanr",
 			"x-prompt": "What's the Mongoose database URI of the MealPlanr API?"
 		},
 		"testing_password": {
@@ -31,7 +31,7 @@
 		"mp_mpapi_uri": {
 			"type": "string",
 			"description": "MealPlanr API URI",
-			"default": "http://localhost:3333",
+			"default": "http://127.0.0.1:3333",
 			"x-prompt": "What's the MealPlanr API URI?"
 		},
 		"pino_log_level": {

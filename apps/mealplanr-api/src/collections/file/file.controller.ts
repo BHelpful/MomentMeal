@@ -21,7 +21,7 @@ db.once('open', function () {
 export async function createFileHandler(req: Request, res: Response) {
 	// gets items from default config file
 	const port: number = parseInt(process.env.PORT as string, 10) || 3000;
-	const host: string = (process.env.HOST as string) || 'localhost';
+	const host: string = (process.env.HOST as string) || '127.0.0.1';
 
 	if (req.file === undefined)
 		return res.status(400).send('You must select a file to send.');
