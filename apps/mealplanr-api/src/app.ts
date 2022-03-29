@@ -7,13 +7,12 @@ import express, {
 import { ValidateError } from 'tsoa';
 import cors from 'cors';
 import compression from 'compression';
-import { deserializeUser } from './middleware';
 import fileRouter from './routes/files';
 import bodyParser from 'body-parser';
 import { RegisterRoutes } from './routes';
 import * as swaggerJson from './swagger.json';
 import * as swaggerUI from 'swagger-ui-express';
-import log from './config/Logger';
+import Logger from './config/Logger';
 import MongoStore from 'connect-mongo';
 import { nanoid } from 'nanoid';
 import session from 'express-session';
@@ -57,10 +56,6 @@ app.use(
 		}),
 	})
 );
-
-// this will attach the user to every single request
-// that comes into the application
-app.use(deserializeUser);
 
 // need to use this in order to understand the JSON body from RESTful requests
 app.use(express.json());
@@ -128,14 +123,14 @@ app.use(function errorHandler(
 	next: NextFunction
 ): ExResponse | void {
 	if (err instanceof ValidateError) {
-		log.error(err, `Caught Validation Error for ${req.path}:`);
+		Logger.error(err, `Caught Validation Error for ${req.path}:`);
 		return res.status(422).json({
 			message: 'Validation Failed',
 			details: err?.fields,
 		});
 	}
 	if (err instanceof Error) {
-		log.error(err, `Caught Internal Server Error for ${req.path}:`);
+		Logger.error(err, `Caught Internal Server Error for ${req.path}:`);
 		return res.status(500).json({
 			message: 'Internal Server Error',
 			details: err?.message,
