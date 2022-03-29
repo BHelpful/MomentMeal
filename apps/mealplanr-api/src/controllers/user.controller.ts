@@ -6,6 +6,7 @@ import {
 	Path,
 	Post,
 	Put,
+	Query,
 	Res,
 	Route,
 	SuccessResponse,
@@ -16,12 +17,12 @@ import { IUserModel, IUserPost, IUserResponse } from '../models/user.model';
 import { UserService } from '../services/user.service';
 import { EmailPattern } from '../utils/patternTypes';
 
-@Route('users')
+@Route('users/exists')
 @Tags('User')
-export class UsersController extends Controller {
-	@Get('exists/{userMail}')
+export class UsersExistsController extends Controller {
+	@Get()
 	public async getUserExists(
-		@Path() userMail: EmailPattern,
+		@Query() userMail: EmailPattern,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
 	): Promise<IUserResponse> {
 		const userService = new UserService();
@@ -31,10 +32,13 @@ export class UsersController extends Controller {
 		}
 		return user;
 	}
-	
-	@Get('{userId}')
+}
+@Route('users')
+@Tags('User')
+export class UsersController extends Controller {
+	@Get()
 	public async getUser(
-		@Path() userId: string,
+		@Query() userId: string,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
 	): Promise<IUserResponse> {
 		const userService = new UserService();
@@ -44,7 +48,6 @@ export class UsersController extends Controller {
 		}
 		return user;
 	}
-
 
 	@SuccessResponse('201', 'resource created successfully')
 	@Post()
@@ -56,9 +59,9 @@ export class UsersController extends Controller {
 	}
 
 	@SuccessResponse('200', 'resource updated successfully')
-	@Put('{userId}')
+	@Put()
 	public async updateUser(
-		@Path() userId: string,
+		@Query() userId: string,
 		@Body() requestBody: IUserModel,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
@@ -80,9 +83,9 @@ export class UsersController extends Controller {
 	}
 
 	@SuccessResponse('204', 'resource deleted successfully')
-	@Delete('{userId}')
+	@Delete()
 	public async deleteUser(
-		@Path() userId: string,
+		@Query() userId: string,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
 	): Promise<void> {

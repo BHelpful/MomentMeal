@@ -8,6 +8,7 @@ import {
 	Tags,
 	TsoaResponse,
 	Request,
+	Delete,
 } from 'tsoa';
 import express from 'express';
 import { UserService } from '../services/user.service';
@@ -41,7 +42,7 @@ export class SessionsController extends Controller {
 		}
 
 		req.session.user = user as IUserResponse; //THIS SETS AN OBJECT - 'USER'
-		req.session.accessToken = req.session.user.email;
+		req.session.accessToken = req.session.user._id;
 		req.session.refreshToken = 'someString';
 
 		let error = '';
@@ -62,5 +63,10 @@ export class SessionsController extends Controller {
 			this.setStatus(201); // set return status 201
 			return req.session;
 		}
+	}
+	@SuccessResponse('201', 'resource created successfully')
+	@Delete()
+	public async deleteSession() {
+		this.setStatus(200);
 	}
 }

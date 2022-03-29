@@ -26,12 +26,12 @@ export abstract class Service<EntityDocument, EntityParams, EntityResponse> {
 	}
 
 	public async getPaginated(
-		page: number,
+		query: FilterQuery<EntityParams>,
 		limit: number,
-		fields: string,
-		sort: string,
-		query: string
-	): Promise<PaginationModel> {
+		page = 0,
+		fields?: string,
+		sort = ''
+	): Promise<PaginationModel<EntityDocument>> {
 		const skip: number = (Math.max(1, page) - 1) * limit;
 		const count = await this.repository.count(query);
 		let docs = await this.repository.find(query, sort, skip, limit);
@@ -46,7 +46,7 @@ export abstract class Service<EntityDocument, EntityParams, EntityResponse> {
 				fieldArray.forEach((f) => (attrs[f] = (d as any)[f]));
 				return attrs;
 			});
-		return new PaginationModel({
+		return new PaginationModel<EntityDocument>({
 			count,
 			page,
 			limit,

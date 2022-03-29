@@ -134,7 +134,10 @@ const sessionReducer = (
 };
 
 export const checkForUser = (email: string) => {
-	return async function (dispatch: (arg: unknown)=>void, getState: ()=>RootState) {
+	return async function (
+		dispatch: (arg: unknown) => void,
+		getState: () => RootState
+	) {
 		const user = await fetch(
 			`${NX_MP_API_URI}/users/exists/?userMail=${email}`,
 			{
@@ -162,7 +165,10 @@ export const createUser = (
 	password: string,
 	passwordConfirmation: string
 ) => {
-	return async function (dispatch: (arg: unknown)=>void, getState: ()=>RootState) {
+	return async function (
+		dispatch: (arg: unknown) => void,
+		getState: () => RootState
+	) {
 		const userResponse = await fetch(`${NX_MP_API_URI}/users`, {
 			body: JSON.stringify({
 				email: email,
@@ -208,7 +214,10 @@ export const createUser = (
 };
 
 export const userLogin = (email: string, password: string) => {
-	return async function (dispatch: (arg: unknown)=>void, getState: RootState) {
+	return async function (
+		dispatch: (arg: unknown) => void,
+		getState: RootState
+	) {
 		const sessionResponse = await fetch(`${NX_MP_API_URI}/sessions`, {
 			body: JSON.stringify({
 				email: email,
@@ -217,16 +226,19 @@ export const userLogin = (email: string, password: string) => {
 			headers: { 'Content-Type': 'application/json' },
 			method: 'POST',
 		});
-		if (sessionResponse.status === 200) {
+		if (sessionResponse.status === 201) {
 			const session = await sessionResponse.json();
-			const userResponse = await fetch(`${NX_MP_API_URI}/users/`, {
-				headers: {
-					'Content-Type': 'application/json',
-					'x-refresh': session.refreshToken,
-					authorization: session.accessToken,
-				},
-				method: 'GET',
-			});
+			const userResponse = await fetch(
+				`${NX_MP_API_URI}/users/?userId=${session.accessToken}`,
+				{
+					headers: {
+						'Content-Type': 'application/json',
+						'x-refresh': session.refreshToken,
+						authorization: session.accessToken,
+					},
+					method: 'GET',
+				}
+			);
 
 			if (userResponse.status === 200) {
 				const user = await userResponse.json();
@@ -252,7 +264,10 @@ export const userLogin = (email: string, password: string) => {
 };
 
 export const userLogout = (refresh: string, authorization: string) => {
-	return async function (dispatch: (arg: unknown)=>void, getState: (arg: unknown)=>void) {
+	return async function (
+		dispatch: (arg: unknown) => void,
+		getState: (arg: unknown) => void
+	) {
 		const sessionResponse = await fetch(`${NX_MP_API_URI}/sessions`, {
 			headers: {
 				'Content-Type': 'application/json',

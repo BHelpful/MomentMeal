@@ -6,7 +6,8 @@ import {
 	getRecipesPlan,
 	MealplanType,
 	recipeDefaults,
-	RecipesType,
+	recipesDefaults,
+	RecipeType,
 } from '../../services/MP-API/recipes';
 import { useDispatch } from 'react-redux';
 import { setPage } from '../../reducers/navState';
@@ -135,10 +136,13 @@ export default function Recipes(props: RecipesProps) {
 	const { mealFrom } = props;
 	const displayAmount = 10;
 
-	const [listData, setListData] = useState([recipeDefaults]);
+	const [recipesData, setListData] = useState(recipesDefaults);
 	useEffect(() => {
 		getRecipes(displayAmount, 0, setListData);
 	}, []);
+
+	console.log('listData: ');
+	console.log(recipesData);
 
 	if (mealFrom === 'plan')
 		return (
@@ -168,7 +172,7 @@ export default function Recipes(props: RecipesProps) {
 				) : (
 					''
 				)}
-				{listData.map((recipesItem: RecipesType, index: number) => (
+				{recipesData.docs.map((recipesItem: RecipeType, index: number) => (
 					<Recipe
 						key={index}
 						type={'wide'}
