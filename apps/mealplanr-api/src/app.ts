@@ -35,6 +35,7 @@ const app = express();
 app.disable('x-powered-by');
 
 const oneDay = 1000 * 60 * 60 * 24;
+console.log(`NINJA: ${process.env.DB_URI}`);
 app.use(
 	session({
 		secret: process.env.PRIVATE_KEY as string,

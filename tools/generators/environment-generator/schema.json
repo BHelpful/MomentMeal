@@ -22,6 +22,12 @@
 			"default": "mongodb://localhost:27017/mealplanr",
 			"x-prompt": "What's the Mongoose database URI of the MealPlanr API?"
 		},
+		"testing_password": {
+			"type": "string",
+			"description": "The default password used for the testing",
+			"default": "myPassword?1",
+			"x-prompt": "What shall be the password to use when testing?"
+		},
 		"mp_mpapi_uri": {
 			"type": "string",
 			"description": "MealPlanr API URI",

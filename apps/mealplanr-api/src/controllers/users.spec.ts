@@ -15,8 +15,8 @@ describe('POST /users', () => {
 	it('Should create a new user', async () => {
 		const res = await request(app).post('/users').send({
 			email: 'test@test.test',
-			password: 'myPassword?1',
-			passwordConfirmation: 'myPassword?1',
+			password: process.env.TESTING_PASSWORD,
+			passwordConfirmation: process.env.TESTING_PASSWORD,
 		});
 
 		const body = res.body;
@@ -29,8 +29,8 @@ describe('POST /users', () => {
 	it('Should fail as user already exists', async () => {
 		const res = await request(app).post('/users').send({
 			email: 'test@test.test',
-			password: 'myPassword?1',
-			passwordConfirmation: 'myPassword?1',
+			password: process.env.TESTING_PASSWORD,
+			passwordConfirmation: process.env.TESTING_PASSWORD,
 		});
 
 		expect(res.body).not.toContain('_id');

@@ -11,11 +11,11 @@ let mongod: MongoMemoryServer;
  * It logs on success and on connection error.
  */
 export async function connectDB() {
-	console.log('NINJA: ' + process.env.NODE_ENV);
 	if (process.env.NODE_ENV === 'test') {
 		// In test environment, we don't want to connect to the real DB.
 		mongod = await MongoMemoryServer.create();
 		const uri = mongod.getUri();
+		console.log('NINJA: ' + uri);
 		await connect(uri, {
 			useNewUrlParser: true,
 			useCreateIndex: true,
