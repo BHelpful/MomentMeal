@@ -34,28 +34,28 @@ const app = express();
 app.disable('x-powered-by');
 
 const oneDay = 1000 * 60 * 60 * 24;
-app.use(
-	session({
-		secret: process.env.PRIVATE_KEY as string,
-		genid: function () {
-			return nanoid(10); // use UUIDs for session IDs
-		},
-		saveUninitialized: true,
-		cookie: { maxAge: oneDay },
-		resave: false,
-		store: MongoStore.create({
-			mongoUrl: "mongodb://localhost:27017/mealplanr",
-			dbName: 'mealplanr',
-			touchAfter: 24 * 3600, // time period in seconds
-			ttl: 14 * 24 * 60 * 60, // = 14 days. Default,
-			autoRemove: 'interval',
-			autoRemoveInterval: 60, // In minutes.
-			crypto: {
-				secret: 'squirrel',
-			},
-		}),
-	})
-);
+// app.use(
+// 	session({
+// 		secret: process.env.PRIVATE_KEY as string,
+// 		genid: function () {
+// 			return nanoid(10); // use UUIDs for session IDs
+// 		},
+// 		saveUninitialized: true,
+// 		cookie: { maxAge: oneDay },
+// 		resave: false,
+// 		store: MongoStore.create({
+// 			mongoUrl: "mongodb://localhost:27017/mealplanr",
+// 			dbName: 'mealplanr',
+// 			touchAfter: 24 * 3600, // time period in seconds
+// 			ttl: 14 * 24 * 60 * 60, // = 14 days. Default,
+// 			autoRemove: 'interval',
+// 			autoRemoveInterval: 60, // In minutes.
+// 			crypto: {
+// 				secret: 'squirrel',
+// 			},
+// 		}),
+// 	})
+// );
 
 // need to use this in order to understand the JSON body from RESTful requests
 app.use(express.json());
