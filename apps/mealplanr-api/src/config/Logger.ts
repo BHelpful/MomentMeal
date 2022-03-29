@@ -1,7 +1,7 @@
 import pinoLogger from 'pino';
-import fs = require('fs');
+import fs from 'fs';
 import dayjs from 'dayjs';
-import pinoMS = require('pino-multi-stream');
+import pinoMS from 'pino-multi-stream';
 import pretty from 'pino-pretty';
 
 const levels = {
@@ -32,7 +32,7 @@ const streams = [
  * as node.js is a single threaded environment, it is important to have a logger that is not logging to the console.
  *
  */
-const log = pinoLogger(
+const Logger = pinoLogger(
 	{
 		base: {
 			pid: false,
@@ -44,4 +44,4 @@ const log = pinoLogger(
 	pinoMS.multistream(streams)
 );
 
-export default log;
+export default Logger;

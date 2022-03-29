@@ -1,5 +1,5 @@
-import util = require('util');
-import multer = require('multer');
+import util from 'util';
+import multer from 'multer';
 import { GridFsStorage } from 'multer-gridfs-storage';
 
 const storage = new GridFsStorage({

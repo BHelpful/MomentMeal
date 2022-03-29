@@ -40,7 +40,6 @@ export class SessionsController extends Controller {
 		if (!user || user === undefined) {
 			return notFoundResponse(404, { reason: 'User not found' });
 		}
-
 		req.session.user = user as IUserResponse; //THIS SETS AN OBJECT - 'USER'
 		req.session.accessToken = req.session.user._id;
 		req.session.refreshToken = 'someString';

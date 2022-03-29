@@ -23,12 +23,13 @@ export class UsersExistsController extends Controller {
 	public async getUserExists(
 		@Query() userMail: EmailPattern,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
-	) {
+	): Promise<boolean> {
 		const userService = new UserService();
 		const user = await userService.findOne({ email: userMail });
 		if (!user) {
 			return notFoundResponse(404, { reason: 'User not found' });
 		}
+		return true;
 	}
 }
 @Route('users')
