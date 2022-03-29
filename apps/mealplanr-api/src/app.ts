@@ -44,7 +44,7 @@ app.use(
 		cookie: { maxAge: oneDay },
 		resave: false,
 		store: MongoStore.create({
-			mongoUrl: "mongodb://localhost:27017/mealplanr",
+			mongoUrl: process.env.DB_URI as string,
 			dbName: 'mealplanr',
 			touchAfter: 24 * 3600, // time period in seconds
 			ttl: 14 * 24 * 60 * 60, // = 14 days. Default,

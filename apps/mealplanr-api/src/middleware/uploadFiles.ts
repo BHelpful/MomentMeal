@@ -19,5 +19,12 @@ const storage = new GridFsStorage({
 	},
 });
 
-const uploadFiles = util.promisify(multer({ storage }).single('file'));
+const uploadFiles = util.promisify(
+	multer({
+		storage: storage,
+		limits: {
+			fileSize: 1000,
+		},
+	}).single('file')
+);
 export default uploadFiles;
