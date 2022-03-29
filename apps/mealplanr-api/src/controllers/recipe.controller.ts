@@ -1,12 +1,12 @@
-import { omit } from 'lodash';
+import { Omit } from 'lodash';
 import {
 	Body,
 	Controller,
 	Delete,
 	Get,
-	Path,
 	Post,
 	Put,
+	Query,
 	Res,
 	Route,
 	SuccessResponse,
@@ -14,18 +14,36 @@ import {
 	TsoaResponse,
 } from 'tsoa';
 import { IRecipeBackend, IRecipeBackendResponse } from '../models/recipe.model';
+import { PaginationModel } from '../models/util/PaginationModel';
 import { RecipeService } from '../services/recipe.service';
 
 @Route('recipes')
 @Tags('Recipe')
 export class RecipesController extends Controller {
-	@Get('{recipeId}')
+	@Get()
 	public async getRecipe(
-		@Path() recipeId: string,
-		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
-	): Promise<IRecipeBackendResponse> {
+		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
+		@Query() recipeId?: string,
+		@Query() creatorId?: string,
+		@Query() limit?: number,
+		@Query() selectedRecipe?: number
+	): Promise<IRecipeBackendResponse | PaginationModel<IRecipeBackendResponse>> {
+		let definedLimit = limit ? limit : 100;
+		let definedSelectedRecipe = selectedRecipe ? selectedRecipe : 1;
+		definedLimit = Math.min(Math.max(definedLimit, 1), 100);
+		definedSelectedRecipe = Math.min(Math.max(definedSelectedRecipe, 0), 1000);
+
+		const definedRecipeId = recipeId ? { recipeId } : {};
+		const definedCreatorId = creatorId ? { creatorId } : {};
+
+		const query = { ...definedRecipeId, ...definedCreatorId };
+
 		const recipeService = new RecipeService();
-		const recipe = await recipeService.getById(recipeId);
+		const recipe = await recipeService.getPaginated(
+			query,
+			definedLimit,
+			definedSelectedRecipe
+		);
 		if (!recipe) {
 			return notFoundResponse(404, { reason: 'Recipe not found' });
 		}
@@ -35,19 +53,17 @@ export class RecipesController extends Controller {
 	@SuccessResponse('201', 'resource created successfully')
 	@Post()
 	public async createRecipe(
-		@Body() requestBody: omit<IRecipeBackend, 'ID'>
+		@Body() requestBody: Omit<IRecipeBackend, 'ID'>
 	): Promise<IRecipeBackendResponse> {
-
-
 		this.setStatus(201); // set return status 201
 		return new RecipeService().create(requestBody);
 	}
 
 	@SuccessResponse('200', 'resource updated successfully')
-	@Put('{recipeId}')
+	@Put()
 	public async updateRecipe(
-		@Path() recipeId: string,
-		@Body() requestBody: omit<IRecipeBackend, 'ID'>,
+		@Query() recipeId: string,
+		@Body() requestBody: Omit<IRecipeBackend, 'ID'>,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
 	): Promise<IRecipeBackendResponse> {
@@ -68,9 +84,9 @@ export class RecipesController extends Controller {
 	}
 
 	@SuccessResponse('204', 'resource deleted successfully')
-	@Delete('{recipeId}')
+	@Delete()
 	public async deleteRecipe(
-		@Path() recipeId: string,
+		@Query() recipeId: string,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
 	): Promise<void> {

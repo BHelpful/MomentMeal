@@ -1,91 +1,72 @@
 import {
 	Body,
 	Controller,
-	Delete,
-	Get,
-	Path,
 	Post,
-	Put,
 	Res,
 	Route,
 	SuccessResponse,
 	Tags,
 	TsoaResponse,
+	Request,
+	Delete,
 } from 'tsoa';
-import {
-	ISessionBackend,
-	ISessionBackendResponse,
-} from '../models/session.model';
-import { SessionService } from '../services/session.service';
+import express from 'express';
+import { UserService } from '../services/user.service';
+import { IUserResponse } from '../models/user.model';
+import { OurSessionData } from '../app';
+import { EmailPattern, PasswordPattern } from '../utils/patternTypes';
+import Logger from '../config/Logger';
+import { omit } from 'lodash';
 
 @Route('sessions')
 @Tags('Session')
 export class SessionsController extends Controller {
-	@Get('{sessionId}')
-	public async getSession(
-		@Path() sessionId: string,
-		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
-	): Promise<ISessionBackendResponse> {
-		const sessionService = new SessionService();
-		const session = await sessionService.getById(sessionId);
-		if (!session) {
-			return notFoundResponse(404, { reason: 'Session not found' });
-		}
-		return session;
-	}
-
 	@SuccessResponse('201', 'resource created successfully')
 	@Post()
 	public async createSession(
-		@Body() requestBody: ISessionBackend
-	): Promise<ISessionBackendResponse> {
-		this.setStatus(201); // set return status 201
-		return new SessionService().create(requestBody);
-	}
-
-	@SuccessResponse('200', 'resource updated successfully')
-	@Put('{sessionId}')
-	public async updateSession(
-		@Path() sessionId: string,
-		@Body() requestBody: ISessionBackend,
+		@Request() req: express.Request,
+		@Res() internalServerError: TsoaResponse<500, { reason: string }>,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
-		@Res() internalServerError: TsoaResponse<500, { reason: string }>
-	): Promise<ISessionBackendResponse> {
-		const sessionService = new SessionService();
-		const session = await sessionService.getById(sessionId);
-		if (!session) {
-			return notFoundResponse(404, { reason: 'Session not found' });
+		@Body()
+		requestBody: {
+			email: EmailPattern;
+			password: PasswordPattern;
+		}
+	): Promise<OurSessionData> {
+		const user = await new UserService().validatePassword(
+			requestBody.email,
+			requestBody.password
+		);
+		if (!user || user === undefined) {
+			return notFoundResponse(404, { reason: 'User not found' });
 		}
 
-		const updatedSession = await sessionService.update(sessionId, requestBody);
-		if (!updatedSession) {
+		req.session.user = user as IUserResponse; //THIS SETS AN OBJECT - 'USER'
+		req.session.accessToken = req.session.user._id;
+		req.session.refreshToken = 'someString';
+
+		let error = '';
+		req.session.save((err) => {
+			if (err) {
+				error = err.message;
+				Logger.error(err);
+			} else {
+				return omit(req.session, 'user.password');
+			}
+		}); //THIS SAVES THE SESSION.
+
+		if (!req.session.user) {
 			return internalServerError(500, {
-				reason: 'Failed to update session',
+				reason: error,
 			});
+		} else {
+			this.setStatus(201); // set return status 201
+			return req.session;
 		}
-
-		return updatedSession;
 	}
-
-	@SuccessResponse('204', 'resource deleted successfully')
-	@Delete('{sessionId}')
-	public async deleteSession(
-		@Path() sessionId: string,
-		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
-		@Res() internalServerError: TsoaResponse<500, { reason: string }>
-	): Promise<void> {
-		const sessionService = new SessionService();
-		const session = await sessionService.getById(sessionId);
-		if (!session) {
-			return notFoundResponse(404, { reason: 'Session not found' });
-		}
-
-		try {
-			await sessionService.delete(sessionId);
-		} catch (error) {
-			return internalServerError(500, {
-				reason: 'Failed to delete session',
-			});
-		}
+	@SuccessResponse('201', 'resource created successfully')
+	@Delete()
+	public async deleteSession() {
+		this.setStatus(200);
 	}
 }

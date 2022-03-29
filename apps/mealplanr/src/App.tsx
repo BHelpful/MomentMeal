@@ -10,8 +10,8 @@ import { setNavIndex, setPage } from './reducers/navState';
 const user = {
 	id: 9272,
 	color: 0,
-	email: 'test@test.test',
-	pass: '123456',
+	email: 'user@example.com',
+	pass: 'Example?Password1',
 };
 
 function App() {
@@ -55,7 +55,7 @@ function App() {
 							</p>
 							<input
 								type={'email'}
-								placeholder={'test@test.test'}
+								placeholder={'user@example.com'}
 								id={'userCheckEmail'}
 								onChange={updateDataEmail}
 							/>
@@ -76,7 +76,7 @@ function App() {
 							<p>Mail known, enter password</p>
 							<input
 								type={'password'}
-								placeholder={'123456'}
+								placeholder={'Example?Password1'}
 								onChange={updateDataPass}
 								value={''}
 							/>

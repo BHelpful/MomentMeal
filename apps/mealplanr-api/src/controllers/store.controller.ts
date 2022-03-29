@@ -11,18 +11,23 @@ import {
 	SuccessResponse,
 	Tags,
 	TsoaResponse,
+	Request,
 } from 'tsoa';
 import { IStoreBackend, IStoreBackendResponse } from '../models/store.model';
 import { StoreService } from '../services/store.service';
+import express from 'express';
 
 @Route('stores')
 @Tags('Store')
 export class StoresController extends Controller {
 	@Get('{storeId}')
 	public async getStore(
+		@Request() req: express.Request,
 		@Path() storeId: string,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
 	): Promise<IStoreBackendResponse> {
+		console.log(req.session);
+
 		const storeService = new StoreService();
 		const store = await storeService.getById(storeId);
 		if (!store) {

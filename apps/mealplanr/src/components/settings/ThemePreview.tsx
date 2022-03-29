@@ -58,7 +58,7 @@ const handleThemeClick = (dispatch: (arg: unknown)=>void) => (e: React.MouseEven
   const allPallets = document.getElementsByClassName("themecolor");
   for(let i = 0; i < allPallets.length; i++) allPallets[i].classList.remove("selected");
 
-  const password = "123456";
+  const password = 'Example?Password1';
 
   (e.target as HTMLDivElement).classList.add("selected");
   dispatch(setTheme(password, prevcolor.base, prevcolor.shade));

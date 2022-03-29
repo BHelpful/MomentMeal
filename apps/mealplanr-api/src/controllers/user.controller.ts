@@ -6,23 +6,41 @@ import {
 	Path,
 	Post,
 	Put,
+	Query,
 	Res,
 	Route,
 	SuccessResponse,
 	Tags,
 	TsoaResponse,
 } from 'tsoa';
-import { IUserBackend, IUserBackendResponse } from '../models/user.model';
+import { IUserModel, IUserPost, IUserResponse } from '../models/user.model';
 import { UserService } from '../services/user.service';
+import { EmailPattern } from '../utils/patternTypes';
 
+@Route('users/exists')
+@Tags('User')
+export class UsersExistsController extends Controller {
+	@Get()
+	public async getUserExists(
+		@Query() userMail: EmailPattern,
+		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
+	): Promise<IUserResponse> {
+		const userService = new UserService();
+		const user = await userService.findOne({ email: userMail });
+		if (!user) {
+			return notFoundResponse(404, { reason: 'User not found' });
+		}
+		return user;
+	}
+}
 @Route('users')
 @Tags('User')
 export class UsersController extends Controller {
-	@Get('{userId}')
+	@Get()
 	public async getUser(
-		@Path() userId: string,
+		@Query() userId: string,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>
-	): Promise<IUserBackendResponse> {
+	): Promise<IUserResponse> {
 		const userService = new UserService();
 		const user = await userService.getById(userId);
 		if (!user) {
@@ -34,20 +52,20 @@ export class UsersController extends Controller {
 	@SuccessResponse('201', 'resource created successfully')
 	@Post()
 	public async createUser(
-		@Body() requestBody: IUserBackend
-	): Promise<IUserBackendResponse> {
+		@Body() requestBody: IUserPost
+	): Promise<IUserResponse> {
 		this.setStatus(201); // set return status 201
 		return new UserService().create(requestBody);
 	}
 
 	@SuccessResponse('200', 'resource updated successfully')
-	@Put('{userId}')
+	@Put()
 	public async updateUser(
-		@Path() userId: string,
-		@Body() requestBody: IUserBackend,
+		@Query() userId: string,
+		@Body() requestBody: IUserModel,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
-	): Promise<IUserBackendResponse> {
+	): Promise<IUserResponse> {
 		const userService = new UserService();
 		const user = await userService.getById(userId);
 		if (!user) {
@@ -65,9 +83,9 @@ export class UsersController extends Controller {
 	}
 
 	@SuccessResponse('204', 'resource deleted successfully')
-	@Delete('{userId}')
+	@Delete()
 	public async deleteUser(
-		@Path() userId: string,
+		@Query() userId: string,
 		@Res() notFoundResponse: TsoaResponse<404, { reason: string }>,
 		@Res() internalServerError: TsoaResponse<500, { reason: string }>
 	): Promise<void> {

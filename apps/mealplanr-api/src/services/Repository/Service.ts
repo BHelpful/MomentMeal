@@ -1,4 +1,4 @@
-import { Model, UpdateQuery, DocumentDefinition } from 'mongoose';
+import { Model, UpdateQuery, DocumentDefinition, FilterQuery } from 'mongoose';
 import { PaginationModel } from '../../models/util/PaginationModel';
 import { Repository } from './Repository';
 
@@ -15,17 +15,23 @@ export abstract class Service<EntityDocument, EntityParams, EntityResponse> {
 		return this.populate(await this.repository.findOne({ _id }));
 	}
 
+	public async findOne(
+		query: FilterQuery<EntityParams>
+	): Promise<EntityResponse> {
+		return this.populate(await this.repository.findOne(query));
+	}
+
 	public async exists(_id: string): Promise<boolean> {
 		return this.repository.exists({ _id });
 	}
 
 	public async getPaginated(
-		page: number,
+		query: FilterQuery<EntityParams>,
 		limit: number,
-		fields: string,
-		sort: string,
-		query: string
-	): Promise<PaginationModel> {
+		page = 0,
+		fields?: string,
+		sort = ''
+	): Promise<PaginationModel<EntityDocument>> {
 		const skip: number = (Math.max(1, page) - 1) * limit;
 		const count = await this.repository.count(query);
 		let docs = await this.repository.find(query, sort, skip, limit);
@@ -40,7 +46,7 @@ export abstract class Service<EntityDocument, EntityParams, EntityResponse> {
 				fieldArray.forEach((f) => (attrs[f] = (d as any)[f]));
 				return attrs;
 			});
-		return new PaginationModel({
+		return new PaginationModel<EntityDocument>({
 			count,
 			page,
 			limit,
