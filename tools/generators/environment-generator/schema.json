@@ -22,11 +22,23 @@
 			"default": "mongodb://localhost:27017/mealplanr",
 			"x-prompt": "What's the Mongoose database URI of the MealPlanr API?"
 		},
+		"testing_password": {
+			"type": "string",
+			"description": "The default password used for the testing",
+			"default": "myPassword?1",
+			"x-prompt": "What shall be the password to use when testing?"
+		},
 		"mp_mpapi_uri": {
 			"type": "string",
 			"description": "MealPlanr API URI",
 			"default": "http://localhost:3333",
 			"x-prompt": "What's the MealPlanr API URI?"
+		},
+		"pino_log_level": {
+			"type": "string",
+			"description": "Pino log level",
+			"default": "info",
+			"x-prompt": "What's the default log level for Pino logger?"
 		},
 		"mpapi_salt_worker_factor": {
 			"type": "string",

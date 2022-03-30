@@ -1,6 +1,3 @@
-node_modules
-/api/config/default.ts
-/api/config/tunnel_rsa
-/api/config/api_rsa
-.env
-.DS_Store
+# The following are generated files, which should not be committed.
+/src/routes.ts
+/src/swagger.json

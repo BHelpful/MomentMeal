@@ -1,5 +1,5 @@
-import util = require('util');
-import multer = require('multer');
+import util from 'util';
+import multer from 'multer';
 import { GridFsStorage } from 'multer-gridfs-storage';
 
 const storage = new GridFsStorage({
@@ -19,5 +19,12 @@ const storage = new GridFsStorage({
 	},
 });
 
-const uploadFiles = util.promisify(multer({ storage }).single('file'));
+const uploadFiles = util.promisify(
+	multer({
+		storage: storage,
+		limits: {
+			fileSize: 1000,
+		},
+	}).single('file')
+);
 export default uploadFiles;
