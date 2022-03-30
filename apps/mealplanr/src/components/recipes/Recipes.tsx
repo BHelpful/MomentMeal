@@ -141,9 +141,6 @@ export default function Recipes(props: RecipesProps) {
 		getRecipes(displayAmount, 0, setListData);
 	}, []);
 
-	console.log('listData: ');
-	console.log(recipesData);
-
 	if (mealFrom === 'plan')
 		return (
 			<>

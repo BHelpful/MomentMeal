@@ -17,6 +17,7 @@ export type PasswordPattern = string;
 
 /**
  * Name.
+ * @pattern ^([A-Z][^\s\dA-Z]+ |$){2,4} 2 to 4 names, that are sperated by one space and that must only contain a leading english capital letter.
  * @format name
  * @example "John Doe"
  */

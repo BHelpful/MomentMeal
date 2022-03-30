@@ -33,7 +33,12 @@ declare module 'express-session' {
 const app = express();
 app.disable('x-powered-by');
 
-const oneDay = 1000 * 60 * 60 * 24;
+interface TUnitType {
+	[key: string]: number;
+}
+const tUnits: TUnitType = { "ms": 86400000, "s": 86400, "m": 1440, "h": 24, "d": 1 };
+const daysAsUnit = (unit: string, days = 1) => days * tUnits[unit];
+
 app.use(
 	session({
 		secret: process.env.PRIVATE_KEY as string,
@@ -41,15 +46,15 @@ app.use(
 			return nanoid(10); // use UUIDs for session IDs
 		},
 		saveUninitialized: true,
-		cookie: { maxAge: oneDay },
+		cookie: { maxAge: daysAsUnit('ms'), secure: true }, // 1 day
 		resave: false,
 		store: MongoStore.create({
 			mongoUrl: process.env.DB_URI as string,
 			dbName: 'mealplanr',
-			touchAfter: 24 * 3600, // time period in seconds
-			ttl: 14 * 24 * 60 * 60, // = 14 days. Default,
+			touchAfter: daysAsUnit('s'), // 1 day
+			ttl: daysAsUnit('s', 14), // 14 days
 			autoRemove: 'interval',
-			autoRemoveInterval: 60, // In minutes.
+			autoRemoveInterval: daysAsUnit('m', 1/24), // 1 hour
 			crypto: {
 				secret: 'squirrel',
 			},
