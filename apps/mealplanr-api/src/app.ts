@@ -33,10 +33,10 @@ declare module 'express-session' {
 const app = express();
 app.disable('x-powered-by');
 
-interface tUnitType {
+interface TUnitType {
 	[key: string]: number;
 }
-const tUnits: tUnitType = { "ms": 86400000, "s": 86400, "m": 1440, "h": 24, "d": 1 };
+const tUnits: TUnitType = { "ms": 86400000, "s": 86400, "m": 1440, "h": 24, "d": 1 };
 const daysAsUnit = (unit: string, days = 1) => days * tUnits[unit];
 
 app.use(
