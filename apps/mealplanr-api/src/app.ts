@@ -68,7 +68,7 @@ app.use(compression());
 app.use(express.static(`${__dirname}/public`, { maxAge: 31_557_600 }));
 
 const allowedOrigins = [
-	'http://localhost:4200',
+	'http://localhost:4200', 
 	'http://localhost:3333',
 	'http://127.0.0.1:4200', //MongoDB on linux systems don't like localhost
 	'http://127.0.0.1:3333',

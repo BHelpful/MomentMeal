@@ -37,7 +37,7 @@ function handleNextImage(e: React.SyntheticEvent<HTMLImageElement, Event>) {
 	if (!pTarget.classList.contains('shadow')) return; // If no shadow, placeholder is used - no images at all
 	const max = Number(target.dataset.images); // Data-tag containing amount of images assoatiated
 	const [id, current] = target.src
-		.replace(/http:\/\/localhost:3000\/temp\/recipe_(\d+)_(\d+).jpg/, '$1,$2')
+		.replace(/http:\/\/127.0.0.1:3000\/temp\/recipe_(\d+)_(\d+).jpg/, '$1,$2')
 		.split(','); // get current values
 	const next = (Number(current) + 1) % max; // Add one and loop in case of overflow
 	setTimeout(() => {
