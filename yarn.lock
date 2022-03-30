@@ -2021,9 +2021,9 @@
     webpack-node-externals "^3.0.0"
 
 "@nrwl/nx-cloud@latest":
-  version "13.1.2"
-  resolved "https://registry.yarnpkg.com/@nrwl/nx-cloud/-/nx-cloud-13.1.2.tgz#5715bd571d883f48b34354468265e723cc41cb6d"
-  integrity sha512-0MzPYtnt63ZoiWCN6B4zpDprkM+/+/opGV1g8evXb5GbMpLQIeAkyABt49RlNuBPhhmUUYvte4WwyzEmyWZSRQ==
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@nrwl/nx-cloud/-/nx-cloud-13.1.6.tgz#c1923ffc3c8336363e6c2c0d43d640b5671d8045"
+  integrity sha512-p/Iybpvixywm2iSFb6tcNde8BAIYFbzowhsNwDOuEVy7s9y9v/bEvCdT14VF6SxWrcGylyXo8A98Yyg0hsr0zQ==
   dependencies:
     axios "^0.21.1"
     chalk "4.1.0"
