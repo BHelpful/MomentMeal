@@ -20,10 +20,11 @@ describe('POST /users', () => {
 		});
 
 		const body = res.body;
-		expect(Object.prototype.hasOwnProperty.call(body, '_id')).toBe(true);
-		expect(Object.prototype.hasOwnProperty.call(body, 'email')).toBe(true);
-		expect(Object.prototype.hasOwnProperty.call(body, 'createdAt')).toBe(true);
-		expect(Object.prototype.hasOwnProperty.call(body, 'updatedAt')).toBe(true);
+		const thisProperty = (property: string) => Object({on: (testobj: object) => Object.prototype.hasOwnProperty.call(testobj,property)});
+		expect(thisProperty('_id').on(body)).toBe(true);
+		expect(thisProperty('email').on(body)).toBe(true);
+		expect(thisProperty('createdAt').on(body)).toBe(true);
+		expect(thisProperty('updatedAt').on(body)).toBe(true);
 	});
 
 	it('Should fail as user already exists', async () => {

@@ -27,10 +27,10 @@ const validate =
 			});
 
 			return next();
-		} catch (e: any) {
+		} catch (e) {
 			Logger.error(e);
 			// sets status to 400 (Bad Request)
-			return res.status(400).send(e.errors);
+			return res.status(400).send((e as {errors: string}).errors);
 		}
 	};
 
