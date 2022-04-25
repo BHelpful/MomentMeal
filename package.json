@@ -69,7 +69,7 @@
 		"@nrwl/nx-cloud": "latest",
 		"@nrwl/react": "13.8.1",
 		"@nrwl/tao": "13.8.3",
-		"@nrwl/web": "13.8.0",
+		"@nrwl/web": "14.0.2",
 		"@nrwl/workspace": "13.8.1",
 		"@testing-library/jest-dom": "^5.11.4",
 		"@testing-library/react": "12.1.3",
