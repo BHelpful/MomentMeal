@@ -9,6 +9,7 @@
 This repository contains all applications of BHelpful that benefits from sharing libraries and developer enviorment.
 
 ## Helpful information
+The most up to date information is located in our [Wiki](https://github.com/BHelpful/BHelpful/wiki).
 
 ### Information and HOW_TOs
 If you need information about the repo or how-to guides, go to the folder [`DOCS/`](https://github.com/BHelpful/BHelpful/tree/master/DOCS/).
