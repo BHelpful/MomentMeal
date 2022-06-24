@@ -17,7 +17,8 @@
 		"paths": {
 			"@bhelpful/mealplanr-api/util-interfaces": [
 				"libs/mealplanr-api/util-interfaces/src/index.ts"
-			]
+			],
+			"@bhelpful/ui": ["libs/ui/src/index.ts"]
 		},
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,

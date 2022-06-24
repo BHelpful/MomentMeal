@@ -68,6 +68,7 @@
 		"@nrwl/node": "13.8.2",
 		"@nrwl/nx-cloud": "latest",
 		"@nrwl/react": "13.8.1",
+		"@nrwl/storybook": "^14.3.6",
 		"@nrwl/tao": "13.8.3",
 		"@nrwl/web": "13.8.0",
 		"@nrwl/workspace": "13.8.1",
