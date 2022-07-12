@@ -1,9 +1,0 @@
-{
-	"version": 2,
-	"projects": {
-		"mealplanr": "apps/mealplanr",
-		"mealplanr-api": "apps/mealplanr-api",
-		"mealplanr-api-util-interfaces": "libs/mealplanr-api/util-interfaces",
-		"mealplanr-e2e": "apps/mealplanr-e2e"
-	}
-}
