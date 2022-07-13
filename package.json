@@ -5,9 +5,10 @@
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
-    "start": "nx serve",
+    "start": "nx run-many --target=serve --projects=api,meal-time",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "api:res": "nx g @nrwl/nest:resource --project=api"
   },
   "private": true,
   "dependencies": {
@@ -21,7 +22,9 @@
     "@angular/router": "~14.0.0",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/swagger": "^6.0.3",
     "@nrwl/angular": "14.4.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.4.0",
