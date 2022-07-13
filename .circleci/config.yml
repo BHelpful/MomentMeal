@@ -16,6 +16,6 @@ jobs:
           command: |
             yarn test
 workflows:
-  build_test:
+  CI_Tests:
     jobs:
       - run_tests
