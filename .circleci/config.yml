@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yarn
+            yarn install --ignore-engines
       - run:
           name: Run tests
           command: |
