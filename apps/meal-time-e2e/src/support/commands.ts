@@ -18,7 +18,9 @@ declare namespace Cypress {
 //
 // -- This is a parent command --
 Cypress.Commands.add('login', (mockEmail, mockPassword) => {
-  console.log('Custom command example: Login', mockEmail, mockPassword);
+  console.log('Custom command example: Login');
+  // Just using variables here for show
+  expect(mockEmail).not.to.equal(mockPassword);
 });
 //
 // -- This is a child command --
