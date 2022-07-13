@@ -6,8 +6,8 @@
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "start": "nx run-many --target=serve --projects=api,meal-time",
-    "build": "nx build",
-    "test": "nx test",
+    "build": "nx run-many --target=build --projects=api,meal-time",
+    "test": "nx run-many --target=test --projects=api,meal-time",
     "api:res": "nx g @nrwl/nest:resource --project=api"
   },
   "private": true,
