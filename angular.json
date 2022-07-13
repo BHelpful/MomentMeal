@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "api": "apps/api",
+    "api-interfaces": "libs/api-interfaces",
+    "meal-time": "apps/meal-time",
+    "meal-time-e2e": "apps/meal-time-e2e"
+  }
+}
