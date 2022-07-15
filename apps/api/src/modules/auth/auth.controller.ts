@@ -1,3 +1,4 @@
+import { CreateAuthDto, UpdateAuthDto } from '@meal-time/api-interfaces';
 import {
   Controller,
   Get,
@@ -10,8 +11,6 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 
 @ApiTags('Auth')
 @Controller('auth')

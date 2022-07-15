@@ -1,6 +1,5 @@
+import { CreateCategoryDto, UpdateCategoryDto } from '@meal-time/api-interfaces';
 import { Injectable } from '@nestjs/common';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Injectable()
 export class CategoriesService {

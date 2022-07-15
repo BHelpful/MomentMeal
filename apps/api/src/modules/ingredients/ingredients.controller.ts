@@ -8,9 +8,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { IngredientsService } from './ingredients.service';
-import { CreateIngredientDto } from './dto/create-ingredient.dto';
-import { UpdateIngredientDto } from './dto/update-ingredient.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { CreateIngredientDto, UpdateIngredientDto } from '@meal-time/api-interfaces';
 
 @ApiTags('Ingredients')
 @Controller('ingredients')

@@ -1,6 +1,5 @@
+import { CreateUserDto, UpdateUserDto } from '@meal-time/api-interfaces';
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {

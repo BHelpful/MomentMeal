@@ -1,3 +1,4 @@
+import { CreateCategoryDto, UpdateCategoryDto } from '@meal-time/api-interfaces';
 import {
   Controller,
   Get,
@@ -9,8 +10,6 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CategoriesService } from './categories.service';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @ApiTags('Categories')
 @Controller('categories')

@@ -1,6 +1,5 @@
+import { CreateIngredientDto, UpdateIngredientDto } from '@meal-time/api-interfaces';
 import { Injectable } from '@nestjs/common';
-import { CreateIngredientDto } from './dto/create-ingredient.dto';
-import { UpdateIngredientDto } from './dto/update-ingredient.dto';
 
 @Injectable()
 export class IngredientsService {
