@@ -3,16 +3,21 @@
  * This is only a minimal backend to get started.
  */
 
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { AppModule } from './app/app.module';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+    })
+  );
   const port = process.env.PORT || 3333;
 
   const config = new DocumentBuilder()
@@ -25,6 +30,7 @@ async function bootstrap() {
       'https://www.linkedin.com/in/andreasgdp/',
       'andreasgdp@gmail.com'
     )
+    .addBearerAuth()
     .setExternalDoc('GitHub WiKi', 'https://github.com/BHelpful/MealTime/wiki')
     .setLicense('GPLv3', 'https://www.gnu.org/licenses/gpl-3.0.en.html')
     .build();

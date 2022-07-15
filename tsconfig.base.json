@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@meal-time/api-interfaces": ["libs/api-interfaces/src/index.ts"]
-    }
+    },
+    "strictPropertyInitialization": false
   },
   "exclude": ["node_modules", "tmp"]
 }
