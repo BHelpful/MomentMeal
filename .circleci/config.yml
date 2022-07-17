@@ -10,12 +10,12 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yarn install
+            yarn install --ignore-engines
       - run:
           name: Run tests
           command: |
             yarn test
 workflows:
-  build_test:
+  CI_Tests:
     jobs:
       - run_tests

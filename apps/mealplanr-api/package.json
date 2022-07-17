@@ -1,9 +1,0 @@
-{
-	"name": "mealplanr-api",
-	"version": "0.0.0",
-	"license": "MIT",
-	"scripts": {
-		"compile:mpApiTsoa": "npx tsoa spec-and-routes && npx tsc"
-	},
-	"private": true
-}
