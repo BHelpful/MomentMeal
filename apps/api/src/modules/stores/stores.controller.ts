@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  NotFoundException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { StoresService } from './stores.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -14,6 +16,7 @@ import {
   ResponseStoreDto,
   UpdateStoreDto,
 } from '@meal-time/api-interfaces';
+import { STORES_EXCEPTION_MSG } from './stores.exceptionMessages';
 
 @ApiTags('Stores')
 @Controller('stores')
@@ -29,8 +32,12 @@ export class StoresController {
     description: 'The record has been successfully created.',
     type: ResponseStoreDto,
   })
+  @ApiResponse({
+    status: new ForbiddenException().getStatus(),
+    description: STORES_EXCEPTION_MSG.ALREADY_EXISTS,
+  })
   @Post()
-  create(@Body() createStoreDto: CreateStoreDto): string {
+  create(@Body() createStoreDto: CreateStoreDto) {
     return this.storesService.create(createStoreDto);
   }
 
@@ -82,7 +89,11 @@ export class StoresController {
   })
   @ApiResponse({
     status: 201,
-    description: 'Store deleted successfully',
+    description: 'Record deleted successfully',
+  })
+  @ApiResponse({
+    status: new NotFoundException().getStatus(),
+    description: STORES_EXCEPTION_MSG.NOT_FOUND,
   })
   @Delete(':id')
   remove(@Param('id') id: string) {
