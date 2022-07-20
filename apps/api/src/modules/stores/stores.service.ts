@@ -37,7 +37,7 @@ export class StoresService {
   update(id: number, updateStoreDto: UpdateStoreDto) {
     return `This action updates a #${id} store`;
   }
-
+  
   async remove(id: number) {
     const store = await this.prisma.stores.findUnique({
       where: {
