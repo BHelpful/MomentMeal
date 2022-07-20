@@ -1,25 +1,21 @@
-[![CodeQL](https://github.com/BHelpful/BHelpful/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BHelpful/BHelpful/actions/workflows/codeql-analysis.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=BHelpful_BHelpful&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=BHelpful_BHelpful)
-[![CodeScene Code Health](https://codescene.io/projects/21818/status-badges/code-health)](https://codescene.io/projects/21818)
-[![CodeScene System Mastery](https://codescene.io/projects/21818/status-badges/system-mastery)](https://codescene.io/projects/21818)
-
+[![CodeQL](https://github.com/BHelpful/BHelpful/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BHelpful/BHelpful/actions/workflows/codeql-analysis.yml)
+[![CodeScene Code Health](https://codescene.io/projects/27963/status-badges/code-health)](https://codescene.io/projects/27963)
+[![CodeScene System Mastery](https://codescene.io/projects/27963/status-badges/system-mastery)](https://codescene.io/projects/27963)
 
 # BHelpful MonoRepo
 
 This repository contains all applications of BHelpful that benefits from sharing libraries and developer enviorment.
 
-## Helpful information
-The most up to date information is located in our [Wiki](https://github.com/BHelpful/BHelpful/wiki).
-
 ### Information and HOW_TOs
-If you need information about the repo or how-to guides, go to the folder [`DOCS/`](https://github.com/BHelpful/BHelpful/tree/master/DOCS/).
+If you need information about the repo, our design patterns or how-to guides, go to the folder [`DOCS/`](https://github.com/BHelpful/BHelpful/tree/master/DOCS/).
 
 ### Repo health information
 
 Here is the current overview of the code health of the repository measured by:
 
 - Sonarcloud: https://sonarcloud.io/summary/overall?id=BHelpful_BHelpful
-- CodeScene: https://codescene.io/projects/21818/jobs/328456/results
+- CodeScene: https://codescene.io/projects/27963/jobs/530796/results
 
 ### Overview of the repo structure
 
