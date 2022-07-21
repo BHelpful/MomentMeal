@@ -47,7 +47,7 @@ export class StoresService {
 
     if (!store) throw new NotFoundException(STORES_EXCEPTION_MSG.NOT_FOUND);
 
-    await this.prisma.stores.delete({
+    return this.prisma.stores.delete({
       where: {
         id,
       },
