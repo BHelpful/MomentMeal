@@ -8,7 +8,15 @@
 This repository contains all applications of BHelpful that benefits from sharing libraries and developer enviorment.
 
 ### Information and HOW_TOs
+
 If you need information about the repo, our design patterns or how-to guides, go to the folder [`DOCS/`](https://github.com/BHelpful/BHelpful/tree/master/DOCS/).
+
+The most important documents are:
+
+- [`DESIGN_PATTERNS.md`](https://github.com/BHelpful/MealTime/blob/master/DOCS/DESIGN_PATTERNS.md) - Contains all the design patterns used in the project (READ THROUGH before developing).
+- [`CONTRIBUTING.md`](https://github.com/BHelpful/MealTime/blob/master/DOCS/CONTRIBUTING.md) - Contains all the information about how to contribute to the project.
+- [`CODE_OF_CONDUCT.md`](https://github.com/BHelpful/MealTime/blob/master/DOCS/CODE_OF_CONDUCT.md) - Contains all the sets of rules outlining the norms, rules, and responsibilitie/proper practices of MealTime.
+
 
 ### Repo health information
 
