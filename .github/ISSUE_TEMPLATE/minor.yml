@@ -7,16 +7,6 @@ body:
     attributes:
       value: |
         Thanks for creating a new minor feature to improve our product!
-  - type: dropdown
-    id: project
-    attributes:
-      label: Project/Library/Tool (or repo) specific
-      description: The Project/Library/Tool in the monorepo that this issue is relevant for
-      options:
-        - MealPlanr
-        - Repository
-    validations:
-      required: true
   - type: textarea
     id: description
     attributes:
