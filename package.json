@@ -12,14 +12,18 @@
     "api:ser": "nx g @nrwl/nest:service --project=api",
     "api:con": "nx g @nrwl/nest:controller --project=api",
     "api:mod": "nx g @nrwl/nest:module --project=api",
-    "prisma:dev:deploy": "prisma migrate deploy",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "prisma db seed",
     "db:dev:rm": "docker compose rm dev-db -s -f -v",
     "db:dev:up": "docker compose up dev-db -d",
-    "db:dev:restart": "yarn db:dev:rm && yarn db:dev:up && sleep 1 && yarn prisma:dev:deploy",
+    "prisma:dev:deploy": "prisma migrate deploy",
+    "db:dev:restart": "yarn db:dev:rm && yarn db:dev:up && sleep 10 && yarn prisma:dev:deploy",
     "prisma:test:deploy": "dotenv -e .env.test -- prisma migrate deploy",
     "db:test:rm": "docker compose rm test-db -s -f -v",
     "db:test:up": "docker compose up test-db -d",
-    "db:test:restart": "yarn db:test:rm && yarn db:test:up && sleep 1 && yarn prisma:test:deploy",
+    "db:test:restart": "yarn db:test:rm && yarn db:test:up && sleep 10 && yarn prisma:test:deploy",
+    "pretest:integration": "yarn db:test:restart",
+    "test:integration": "dotenv -e .env.test -- jest --watch --no-cache --config ./apps/api/test/jest-integration.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\""
   },
   "private": true,
@@ -42,6 +46,7 @@
     "@prisma/client": "^4.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "dotenv-cli": "^6.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.4.0",
     "tslib": "^2.0.0",
@@ -66,7 +71,7 @@
     "@nrwl/node": "14.4.2",
     "@nrwl/nx-cloud": "latest",
     "@nrwl/workspace": "14.4.2",
-    "@types/jest": "27.4.1",
+    "@types/jest": "^28.1.6",
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",
@@ -77,10 +82,14 @@
     "jest": "27.5.1",
     "jest-preset-angular": "~11.1.2",
     "nx": "14.4.2",
+    "pactum": "^3.1.13",
     "prettier": "^2.6.2",
     "prisma": "^4.0.0",
     "ts-jest": "27.1.4",
     "ts-node": "~10.8.0",
     "typescript": "~4.7.2"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }

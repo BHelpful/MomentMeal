@@ -1,9 +1,9 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { CreateUserDto } from './create-user.dto';
+import { Stores } from '@prisma/client';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class ResponseUserDto extends PartialType(CreateUserDto) {
+export class UserEntity implements Stores {
   @ApiProperty({
-    description: 'Id of a user',
+    description: 'Id of user',
     default: '1',
   })
   id: number;
@@ -19,4 +19,10 @@ export class ResponseUserDto extends PartialType(CreateUserDto) {
     default: new Date(),
   })
   updatedAt: Date;
+
+  @ApiProperty({
+    description: 'Name of user',
+    default: 'Rema 1000',
+  })
+  readonly name: string;
 }

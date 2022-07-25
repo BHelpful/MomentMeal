@@ -6,14 +6,23 @@ import {
   Patch,
   Param,
   Delete,
+  NotFoundException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { StoresService } from './stores.service';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   CreateStoreDto,
-  ResponseStoreDto,
+  StoreEntity,
   UpdateStoreDto,
 } from '@meal-time/api-interfaces';
+import { STORES_EXCEPTION_MSG } from './stores.exceptionMessages';
 
 @ApiTags('Stores')
 @Controller('stores')
@@ -24,13 +33,13 @@ export class StoresController {
     summary: 'Create a new store',
     description: 'Test',
   })
+  @ApiCreatedResponse({ type: StoreEntity })
   @ApiResponse({
-    status: 200,
-    description: 'The record has been successfully created.',
-    type: ResponseStoreDto,
+    status: new ForbiddenException().getStatus(),
+    description: STORES_EXCEPTION_MSG.ALREADY_EXISTS,
   })
   @Post()
-  create(@Body() createStoreDto: CreateStoreDto): string {
+  create(@Body() createStoreDto: CreateStoreDto) {
     return this.storesService.create(createStoreDto);
   }
 
@@ -38,11 +47,7 @@ export class StoresController {
     summary: 'Get all stores',
     description: 'Test',
   })
-  @ApiResponse({
-    status: 200,
-    description: 'Response object containing all records',
-    type: [ResponseStoreDto],
-  })
+  @ApiOkResponse({ type: StoreEntity, isArray: true })
   @Get()
   findAll() {
     return this.storesService.findAll();
@@ -52,11 +57,7 @@ export class StoresController {
     summary: 'Find a store by id',
     description: 'Test',
   })
-  @ApiResponse({
-    status: 200,
-    description: 'Response object containing the record',
-    type: ResponseStoreDto,
-  })
+  @ApiOkResponse({ type: StoreEntity })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.storesService.findOne(+id);
@@ -66,11 +67,7 @@ export class StoresController {
     summary: 'Update a store by id',
     description: 'Test',
   })
-  @ApiResponse({
-    status: 200,
-    description: 'Response object containing the updated record',
-    type: ResponseStoreDto,
-  })
+  @ApiOkResponse({ type: StoreEntity })
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
     return this.storesService.update(+id, updateStoreDto);
@@ -80,9 +77,10 @@ export class StoresController {
     summary: 'Delete a store by id',
     description: 'Test',
   })
+  @ApiOkResponse({ type: StoreEntity })
   @ApiResponse({
-    status: 201,
-    description: 'Store deleted successfully',
+    status: new NotFoundException().getStatus(),
+    description: STORES_EXCEPTION_MSG.NOT_FOUND,
   })
   @Delete(':id')
   remove(@Param('id') id: string) {
