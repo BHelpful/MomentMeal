@@ -38,12 +38,17 @@ cleanDb() {
 
 When adding of making changes to the you need to update `prisma/seed.ts` file to be able to seed the database with the new changes with the command `yarn prisma:seed`.
 
+### When changing the structure of the database follow the expand and contract pattern
+
+[Expand and contract pattern (Prisma)](https://www.prisma.io/dataguide/types/relational/expand-and-contract-pattern)
+
 ## Backend Design Patterns
 
 For a more in-depth look at the backend design patterns, please refer to the following documents:
 https://www.prisma.io/blog/nestjs-prisma-rest-api-7D056s1BmOL0#update-swagger-response-types
 
 ### Data transfer objects (DTOs) and entity classes
+
 For each model in the database there needs to be corresponding DTOs (e.g. create-store.dto.ts & update-store.dto.ts) and entity class. The DTOs are used to transfer data between the frontend and the backend. The entity class is used to map the data from the database to the DTOs.
 
 ### Validation - Validators
