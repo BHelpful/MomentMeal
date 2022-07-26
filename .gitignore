@@ -41,3 +41,4 @@ Thumbs.db
 .angular
 
 .env
+.env.test
