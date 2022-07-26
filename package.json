@@ -70,7 +70,7 @@
     "@nrwl/nest": "14.4.2",
     "@nrwl/node": "14.4.2",
     "@nrwl/nx-cloud": "latest",
-    "@nrwl/workspace": "14.4.2",
+    "@nrwl/workspace": "14.4.3",
     "@types/jest": "^28.1.6",
     "@types/node": "18.6.1",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
