@@ -7,6 +7,10 @@ jobs:
     steps:
       - checkout:
           path: ~/BHelpful
+      # Install via apk on alpine based images
+      - run:
+          name: Install Docker client
+          command: apk add docker-cli
       - run:
           name: Install dependencies
           command: |
