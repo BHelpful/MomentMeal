@@ -1,8 +1,8 @@
 version: 2.1
 jobs:
   run_tests:
-    docker:
-      - image: cimg/node:lts
+    machine:
+      image: ubuntu-2204:2022.04.2
     working_directory: ~/BHelpful
     steps:
       - checkout:
@@ -19,8 +19,6 @@ jobs:
           name: Run tests
           command: |
             yarn test
-      - setup_remote_docker:
-          version: 20.10.14
 workflows:
   CI_Tests:
     jobs:
