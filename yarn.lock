@@ -2219,6 +2219,25 @@
     source-map-support "0.5.19"
     tree-kill "1.2.2"
 
+"@nrwl/js@14.4.3":
+  version "14.4.3"
+  resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-14.4.3.tgz#fb03a60db67e9b0551680f672cb658d4a67b50dc"
+  integrity sha512-WxNo9sEP0RiuI1eHqGL14CSSa4YEbgWxCai/wdVHackC8C4QNWUP6is1hyLvSIbW91aF3105v8YN7BHWfLANtg==
+  dependencies:
+    "@nrwl/devkit" "14.4.3"
+    "@nrwl/jest" "14.4.3"
+    "@nrwl/linter" "14.4.3"
+    "@nrwl/workspace" "14.4.3"
+    "@parcel/watcher" "2.0.4"
+    chalk "4.1.0"
+    fast-glob "3.2.7"
+    fs-extra "^10.1.0"
+    ignore "^5.0.4"
+    js-tokens "^4.0.0"
+    minimatch "3.0.5"
+    source-map-support "0.5.19"
+    tree-kill "1.2.2"
+
 "@nrwl/linter@14.4.2":
   version "14.4.2"
   resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-14.4.2.tgz#b6dbcb47f1cfd0ca6e20434bf43081641c8fcfdd"
@@ -2243,17 +2262,17 @@
     tmp "~0.2.1"
     tslib "^2.3.0"
 
-"@nrwl/nest@14.4.2":
-  version "14.4.2"
-  resolved "https://registry.yarnpkg.com/@nrwl/nest/-/nest-14.4.2.tgz#e102d80c71c5d5587dc9ec2668bec1e9a6cd4585"
-  integrity sha512-TVlY7UbWQLMjQyCwkos8IkLzhKz/58IPUqoE3Jr9syf8KJ+JCkVxndEcUSPMlEJWtfxdEjchNrOwZH5bWpZPBw==
+"@nrwl/nest@14.4.3":
+  version "14.4.3"
+  resolved "https://registry.yarnpkg.com/@nrwl/nest/-/nest-14.4.3.tgz#6a3b768c2d7389a25f2c0c60ee863ec5b6bdec2e"
+  integrity sha512-1Ua99pe+lm59n4sx4yzOs1VEV5h8+prmlEaMJWKaKwnlIPQrKA0O819mCA0KCHzYEZYSHCFFSsvulFc/hlJarQ==
   dependencies:
     "@nestjs/schematics" "^8.0.0"
-    "@nrwl/devkit" "14.4.2"
-    "@nrwl/jest" "14.4.2"
-    "@nrwl/js" "14.4.2"
-    "@nrwl/linter" "14.4.2"
-    "@nrwl/node" "14.4.2"
+    "@nrwl/devkit" "14.4.3"
+    "@nrwl/jest" "14.4.3"
+    "@nrwl/js" "14.4.3"
+    "@nrwl/linter" "14.4.3"
+    "@nrwl/node" "14.4.3"
 
 "@nrwl/node@14.4.2":
   version "14.4.2"
@@ -2267,6 +2286,38 @@
     "@nrwl/workspace" "14.4.2"
     chalk "4.1.0"
     copy-webpack-plugin "^9.0.1"
+    enhanced-resolve "^5.8.3"
+    fork-ts-checker-webpack-plugin "6.2.10"
+    fs-extra "^10.1.0"
+    glob "7.1.4"
+    license-webpack-plugin "^4.0.2"
+    rxjs "^6.5.4"
+    rxjs-for-await "0.0.2"
+    source-map-support "0.5.19"
+    terser-webpack-plugin "^5.3.0"
+    tree-kill "1.2.2"
+    ts-loader "^9.2.6"
+    ts-node "~10.8.0"
+    tsconfig-paths "^3.9.0"
+    tsconfig-paths-webpack-plugin "3.5.2"
+    tslib "^2.3.0"
+    webpack "^5.58.1"
+    webpack-merge "^5.8.0"
+    webpack-node-externals "^3.0.0"
+
+"@nrwl/node@14.4.3":
+  version "14.4.3"
+  resolved "https://registry.yarnpkg.com/@nrwl/node/-/node-14.4.3.tgz#33e2744dd9de690ad3f2c2600bcc098fff88de71"
+  integrity sha512-nqapfqM0ZUbYLWYGC+VwOqMsIgx3HSSh4LHUsoPaRPJFF29JmHvVFTvjgJkzyX3xu4/y7Au6u40q/UO6Sj1Nig==
+  dependencies:
+    "@nrwl/devkit" "14.4.3"
+    "@nrwl/jest" "14.4.3"
+    "@nrwl/js" "14.4.3"
+    "@nrwl/linter" "14.4.3"
+    "@nrwl/workspace" "14.4.3"
+    chalk "4.1.0"
+    copy-webpack-plugin "^9.0.1"
+    dotenv "~10.0.0"
     enhanced-resolve "^5.8.3"
     fork-ts-checker-webpack-plugin "6.2.10"
     fs-extra "^10.1.0"
