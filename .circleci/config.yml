@@ -25,6 +25,11 @@ jobs:
           name: Lint
           command: |
             yarn lint
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules/*
+            - cypress/*
   build:
     machine:
       image: ubuntu-2204:2022.04.2
@@ -32,19 +37,10 @@ jobs:
     steps:
       - checkout:
           path: ~/BHelpful
-      - restore_cache:
-          keys: 
-            - v1-deps-{{ checksum "yarn.lock" }}
-            - v1-deps-
       - run:
           name: Install dependencies
           command: |
             yarn install --ignore-engines
-      # save any changes to the cache
-      - save_cache:
-          key: v1-deps-{{ checksum "yarn.lock" }}
-          paths: 
-            - node_modules
       - run:
           name: Build
           command: |
@@ -57,20 +53,10 @@ jobs:
     steps:
       - checkout:
           path: ~/BHelpful
-      # look for existing cache and restore if found
-      - restore_cache:
-          keys: 
-            - v1-deps-{{ checksum "yarn.lock" }}
-            - v1-deps-
       - run:
           name: Install dependencies
           command: |
             yarn install --ignore-engines
-      # save any changes to the cache
-      - save_cache:
-          key: v1-deps-{{ checksum "yarn.lock" }}
-          paths: 
-            - node_modules
       - run:
           name: Run tests
           command: |
@@ -82,20 +68,11 @@ jobs:
     steps:
       - checkout:
           path: ~/BHelpful
-      # look for existing cache and restore if found
-      - restore_cache:
-          keys: 
-            - v1-deps-{{ checksum "yarn.lock" }}
-            - v1-deps-
       - run:
           name: Install dependencies
           command: |
             yarn install --ignore-engines
       # save any changes to the cache
-      - save_cache:
-          key: v1-deps-{{ checksum "yarn.lock" }}
-          paths: 
-            - node_modules
       - run:
           name: Run e2e tests
           command: |
