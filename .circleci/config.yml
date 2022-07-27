@@ -1,6 +1,36 @@
 version: 2.1
 jobs:
-  run_tests:
+  build:
+    machine:
+      image: ubuntu-2204:2022.04.2
+    working_directory: ~/BHelpful
+    steps:
+      - checkout:
+          path: ~/BHelpful
+      - run:
+          name: Install dependencies
+          command: |
+            yarn install --ignore-engines
+      - run:
+          name: Run tests
+          command: |
+            yarn build
+  lint:
+    machine:
+      image: ubuntu-2204:2022.04.2
+    working_directory: ~/BHelpful
+    steps:
+      - checkout:
+          path: ~/BHelpful
+      - run:
+          name: Install dependencies
+          command: |
+            yarn install --ignore-engines
+      - run:
+          name: Run tests
+          command: |
+            yarn lint
+  test:
     machine:
       image: ubuntu-2204:2022.04.2
     working_directory: ~/BHelpful
@@ -15,7 +45,31 @@ jobs:
           name: Run tests
           command: |
             yarn ci:test
+  e2e:
+    machine:
+      image: ubuntu-2204:2022.04.2
+    working_directory: ~/BHelpful
+    steps:
+      - checkout:
+          path: ~/BHelpful
+      - run:
+          name: Install dependencies
+          command: |
+            yarn install --ignore-engines
+      - run:
+          name: Run tests
+          command: |
+            yarn e2e
 workflows:
   CI_Tests:
     jobs:
-      - run_tests
+      - lint
+      - build:
+          requires:
+            - lint
+      - test:
+          requires:
+            - build
+      - e2e:
+          requires:
+            - test
