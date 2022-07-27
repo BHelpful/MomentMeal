@@ -10,7 +10,7 @@ jobs:
       # look for existing cache and restore if found
       - restore_cache:
           keys: 
-            - v1-deps-{{ checksum "package-lock.json" }}
+            - v1-deps-{{ checksum "yarn.lock" }}
             - v1-deps-
       - run:
           name: Install dependencies
@@ -18,7 +18,7 @@ jobs:
             yarn install --ignore-engines
       # save any changes to the cache
       - save_cache:
-          key: v1-deps-{{ checksum "package-lock.json" }}
+          key: v1-deps-{{ checksum "yarn.lock" }}
           paths: 
             - node_modules
       - run:
@@ -34,7 +34,7 @@ jobs:
           path: ~/BHelpful
       - restore_cache:
           keys: 
-            - v1-deps-{{ checksum "package-lock.json" }}
+            - v1-deps-{{ checksum "yarn.lock" }}
             - v1-deps-
       - run:
           name: Install dependencies
@@ -42,7 +42,7 @@ jobs:
             yarn install --ignore-engines
       # save any changes to the cache
       - save_cache:
-          key: v1-deps-{{ checksum "package-lock.json" }}
+          key: v1-deps-{{ checksum "yarn.lock" }}
           paths: 
             - node_modules
       - run:
@@ -60,7 +60,7 @@ jobs:
       # look for existing cache and restore if found
       - restore_cache:
           keys: 
-            - v1-deps-{{ checksum "package-lock.json" }}
+            - v1-deps-{{ checksum "yarn.lock" }}
             - v1-deps-
       - run:
           name: Install dependencies
@@ -68,7 +68,7 @@ jobs:
             yarn install --ignore-engines
       # save any changes to the cache
       - save_cache:
-          key: v1-deps-{{ checksum "package-lock.json" }}
+          key: v1-deps-{{ checksum "yarn.lock" }}
           paths: 
             - node_modules
       - run:
@@ -85,7 +85,7 @@ jobs:
       # look for existing cache and restore if found
       - restore_cache:
           keys: 
-            - v1-deps-{{ checksum "package-lock.json" }}
+            - v1-deps-{{ checksum "yarn.lock" }}
             - v1-deps-
       - run:
           name: Install dependencies
@@ -93,7 +93,7 @@ jobs:
             yarn install --ignore-engines
       # save any changes to the cache
       - save_cache:
-          key: v1-deps-{{ checksum "package-lock.json" }}
+          key: v1-deps-{{ checksum "yarn.lock" }}
           paths: 
             - node_modules
       - run:
