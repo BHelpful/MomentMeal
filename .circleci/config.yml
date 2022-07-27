@@ -22,7 +22,7 @@ jobs:
           paths: 
             - node_modules
       - run:
-          name: Run tests
+          name: Lint
           command: |
             yarn lint
   build:
@@ -46,7 +46,7 @@ jobs:
           paths: 
             - node_modules
       - run:
-          name: Run tests
+          name: Build
           command: |
             yarn build
   
@@ -97,7 +97,7 @@ jobs:
           paths: 
             - node_modules
       - run:
-          name: Run tests
+          name: Run e2e tests
           command: |
             yarn e2e
 workflows:
