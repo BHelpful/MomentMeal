@@ -1,17 +1,21 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "$id": "gen-env",
+  "$id": "environment-generator",
   "type": "object",
   "properties": {
-    "name": {
+    "db_uri": {
       "type": "string",
-      "description": "Library name",
-      "$default": {
-        "$source": "argv",
-        "index": 0
-      }
+      "description": "Postgress database URI of the API",
+      "default": "postgresql://postgres:123@localhost:5434/nest?schema=public",
+      "x-prompt": "What's the Postgress database URI of the API?"
+    },
+    "test_db_uri": {
+      "type": "string",
+      "description": "Postgress database URI of the API",
+      "default": "postgresql://postgres:123@localhost:5435/nest?schema=public",
+      "x-prompt": "What's the Postgress database URI of the API?"
     }
   },
-  "required": ["name"]
+  "required": []
 }

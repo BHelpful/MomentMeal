@@ -28,7 +28,8 @@
     "api:ser": "nx g @nrwl/nest:service --project=api",
     "api:con": "nx g @nrwl/nest:controller --project=api",
     "api:mod": "nx g @nrwl/nest:module --project=api",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "gen:env": "nx workspace-generator gen-env"
   },
   "private": true,
   "dependencies": {
