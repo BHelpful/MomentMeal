@@ -22,7 +22,7 @@
     "preci:test": "yarn ci:db:restart",
     "ci:test": "nx run-many --target=test --projects=api,meal-time",
     "ci:prisma:deploy": "prisma migrate deploy",
-    "ci:db:restart": "yarn test:db:rm && yarn test:db:up && sleep 20 && yarn ci:prisma:deploy",
+    "ci:db:restart": "yarn test:db:rm && yarn test:db:up && prisma generate && yarn ci:prisma:deploy",
     "api:res": "nx g @nrwl/nest:resource --project=api",
     "api:ser": "nx g @nrwl/nest:service --project=api",
     "api:con": "nx g @nrwl/nest:controller --project=api",
