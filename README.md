@@ -3,9 +3,9 @@
 [![CodeScene Code Health](https://codescene.io/projects/27963/status-badges/code-health)](https://codescene.io/projects/27963)
 [![CodeScene System Mastery](https://codescene.io/projects/27963/status-badges/system-mastery)](https://codescene.io/projects/27963)
 
-# BHelpful MonoRepo
+# MealTime MonoRepo
 
-This repository contains all applications of BHelpful that benefits from sharing libraries and developer enviorment.
+This repository contains all the main applications and utilities of MealTime.
 
 ### Information and HOW_TOs
 
