@@ -1,11 +1,10 @@
-import {
-  CreateStoreDto,
-} from '@meal-time/api-interfaces';
+import { AppModule } from '../app.module';
+import { CreateStoreDto } from '@meal-time/api-interfaces';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as pactum from 'pactum';
-import { AppModule } from '../src/app.module';
-import { PrismaService } from '../src/services/prisma/prisma.service';
+import { PrismaService } from '../services/prisma/prisma.service';
+
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -27,7 +26,7 @@ describe('App e2e', () => {
 
     prisma = app.get(PrismaService);
     await prisma.cleanDb();
-    pactum.request.setBaseUrl('http://localhost:3333/api');
+    pactum.request.setBaseUrl('http://localhost:3333');
   });
 
   afterAll(() => {
@@ -45,17 +44,7 @@ describe('App e2e', () => {
           .post('/stores')
           .withBody(dto)
           .expectStatus(201)
-          .stores('bookmarkId', 'id');
-      });
-    });
-
-    describe('Delete bookmark by id', () => {
-      it('should delete bookmark', async () => {
-        return pactum
-          .spec()
-          .delete('/bookmarks/{id}')
-          .withPathParams('id', '$S{bookmarkId}')
-          .expectStatus(204);
+          .stores('storeId', 'id');
       });
     });
   });
