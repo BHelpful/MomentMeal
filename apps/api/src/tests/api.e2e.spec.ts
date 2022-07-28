@@ -1,4 +1,4 @@
-import { AppModule } from '../app.module';
+import { AppModule } from '../app/app.module';
 import { CreateStoreDto } from '@meal-time/api-interfaces';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
