@@ -1,6 +1,7 @@
+import { LandingModule } from './landing/landing.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -9,23 +10,30 @@ import { environment } from '../environments/environment';
 
 import SuperTokens from 'supertokens-web-js';
 import Session from 'supertokens-web-js/recipe/session';
+import EmailPassword from 'supertokens-web-js/recipe/emailpassword';
+import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword';
+import { AuthModule } from './auth/auth.module';
 
 SuperTokens.init({
   appInfo: {
     apiDomain: 'http://localhost:3333',
     apiBasePath: '/api',
-    appName: '...',
+    appName: 'meal-time',
   },
-  recipeList: [Session.init()],
+  recipeList: [
+    EmailPassword.init(),
+    ThirdPartyEmailPassword.init(),
+    Session.init(),
+  ],
 });
-
-const routes: Routes = [];
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    LandingModule,
+    AuthModule,
     BrowserModule,
-    RouterModule.forRoot(routes),
+    RouterModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,

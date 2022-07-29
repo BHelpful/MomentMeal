@@ -1,0 +1,7 @@
+<h1>Authentication</h1>
+<!-- button -->
+<button (click)="signUp('testMail@gmail.com', 'Password123+')">Sign Up</button>
+<button (click)="signIn('testMail@gmail.com', 'Password123+')">Sign In</button>
+<button (click)="signOut()">Sign Out</button>
+
+<h2>Is the user signed in?: {{ isLoggedIn }}</h2>
