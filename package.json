@@ -7,9 +7,11 @@
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "prestart": "yarn db:restart && yarn prisma:seed",
     "start": "nx run-many --target=serve --projects=api,meal-time",
-    "build": "nx affected --target=build ---base=origin/master --parallel",
+    "build": "nx affected --target=build --base=origin/master --parallel",
     "lint": "nx affected --target=lint --base=origin/master --parallel",
-    "e2e": "nx affected --target=e2e --base=origin/master --parallel",
+    "e2e": "yarn e2e:script -- 'nx affected:e2e'",
+    "e2e:watch": "yarn e2e:script -- 'nx affected:e2e --watch'",
+    "e2e:script": "start-server-and-test \"yarn db:restart && yarn prisma:seed && nx run api:serve\" http://localhost:3333/api",
     "db:rm": "docker compose rm dev-db supertokens -s -f -v",
     "db:up": "docker compose up dev-db supertokens -d",
     "db:restart": "yarn db:rm && yarn db:up && yarn prisma:deploy ",
@@ -92,7 +94,7 @@
     "@types/node": "18.6.1",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",
-    "cypress": "^9.1.0",
+    "cypress": "^10.2.0",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",
@@ -102,6 +104,7 @@
     "pactum": "^3.1.13",
     "prettier": "^2.6.2",
     "prisma": "^4.0.0",
+    "start-server-and-test": "^1.14.0",
     "ts-jest": "27.1.4",
     "ts-node": "~10.8.0",
     "typescript": "~4.7.2"
@@ -110,4 +113,3 @@
     "seed": "ts-node prisma/seed.ts"
   }
 }
-
