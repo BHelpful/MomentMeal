@@ -8,7 +8,7 @@ import { NestFactory } from '@nestjs/core';
 import supertokens from 'supertokens-node';
 
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { AppModule } from './app/app.module';
+import { AppModule } from './app.module';
 import { SupertokensExceptionFilter } from './modules/auth/auth.filter';
 
 async function bootstrap() {
