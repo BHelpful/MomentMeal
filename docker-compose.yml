@@ -24,7 +24,7 @@ services:
     ports:
       - 3567:3567
     environment:
-      POSTGRESQL_CONNECTION_URI: "postgresql://postgres:123@172.25.0.1:5434/nest?schema=public"
+      POSTGRESQL_CONNECTION_URI: "${DATABASE_URL_DOCKER}"
     networks:
       - mealtime
     restart: unless-stopped

@@ -1,15 +1,10 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import supertokens from 'supertokens-node';
-
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+
 import { AppModule } from './app.module';
-import { SupertokensExceptionFilter } from './modules/auth/auth.filter';
+import { SupertokensExceptionFilter } from './services/auth/auth.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

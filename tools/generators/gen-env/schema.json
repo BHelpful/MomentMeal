@@ -15,6 +15,18 @@
       "description": "Postgress database URI of the API",
       "default": "postgresql://postgres:123@localhost:5435/nest?schema=public",
       "x-prompt": "What's the Postgress database URI of the API?"
+    },
+    "db_uri_docker": {
+      "type": "string",
+      "description": "Postgress database URI of the API running in docker",
+      "default": "postgresql://postgres:123@172.25.0.1:5434/nest?schema=public",
+      "x-prompt": "What's the Postgress database URI of the API?"
+    },
+    "test_db_uri_docker": {
+      "type": "string",
+      "description": "Postgress database URI of the API running in docker",
+      "default": "postgresql://postgres:123@172.25.0.1:5435/nest?schema=public",
+      "x-prompt": "What's the Postgress database URI of the API?"
     }
   },
   "required": []

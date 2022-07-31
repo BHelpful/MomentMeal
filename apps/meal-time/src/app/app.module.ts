@@ -1,3 +1,4 @@
+import { HomeModule } from './home/home.module';
 import { LandingModule } from './landing/landing.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,6 +14,8 @@ import Session from 'supertokens-web-js/recipe/session';
 import EmailPassword from 'supertokens-web-js/recipe/emailpassword';
 import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword';
 import { AuthModule } from './auth/auth.module';
+import { CallbackComponent } from './auth/callback/callback.component';
+import { HomeComponent } from './home/home.component';
 
 SuperTokens.init({
   appInfo: {
@@ -28,10 +31,11 @@ SuperTokens.init({
 });
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, CallbackComponent, HomeComponent],
   imports: [
     LandingModule,
     AuthModule,
+    HomeModule,
     BrowserModule,
     RouterModule,
     HttpClientModule,

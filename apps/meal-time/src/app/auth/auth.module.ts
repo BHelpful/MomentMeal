@@ -1,17 +1,18 @@
+import { CallbackComponent } from './callback/callback.component';
 import { AuthComponent } from './auth.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
+// TODO add more specific callback routes for each provider
 
-const routes: Routes = [{ path: 'auth', component: AuthComponent }];
-
+const routes: Routes = [
+  { path: 'auth', component: AuthComponent },
+  { path: 'auth/callback', component: CallbackComponent },
+];
 
 @NgModule({
   declarations: [AuthComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forRoot(routes),
-  ]
+  imports: [CommonModule, RouterModule.forRoot(routes)],
 })
-export class AuthModule { }
+export class AuthModule {}

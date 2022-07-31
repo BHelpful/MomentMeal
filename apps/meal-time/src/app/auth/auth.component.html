@@ -2,6 +2,17 @@
 <!-- button -->
 <button (click)="signUp('testMail@gmail.com', 'Password123+')">Sign Up</button>
 <button (click)="signIn('testMail@gmail.com', 'Password123+')">Sign In</button>
+<button (click)="onGooglePressed()">
+  {{ 'Sign in with google' | titlecase }}
+</button>
+<button (click)="onApplePressed()">
+  {{ 'Sign in with apple' | titlecase }}
+</button>
+<button (click)="onGithubPressed()">
+  {{ 'Sign in with GitHub' | titlecase }}
+</button>
 <button (click)="signOut()">Sign Out</button>
+<!-- Is user signed in btn -->
+<button (click)="userLoggedIn()">Is user signed in?</button>
 
 <h2>Is the user signed in?: {{ isLoggedIn }}</h2>
