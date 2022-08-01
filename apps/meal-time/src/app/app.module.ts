@@ -15,7 +15,6 @@ import EmailPassword from 'supertokens-web-js/recipe/emailpassword';
 import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword';
 import { AuthModule } from './auth/auth.module';
 import { CallbackComponent } from './auth/callback/callback.component';
-import { HomeComponent } from './home/home.component';
 
 SuperTokens.init({
   appInfo: {
@@ -31,7 +30,7 @@ SuperTokens.init({
 });
 
 @NgModule({
-  declarations: [AppComponent, CallbackComponent, HomeComponent],
+  declarations: [AppComponent, CallbackComponent],
   imports: [
     LandingModule,
     AuthModule,
