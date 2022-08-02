@@ -1,14 +1,12 @@
 version: 2.1
 jobs:
   lint:
-    docker:
-      - image: circleci/node:16.3.0
-      - image: docker:17.05.0-ce-git
+    machine:
+      image: ubuntu-2204:2022.04.2
     working_directory: ~/BHelpful
     steps:
       - checkout:
           path: ~/BHelpful
-      # This should go into custom primary image, here's only for the sake of explanation
       # look for existing cache and restore if found
       - restore_cache:
           keys:
@@ -33,14 +31,12 @@ jobs:
             - node_modules/*
             - cypress/*
   build:
-    docker:
-      - image: circleci/node:16.3.0
-      - image: docker:17.05.0-ce-git
+    machine:
+      image: ubuntu-2204:2022.04.2
     working_directory: ~/BHelpful
     steps:
       - checkout:
           path: ~/BHelpful
-      # This should go into custom primary image, here's only for the sake of explanation
       - restore_cache:
           keys:
             - v1-deps-{{ checksum "package.json" }}
@@ -60,14 +56,12 @@ jobs:
             yarn build
 
   test:
-    docker:
-      - image: circleci/node:16.3.0
-      - image: docker:17.05.0-ce-git
+    machine:
+      image: ubuntu-2204:2022.04.2
     working_directory: ~/BHelpful
     steps:
       - checkout:
           path: ~/BHelpful
-      # This should go into custom primary image, here's only for the sake of explanation
       # look for existing cache and restore if found
       - restore_cache:
           keys:
@@ -87,14 +81,12 @@ jobs:
           command: |
             yarn ci:test
   e2e:
-    docker:
-      - image: circleci/node:16.3.0
-      - image: docker:17.05.0-ce-git
+    machine:
+      image: ubuntu-2204:2022.04.2
     working_directory: ~/BHelpful
     steps:
       - checkout:
           path: ~/BHelpful
-      # This should go into custom primary image, here's only for the sake of explanation
       # look for existing cache and restore if found
       - restore_cache:
           keys:
