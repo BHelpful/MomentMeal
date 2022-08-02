@@ -33,10 +33,10 @@ describe('App e2e', () => {
     pactum.request.setBaseUrl('http://localhost:3333');
   });
 
-  afterAll(async () => {
-    await prisma.$disconnect();
-    app.close();
-  });
+  // afterAll(async () => {
+  //   await prisma.$disconnect();
+  //   app.close();
+  // });
 
   describe('Stores', () => {
     describe('Create store', () => {
