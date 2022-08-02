@@ -75,8 +75,6 @@ jobs:
           key: v1-deps-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run:
           name: Run tests
           command: |
