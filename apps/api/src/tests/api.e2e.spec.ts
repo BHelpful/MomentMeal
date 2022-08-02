@@ -12,7 +12,6 @@ describe('App e2e', () => {
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
-      providers: [PrismaService],
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -21,22 +20,17 @@ describe('App e2e', () => {
         whitelist: true,
       })
     );
-
-    app = moduleRef.createNestApplication();
-    prisma = moduleRef.get(PrismaService);
-
     await app.init();
     await app.listen(3333);
 
+    prisma = app.get(PrismaService);
     await prisma.cleanDb();
-
     pactum.request.setBaseUrl('http://localhost:3333');
   });
 
-  // afterAll(async () => {
-  //   await prisma.$disconnect();
-  //   app.close();
-  // });
+  afterAll(() => {
+    app.close();
+  });
 
   describe('Stores', () => {
     describe('Create store', () => {
