@@ -54,7 +54,6 @@ jobs:
           name: Build
           command: |
             yarn build
-
   test:
     machine:
       image: ubuntu-2204:2022.04.2
