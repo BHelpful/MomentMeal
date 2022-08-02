@@ -1,59 +1,6 @@
 version: 2.1
 jobs:
-  lint:
-    machine:
-      image: ubuntu-2204:2022.04.2
-    working_directory: ~/BHelpful
-    steps:
-      - checkout:
-          path: ~/BHelpful
-      # look for existing cache and restore if found
-      - restore_cache:
-          keys:
-            - v1-deps-{{ checksum "package.json" }}
-            - v1-deps-
-      - run:
-          name: Install dependencies
-          command: |
-            yarn install --ignore-engines
-      # save any changes to the cache
-      - save_cache:
-          key: v1-deps-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Lint
-          command: |
-            yarn lint
-      - persist_to_workspace:
-          root: .
-          paths:
-            - node_modules/*
-            - cypress/*
-  build:
-    machine:
-      image: ubuntu-2204:2022.04.2
-    working_directory: ~/BHelpful
-    steps:
-      - checkout:
-          path: ~/BHelpful
-      - restore_cache:
-          keys:
-            - v1-deps-{{ checksum "package.json" }}
-            - v1-deps-
-      - run:
-          name: Install dependencies
-          command: |
-            yarn install --ignore-engines
-      # save any changes to the cache
-      - save_cache:
-          key: v1-deps-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Build
-          command: |
-            yarn build
+
   test:
     machine:
       image: ubuntu-2204:2022.04.2
@@ -78,6 +25,7 @@ jobs:
       - run:
           name: Run tests
           command: |
+            node --version
             yarn ci:test
   e2e:
     machine:
@@ -107,13 +55,9 @@ jobs:
 workflows:
   CI_Tests:
     jobs:
-      - lint
-      - build:
-          requires:
-            - lint
-      - test:
-          requires:
-            - build
+
+      - test
+
       - e2e:
           requires:
             - test
