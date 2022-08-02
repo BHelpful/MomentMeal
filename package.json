@@ -30,7 +30,7 @@
     "ci:db:rm": "docker-compose rm -s -f -v test-db",
     "ci:db:up": "docker-compose up -d test-db",
     "ci:prisma:deploy": "prisma migrate deploy",
-    "ci:db:restart": "yarn ci:db:rm && yarn ci:db:up && prisma generate && sleep 40 && yarn ci:prisma:deploy",
+    "ci:db:restart": "yarn ci:db:rm && yarn ci:db:up && prisma generate && docker ps && yarn ci:prisma:deploy",
     "ci:e2e": "yarn e2e:script -- 'nx affected:e2e'",
     "ci:e2e:watch": "yarn e2e:script -- 'nx affected:e2e --watch'",
     "ci:e2e:script": "start-server-and-test \"yarn ci:db:restart && yarn prisma:seed && nx run api:serve\" http://localhost:3333/api",
