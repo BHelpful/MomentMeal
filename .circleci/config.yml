@@ -8,6 +8,17 @@ jobs:
       - checkout:
           path: ~/BHelpful
       # look for existing cache and restore if found
+      - run: |
+            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run: |
+          node -v
+      - run: |
+          nvm install v16.15.1
+          node -v
+          nvm alias default v16.15.1
+      - run: |
+          node -v
       - restore_cache:
           keys:
             - v1-deps-{{ checksum "package.json" }}
@@ -37,6 +48,17 @@ jobs:
     steps:
       - checkout:
           path: ~/BHelpful
+      - run: |
+            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run: |
+          node -v
+      - run: |
+          nvm install v16.15.1
+          node -v
+          nvm alias default v16.15.1
+      - run: |
+          node -v
       - restore_cache:
           keys:
             - v1-deps-{{ checksum "package.json" }}
@@ -62,6 +84,17 @@ jobs:
     steps:
       - checkout:
           path: ~/BHelpful
+      - run: |
+            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run: |
+          node -v
+      - run: |
+          nvm install v16.15.1
+          node -v
+          nvm alias default v16.15.1
+      - run: |
+          node -v
       # look for existing cache and restore if found
       - restore_cache:
           keys:
@@ -87,6 +120,17 @@ jobs:
     steps:
       - checkout:
           path: ~/BHelpful
+      - run: |
+            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run: |
+          node -v
+      - run: |
+          nvm install v16.15.1
+          node -v
+          nvm alias default v16.15.1
+      - run: |
+          node -v
       # look for existing cache and restore if found
       - restore_cache:
           keys:
