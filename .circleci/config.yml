@@ -57,19 +57,11 @@ jobs:
 
   test:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: circleci/node:16.3.0
     working_directory: ~/BHelpful
     steps:
       - checkout:
           path: ~/BHelpful
-      - run:
-          name: Install docker-compose
-          command: |
-            apk add --no-cache \
-              py-pip=9.0.0-r1
-            pip install \
-              docker-compose==1.12.0 \
-              awscli==1.11.76
       # look for existing cache and restore if found
       - restore_cache:
           keys:
@@ -84,6 +76,14 @@ jobs:
           key: v1-deps-{{ checksum "package.json" }}
           paths:
             - node_modules
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Install Docker client
+          command: |
+            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-17.03.0-ce.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            sudo mv /tmp/docker/* /usr/bin
       - run:
           name: Run tests
           command: |
