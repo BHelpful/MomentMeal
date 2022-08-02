@@ -1,24 +1,15 @@
 version: 2.1
 jobs:
   lint:
-    machine:
-      image: ubuntu-2204:2022.04.2
+    docker:
+      - image: circleci/node:16.3.0
+      - image: docker:17.05.0-ce-git
     working_directory: ~/BHelpful
     steps:
       - checkout:
           path: ~/BHelpful
+      # This should go into custom primary image, here's only for the sake of explanation
       # look for existing cache and restore if found
-      - run: |
-            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run: |
-          node -v
-      - run: |
-          nvm install v16.15.1
-          node -v
-          nvm alias default v16.15.1
-      - run: |
-          node -v
       - restore_cache:
           keys:
             - v1-deps-{{ checksum "package.json" }}
@@ -42,23 +33,14 @@ jobs:
             - node_modules/*
             - cypress/*
   build:
-    machine:
-      image: ubuntu-2204:2022.04.2
+    docker:
+      - image: circleci/node:16.3.0
+      - image: docker:17.05.0-ce-git
     working_directory: ~/BHelpful
     steps:
       - checkout:
           path: ~/BHelpful
-      - run: |
-            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run: |
-          node -v
-      - run: |
-          nvm install v16.15.1
-          node -v
-          nvm alias default v16.15.1
-      - run: |
-          node -v
+      # This should go into custom primary image, here's only for the sake of explanation
       - restore_cache:
           keys:
             - v1-deps-{{ checksum "package.json" }}
@@ -78,23 +60,14 @@ jobs:
             yarn build
 
   test:
-    machine:
-      image: ubuntu-2204:2022.04.2
+    docker:
+      - image: circleci/node:16.3.0
+      - image: docker:17.05.0-ce-git
     working_directory: ~/BHelpful
     steps:
       - checkout:
           path: ~/BHelpful
-      - run: |
-            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run: |
-          node -v
-      - run: |
-          nvm install v16.15.1
-          node -v
-          nvm alias default v16.15.1
-      - run: |
-          node -v
+      # This should go into custom primary image, here's only for the sake of explanation
       # look for existing cache and restore if found
       - restore_cache:
           keys:
@@ -114,23 +87,14 @@ jobs:
           command: |
             yarn ci:test
   e2e:
-    machine:
-      image: ubuntu-2204:2022.04.2
+    docker:
+      - image: circleci/node:16.3.0
+      - image: docker:17.05.0-ce-git
     working_directory: ~/BHelpful
     steps:
       - checkout:
           path: ~/BHelpful
-      - run: |
-            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run: |
-          node -v
-      - run: |
-          nvm install v16.15.1
-          node -v
-          nvm alias default v16.15.1
-      - run: |
-          node -v
+      # This should go into custom primary image, here's only for the sake of explanation
       # look for existing cache and restore if found
       - restore_cache:
           keys:
