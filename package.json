@@ -26,7 +26,7 @@
     "test:prisma:deploy": "dotenv -e .env.test -- prisma migrate deploy",
     "test:db:restart": "yarn test:db:rm && yarn test:db:up && yarn test:prisma:deploy",
     "preci:test": "yarn ci:db:restart",
-    "ci:test": "nx affected --target=test ---base=origin/master --parallel --codeCoverage",
+    "ci:test": "nx affected --target=test ---base=origin/master --parallel --codeCoverage --maxWorkers=2",
     "ci:db:rm": "docker-compose rm -s -f -v test-db",
     "ci:db:up": "docker-compose up -d test-db",
     "ci:prisma:deploy": "prisma migrate deploy",
