@@ -5,6 +5,26 @@
     "api": "apps/api",
     "api-interfaces": "libs/api-interfaces",
     "meal-time": "apps/meal-time",
-    "meal-time-e2e": "apps/meal-time-e2e"
+    "meal-time-e2e": "apps/meal-time-e2e",
+    "all": {
+      "projectType": "application",
+      "root": "apps/api",
+      "architect": {
+        "serve": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "ng serve api"
+              },
+              {
+                "command": "ng serve meal-time --host 0.0.0.0"
+              }
+            ],
+            "parallel": true
+          }
+        }
+      }
+    }
   }
 }

@@ -1,0 +1,31 @@
+version: '3'
+services:
+  golang_test:
+    build:
+      context: ./golang
+      dockerfile: ./Dockerfile
+    restart: on-failure
+    command: /bin/sh -c 'while true; do sleep 1; done'
+    volumes:
+      - golang_vol:/usr/src/app/
+    networks:
+      - monorepo_net
+  nodejs_test:
+    build:
+      context: ./nodejs
+      dockerfile: ./Dockerfile
+    restart: on-failure
+    command: /bin/sh -c 'while true; do sleep 1; done'
+    volumes:
+      - nodejs_vol:/usr/src/app/
+      - /usr/src/app/node_modules
+    networks:
+      - monorepo_net
+
+volumes:
+  golang_vol:
+  nodejs_vol:
+
+networks:
+  monorepo_net:
+    driver: bridge

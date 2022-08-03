@@ -1,37 +1,5 @@
 version: '3.8'
 services:
-  calypso:
-    build:
-      context: ./golang
-      dockerfile: ./Dockerfile
-      args:
-        project: ./cmd/calypso
-        port: 3001
-    environment:
-      - APP_NAME=calypso
-    ports:
-      - 8001:3000
-    restart: on-failure
-    volumes:
-      - ./golang:/usr/src/app
-    networks:
-      - mealtime
-  echo:
-    build:
-      context: ./golang
-      dockerfile: ./Dockerfile
-      args:
-        project: ./cmd/echo
-        port: 3001
-    environment:
-      - APP_NAME=echo
-    ports:
-      - 8002:3000
-    restart: on-failure
-    volumes:
-      - ./golang:/usr/src/app
-    networks:
-      - mealtime
   dev-db:
     image: postgres:latest
     command: postgres -c listen_addresses=0.0.0.0
@@ -76,22 +44,6 @@ services:
       POSTGRES_DB: nest
     networks:
       - mealtime
-  nodejs:
-    depends_on:
-      - supertokens
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    ports:
-      - 4200:4200
-      - 3333:3333
-    restart: on-failure
-    volumes:
-      - ./:/usr/src/app
-      - /usr/src/app/node_modules
-    networks:
-      - mealtime
-
 networks:
   mealtime:
     driver: bridge

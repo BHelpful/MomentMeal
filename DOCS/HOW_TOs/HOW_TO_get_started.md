@@ -9,6 +9,8 @@ These are the steps to setup the backend to run the application.
 To get started, you need to have the following programs installed:
 
 - [Docker](https://docs.docker.com/get-docker/) - In order to more easily setup the environment.
+- [Go tools](https://go.dev/doc/install) - To use go.
+- Make. You can install it using [Chocolatey](https://chocolatey.org/install) `choco install make` - To use the `make` command.
 - [Node](https://nodejs.org/en/download/) - To run the application.
 
 ## Installation
