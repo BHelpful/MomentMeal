@@ -1,39 +1,8 @@
 version: '3.8'
 services:
-  calypso:
-    build:
-      context: ./golang
-      dockerfile: ./Dockerfile
-      args:
-        project: ./cmd/calypso
-        port: 3001
-    environment:
-      - APP_NAME=calypso
-    ports:
-      - 8001:3000
-    restart: on-failure
-    volumes:
-      - ./golang:/usr/src/app
-    networks:
-      - mealtime
-  echo:
-    build:
-      context: ./golang
-      dockerfile: ./Dockerfile
-      args:
-        project: ./cmd/echo
-        port: 3001
-    environment:
-      - APP_NAME=echo
-    ports:
-      - 8002:3000
-    restart: on-failure
-    volumes:
-      - ./golang:/usr/src/app
-    networks:
-      - mealtime
   dev-db:
     image: postgres:latest
+    container_name: dev-db
     command: postgres -c listen_addresses=0.0.0.0
     ports:
       - 5434:5432
@@ -51,12 +20,13 @@ services:
       retries: 5
   supertokens:
     image: registry.supertokens.io/supertokens/supertokens-postgresql
+    container_name: supertokens
     depends_on:
       - dev-db
     ports:
       - 3567:3567
     environment:
-      POSTGRESQL_CONNECTION_URI: "${DATABASE_URL_DOCKER}"
+      POSTGRESQL_CONNECTION_URI: '${DATABASE_URL_DOCKER}'
     networks:
       - mealtime
     restart: unless-stopped
@@ -89,6 +59,38 @@ services:
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
+    networks:
+      - mealtime
+  calypso:
+    build:
+      context: ./golang
+      dockerfile: ./Dockerfile
+      args:
+        project: ./cmd/calypso
+        port: 3001
+    environment:
+      - APP_NAME=calypso
+    ports:
+      - 8001:3000
+    restart: on-failure
+    volumes:
+      - ./golang:/usr/src/app
+    networks:
+      - mealtime
+  echo:
+    build:
+      context: ./golang
+      dockerfile: ./Dockerfile
+      args:
+        project: ./cmd/echo
+        port: 3001
+    environment:
+      - APP_NAME=echo
+    ports:
+      - 8002:3000
+    restart: on-failure
+    volumes:
+      - ./golang:/usr/src/app
     networks:
       - mealtime
 
