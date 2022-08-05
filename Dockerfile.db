@@ -1,0 +1,8 @@
+FROM postgres:latest
+
+# Adjust PostgreSQL configuration so that remote connections to the
+# database are possible.
+RUN echo "host all  all    deb-db  md5" >> /var/lib/postgresql/data/pg_hba.conf
+
+# And add ``listen_addresses`` to ``postgresql.conf``
+RUN echo "listen_addresses='*'" >> /var/lib/postgresql/data/postgresql.conf

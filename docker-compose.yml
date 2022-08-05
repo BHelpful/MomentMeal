@@ -1,11 +1,11 @@
 version: '3.8'
 services:
   dev-db:
-    image: postgres:latest
+    image: postgres:12
     container_name: dev-db
-    command: postgres -c listen_addresses=0.0.0.0
+    # command: postgres -c listen_addresses=0.0.0.0 -c port=5432
     ports:
-      - 5434:5432
+      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
@@ -26,7 +26,7 @@ services:
     ports:
       - 3567:3567
     environment:
-      POSTGRESQL_CONNECTION_URI: '${DATABASE_URL_DOCKER}'
+      POSTGRESQL_CONNECTION_URI: 'postgresql://postgres:123@dev-db:5432/nest?schema=public'
     networks:
       - mealtime
     restart: unless-stopped
@@ -36,16 +36,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  test-db:
-    image: postgres:latest
-    ports:
-      - 5435:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: nest
-    networks:
-      - mealtime
   nodejs:
     depends_on:
       - supertokens
@@ -59,38 +49,6 @@ services:
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
-    networks:
-      - mealtime
-  calypso:
-    build:
-      context: ./golang
-      dockerfile: ./Dockerfile
-      args:
-        project: ./cmd/calypso
-        port: 3001
-    environment:
-      - APP_NAME=calypso
-    ports:
-      - 8001:3000
-    restart: on-failure
-    volumes:
-      - ./golang:/usr/src/app
-    networks:
-      - mealtime
-  echo:
-    build:
-      context: ./golang
-      dockerfile: ./Dockerfile
-      args:
-        project: ./cmd/echo
-        port: 3001
-    environment:
-      - APP_NAME=echo
-    ports:
-      - 8002:3000
-    restart: on-failure
-    volumes:
-      - ./golang:/usr/src/app
     networks:
       - mealtime
 
