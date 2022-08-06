@@ -22,5 +22,8 @@ ENV NODE_ENV $node_env
 
 RUN apk --no-cache add curl
 
+# install git
+RUN apk add --no-cache git
+
 # Run the npm command
 CMD [ "sh", "-c", "npm run ${cmd}" ]

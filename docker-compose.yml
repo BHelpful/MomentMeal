@@ -22,7 +22,7 @@ services:
   db-migration:
     container_name: db-migration
     depends_on:
-      dev_db:
+      dev-db:
         condition: service_started
     environment:
       - cmd=prisma:deploy
