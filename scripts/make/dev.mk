@@ -6,7 +6,10 @@ status: ## Get status of containers
 logs: ## Get logs of containers
 	docker-compose logs --tail=0 --follow
 
-start:build ## Build and start docker containers
+remove:
+	docker-compose rm -s -f -v
+
+start: remove build ## Build and start docker containers
 	docker-compose up -d
 
 stop: ## Stop docker containers

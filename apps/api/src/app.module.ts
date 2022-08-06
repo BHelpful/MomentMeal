@@ -16,7 +16,7 @@ import { PrismaModule } from './services/prisma/prisma.module';
     }),
     AuthModule.forRoot({
       // These are the connection details of the app you created on supertokens.com
-      connectionURI: 'http://localhost:3567',
+      connectionURI: 'http://supertokens:3567',
       apiKey: 'someKey', // OR can be undefined
       appInfo: {
         // Learn more about this on https://supertokens.com/docs/thirdparty/appinfo

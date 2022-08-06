@@ -1,5 +1,7 @@
 # Start from node base image
-FROM node:16 AS builder
+FROM node:16-alpine AS setup
+
+ENV cmd=prisma:deploy
 
 # Set the current working directory inside the container
 WORKDIR /usr/src/app
@@ -18,31 +20,7 @@ COPY . .
 ARG node_env=development
 ENV NODE_ENV $node_env
 
-# Run the app
-CMD [  "npm", "run", "start:migrate:prod" ]
+RUN apk --no-cache add curl
 
-
-
-
-
-
-# RUN yarn build
-
-# FROM node:16
-
-# COPY --from=builder /usr/src/app/node_modules ./node_modules
-# COPY --from=builder /usr/src/app/package.json ./
-# COPY --from=builder /usr/src/app/yarn.lock ./
-# COPY --from=builder /usr/src/app/dist ./dist
-# COPY --from=builder /usr/src/app/prisma ./prisma
-
-
-# # Set the Node environment
-# ARG node_env=development
-# ENV NODE_ENV $node_env
-
-
-# EXPOSE 3333
-
-# # Run the app
-# CMD [  "npm", "run", "start:migrate:prod" ]
+# Run the npm command
+CMD [ "sh", "-c", "npm run ${cmd}" ]

@@ -7,7 +7,7 @@
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "prestart": "yarn db:restart && yarn prisma:seed",
     "start": "nx run-many --target=serve --projects=api,meal-time",
-    "start:prod": "nx run-many --target=serve --projects=api,meal-time",
+    "start:prod": "nx run-many --target=serve --projects=api,meal-time --host 0.0.0.0",
     "start:migrate:prod": "prisma migrate deploy && prisma db seed && npm run start:prod",
     "build": "nx affected --target=build --base=origin/master --parallel",
     "lint": "nx affected --target=lint --base=origin/master --parallel",

@@ -15,14 +15,29 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ['CMD', 'pg_isready -U supertokens_user']
-      interval: 5s
+      interval: 30s
       timeout: 5s
+      start_period: 40s
       retries: 5
+  db-migration:
+    container_name: db-migration
+    depends_on:
+      dev_db:
+        condition: service_started
+    environment:
+      - cmd=prisma:deploy
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    restart: on-failure
+    networks:
+      - mealtime
   supertokens:
     image: registry.supertokens.io/supertokens/supertokens-postgresql
     container_name: supertokens
     depends_on:
-      - nodejs
+      db-migration:
+        condition: service_completed_successfully
     ports:
       - 3567:3567
     environment:
@@ -36,9 +51,13 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  nodejs:
+  meal-time:
+    container_name: meal-time
     depends_on:
-      - dev-db
+      supertokens:
+        condition: service_healthy
+    environment:
+      - cmd=start:prod
     build:
       context: ./
       dockerfile: ./Dockerfile
@@ -46,11 +65,14 @@ services:
       - 4200:4200
       - 3333:3333
     restart: on-failure
-    volumes:
-      - ./:/usr/src/app
-      - /usr/src/app/node_modules
     networks:
       - mealtime
+    healthcheck:
+      test: curl --fail http://localhost:3333/api || exit 1
+      interval: 10s
+      start_period: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   mealtime:
