@@ -57,13 +57,22 @@ services:
       supertokens:
         condition: service_healthy
     environment:
-      - cmd=test:cov
+      - cmd=test
     build:
       context: ./
       dockerfile: ./Dockerfile
+    ports:
+      - 4200:4200
+      - 3333:3333
     restart: on-failure
     networks:
       - mealtime
+    healthcheck:
+      test: curl --fail http://localhost:3333/api || exit 1
+      interval: 10s
+      start_period: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   mealtime:
