@@ -13,6 +13,10 @@ jobs:
       - nx/set-shas
       - run:
           command: >-
+            yarn prisma generate
+          name: Prisma generate
+      - run:
+          command: >-
             yarn nx affected --target=build --base=$NX_BASE --parallel
             --max-parallel=3
           name: Run Builds
