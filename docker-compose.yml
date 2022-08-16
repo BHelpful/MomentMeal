@@ -3,13 +3,13 @@ services:
   dev-db:
     image: postgres:12
     container_name: dev-db
-    command: postgres -c listen_addresses=0.0.0.0 -c port=5432
+    command: postgres -c listen_addresses=0.0.0.0 -c port=${DB_PORT}
     ports:
-      - 5432:5432
+      - ${DB_PORT}:5432
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: nest
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     networks:
       - mealtime
     restart: unless-stopped
@@ -25,7 +25,7 @@ services:
       dev-db:
         condition: service_started
     environment:
-      - cmd=prisma:deploy
+      - cmd=docker:prisma:deploy
     build:
       context: ./
       dockerfile: ./Dockerfile
@@ -41,7 +41,7 @@ services:
     ports:
       - 3567:3567
     environment:
-      POSTGRESQL_CONNECTION_URI: 'postgresql://postgres:123@dev-db:5432/nest?schema=public'
+      POSTGRESQL_CONNECTION_URI: '${DATABASE_URL}'
     networks:
       - mealtime
     restart: unless-stopped
@@ -57,7 +57,7 @@ services:
       supertokens:
         condition: service_healthy
     environment:
-      - cmd=start:prod
+      - cmd=docker:start
     build:
       context: ./
       dockerfile: ./Dockerfile
