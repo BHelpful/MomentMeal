@@ -23,8 +23,14 @@ describe('Stores', () => {
 ## Running the tests in watch mode
 In order to do TDD with a backend you need to run the tests in watch mode. This is done by adding the `--watch` flag to the command.
 
+If you don't have the db running in docker you can start it by running:
+```bash
+make db
+```
+
+Run tests in watch mode:
 ```bash
 yarn test --watch
 ```
 
-The test is using the test environment variables `.env.test`. The main difference being the ports for the databases are different, so the development database port does not clash with the test database port. To see how to generate the test environment variables look at [Getting Started](https://github.com/BHelpful/MealTime/blob/master/DOCS/HOW_TOs/HOW_TO_get_started.md).
+The test is using the environment variables `.env`. The main difference being the ports for the databases are different, so the development database port does not clash with the test database port. To see how to generate the test environment variables look at [Getting Started](https://github.com/BHelpful/MealTime/blob/master/DOCS/HOW_TOs/HOW_TO_get_started.md).

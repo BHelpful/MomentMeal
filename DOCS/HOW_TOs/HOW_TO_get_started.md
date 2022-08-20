@@ -37,6 +37,13 @@ Press enter to use default value, using all defaults _should_ work on all system
 
 ## Start application
 
+Start database (this you can keep running in the background in docker):
+
+```
+make db
+```
+
+Start the application
 ```
 yarn start
 ```
