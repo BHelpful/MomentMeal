@@ -53,7 +53,7 @@ export class AuthComponent implements OnInit {
       ],
     });
     if (response.status === 'OK') {
-      // window.location.href = '/dashboard';
+      window.location.assign('/home');
       this.isLoggedIn = true;
     }
   }
@@ -73,7 +73,7 @@ export class AuthComponent implements OnInit {
       ],
     });
     if (response.status === 'OK') {
-      // window.location.href = '/dashboard';
+      window.location.assign('/home');
       this.isLoggedIn = true;
     }
   }
