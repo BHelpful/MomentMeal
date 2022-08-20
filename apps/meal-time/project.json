@@ -18,6 +18,9 @@
           "apps/meal-time/src/assets",
           "apps/meal-time/src/manifest.webmanifest"
         ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["libs/mealtime-ui-components/src/lib/tokens"]
+        },
         "styles": ["apps/meal-time/src/styles.scss"],
         "scripts": [],
         "serviceWorker": true,

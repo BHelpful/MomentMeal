@@ -68,7 +68,7 @@
         "storybook": {
           "executor": "@storybook/angular:start-storybook",
           "options": {
-            "port": 4400,
+            "port": 6006,
             "configDir": "libs/mealtime-ui-components/.storybook",
             "browserTarget": "mealtime-ui-components:build-storybook",
             "compodoc": false

@@ -8,7 +8,7 @@ import Session from 'supertokens-web-js/recipe/session';
 @Component({
   selector: 'meal-time-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css'],
+  styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
   // define params
