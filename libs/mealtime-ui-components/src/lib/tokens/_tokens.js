@@ -2,12 +2,12 @@ module.exports = {
   "global": {
     "color": {
       "teal": {
-        "value": "#33d3a5",
+        "value": "#1d775d",
         "type": "color",
         "filePath": "tokens/tokens.json",
         "isSource": true,
         "original": {
-          "value": "#33d3a5",
+          "value": "#1d775d",
           "type": "color"
         },
         "name": "GlobalColorTeal",
