@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword';
 import Session from 'supertokens-web-js/recipe/session';
 
-// TODO continue to implement functions from here (https://github.com/supertokens/supertokens-web-js/blob/master/examples/vuejs/with-thirdpartyemailpassword/src/views/AuthView.vue) Possibly look here (https://supertokens.com/blog/adding-social-login-to-your-website-with-supertokens)
-
 @Component({
   selector: 'meal-time-auth',
   templateUrl: './auth.component.html',
