@@ -7,13 +7,13 @@ logs: ## Get logs of containers
 	docker-compose logs --tail=0 --follow
 
 remove:
-	docker-compose rm dev-db db-migration supertokens meal-time -s -f -v
+	docker-compose rm -s -f -v dev-db db-migration supertokens meal-time
 
 db: build ## Build and start docker containers
-	docker-compose --env-file ./.env.docker up dev-db db-migration supertokens -d
+	docker-compose --env-file ./.env.docker up -d dev-db db-migration supertokens
 
 db-ci: build ## Build and start docker containers
-	docker-compose up dev-db db-migration supertokens -d
+	docker-compose up -d dev-db db-migration supertokens 
 
 run: remove build-docker ## Build and start docker containers
 	docker-compose --env-file ./.env.docker up -d
