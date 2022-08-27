@@ -55,12 +55,16 @@ jobs:
           command: |
             yarn build
   test:
-    docker:
-      - image: circleci/node:16.3.0
+    machine:
+      image: ubuntu-2204:2022.04.2
     working_directory: ~/BHelpful
     steps:
       - checkout:
           path: ~/BHelpful
+      - run:
+          name: Start DB
+          command: |
+            make db
       - restore_cache:
           keys:
             - v1-deps-{{ checksum "package.json" }}
