@@ -111,12 +111,6 @@ workflows:
   CI_Tests:
     jobs:
       - lint
-      - build:
-          requires:
-            - lint
-      - test:
-          requires:
-            - build
-      - e2e:
-          requires:
-            - test
+      - build
+      - test
+      - e2e
