@@ -9,8 +9,11 @@ logs: ## Get logs of containers
 remove:
 	docker-compose rm dev-db db-migration supertokens meal-time -s -f -v
 
-db: remove build ## Build and start docker containers
+db: build ## Build and start docker containers
 	docker-compose --env-file ./.env.docker up dev-db db-migration supertokens -d
+
+db-ci: build ## Build and start docker containers
+	docker-compose up dev-db db-migration supertokens -d
 
 run: remove build-docker ## Build and start docker containers
 	docker-compose --env-file ./.env.docker up -d
