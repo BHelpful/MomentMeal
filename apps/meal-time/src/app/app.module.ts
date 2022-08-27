@@ -15,6 +15,7 @@ import EmailPassword from 'supertokens-web-js/recipe/emailpassword';
 import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword';
 import { AuthModule } from './auth/auth.module';
 import { CallbackComponent } from './auth/callback/callback.component';
+import { MealtimeUiComponentsModule } from 'mealtime-ui-components';
 
 SuperTokens.init({
   appInfo: {
@@ -32,6 +33,7 @@ SuperTokens.init({
 @NgModule({
   declarations: [AppComponent, CallbackComponent],
   imports: [
+    MealtimeUiComponentsModule,
     LandingModule,
     AuthModule,
     HomeModule,

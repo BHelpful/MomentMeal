@@ -1,18 +1,25 @@
 <h1>Authentication</h1>
 <!-- button -->
-<button (click)="signUp('testMail@gmail.com', 'Password123+')">Sign Up</button>
-<button (click)="signIn('testMail@gmail.com', 'Password123+')">Sign In</button>
-<button (click)="onGooglePressed()">
-  {{ 'Sign in with google' | titlecase }}
-</button>
-<button (click)="onApplePressed()">
-  {{ 'Sign in with apple' | titlecase }}
-</button>
-<button (click)="onGithubPressed()">
-  {{ 'Sign in with GitHub' | titlecase }}
-</button>
-<button (click)="signOut()">Sign Out</button>
-<!-- Is user signed in btn -->
-<button (click)="userLoggedIn()">Is user signed in?</button>
+<div class="container">
+  <mt-button
+    (click)="signUp('testMail@gmail.com', 'Password123+')"
+    value="Sign Up"
+  ></mt-button>
+  <mt-button
+    (click)="signIn('testMail@gmail.com', 'Password123+')"
+    value="Sign In"
+  ></mt-button>
+  <mt-button
+    (click)="onGooglePressed()"
+    value="Sign in with google"
+  ></mt-button>
+  <mt-button (click)="onApplePressed()" value="Sign in with apple"></mt-button>
+  <mt-button
+    (click)="onGithubPressed()"
+    value="Sign in with GitHub"
+  ></mt-button>
+  <mt-button (click)="signOut()" value="Sign Out"></mt-button>
+  <mt-button (click)="userLoggedIn()" value="Is user signed in?"></mt-button>
+</div>
 
 <h2>Is the user signed in?: {{ isLoggedIn }}</h2>

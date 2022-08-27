@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "meal-time",
+            "prefix": "mt",
             "style": "kebab-case"
           }
         ]

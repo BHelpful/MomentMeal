@@ -30,7 +30,7 @@
       "projectType": "library",
       "root": "libs/mealtime-ui-components",
       "sourceRoot": "libs/mealtime-ui-components/src",
-      "prefix": "meal-time",
+      "prefix": "mt",
       "targets": {
         "build": {
           "executor": "@nrwl/angular:package",

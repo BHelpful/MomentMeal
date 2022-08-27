@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'link';
 
 @Component({
-  selector: 'meal-time-button',
+  selector: 'mt-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
 })
