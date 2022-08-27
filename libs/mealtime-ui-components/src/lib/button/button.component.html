@@ -1,1 +1,3 @@
-<button class="btn">button works!</button>
+<button class="btn" [ngClass]="[variant]" [class.disabled]="disabled">
+  {{ value | uppercase }}
+</button>

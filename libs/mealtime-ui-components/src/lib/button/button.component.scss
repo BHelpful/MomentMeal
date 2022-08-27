@@ -1,23 +1,53 @@
 .btn {
-  background-color: rgba(51, 51, 51, 0.05);
-  border-radius: 8px;
-  border-width: 0;
-  color: #333333;
-  cursor: pointer;
-  display: inline-block;
-  font-family: 'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial,
-    sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 10px 12px;
+  font-family: 'montserrat', sans-serif;
+  display: flex;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  flex-direction: column;
+  font-weight: bold;
   text-align: center;
-  transition: all 200ms;
-  vertical-align: baseline;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: 2px;
   white-space: nowrap;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.15) 0 3px 9px 0;
+    transform: translateY(-2px);
+  }
+  &:active {
+    transform: scale(0.99);
+  }
+}
+.primary {
+  background: #4b4ded;
+}
+
+.secondary {
+  background: #efeffd;
+  color: #4b4ded;
+}
+
+.tertiary {
+  background: #ffffff;
+  border: 1px solid #efeffd;
+  color: #4b4ded;
+}
+
+.link {
+  background: none;
+  color: #4b4ded;
+}
+
+.disabled {
+  background: none;
+  border: none;
+  color: #8c8ca2;
+  pointer-events: none;
 }
