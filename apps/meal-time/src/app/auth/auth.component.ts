@@ -145,4 +145,9 @@ export class AuthComponent implements OnInit {
     // we redirect the user to sign in with github
     window.location.href = githubAuthURL;
   }
+
+  // goToLanding
+  goToLanding() {
+    window.location.assign('/');
+  }
 }

@@ -1,25 +1,34 @@
-<h1>Authentication</h1>
-<!-- button -->
 <div class="container">
+  <h1>Authentication</h1>
+</div>
+<div class="container">
+  <!-- button -->
   <mt-button
     (click)="signUp('testMail@gmail.com', 'Password123+')"
     value="Sign Up"
+    variant="primary"
   ></mt-button>
   <mt-button
     (click)="signIn('testMail@gmail.com', 'Password123+')"
     value="Sign In"
+    variant="secondary"
   ></mt-button>
   <mt-button
     (click)="onGooglePressed()"
     value="Sign in with google"
+    variant="tertiary"
   ></mt-button>
-  <mt-button (click)="onApplePressed()" value="Sign in with apple"></mt-button>
   <mt-button
     (click)="onGithubPressed()"
     value="Sign in with GitHub"
+    variant="link"
   ></mt-button>
-  <mt-button (click)="signOut()" value="Sign Out"></mt-button>
-  <mt-button (click)="userLoggedIn()" value="Is user signed in?"></mt-button>
+  <mt-button
+    (click)="onApplePressed()"
+    [disabled]="true"
+    value="Sign in with apple"
+  ></mt-button>
 </div>
-
-<h2>Is the user signed in?: {{ isLoggedIn }}</h2>
+<div class="container">
+  <mt-button (click)="goToLanding()" value="Back"></mt-button>
+</div>
