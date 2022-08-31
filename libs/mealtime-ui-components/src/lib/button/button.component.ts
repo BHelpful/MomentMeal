@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'link';
 
@@ -16,4 +16,13 @@ export class ButtonComponent {
 
   @Input()
   public value = 'Button';
+
+  @Output()
+  public clicked = new EventEmitter();
+
+  public onClick() {
+    if (!this.disabled) {
+      this.clicked.emit();
+    }
+  }
 }

@@ -4,31 +4,31 @@
 <div class="container">
   <!-- button -->
   <mt-button
-    (click)="signUp('testMail@gmail.com', 'Password123+')"
+    (clicked)="signUp('testMail@gmail.com', 'Password123+')"
     value="Sign Up"
     variant="primary"
   ></mt-button>
   <mt-button
-    (click)="signIn('testMail@gmail.com', 'Password123+')"
+    (clicked)="signIn('testMail@gmail.com', 'Password123+')"
     value="Sign In"
     variant="secondary"
   ></mt-button>
   <mt-button
-    (click)="onGooglePressed()"
+    (clicked)="onGooglePressed()"
     value="Sign in with google"
     variant="tertiary"
   ></mt-button>
   <mt-button
-    (click)="onGithubPressed()"
+    (clicked)="onGithubPressed()"
     value="Sign in with GitHub"
     variant="link"
   ></mt-button>
   <mt-button
-    (click)="onApplePressed()"
+    (clicked)="onApplePressed()"
     [disabled]="true"
     value="Sign in with apple"
   ></mt-button>
 </div>
 <div class="container">
-  <mt-button (click)="goToLanding()" value="Back"></mt-button>
+  <mt-button (clicked)="goToLanding()" value="Back"></mt-button>
 </div>
