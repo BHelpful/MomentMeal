@@ -5,7 +5,6 @@ import { Test } from '@nestjs/testing';
 import * as pactum from 'pactum';
 import { PrismaService } from '../services/prisma/prisma.service';
 
-
 describe('App e2e', () => {
   let app: INestApplication;
   let prisma: PrismaService;

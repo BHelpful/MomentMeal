@@ -6,8 +6,9 @@
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/meal-time-e2e/cypress.json",
-        "devServerTarget": "meal-time:serve:development"
+        "cypressConfig": "apps/meal-time-e2e/cypress.config.ts",
+        "devServerTarget": "meal-time:serve:development",
+        "testingType": "e2e"
       },
       "configurations": {
         "production": {
@@ -17,18 +18,12 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/meal-time-e2e/**/*.{js,ts}"
-        ]
+        "lintFilePatterns": ["apps/meal-time-e2e/**/*.{js,ts}"]
       }
     }
   },
   "tags": [],
-  "implicitDependencies": [
-    "meal-time"
-  ]
+  "implicitDependencies": ["meal-time"]
 }

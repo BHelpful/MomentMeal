@@ -1,0 +1,34 @@
+<div class="container">
+  <h1>Authentication</h1>
+</div>
+<div class="container">
+  <!-- button -->
+  <mt-button
+    (clicked)="signUp('testMail@gmail.com', 'Password123+')"
+    value="Sign Up"
+    variant="primary"
+  ></mt-button>
+  <mt-button
+    (clicked)="signIn('testMail@gmail.com', 'Password123+')"
+    value="Sign In"
+    variant="secondary"
+  ></mt-button>
+  <mt-button
+    (clicked)="onGooglePressed()"
+    value="Sign in with google"
+    variant="tertiary"
+  ></mt-button>
+  <mt-button
+    (clicked)="onGithubPressed()"
+    value="Sign in with GitHub"
+    variant="link"
+  ></mt-button>
+  <mt-button
+    (clicked)="onApplePressed()"
+    [disabled]="true"
+    value="Sign in with apple"
+  ></mt-button>
+</div>
+<div class="container">
+  <mt-button (clicked)="goToLanding()" value="Back"></mt-button>
+</div>

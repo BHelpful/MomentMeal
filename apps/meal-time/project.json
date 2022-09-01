@@ -5,9 +5,7 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/meal-time",
         "index": "apps/meal-time/src/index.html",
@@ -20,9 +18,10 @@
           "apps/meal-time/src/assets",
           "apps/meal-time/src/manifest.webmanifest"
         ],
-        "styles": [
-          "apps/meal-time/src/styles.scss"
-        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["libs/mealtime-ui-components/src/lib/tokens"]
+        },
+        "styles": ["apps/meal-time/src/styles.scss"],
         "scripts": [],
         "serviceWorker": true,
         "ngswConfigPath": "apps/meal-time/ngsw-config.json"
@@ -92,9 +91,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/meal-time"
-      ],
+      "outputs": ["coverage/apps/meal-time"],
       "options": {
         "jestConfig": "apps/meal-time/jest.config.ts",
         "passWithNoTests": true

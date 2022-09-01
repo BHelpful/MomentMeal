@@ -9,7 +9,8 @@ These are the steps to setup the backend to run the application.
 To get started, you need to have the following programs installed:
 
 - [Docker](https://docs.docker.com/get-docker/) - In order to more easily setup the environment.
-- [Node](https://nodejs.org/en/download/) - To run the application.
+- Make. You can install it using [Chocolatey](https://chocolatey.org/install) `choco install make` - To use the `make` command.
+- [Node](https://nodejs.org/en/download/) v. 16.10.0 or above - To run the application.
 
 ## Installation
 
@@ -35,6 +36,13 @@ Press enter to use default value, using all defaults _should_ work on all system
 
 ## Start application
 
+Start database (this you can keep running in the background in docker):
+
+```
+make db
+```
+
+Start the application
 ```
 yarn start
 ```

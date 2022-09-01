@@ -1,0 +1,9 @@
+<button
+  class="btn"
+  [ngClass]="[variant]"
+  [class.disabled]="disabled"
+  onclick="!disabled"
+  (click)="onClick()"
+>
+  {{ value | uppercase }}
+</button>

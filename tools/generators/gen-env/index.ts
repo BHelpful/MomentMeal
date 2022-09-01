@@ -6,12 +6,9 @@ import {
   joinPathFragments,
 } from '@nrwl/devkit';
 
-interface NewArticleSchemaOptions {
-  db_uri: string;
-  test_db_uri: string;
-}
+interface NewEnvSchemaOptions {}
 
-export default async function (tree: Tree, schema: NewArticleSchemaOptions) {
+export default async function (tree: Tree, schema: NewEnvSchemaOptions) {
   generateFiles(
     // virtual file system
     tree,
@@ -24,9 +21,6 @@ export default async function (tree: Tree, schema: NewArticleSchemaOptions) {
 
     // the variables to be substituted in the template
     {
-      db_uri: schema.db_uri,
-      test_db_uri: schema.test_db_uri,
-
       template: '',
     }
   );
