@@ -1,5 +1,5 @@
 import { AppModule } from '../app.module';
-import { CreateStoreDto } from '@meal-time/api-interfaces';
+import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as pactum from 'pactum';
@@ -69,7 +69,16 @@ describe('App e2e', () => {
     });
 
     describe('Update store', () => {
-      it.todo('should update store');
+      const uDto: UpdateStoreDto = {
+        name: 'Aldi gevaldi',
+      };
+      it('should update store', async () => {
+        return pactum.
+          spec().
+          patch('/stores/$S{storeId}').
+          withBody(uDto).
+          expectStatus(200)
+      });
     });
   });
 });

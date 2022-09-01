@@ -28,6 +28,15 @@ export class StoresService {
 
   async findAll() {
     const stores = await this.prisma.stores.findMany();
+    // Sorting the array of stores in ascending order
+    await stores.sort((a, b) => {
+      if (a.id > b.id) {
+        return 1
+      } else if (a.id < b.id) {
+        return -1
+      }
+      return 0
+    });
     return stores;
   }
 
@@ -43,7 +52,18 @@ export class StoresService {
   }
 
   async update(id: number, updateStoreDto: UpdateStoreDto) {
-    return `This action updates a #${id} store`;
+    return this.prisma.stores.update({
+      data: {
+        ...updateStoreDto,
+      },
+      where: {
+        id: id
+      }
+    }).catch((error: PrismaClientKnownRequestError) => {
+      if (error.code === 'P2001') {
+        throw new NotFoundException(STORES_EXCEPTION_MSG.NOT_FOUND);
+      }
+    })
   }
   
   async remove(id: number) {
