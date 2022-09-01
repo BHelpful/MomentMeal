@@ -1,24 +1,26 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "lib": ["es2017", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@meal-time/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "mealtime-ui-components": ["libs/mealtime-ui-components/src/index.ts"]
-    },
-    "strictPropertyInitialization": false
-  },
-  "exclude": ["node_modules", "tmp"]
+	"compileOnSave": false,
+	"compilerOptions": {
+		"rootDir": ".",
+		"sourceMap": true,
+		"declaration": false,
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"importHelpers": true,
+		"target": "es2015",
+		"module": "esnext",
+		"lib": ["es2017", "dom"],
+		"skipLibCheck": true,
+		"skipDefaultLibCheck": true,
+		"baseUrl": ".",
+		"paths": {
+			"@meal-time/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+			"mealtime-ui-components": [
+				"libs/mealtime-ui-components/src/index.ts"
+			]
+		},
+		"strictPropertyInitialization": false
+	},
+	"exclude": ["node_modules", "tmp"]
 }
