@@ -31,7 +31,7 @@ export class StoresController {
 
   @ApiOperation({
     summary: 'Create a new store',
-    description: 'Test',
+    description: 'Create a new store',
   })
   @ApiCreatedResponse({ type: StoreEntity })
   @ApiResponse({
@@ -45,7 +45,7 @@ export class StoresController {
 
   @ApiOperation({
     summary: 'Get all stores',
-    description: 'Test',
+    description: 'Get all stores, sorted in ascending order.',
   })
   @ApiOkResponse({ type: StoreEntity, isArray: true })
   @Get()
@@ -55,7 +55,7 @@ export class StoresController {
 
   @ApiOperation({
     summary: 'Find a store by id',
-    description: 'Test',
+    description: 'Find a store by a specific id.',
   })
   @ApiOkResponse({ type: StoreEntity })
   @Get(':id')
@@ -65,7 +65,7 @@ export class StoresController {
 
   @ApiOperation({
     summary: 'Update a store by id',
-    description: 'Test',
+    description: 'Update a store by a specific id.',
   })
   @ApiOkResponse({ type: StoreEntity })
   @ApiResponse({
@@ -79,7 +79,7 @@ export class StoresController {
 
   @ApiOperation({
     summary: 'Delete a store by id',
-    description: 'Test',
+    description: 'Delete a store by a specific id.',
   })
   @ApiOkResponse({ type: StoreEntity })
   @ApiResponse({
