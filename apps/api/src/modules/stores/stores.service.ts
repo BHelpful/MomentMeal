@@ -26,15 +26,23 @@ export class StoresService {
       });
   }
 
-  findAll() {
-    return `This action returns all stores`;
+  async findAll() {
+    const stores = await this.prisma.stores.findMany();
+    return stores;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} store`;
+  async findOne(id: number) {
+    const store = await this.prisma.stores.findUnique({
+      where: {
+        id: id
+      }
+    });
+
+    if(!store) throw new NotFoundException(STORES_EXCEPTION_MSG.NOT_FOUND);
+    return store;
   }
 
-  update(id: number, updateStoreDto: UpdateStoreDto) {
+  async update(id: number, updateStoreDto: UpdateStoreDto) {
     return `This action updates a #${id} store`;
   }
   
