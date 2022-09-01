@@ -68,6 +68,10 @@ export class StoresController {
     description: 'Test',
   })
   @ApiOkResponse({ type: StoreEntity })
+  @ApiResponse({
+    status: new NotFoundException().getStatus(),
+    description: STORES_EXCEPTION_MSG.NOT_FOUND,
+  })
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
     return this.storesService.update(+id, updateStoreDto);
