@@ -24,7 +24,7 @@ describe('App e2e', () => {
     await app.listen(3333);
 
     prisma = app.get(PrismaService);
-    await prisma.cleanDb(); // ! I do not think that this works?
+    await prisma.cleanDb();
     pactum.request.setBaseUrl('http://localhost:3333');
   });
 
