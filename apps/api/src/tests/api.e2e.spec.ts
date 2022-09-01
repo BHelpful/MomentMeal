@@ -24,7 +24,7 @@ describe('App e2e', () => {
     await app.listen(3333);
 
     prisma = app.get(PrismaService);
-    await prisma.cleanDb();
+    await prisma.cleanDb(); // ! I do not think that this works?
     pactum.request.setBaseUrl('http://localhost:3333');
   });
 
@@ -53,23 +53,23 @@ describe('App e2e', () => {
           .spec()
           .get('/stores')
           .expectStatus(200)
-          .expectJsonLike({
+          .expectJsonLike([{
             "name": "Rema 1000"
-        })
+        }]);
       });
       it('should get a specific store', async () => {
         return pactum
           .spec()
-          .get('/stores/1') //TODO fix when running test multiple times without remaking db, the id's keep incrementing
+          .get('/stores/$S{storeId}')
           .expectStatus(200)
           .expectJsonLike({
               "name": "Rema 1000"
-          })
+          });
       })
     });
 
     describe('Update store', () => {
-      it.todo('should update store')
+      it.todo('should update store');
     });
   });
 });
