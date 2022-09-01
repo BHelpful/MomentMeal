@@ -46,5 +46,30 @@ describe('App e2e', () => {
           .stores('storeId', 'id');
       });
     });
+  
+    describe('Get all stores', () => {
+      it('should get all stores', async () => {
+        return pactum
+          .spec()
+          .get('/stores')
+          .expectStatus(200)
+          .expectJsonLike({
+            "name": "Rema 1000"
+        })
+      });
+      it('should get a specific store', async () => {
+        return pactum
+          .spec()
+          .get('/stores/1') //TODO fix when running test multiple times without remaking db, the id's keep incrementing
+          .expectStatus(200)
+          .expectJsonLike({
+              "name": "Rema 1000"
+          })
+      })
+    });
+
+    describe('Update store', () => {
+      it.todo('should update store')
+    });
   });
 });
