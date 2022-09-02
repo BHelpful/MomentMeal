@@ -1,8 +1,8 @@
-import { AppModule } from '../app.module';
 import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as pactum from 'pactum';
+import { AppModule } from '../app.module';
 import { PrismaService } from '../services/prisma/prisma.service';
 
 describe('App e2e', () => {
@@ -78,6 +78,10 @@ describe('App e2e', () => {
 			it('should not get specific store that does not exist', async () => {
 				return pactum.spec().get('/stores/10000').expectStatus(404);
 			});
+
+			it('should not get store with incorrect id', async () => {
+				return pactum.spec().get('/stores/asdf').expectStatus(400);
+			});
 		});
 
 		describe('Update store', () => {
@@ -107,6 +111,14 @@ describe('App e2e', () => {
 					.patch('/stores/100000')
 					.withBody(uDto2)
 					.expectStatus(404);
+			});
+
+			it('should not update store with incorrect id', async () => {
+				return pactum
+					.spec()
+					.patch('/stores/asdf')
+					.withBody(uDto2)
+					.expectStatus(400);
 			});
 
 			it('should not update store to store wich already exists', async () => {

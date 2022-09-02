@@ -63,6 +63,10 @@ export class StoresController {
 		description: 'Find a store by a specific id.',
 	})
 	@ApiOkResponse({ type: StoreEntity })
+	@ApiResponse({
+		status: new NotFoundException().getStatus(),
+		description: STORES_EXCEPTION_MSG.NOT_FOUND,
+	})
 	@Get(':id')
 	findOne(@Param('id') id: string) {
 		return this.storesService.findOne(+id);
