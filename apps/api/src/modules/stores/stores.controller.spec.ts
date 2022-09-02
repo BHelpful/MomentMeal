@@ -18,6 +18,7 @@ describe('StoresController', () => {
 		}).compile();
 		controller = module.get<StoresController>(StoresController);
 		prisma = module.get<PrismaService>(PrismaService);
+		await prisma.cleanDb();
 	});
 
 	beforeEach(async () => {
