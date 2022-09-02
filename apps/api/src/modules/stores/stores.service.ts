@@ -1,5 +1,6 @@
 import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
 import {
+	BadRequestException,
 	ForbiddenException,
 	Injectable,
 	InternalServerErrorException,
@@ -41,6 +42,9 @@ export class StoresService {
 	}
 
 	async findOne(id: number) {
+		if (isNaN(id)) {
+			throw new BadRequestException();
+		}
 		const store = await this.prisma.stores.findUnique({
 			where: {
 				id: id,
@@ -52,6 +56,9 @@ export class StoresService {
 	}
 
 	async update(id: number, updateStoreDto: UpdateStoreDto) {
+		if (isNaN(id)) {
+			throw new BadRequestException();
+		}
 		return this.prisma.stores
 			.update({
 				data: {
@@ -75,6 +82,9 @@ export class StoresService {
 	}
 
 	async remove(id: number) {
+		if (isNaN(id)) {
+			throw new BadRequestException();
+		}
 		const store = await this.prisma.stores.findUnique({
 			where: {
 				id,
