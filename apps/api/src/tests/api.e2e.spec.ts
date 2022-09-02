@@ -70,7 +70,7 @@ describe('App e2e', () => {
 
     describe('Update store', () => {
       const uDto: UpdateStoreDto = {
-        name: 'Aldi gevaldi',
+        name: 'Aldi',
       };
       it('should update store', async () => {
         return pactum.
