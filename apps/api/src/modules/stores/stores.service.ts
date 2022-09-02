@@ -62,7 +62,7 @@ export class StoresService {
 				},
 			})
 			.catch((error: PrismaClientKnownRequestError) => {
-				if (error.code === 'P2001') {
+				if (error.code === 'P2025') {
 					throw new NotFoundException(STORES_EXCEPTION_MSG.NOT_FOUND);
 				} else if (error.code === 'P2002') {
 					throw new ForbiddenException(STORES_EXCEPTION_MSG.ALREADY_EXISTS);
