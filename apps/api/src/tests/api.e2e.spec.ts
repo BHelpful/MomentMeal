@@ -37,6 +37,7 @@ describe('App e2e', () => {
 			const dto: CreateStoreDto = {
 				name: 'Rema 1000',
 			};
+
 			it('should create store', async () => {
 				return pactum
 					.spec()
@@ -45,12 +46,9 @@ describe('App e2e', () => {
 					.expectStatus(201)
 					.stores('storeId', 'id');
 			});
+
 			it('should not create same store', async () => {
-				return pactum
-					.spec()
-					.post('/stores')
-					.withBody(dto)
-					.expectStatus(403);
+				return pactum.spec().post('/stores').withBody(dto).expectStatus(403);
 			});
 		});
 
@@ -66,6 +64,7 @@ describe('App e2e', () => {
 						},
 					]);
 			});
+
 			it('should get a specific store', async () => {
 				return pactum
 					.spec()
@@ -75,17 +74,21 @@ describe('App e2e', () => {
 						name: 'Rema 1000',
 					});
 			});
+
+			it('should not get specific store that does not exist', async () => {
+				return pactum.spec().get('/stores/10000').expectStatus(404);
+			});
 		});
 
 		describe('Update store', () => {
-			const uDto: UpdateStoreDto = {
-				name: 'Aldi',
-			};
 			const dto: CreateStoreDto = {
-				name: 'Aldi',
+				name: 'Meny',
 			};
 			const dto2: CreateStoreDto = {
 				name: 'Fakta',
+			};
+			const uDto: UpdateStoreDto = {
+				name: 'Aldi',
 			};
 			const uDto2: UpdateStoreDto = {
 				name: 'Fakta',
@@ -97,6 +100,15 @@ describe('App e2e', () => {
 					.withBody(uDto)
 					.expectStatus(200);
 			});
+
+			it('should not update store which does not exist', async () => {
+				return pactum
+					.spec()
+					.patch('/stores/100000')
+					.withBody(uDto2)
+					.expectStatus(404);
+			});
+
 			it('should not update store to store wich already exists', async () => {
 				await pactum
 					.spec()
