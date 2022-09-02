@@ -88,8 +88,6 @@ describe('StoresService', () => {
 		if (updateStore) {
 			return expect(updateStore.name).toEqual('Primark');
 		}
-
-		return false;
 	});
 
 	it('should remove store', async () => {
