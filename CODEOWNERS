@@ -1,22 +1,18 @@
 
 # Global codeowners
-* @BHelpful/BHelpful
+* @BHelpful/MealTime
 
 # Owns scss files
 *.scss @BHelpful/Front-end-design
 
 # Owns all in the app folder
-/apps/mealplanr/ @BHelpful/Reactjs
+/apps/meal-time/ @BHelpful/Angular
 
 # Owns the cypress folder (this overrules the rule before as it comes later)
-/apps/mealplanr-e2e/ @BHelpful/Cypress
+/apps/meal-time-e2e/ @BHelpful/Cypress
 
-# Owns model files containing the mongoose noSQL schemas (also the documents file with reusable schemas)
-/apps/mealplanr-api/scr/collections/*/*.model.ts @BHelpful/noSQL
-/apps/mealplanr-api/scr/collections/documents.ts @BHelpful/noSQL
-
-# Owns the file for routing as well as containing the swagger api documentation
-/apps/mealplanr-api/scr/routes @BHelpful/Swagger-api-documentation
+# Owns model files of database
+/prisma @BHelpful/database
 
 # Owns all in the api folder
-/apps/mealplanr-api/scr/ @BHelpful/RESTful-API
+/apps/api/ @BHelpful/RESTful-API
