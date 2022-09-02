@@ -37,10 +37,6 @@ describe('StoresService', () => {
 		});
 	});
 
-	it('should be defined', () => {
-		expect(service).toBeDefined();
-	});
-
 	it('should create store', async () => {
 		const dto: CreateStoreDto = {
 			name: 'Meny',
