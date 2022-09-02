@@ -2,6 +2,7 @@ import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
 import {
 	ForbiddenException,
 	Injectable,
+	InternalServerErrorException,
 	NotFoundException,
 } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
@@ -21,8 +22,10 @@ export class StoresService {
 			})
 			.catch((error: PrismaClientKnownRequestError) => {
 				if (error.code === 'P2002') {
-					throw new ForbiddenException(
-						STORES_EXCEPTION_MSG.ALREADY_EXISTS
+					throw new ForbiddenException(STORES_EXCEPTION_MSG.ALREADY_EXISTS);
+				} else {
+					throw new InternalServerErrorException(
+						STORES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR
 					);
 				}
 			});
@@ -61,6 +64,12 @@ export class StoresService {
 			.catch((error: PrismaClientKnownRequestError) => {
 				if (error.code === 'P2001') {
 					throw new NotFoundException(STORES_EXCEPTION_MSG.NOT_FOUND);
+				} else if (error.code === 'P2002') {
+					throw new ForbiddenException(STORES_EXCEPTION_MSG.ALREADY_EXISTS);
+				} else {
+					throw new InternalServerErrorException(
+						STORES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR
+					);
 				}
 			});
 	}
