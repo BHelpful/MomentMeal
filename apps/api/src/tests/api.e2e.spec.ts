@@ -45,6 +45,13 @@ describe('App e2e', () => {
 					.expectStatus(201)
 					.stores('storeId', 'id');
 			});
+			it('should not create same store', async () => {
+				return pactum
+					.spec()
+					.post('/stores')
+					.withBody(dto)
+					.expectStatus(403);
+			});
 		});
 
 		describe('Get stores', () => {
@@ -74,12 +81,37 @@ describe('App e2e', () => {
 			const uDto: UpdateStoreDto = {
 				name: 'Aldi',
 			};
+			const dto: CreateStoreDto = {
+				name: 'Aldi',
+			};
+			const dto2: CreateStoreDto = {
+				name: 'Fakta',
+			};
+			const uDto2: UpdateStoreDto = {
+				name: 'Fakta',
+			};
 			it('should update store', async () => {
 				return pactum
 					.spec()
 					.patch('/stores/$S{storeId}')
 					.withBody(uDto)
 					.expectStatus(200);
+			});
+			it('should not update store to store wich already exists', async () => {
+				await pactum
+					.spec()
+					.post('/stores')
+					.withBody(dto)
+					.expectStatus(201)
+					.stores('updateID', 'id');
+
+				await pactum.spec().post('/stores').withBody(dto2);
+
+				return pactum
+					.spec()
+					.patch('/stores/$S{updateID}')
+					.withBody(uDto2)
+					.expectStatus(403);
 			});
 		});
 	});
