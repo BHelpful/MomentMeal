@@ -1,15 +1,20 @@
 import {
-	Controller,
-	Get,
-	Post,
+	CreateStoreDto,
+	StoreEntity,
+	UpdateStoreDto,
+} from '@meal-time/api-interfaces';
+import {
 	Body,
-	Patch,
-	Param,
+	Controller,
 	Delete,
-	NotFoundException,
 	ForbiddenException,
+	Get,
+	InternalServerErrorException,
+	NotFoundException,
+	Param,
+	Patch,
+	Post,
 } from '@nestjs/common';
-import { StoresService } from './stores.service';
 import {
 	ApiCreatedResponse,
 	ApiOkResponse,
@@ -17,12 +22,8 @@ import {
 	ApiResponse,
 	ApiTags,
 } from '@nestjs/swagger';
-import {
-	CreateStoreDto,
-	StoreEntity,
-	UpdateStoreDto,
-} from '@meal-time/api-interfaces';
 import { STORES_EXCEPTION_MSG } from './stores.exceptionMessages';
+import { StoresService } from './stores.service';
 
 @ApiTags('Stores')
 @Controller('stores')
@@ -37,6 +38,10 @@ export class StoresController {
 	@ApiResponse({
 		status: new ForbiddenException().getStatus(),
 		description: STORES_EXCEPTION_MSG.ALREADY_EXISTS,
+	})
+	@ApiResponse({
+		status: new InternalServerErrorException().getStatus(),
+		description: STORES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR,
 	})
 	@Post()
 	create(@Body() createStoreDto: CreateStoreDto) {
@@ -71,6 +76,14 @@ export class StoresController {
 	@ApiResponse({
 		status: new NotFoundException().getStatus(),
 		description: STORES_EXCEPTION_MSG.NOT_FOUND,
+	})
+	@ApiResponse({
+		status: new ForbiddenException().getStatus(),
+		description: STORES_EXCEPTION_MSG.ALREADY_EXISTS,
+	})
+	@ApiResponse({
+		status: new InternalServerErrorException().getStatus(),
+		description: STORES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR,
 	})
 	@Patch(':id')
 	update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {

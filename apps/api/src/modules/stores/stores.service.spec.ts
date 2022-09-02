@@ -25,11 +25,9 @@ describe('StoresService', () => {
 		const dto: CreateStoreDto = {
 			name: 'Meny',
 		};
-		const store = await service.create(dto);
 
-		if (store) {
-			return expect(store.name).toEqual('Meny');
-		}
+		const store = await service.create(dto);
+		return expect(store.name).toEqual('Meny');
 	});
 
 	it('should find all stores', async () => {
@@ -39,21 +37,13 @@ describe('StoresService', () => {
 		const dto2: CreateStoreDto = {
 			name: 'Fakta',
 		};
-		const store1 = await prisma.stores.create({
-			data: {
-				...dto,
-			},
-		});
-		const store2 = await prisma.stores.create({
-			data: {
-				...dto2,
-			},
-		});
+
+		const store1 = await service.create(dto);
+		const store2 = await service.create(dto2);
 
 		const allStores = [store1, store2];
 
 		const stores = await service.findAll();
-
 		return expect(stores).toEqual(allStores);
 	});
 
@@ -61,13 +51,10 @@ describe('StoresService', () => {
 		const dto: CreateStoreDto = {
 			name: 'Brugsen',
 		};
-		const store = await prisma.stores.create({
-			data: {
-				...dto,
-			},
-		});
-		const foundStore = await service.findOne(store.id);
 
+		const store = await service.create(dto);
+
+		const foundStore = await service.findOne(store.id);
 		return expect(foundStore).toEqual(store);
 	});
 
@@ -75,21 +62,15 @@ describe('StoresService', () => {
 		const dto: CreateStoreDto = {
 			name: 'Brugsen',
 		};
-		const store = await prisma.stores.create({
-			data: {
-				...dto,
-			},
-		});
+
+		const store = await service.create(dto);
+
 		const udto: UpdateStoreDto = {
 			name: 'Primark',
 		};
-		const updateStore = await service.update(store.id, udto);
 
-		if (updateStore) {
-			return expect(updateStore.name).toEqual('Primark');
-		}
-
-		return false;
+		const updatedStore = await service.update(store.id, udto);
+		return expect(updatedStore.name).toEqual('Primark');
 	});
 
 	it('should remove store', async () => {
@@ -99,31 +80,16 @@ describe('StoresService', () => {
 		const dto2: CreateStoreDto = {
 			name: 'Fakta',
 		};
-		await prisma.stores.create({
-			data: {
-				...dto,
-			},
-		});
-		await prisma.stores.create({
-			data: {
-				...dto2,
-			},
-		});
 
-		const stores = await prisma.stores.findMany({
-			orderBy: {
-				id: 'asc',
-			},
-		});
+		await service.create(dto);
+		await service.create(dto2);
+
+		const stores = await service.findAll();
 		const storeToRemove = stores.pop();
+
 		await service.remove(storeToRemove.id);
 
-		const storesAfterRemove = await prisma.stores.findMany({
-			orderBy: {
-				id: 'asc',
-			},
-		});
-
+		const storesAfterRemove = await service.findAll();
 		return expect(storesAfterRemove).toEqual(stores);
 	});
 });
