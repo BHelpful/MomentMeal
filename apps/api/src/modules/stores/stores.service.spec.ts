@@ -16,6 +16,7 @@ describe('StoresService', () => {
 
 		service = module.get<StoresService>(StoresService);
 		prisma = module.get<PrismaService>(PrismaService);
+		await prisma.cleanDb();
 	});
 
 	beforeEach(async () => {
