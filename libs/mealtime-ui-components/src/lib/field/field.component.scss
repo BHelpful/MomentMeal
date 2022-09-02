@@ -7,6 +7,7 @@
 		justify-content: space-between;
 		font-size: 20px;
 		margin-bottom: 0.5rem;
+		margin-left: 0.25rem;
 	}
 
 	.input {
@@ -21,7 +22,6 @@
 		box-shadow: inset 0px 2px 2px -1px rgba(74, 74, 104, 0.1);
 		border-radius: 8px;
 
-		flex: none;
 		order: 1;
 		flex-grow: 0;
 		padding: 0 1rem;
@@ -32,6 +32,7 @@
 	.field-helper-text {
 		margin-top: 0.5rem;
 		margin-bottom: 0.5rem;
+		margin-left: 0.25rem;
 		color: #8c8ca2;
 		font-weight: bold;
 	}
