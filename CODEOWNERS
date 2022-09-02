@@ -12,7 +12,7 @@
 /apps/meal-time-e2e/ @BHelpful/Cypress
 
 # Owns model files of database
-/prisma @BHelpful/database
+/prisma @BHelpful/Database
 
 # Owns all in the api folder
 /apps/api/ @BHelpful/RESTful-API
