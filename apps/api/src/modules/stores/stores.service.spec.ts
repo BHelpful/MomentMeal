@@ -9,6 +9,7 @@ describe('StoresService', () => {
 	let service: StoresService;
 	let prisma: PrismaService;
 	let store1: Stores;
+
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [StoresService, PrismaService, ConfigService],
@@ -21,6 +22,7 @@ describe('StoresService', () => {
 		const dto: CreateStoreDto = {
 			name: 'Brugsen',
 		};
+
 		const dto1: CreateStoreDto = {
 			name: 'Fakta',
 		};
@@ -30,6 +32,7 @@ describe('StoresService', () => {
 				...dto,
 			},
 		});
+
 		await prisma.stores.create({
 			data: {
 				...dto1,
@@ -42,6 +45,7 @@ describe('StoresService', () => {
 			name: 'Meny',
 		};
 		const store = await service.create(dto);
+
 		return expect(store).toHaveProperty('name');
 	});
 
@@ -72,9 +76,11 @@ describe('StoresService', () => {
 			name: 'Primark',
 		};
 		const updateStore = await service.update(store1.id, udto);
+
 		if (updateStore) {
 			return expect(updateStore.name).toEqual('Primark');
 		}
+
 		return false;
 	});
 
