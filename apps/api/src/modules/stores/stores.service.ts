@@ -29,15 +29,10 @@ export class StoresService {
 	}
 
 	async findAll() {
-		const stores = await this.prisma.stores.findMany();
-		// Sorting the array of stores in ascending order
-		await stores.sort((a, b) => {
-			if (a.id > b.id) {
-				return 1;
-			} else if (a.id < b.id) {
-				return -1;
-			}
-			return 0;
+		const stores = await this.prisma.stores.findMany({
+			orderBy: {
+				id: 'asc',
+			},
 		});
 		return stores;
 	}
