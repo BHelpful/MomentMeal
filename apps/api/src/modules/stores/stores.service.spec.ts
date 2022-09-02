@@ -1,5 +1,4 @@
 import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
-import { ServiceUnavailableException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Stores } from '@prisma/client';
@@ -10,7 +9,6 @@ describe('StoresService', () => {
 	let service: StoresService;
 	let prisma: PrismaService;
 	let store1: Stores;
-	let store2: Stores;
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [StoresService, PrismaService, ConfigService],
@@ -32,7 +30,7 @@ describe('StoresService', () => {
 				...dto,
 			},
 		});
-		store2 = await prisma.stores.create({
+		await prisma.stores.create({
 			data: {
 				...dto1,
 			},
