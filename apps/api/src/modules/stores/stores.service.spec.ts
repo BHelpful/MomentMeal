@@ -1,43 +1,24 @@
 import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Stores } from '@prisma/client';
 import { PrismaService } from '../../services/prisma/prisma.service';
 import { StoresService } from './stores.service';
 
 describe('StoresService', () => {
+	let module: TestingModule;
 	let service: StoresService;
 	let prisma: PrismaService;
-	let store1: Stores;
-
-	beforeEach(async () => {
-		const module: TestingModule = await Test.createTestingModule({
+	beforeAll(async () => {
+		module = await Test.createTestingModule({
 			providers: [StoresService, PrismaService, ConfigService],
 		}).compile();
 
 		service = module.get<StoresService>(StoresService);
 		prisma = module.get<PrismaService>(PrismaService);
+	});
+
+	beforeEach(async () => {
 		await prisma.cleanDb();
-
-		const dto: CreateStoreDto = {
-			name: 'Brugsen',
-		};
-
-		const dto1: CreateStoreDto = {
-			name: 'Fakta',
-		};
-
-		store1 = await prisma.stores.create({
-			data: {
-				...dto,
-			},
-		});
-
-		await prisma.stores.create({
-			data: {
-				...dto1,
-			},
-		});
 	});
 
 	it('should create store', async () => {
@@ -46,36 +27,63 @@ describe('StoresService', () => {
 		};
 		const store = await service.create(dto);
 
-		return expect(store).toHaveProperty('name');
+		if (store) {
+			return expect(store.name).toEqual('Meny');
+		}
 	});
 
 	it('should find all stores', async () => {
-		const prismaStores = await prisma.stores.findMany();
-		prismaStores.sort((a, b) => {
-			if (a.id > b.id) {
-				return 1;
-			} else if (a.id < b.id) {
-				return -1;
-			}
-			return 0;
+		const dto: CreateStoreDto = {
+			name: 'Brugsen',
+		};
+		const dto2: CreateStoreDto = {
+			name: 'Fakta',
+		};
+		const store1 = await prisma.stores.create({
+			data: {
+				...dto,
+			},
 		});
+		const store2 = await prisma.stores.create({
+			data: {
+				...dto2,
+			},
+		});
+
+		const allStores = [store1, store2];
 
 		const stores = await service.findAll();
 
-		return expect(stores).toEqual(prismaStores);
+		return expect(stores).toEqual(allStores);
 	});
 
 	it('should find specific store', async () => {
-		const foundStore = await service.findOne(store1.id);
+		const dto: CreateStoreDto = {
+			name: 'Brugsen',
+		};
+		const store = await prisma.stores.create({
+			data: {
+				...dto,
+			},
+		});
+		const foundStore = await service.findOne(store.id);
 
-		return expect(foundStore).toEqual(store1);
+		return expect(foundStore).toEqual(store);
 	});
 
 	it('should update store', async () => {
+		const dto: CreateStoreDto = {
+			name: 'Brugsen',
+		};
+		const store = await prisma.stores.create({
+			data: {
+				...dto,
+			},
+		});
 		const udto: UpdateStoreDto = {
 			name: 'Primark',
 		};
-		const updateStore = await service.update(store1.id, udto);
+		const updateStore = await service.update(store.id, udto);
 
 		if (updateStore) {
 			return expect(updateStore.name).toEqual('Primark');
@@ -85,27 +93,35 @@ describe('StoresService', () => {
 	});
 
 	it('should remove store', async () => {
-		const stores = await prisma.stores.findMany();
-		stores.sort((a, b) => {
-			if (a.id > b.id) {
-				return 1;
-			} else if (a.id < b.id) {
-				return -1;
-			}
-			return 0;
+		const dto: CreateStoreDto = {
+			name: 'Brugsen',
+		};
+		const dto2: CreateStoreDto = {
+			name: 'Fakta',
+		};
+		await prisma.stores.create({
+			data: {
+				...dto,
+			},
+		});
+		await prisma.stores.create({
+			data: {
+				...dto2,
+			},
 		});
 
+		const stores = await prisma.stores.findMany({
+			orderBy: {
+				id: 'asc',
+			},
+		});
 		const storeToRemove = stores.pop();
 		await service.remove(storeToRemove.id);
 
-		const storesAfterRemove = await prisma.stores.findMany();
-		storesAfterRemove.sort((a, b) => {
-			if (a.id > b.id) {
-				return 1;
-			} else if (a.id < b.id) {
-				return -1;
-			}
-			return 0;
+		const storesAfterRemove = await prisma.stores.findMany({
+			orderBy: {
+				id: 'asc',
+			},
 		});
 
 		return expect(storesAfterRemove).toEqual(stores);
