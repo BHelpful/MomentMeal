@@ -47,7 +47,7 @@ describe('App e2e', () => {
 			});
 		});
 
-		describe('Get all stores', () => {
+		describe('Get stores', () => {
 			it('should get all stores', async () => {
 				return pactum
 					.spec()
