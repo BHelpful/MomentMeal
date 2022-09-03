@@ -43,7 +43,7 @@ export class StoresService {
 
 	async findOne(id: number) {
 		if (isNaN(id)) {
-			throw new BadRequestException();
+			throw new BadRequestException(STORES_EXCEPTION_MSG.BAD_REQUEST);
 		}
 		const store = await this.prisma.stores.findUnique({
 			where: {
@@ -57,7 +57,7 @@ export class StoresService {
 
 	async update(id: number, updateStoreDto: UpdateStoreDto) {
 		if (isNaN(id)) {
-			throw new BadRequestException();
+			throw new BadRequestException(STORES_EXCEPTION_MSG.BAD_REQUEST);
 		}
 		return this.prisma.stores
 			.update({
@@ -83,7 +83,7 @@ export class StoresService {
 
 	async remove(id: number) {
 		if (isNaN(id)) {
-			throw new BadRequestException();
+			throw new BadRequestException(STORES_EXCEPTION_MSG.BAD_REQUEST);
 		}
 		const store = await this.prisma.stores.findUnique({
 			where: {

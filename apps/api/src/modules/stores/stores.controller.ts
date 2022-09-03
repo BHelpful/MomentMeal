@@ -4,6 +4,7 @@ import {
 	UpdateStoreDto,
 } from '@meal-time/api-interfaces';
 import {
+	BadRequestException,
 	Body,
 	Controller,
 	Delete,
@@ -67,6 +68,10 @@ export class StoresController {
 		status: new NotFoundException().getStatus(),
 		description: STORES_EXCEPTION_MSG.NOT_FOUND,
 	})
+	@ApiResponse({
+		status: new BadRequestException().getStatus(),
+		description: STORES_EXCEPTION_MSG.BAD_REQUEST,
+	})
 	@Get(':id')
 	findOne(@Param('id') id: string) {
 		return this.storesService.findOne(+id);
@@ -89,6 +94,10 @@ export class StoresController {
 		status: new InternalServerErrorException().getStatus(),
 		description: STORES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR,
 	})
+	@ApiResponse({
+		status: new BadRequestException().getStatus(),
+		description: STORES_EXCEPTION_MSG.BAD_REQUEST,
+	})
 	@Patch(':id')
 	update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
 		return this.storesService.update(+id, updateStoreDto);
@@ -102,6 +111,10 @@ export class StoresController {
 	@ApiResponse({
 		status: new NotFoundException().getStatus(),
 		description: STORES_EXCEPTION_MSG.NOT_FOUND,
+	})
+	@ApiResponse({
+		status: new BadRequestException().getStatus(),
+		description: STORES_EXCEPTION_MSG.BAD_REQUEST,
 	})
 	@Delete(':id')
 	remove(@Param('id') id: string) {
