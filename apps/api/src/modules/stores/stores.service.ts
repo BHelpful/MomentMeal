@@ -1,8 +1,10 @@
 import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
 import {
-  ForbiddenException,
-  Injectable,
-  NotFoundException,
+	BadRequestException,
+	ForbiddenException,
+	Injectable,
+	InternalServerErrorException,
+	NotFoundException,
 } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from '../../services/prisma/prisma.service';
@@ -10,47 +12,91 @@ import { STORES_EXCEPTION_MSG } from './stores.exceptionMessages';
 
 @Injectable()
 export class StoresService {
-  constructor(private prisma: PrismaService) {}
+	constructor(private prisma: PrismaService) {}
 
-  async create(createStoreDto: CreateStoreDto) {
-    return this.prisma.stores
-      .create({
-        data: {
-          ...createStoreDto,
-        },
-      })
-      .catch((error: PrismaClientKnownRequestError) => {
-        if (error.code === 'P2002') {
-          throw new ForbiddenException(STORES_EXCEPTION_MSG.ALREADY_EXISTS);
-        }
-      });
-  }
+	async create(createStoreDto: CreateStoreDto) {
+		return this.prisma.stores
+			.create({
+				data: {
+					...createStoreDto,
+				},
+			})
+			.catch((error: PrismaClientKnownRequestError) => {
+				if (error.code === 'P2002') {
+					throw new ForbiddenException(STORES_EXCEPTION_MSG.ALREADY_EXISTS);
+				} else {
+					throw new InternalServerErrorException(
+						STORES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR
+					);
+				}
+			});
+	}
 
-  findAll() {
-    return `This action returns all stores`;
-  }
+	async findAll() {
+		const stores = await this.prisma.stores.findMany({
+			orderBy: {
+				id: 'asc',
+			},
+		});
+		return stores;
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} store`;
-  }
+	async findOne(id: number) {
+		if (isNaN(id)) {
+			throw new BadRequestException(STORES_EXCEPTION_MSG.BAD_REQUEST);
+		}
+		const store = await this.prisma.stores.findUnique({
+			where: {
+				id: id,
+			},
+		});
 
-  update(id: number, updateStoreDto: UpdateStoreDto) {
-    return `This action updates a #${id} store`;
-  }
-  
-  async remove(id: number) {
-    const store = await this.prisma.stores.findUnique({
-      where: {
-        id,
-      },
-    });
+		if (!store) throw new NotFoundException(STORES_EXCEPTION_MSG.NOT_FOUND);
+		return store;
+	}
 
-    if (!store) throw new NotFoundException(STORES_EXCEPTION_MSG.NOT_FOUND);
+	async update(id: number, updateStoreDto: UpdateStoreDto) {
+		if (isNaN(id)) {
+			throw new BadRequestException(STORES_EXCEPTION_MSG.BAD_REQUEST);
+		}
+		return this.prisma.stores
+			.update({
+				data: {
+					...updateStoreDto,
+				},
+				where: {
+					id: id,
+				},
+			})
+			.catch((error: PrismaClientKnownRequestError) => {
+				if (error.code === 'P2025') {
+					throw new NotFoundException(STORES_EXCEPTION_MSG.NOT_FOUND);
+				} else if (error.code === 'P2002') {
+					throw new ForbiddenException(STORES_EXCEPTION_MSG.ALREADY_EXISTS);
+				} else {
+					throw new InternalServerErrorException(
+						STORES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR
+					);
+				}
+			});
+	}
 
-    return this.prisma.stores.delete({
-      where: {
-        id,
-      },
-    });
-  }
+	async remove(id: number) {
+		if (isNaN(id)) {
+			throw new BadRequestException(STORES_EXCEPTION_MSG.BAD_REQUEST);
+		}
+		const store = await this.prisma.stores.findUnique({
+			where: {
+				id,
+			},
+		});
+
+		if (!store) throw new NotFoundException(STORES_EXCEPTION_MSG.NOT_FOUND);
+
+		return this.prisma.stores.delete({
+			where: {
+				id,
+			},
+		});
+	}
 }
