@@ -1,102 +1,102 @@
 {
-  "projectType": "application",
-  "sourceRoot": "apps/meal-time/src",
-  "prefix": "meal-time",
-  "targets": {
-    "build": {
-      "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/apps/meal-time",
-        "index": "apps/meal-time/src/index.html",
-        "main": "apps/meal-time/src/main.ts",
-        "polyfills": "apps/meal-time/src/polyfills.ts",
-        "tsConfig": "apps/meal-time/tsconfig.app.json",
-        "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/meal-time/src/favicon.ico",
-          "apps/meal-time/src/assets",
-          "apps/meal-time/src/manifest.webmanifest"
-        ],
-        "stylePreprocessorOptions": {
-          "includePaths": ["libs/mealtime-ui-components/src/lib/tokens"]
-        },
-        "styles": ["apps/meal-time/src/styles.scss"],
-        "scripts": [],
-        "serviceWorker": true,
-        "ngswConfigPath": "apps/meal-time/ngsw-config.json"
-      },
-      "configurations": {
-        "production": {
-          "budgets": [
-            {
-              "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
-            },
-            {
-              "type": "anyComponentStyle",
-              "maximumWarning": "2kb",
-              "maximumError": "4kb"
-            }
-          ],
-          "fileReplacements": [
-            {
-              "replace": "apps/meal-time/src/environments/environment.ts",
-              "with": "apps/meal-time/src/environments/environment.prod.ts"
-            }
-          ],
-          "outputHashing": "all"
-        },
-        "development": {
-          "buildOptimizer": false,
-          "optimization": false,
-          "vendorChunk": true,
-          "extractLicenses": false,
-          "sourceMap": true,
-          "namedChunks": true
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
-      "configurations": {
-        "production": {
-          "browserTarget": "meal-time:build:production"
-        },
-        "development": {
-          "browserTarget": "meal-time:build:development"
-        }
-      },
-      "defaultConfiguration": "development",
-      "options": {
-        "proxyConfig": "apps/meal-time/proxy.conf.json"
-      }
-    },
-    "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
-      "options": {
-        "browserTarget": "meal-time:build"
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "apps/meal-time/**/*.ts",
-          "apps/meal-time/**/*.html"
-        ]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/meal-time"],
-      "options": {
-        "jestConfig": "apps/meal-time/jest.config.ts",
-        "passWithNoTests": true
-      }
-    }
-  },
-  "tags": []
+	"projectType": "application",
+	"sourceRoot": "apps/meal-time/src",
+	"prefix": "meal-time",
+	"targets": {
+		"build": {
+			"executor": "@angular-devkit/build-angular:browser",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/apps/meal-time",
+				"index": "apps/meal-time/src/index.html",
+				"main": "apps/meal-time/src/main.ts",
+				"polyfills": "apps/meal-time/src/polyfills.ts",
+				"tsConfig": "apps/meal-time/tsconfig.app.json",
+				"inlineStyleLanguage": "scss",
+				"assets": [
+					"apps/meal-time/src/favicon.ico",
+					"apps/meal-time/src/assets",
+					"apps/meal-time/src/manifest.webmanifest"
+				],
+				"stylePreprocessorOptions": {
+					"includePaths": ["libs/mealtime-ui-components/src/lib/tokens"]
+				},
+				"styles": ["apps/meal-time/src/styles.scss"],
+				"scripts": [],
+				"serviceWorker": true,
+				"ngswConfigPath": "apps/meal-time/ngsw-config.json"
+			},
+			"configurations": {
+				"production": {
+					"budgets": [
+						{
+							"type": "initial",
+							"maximumWarning": "500kb",
+							"maximumError": "1mb"
+						},
+						{
+							"type": "anyComponentStyle",
+							"maximumWarning": "2kb",
+							"maximumError": "4kb"
+						}
+					],
+					"fileReplacements": [
+						{
+							"replace": "apps/meal-time/src/environments/environment.ts",
+							"with": "apps/meal-time/src/environments/environment.prod.ts"
+						}
+					],
+					"outputHashing": "all"
+				},
+				"development": {
+					"buildOptimizer": false,
+					"optimization": false,
+					"vendorChunk": true,
+					"extractLicenses": false,
+					"sourceMap": true,
+					"namedChunks": true
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"serve": {
+			"executor": "@angular-devkit/build-angular:dev-server",
+			"configurations": {
+				"production": {
+					"browserTarget": "meal-time:build:production"
+				},
+				"development": {
+					"browserTarget": "meal-time:build:development"
+				}
+			},
+			"defaultConfiguration": "development",
+			"options": {
+				"proxyConfig": "apps/meal-time/proxy.conf.json"
+			}
+		},
+		"extract-i18n": {
+			"executor": "@angular-devkit/build-angular:extract-i18n",
+			"options": {
+				"browserTarget": "meal-time:build"
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"apps/meal-time/**/*.ts",
+					"apps/meal-time/**/*.html"
+				]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/apps/meal-time"],
+			"options": {
+				"jestConfig": "apps/meal-time/jest.config.ts",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
 }
