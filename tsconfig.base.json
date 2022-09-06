@@ -16,8 +16,9 @@
 		"baseUrl": ".",
 		"paths": {
 			"@meal-time/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-			"mealtime-icons": ["libs/mealtime-icons/src/index.ts"],
-			"mealtime-ui-components": ["libs/mealtime-ui-components/src/index.ts"]
+			"mealtime-ui-components": [
+				"libs/mealtime-ui-components/src/index.ts"
+			]
 		},
 		"strictPropertyInitialization": false
 	},

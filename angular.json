@@ -26,48 +26,6 @@
 		"api-interfaces": "libs/api-interfaces",
 		"meal-time": "apps/meal-time",
 		"meal-time-e2e": "apps/meal-time-e2e",
-		"mealtime-icons": {
-			"projectType": "library",
-			"root": "libs/mealtime-icons",
-			"sourceRoot": "libs/mealtime-icons/src",
-			"prefix": "mt-icon",
-			"targets": {
-				"build": {
-					"executor": "@nrwl/angular:package",
-					"outputs": ["dist/libs/mealtime-icons"],
-					"options": {
-						"project": "libs/mealtime-icons/ng-package.json"
-					},
-					"configurations": {
-						"production": {
-							"tsConfig": "libs/mealtime-icons/tsconfig.lib.prod.json"
-						},
-						"development": {
-							"tsConfig": "libs/mealtime-icons/tsconfig.lib.json"
-						}
-					},
-					"defaultConfiguration": "production"
-				},
-				"test": {
-					"executor": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/mealtime-icons"],
-					"options": {
-						"jestConfig": "libs/mealtime-icons/jest.config.ts",
-						"passWithNoTests": true
-					}
-				},
-				"lint": {
-					"executor": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"libs/mealtime-icons/**/*.ts",
-							"libs/mealtime-icons/**/*.html"
-						]
-					}
-				}
-			},
-			"tags": []
-		},
 		"mealtime-ui-components": {
 			"projectType": "library",
 			"root": "libs/mealtime-ui-components",
