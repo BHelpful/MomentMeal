@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
 	selector: 'mt-field',
@@ -6,6 +7,7 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 	styleUrls: ['./field.component.scss'],
 })
 export class FieldComponent {
+	faCoffee = faCoffee;
 	// viewchild
 	@ViewChild('inputField') input: ElementRef;
 
