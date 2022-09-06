@@ -1,5 +1,65 @@
 <div class="field-container">
 	<h1 class="field-label">Field Label</h1>
-	<input class="valid" type="text" placeholder="Textfield text" />
+
+	<div class="input-container" (click)="focusInput()">
+		<input
+			#inputField
+			class="valid test-input"
+			type="text"
+			placeholder="Textfield text"
+			[value]="value"
+			[disabled]="disabled"
+		/>
+
+		<!-- checkmark icon -->
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="icon icon-valid"
+		>
+			<polyline points="20 6 9 17 4 12"></polyline>
+		</svg>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="icon icon-error"
+		>
+			<!-- error icon -->
+			<circle cx="12" cy="12" r="10"></circle>
+			<line x1="12" y1="8" x2="12" y2="12"></line>
+			<line x1="12" y1="16" x2="12" y2="16"></line>
+		</svg>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="icon icon-disabled"
+		>
+			<!-- disabled icon -->
+			<circle cx="12" cy="12" r="10"></circle>
+			<line x1="12" y1="8" x2="12" y2="12"></line>
+			<line x1="12" y1="16" x2="12" y2="16"></line>
+		</svg>
+	</div>
 	<p class="field-helper-text">Helper text</p>
 </div>

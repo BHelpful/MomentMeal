@@ -2,13 +2,25 @@ import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { FieldComponent } from './field.component';
 
 export default {
-  title: 'FieldComponent',
-  component: FieldComponent,
-  decorators: [
-    moduleMetadata({
-      imports: [],
-    })
-  ],
+	title: 'FieldComponent',
+	component: FieldComponent,
+	decorators: [
+		moduleMetadata({
+			imports: [],
+		}),
+	],
+	argTypes: {
+		value: {
+			control: {
+				type: 'text',
+				defaultValue: 'Value',
+			},
+		},
+		disabled: {
+			defaultValue: false,
+			control: { type: 'boolean' },
+		},
+	},
 } as Meta<FieldComponent>;
 
 const Template: Story<FieldComponent> = (args: FieldComponent) => ({
