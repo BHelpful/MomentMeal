@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -8,6 +9,11 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 })
 export class LandingComponent {
 	faLock = faLock;
+
+	emailFormControl = new FormControl('', [
+		Validators.required,
+		Validators.email,
+	]);
 
 	// go to auth route
 	goToAuth() {

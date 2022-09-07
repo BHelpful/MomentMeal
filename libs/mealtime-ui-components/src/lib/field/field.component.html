@@ -1,66 +1,23 @@
 <div class="field-container">
-	<h1 class="field-label">Field Label</h1>
+	<h1 class="field-label">{{ label }}</h1>
 
-	<div class="input-container error" (click)="focusInput()">
+	<div
+		class="input-container"
+		[class.disabled]="disabled"
+		[class.error]="formControl.invalid && formControl.touched"
+		[class.valid]="formControl.valid && formControl.touched"
+		(click)="focusInput()"
+	>
 		<input
 			#inputField
+			[formControl]="formControl"
 			class="valid test-input"
-			type="text"
-			placeholder="Textfield text"
+			[type]="type"
+			[placeholder]="placeholder"
 			[value]="value"
 			[disabled]="disabled"
 		/>
-
-		<!-- checkmark icon -->
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			class="icon icon-valid"
-		>
-			<polyline points="20 6 9 17 4 12"></polyline>
-		</svg>
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			class="icon icon-error"
-		>
-			<!-- error icon -->
-			<circle cx="12" cy="12" r="10"></circle>
-			<line x1="12" y1="8" x2="12" y2="12"></line>
-			<line x1="12" y1="16" x2="12" y2="16"></line>
-		</svg>
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			class="icon icon-disabled"
-		>
-			<!-- disabled icon -->
-			<circle cx="12" cy="12" r="10"></circle>
-			<line x1="12" y1="8" x2="12" y2="12"></line>
-			<line x1="12" y1="16" x2="12" y2="16"></line>
-		</svg>
+		<fa-icon class="icon" [icon]="currentIcon()" size="lg"></fa-icon>
 	</div>
-	<p class="field-helper-text">Helper text</p>
-	<fa-icon [icon]="faCoffee"></fa-icon>
+	<p class="field-helper-text">{{ helperText }}</p>
 </div>

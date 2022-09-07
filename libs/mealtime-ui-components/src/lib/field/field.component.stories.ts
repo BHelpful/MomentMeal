@@ -1,4 +1,5 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { MealtimeUiComponentsModule } from '../mealtime-ui-components.module';
 import { FieldComponent } from './field.component';
 
 export default {
@@ -6,7 +7,7 @@ export default {
 	component: FieldComponent,
 	decorators: [
 		moduleMetadata({
-			imports: [],
+			imports: [MealtimeUiComponentsModule],
 		}),
 	],
 	argTypes: {

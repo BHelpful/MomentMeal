@@ -88,44 +88,26 @@
 		}
 
 		.icon {
-			display: none;
 			padding-right: 1rem;
 			margin-bottom: -0.4rem;
+			color: #4b4b68;
 		}
 
 		&.valid {
 			.icon {
-				&.icon-valid {
-					display: inline;
-					width: fit-content;
-					padding-right: 1rem;
-					margin-bottom: -0.4rem;
-					color: #31d0aa;
-				}
+				color: #31d0aa;
 			}
 		}
 
 		&.error {
 			.icon {
-				&.icon-error {
-					display: inline;
-					width: fit-content;
-					padding-right: 1rem;
-					margin-bottom: -0.4rem;
-					color: #ed4b9e;
-				}
+				color: #ed4b9e;
 			}
 		}
 
 		&.disabled {
 			.icon {
-				&.icon-disabled {
-					display: inline;
-					width: fit-content;
-					padding-right: 1rem;
-					margin-bottom: -0.4rem;
-					color: grey;
-				}
+				color: grey;
 			}
 		}
 
