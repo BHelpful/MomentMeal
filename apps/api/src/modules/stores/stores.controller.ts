@@ -23,7 +23,7 @@ import {
 	ApiResponse,
 	ApiTags,
 } from '@nestjs/swagger';
-import { STORES_EXCEPTION_MSG } from './stores.exceptionMessages';
+import { StoreExceptionMessages } from './stores.exceptionMessages';
 import { StoresService } from './stores.service';
 
 @ApiTags('Stores')
@@ -38,11 +38,11 @@ export class StoresController {
 	@ApiCreatedResponse({ type: StoreEntity })
 	@ApiResponse({
 		status: new ForbiddenException().getStatus(),
-		description: STORES_EXCEPTION_MSG.ALREADY_EXISTS,
+		description: StoreExceptionMessages.ALREADY_EXISTS,
 	})
 	@ApiResponse({
 		status: new InternalServerErrorException().getStatus(),
-		description: STORES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR,
+		description: StoreExceptionMessages.INTERNAL_SERVER_ERROR,
 	})
 	@Post()
 	create(@Body() createStoreDto: CreateStoreDto) {
@@ -66,11 +66,11 @@ export class StoresController {
 	@ApiOkResponse({ type: StoreEntity })
 	@ApiResponse({
 		status: new NotFoundException().getStatus(),
-		description: STORES_EXCEPTION_MSG.NOT_FOUND,
+		description: StoreExceptionMessages.NOT_FOUND,
 	})
 	@ApiResponse({
 		status: new BadRequestException().getStatus(),
-		description: STORES_EXCEPTION_MSG.BAD_REQUEST,
+		description: StoreExceptionMessages.BAD_REQUEST,
 	})
 	@Get(':id')
 	findOne(@Param('id') id: string) {
@@ -84,19 +84,19 @@ export class StoresController {
 	@ApiOkResponse({ type: StoreEntity })
 	@ApiResponse({
 		status: new NotFoundException().getStatus(),
-		description: STORES_EXCEPTION_MSG.NOT_FOUND,
+		description: StoreExceptionMessages.NOT_FOUND,
 	})
 	@ApiResponse({
 		status: new ForbiddenException().getStatus(),
-		description: STORES_EXCEPTION_MSG.ALREADY_EXISTS,
+		description: StoreExceptionMessages.ALREADY_EXISTS,
 	})
 	@ApiResponse({
 		status: new InternalServerErrorException().getStatus(),
-		description: STORES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR,
+		description: StoreExceptionMessages.INTERNAL_SERVER_ERROR,
 	})
 	@ApiResponse({
 		status: new BadRequestException().getStatus(),
-		description: STORES_EXCEPTION_MSG.BAD_REQUEST,
+		description: StoreExceptionMessages.BAD_REQUEST,
 	})
 	@Patch(':id')
 	update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
@@ -110,11 +110,11 @@ export class StoresController {
 	@ApiOkResponse({ type: StoreEntity })
 	@ApiResponse({
 		status: new NotFoundException().getStatus(),
-		description: STORES_EXCEPTION_MSG.NOT_FOUND,
+		description: StoreExceptionMessages.NOT_FOUND,
 	})
 	@ApiResponse({
 		status: new BadRequestException().getStatus(),
-		description: STORES_EXCEPTION_MSG.BAD_REQUEST,
+		description: StoreExceptionMessages.BAD_REQUEST,
 	})
 	@Delete(':id')
 	remove(@Param('id') id: string) {

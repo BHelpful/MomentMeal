@@ -1,8 +1,7 @@
-import { EXCEPTION_MSG } from '../base/base.exceptionMessages';
+import { BaseExceptionMessages } from '../base/base.exceptionMessages';
 
-export const STORES_EXCEPTION_MSG = {
-	...EXCEPTION_MSG,
-	NOT_FOUND: 'Store not found',
-	ALREADY_EXISTS: 'Store already exists',
-	INTERNAL_SERVER_ERROR: 'Internal Server Error',
-};
+export class StoreExceptionMessages extends BaseExceptionMessages {
+	public readonly NOT_FOUND = 'Store not found';
+	public readonly ALREADY_EXISTS = 'Store already exists';
+	public readonly INTERNAL_SERVER_ERROR = 'Internal Server Error';
+}
