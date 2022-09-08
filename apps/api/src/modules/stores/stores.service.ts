@@ -6,11 +6,13 @@ import {
 } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from '../../services/prisma/prisma.service';
+import { ExceptionMessages } from '../../utils/exceptionMessages';
 import { prismaErrorException } from '../../utils/prismaErrorHandler';
-import { StoreExceptionMessages } from './stores.exceptionMessages';
 
 @Injectable()
 export class StoresService {
+	public storeExceptionMessages = new ExceptionMessages('Store');
+
 	constructor(private prisma: PrismaService) {}
 
 	async create(createStoreDto: CreateStoreDto) {
@@ -21,7 +23,7 @@ export class StoresService {
 				},
 			})
 			.catch((error: PrismaClientKnownRequestError) => {
-				throw prismaErrorException(error, StoreExceptionMessages);
+				throw prismaErrorException(error, this.storeExceptionMessages);
 			});
 	}
 
@@ -33,13 +35,13 @@ export class StoresService {
 				},
 			})
 			.catch((error: PrismaClientKnownRequestError) => {
-				throw prismaErrorException(error, StoreExceptionMessages);
+				throw prismaErrorException(error, this.storeExceptionMessages);
 			});
 	}
 
 	async findOne(id: number) {
 		if (isNaN(id)) {
-			throw new BadRequestException(StoreExceptionMessages.BAD_REQUEST);
+			throw new BadRequestException(this.storeExceptionMessages.BAD_REQUEST());
 		}
 		const store = await this.prisma.stores
 			.findUnique({
@@ -48,16 +50,17 @@ export class StoresService {
 				},
 			})
 			.catch((error: PrismaClientKnownRequestError) => {
-				throw prismaErrorException(error, StoreExceptionMessages);
+				throw prismaErrorException(error, this.storeExceptionMessages);
 			});
 
-		if (!store) throw new NotFoundException(StoreExceptionMessages.NOT_FOUND);
+		if (!store)
+			throw new NotFoundException(this.storeExceptionMessages.NOT_FOUND());
 		return store;
 	}
 
 	async update(id: number, updateStoreDto: UpdateStoreDto) {
 		if (isNaN(id)) {
-			throw new BadRequestException(StoreExceptionMessages.BAD_REQUEST);
+			throw new BadRequestException(this.storeExceptionMessages.BAD_REQUEST());
 		}
 		return this.prisma.stores
 			.update({
@@ -69,13 +72,13 @@ export class StoresService {
 				},
 			})
 			.catch((error: PrismaClientKnownRequestError) => {
-				throw prismaErrorException(error, StoreExceptionMessages);
+				throw prismaErrorException(error, this.storeExceptionMessages);
 			});
 	}
 
 	async remove(id: number) {
 		if (isNaN(id)) {
-			throw new BadRequestException(StoreExceptionMessages.BAD_REQUEST);
+			throw new BadRequestException(this.storeExceptionMessages.BAD_REQUEST());
 		}
 		const store = await this.prisma.stores
 			.findUnique({
@@ -84,10 +87,11 @@ export class StoresService {
 				},
 			})
 			.catch((error: PrismaClientKnownRequestError) => {
-				throw prismaErrorException(error, StoreExceptionMessages);
+				throw prismaErrorException(error, this.storeExceptionMessages);
 			});
 
-		if (!store) throw new NotFoundException(StoreExceptionMessages.NOT_FOUND);
+		if (!store)
+			throw new NotFoundException(this.storeExceptionMessages.NOT_FOUND());
 
 		return this.prisma.stores
 			.delete({
@@ -96,7 +100,7 @@ export class StoresService {
 				},
 			})
 			.catch((error: PrismaClientKnownRequestError) => {
-				throw prismaErrorException(error, StoreExceptionMessages);
+				throw prismaErrorException(error, this.storeExceptionMessages);
 			});
 	}
 }

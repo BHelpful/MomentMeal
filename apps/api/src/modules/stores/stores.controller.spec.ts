@@ -1,10 +1,9 @@
-import { PrismaService } from '../../services/prisma/prisma.service';
+import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { StoresController } from './stores.controller';
+import { PrismaService } from '../../services/prisma/prisma.service';
+import { storeExceptionMessages, StoresController } from './stores.controller';
 import { StoresService } from './stores.service';
-import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
-import { StoreExceptionMessages } from './stores.exceptionMessages';
 
 describe('StoresController', () => {
 	let controller: StoresController;
@@ -45,7 +44,7 @@ describe('StoresController', () => {
 
 		return expect(async () => {
 			await controller.create(dto2);
-		}).rejects.toThrow(StoreExceptionMessages.ALREADY_EXISTS);
+		}).rejects.toThrow(storeExceptionMessages.ALREADY_EXISTS());
 	});
 
 	it('should find all stores', async () => {
@@ -79,7 +78,7 @@ describe('StoresController', () => {
 	it('should not find store that does not exist', async () => {
 		return expect(async () => {
 			await controller.findOne('10000');
-		}).rejects.toThrow(StoreExceptionMessages.NOT_FOUND);
+		}).rejects.toThrow(storeExceptionMessages.NOT_FOUND());
 	});
 
 	it('should update store', async () => {
@@ -114,7 +113,7 @@ describe('StoresController', () => {
 
 		return expect(async () => {
 			await controller.update(store.id.toString(), udto);
-		}).rejects.toThrow(StoreExceptionMessages.ALREADY_EXISTS);
+		}).rejects.toThrow(storeExceptionMessages.ALREADY_EXISTS());
 	});
 
 	it('should not update store that does not exist', async () => {
@@ -123,7 +122,7 @@ describe('StoresController', () => {
 		};
 		return expect(async () => {
 			await controller.update('10000', udto);
-		}).rejects.toThrow(StoreExceptionMessages.NOT_FOUND);
+		}).rejects.toThrow(storeExceptionMessages.NOT_FOUND());
 	});
 
 	it('should remove store', async () => {
@@ -149,6 +148,6 @@ describe('StoresController', () => {
 	it('should not remove store that does not exist', async () => {
 		return expect(async () => {
 			await controller.remove('10000');
-		}).rejects.toThrow(StoreExceptionMessages.NOT_FOUND);
+		}).rejects.toThrow(storeExceptionMessages.NOT_FOUND());
 	});
 });
