@@ -1,153 +1,167 @@
-import { environment } from './../../environments/environment';
 import { Component, OnInit } from '@angular/core';
-import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword';
+import { FormControl, Validators } from '@angular/forms';
 import Session from 'supertokens-web-js/recipe/session';
+import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword';
+import { environment } from './../../environments/environment';
 
 @Component({
-  selector: 'meal-time-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss'],
+	selector: 'meal-time-auth',
+	templateUrl: './auth.component.html',
+	styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
-  // define params
-  error = false;
-  errorMessage = 'Something went wrong';
-  // define isLoggedIn as a property
-  isLoggedIn = false;
+	// define params
+	error = false;
+	errorMessage = 'Something went wrong';
+	// define isLoggedIn as a property
+	isLoggedIn = false;
 
-  async ngOnInit(): Promise<void> {
-    // if there is an "error" query param on this page, it means that
-    // social login has failed for some reason. See the AuthCallbackView.vue file
-    // for more context on this
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('error')) {
-      this.errorMessage = 'Something went wrong';
-      this.error = true;
-    }
-    // this redirects the user to the HomeView.vue component if a session
-    // already exists.
-    this.checkForSession();
-  }
+	emailFormControl = new FormControl('', [
+		Validators.required,
+		Validators.email,
+	]);
 
-  async checkForSession() {
-    if (await Session.doesSessionExist()) {
-      // since a session already exists, we redirect the user to the HomeView.vue component
-      window.location.assign('/home');
-    }
-  }
+	passwordFormControl = new FormControl('', [
+		Validators.required,
+		// Password pattern
+		Validators.pattern(
+			'(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}'
+		),
+	]);
 
-  // login function
-  async signUp(email: string, password: string) {
-    const response = await ThirdPartyEmailPassword.emailPasswordSignUp({
-      formFields: [
-        {
-          id: 'email',
-          value: email,
-        },
-        {
-          id: 'password',
-          value: password,
-        },
-      ],
-    });
-    if (response.status === 'OK') {
-      window.location.assign('/home');
-      this.isLoggedIn = true;
-    }
-  }
+	async ngOnInit(): Promise<void> {
+		// if there is an "error" query param on this page, it means that
+		// social login has failed for some reason. See the AuthCallbackView.vue file
+		// for more context on this
+		const params = new URLSearchParams(window.location.search);
+		if (params.has('error')) {
+			this.errorMessage = 'Something went wrong';
+			this.error = true;
+		}
+		// this redirects the user to the HomeView.vue component if a session
+		// already exists.
+		this.checkForSession();
+	}
 
-  // login function
-  async signIn(email: string, password: string) {
-    const response = await ThirdPartyEmailPassword.emailPasswordSignIn({
-      formFields: [
-        {
-          id: 'email',
-          value: email,
-        },
-        {
-          id: 'password',
-          value: password,
-        },
-      ],
-    });
-    if (response.status === 'OK') {
-      window.location.assign('/home');
-      this.isLoggedIn = true;
-    }
-  }
+	async checkForSession() {
+		if (await Session.doesSessionExist()) {
+			// since a session already exists, we redirect the user to the HomeView.vue component
+			window.location.assign('/home');
+		}
+	}
 
-  // logout function
-  async signOut() {
-    Session.signOut();
-    this.isLoggedIn = false;
-  }
+	// login function
+	async signUp(email: string, password: string) {
+		const response = await ThirdPartyEmailPassword.emailPasswordSignUp({
+			formFields: [
+				{
+					id: 'email',
+					value: email,
+				},
+				{
+					id: 'password',
+					value: password,
+				},
+			],
+		});
+		if (response.status === 'OK') {
+			window.location.assign('/home');
+			this.isLoggedIn = true;
+		}
+	}
 
-  // check if user is logged in
-  async userLoggedIn() {
-    const isSignedIn = await Session.doesSessionExist();
-    this.isLoggedIn = isSignedIn;
-    console.log(isSignedIn);
-    return isSignedIn;
-  }
+	// login function
+	async signIn(email: string, password: string) {
+		const response = await ThirdPartyEmailPassword.emailPasswordSignIn({
+			formFields: [
+				{
+					id: 'email',
+					value: email,
+				},
+				{
+					id: 'password',
+					value: password,
+				},
+			],
+		});
+		if (response.status === 'OK') {
+			window.location.assign('/home');
+			this.isLoggedIn = true;
+		}
+	}
 
-  // Google sign in
-  async onGooglePressed() {
-    const googleAuthURL =
-      await ThirdPartyEmailPassword.getAuthorisationURLWithQueryParamsAndSetState(
-        {
-          authorisationURL: `${environment.websiteUrl}/auth/callback`,
-          providerId: 'google',
-        }
-      );
+	// logout function
+	async signOut() {
+		Session.signOut();
+		this.isLoggedIn = false;
+	}
 
-    // we redirect the user to sign in with google
-    window.location.href = googleAuthURL;
-  }
+	// check if user is logged in
+	async userLoggedIn() {
+		const isSignedIn = await Session.doesSessionExist();
+		this.isLoggedIn = isSignedIn;
+		console.log(isSignedIn);
+		return isSignedIn;
+	}
 
-  // Apple sign in
-  async onApplePressed() {
-    const appleAuthURL =
-      await ThirdPartyEmailPassword.getAuthorisationURLWithQueryParamsAndSetState(
-        {
-          authorisationURL: `${environment.websiteUrl}/auth/callback`,
-          providerId: 'apple',
-        }
-      );
+	// Google sign in
+	async onGooglePressed() {
+		const googleAuthURL =
+			await ThirdPartyEmailPassword.getAuthorisationURLWithQueryParamsAndSetState(
+				{
+					authorisationURL: `${environment.websiteUrl}/auth/callback`,
+					providerId: 'google',
+				}
+			);
 
-    // we redirect the user to sign in with apple
-    window.location.href = appleAuthURL;
-  }
+		// we redirect the user to sign in with google
+		window.location.href = googleAuthURL;
+	}
 
-  // Facebook sign in
-  async onFacebookPressed() {
-    const facebookAuthURL =
-      await ThirdPartyEmailPassword.getAuthorisationURLWithQueryParamsAndSetState(
-        {
-          authorisationURL: `${environment.websiteUrl}/auth/callback`,
-          providerId: 'facebook',
-        }
-      );
+	// Apple sign in
+	async onApplePressed() {
+		const appleAuthURL =
+			await ThirdPartyEmailPassword.getAuthorisationURLWithQueryParamsAndSetState(
+				{
+					authorisationURL: `${environment.websiteUrl}/auth/callback`,
+					providerId: 'apple',
+				}
+			);
 
-    // we redirect the user to sign in with facebook
-    window.location.href = facebookAuthURL;
-  }
+		// we redirect the user to sign in with apple
+		window.location.href = appleAuthURL;
+	}
 
-  // Github sign in
-  async onGithubPressed() {
-    const githubAuthURL =
-      await ThirdPartyEmailPassword.getAuthorisationURLWithQueryParamsAndSetState(
-        {
-          authorisationURL: `${environment.websiteUrl}/auth/callback`,
-          providerId: 'github',
-        }
-      );
+	// Facebook sign in
+	async onFacebookPressed() {
+		const facebookAuthURL =
+			await ThirdPartyEmailPassword.getAuthorisationURLWithQueryParamsAndSetState(
+				{
+					authorisationURL: `${environment.websiteUrl}/auth/callback`,
+					providerId: 'facebook',
+				}
+			);
 
-    // we redirect the user to sign in with github
-    window.location.href = githubAuthURL;
-  }
+		// we redirect the user to sign in with facebook
+		window.location.href = facebookAuthURL;
+	}
 
-  // goToLanding
-  goToLanding() {
-    window.location.assign('/');
-  }
+	// Github sign in
+	async onGithubPressed() {
+		const githubAuthURL =
+			await ThirdPartyEmailPassword.getAuthorisationURLWithQueryParamsAndSetState(
+				{
+					authorisationURL: `${environment.websiteUrl}/auth/callback`,
+					providerId: 'github',
+				}
+			);
+
+		// we redirect the user to sign in with github
+		window.location.href = githubAuthURL;
+	}
+
+	// goToLanding
+	goToLanding() {
+		window.location.assign('/');
+	}
 }

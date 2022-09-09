@@ -1,12 +1,9 @@
 <div class="center">
-	<fa-icon [icon]="faLock"></fa-icon>
 	<mt-button (clicked)="goToAuth()" value="Go to Auth"></mt-button>
-	<fa-icon [icon]="faLock"></fa-icon>
-	<mt-field
-		[formControl]="emailFormControl"
-		[label]="'Email'"
-		[placeholder]="'Enter your email'"
-		[helperText]="'We will never share your email with anyone else.'"
-		[type]="'email'"
-	></mt-field>
+
+	<!-- Button to open new tab with https://mealtime.hellonext.co/ -->
+	<mt-button
+		(clicked)="openFeedbackLink()"
+		value="Request a feature"
+	></mt-button>
 </div>
