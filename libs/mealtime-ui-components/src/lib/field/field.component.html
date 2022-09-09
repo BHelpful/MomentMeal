@@ -5,7 +5,7 @@
 		class="input-container"
 		[class.disabled]="disabled"
 		[class.error]="formControl.invalid && formControl.touched"
-		[class.valid]="formControl.valid && formControl.touched"
+		[class.valid]="formControl.valid"
 		(click)="focusInput()"
 	>
 		<input

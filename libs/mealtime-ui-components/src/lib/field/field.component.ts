@@ -66,7 +66,7 @@ export class FieldComponent {
 	currentIcon(): IconDefinition {
 		if (this.formControl.invalid && this.formControl.touched) {
 			return this.faError;
-		} else if (this.formControl.valid && this.formControl.touched) {
+		} else if (this.formControl.valid) {
 			return this.faValid;
 		} else if (!this.disabled) {
 			return this.defaultIcon;
