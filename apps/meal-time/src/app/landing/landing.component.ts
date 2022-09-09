@@ -13,6 +13,6 @@ export class LandingComponent {
 
 	// open new tab with https://mealtime.hellonext.co/
 	openFeedbackLink() {
-		window.open('https://mealtime.hellonext.co/', '_blank');
+		window.open('https://mealtime.hellonext.co/', 'WindowName', 'noopener');
 	}
 }
