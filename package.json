@@ -7,7 +7,7 @@
 		"prestart": "yarn prisma:seed",
 		"start": "nx run-many --target=serve --projects=api,meal-time",
 		"build": "nx affected --target=build --base=origin/master --parallel",
-		"build:meal-time": "nx build meel-time",
+		"build:meal-time": "nx build meal-time",
 		"build:api": "nx build api",
 		"lint": "nx affected --target=lint --base=origin/master --parallel",
 		"test": "nx affected --target=test --base=origin/master --parallel",
