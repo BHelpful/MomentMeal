@@ -3,14 +3,14 @@
 .center {
 	// center vertically and horizontally
 	display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 10px 0;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding: 10px 0;
 
 	.title {
 		font-family: 'montserrat', sans-serif;
-		color: #474C59;
+		color: #474c59;
 	}
 
 	// background-color: $global-color-teal;
