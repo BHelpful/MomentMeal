@@ -1,11 +1,16 @@
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 10px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding: 10px 0;
 
-  > * {
-    margin: 10px 10px;
-  }
+	.title {
+		font-family: 'montserrat', sans-serif;
+		color: #474c59;
+	}
+
+	> * {
+		margin: 10px 10px;
+	}
 }
