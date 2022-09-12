@@ -16,30 +16,53 @@
 		[type]="'password'"
 	></mt-field>
 	<!-- button -->
-	<mt-button
-		(clicked)="signUp('testMail@gmail.com', 'Password123+')"
-		value="Sign Up"
-		variant="primary"
-	></mt-button>
-	<mt-button
-		(clicked)="signIn('testMail@gmail.com', 'Password123+')"
-		value="Sign In"
-		variant="secondary"
-	></mt-button>
-	<mt-button
-		(clicked)="onGooglePressed()"
-		value="Sign in with google"
-		variant="tertiary"
-	></mt-button>
-	<mt-button
-		(clicked)="onGithubPressed()"
-		value="Sign in with GitHub"
-		variant="link"
-	></mt-button>
-	<mt-button
-		(clicked)="onApplePressed()"
-		[disabled]="true"
-		value="Sign in with apple"
-	></mt-button>
+	<div class="inline">
+		<mt-button
+			(clicked)="signUp('testMail@gmail.com', 'Password123+')"
+			value="Sign Up"
+			variant="secondary"
+		></mt-button>
+		<mt-button
+			(clicked)="signIn('testMail@gmail.com', 'Password123+')"
+			value="Sign In"
+			variant="primary"
+		></mt-button>
+	</div>
+	<div class="inline">
+		<mt-button
+			(clicked)="onGooglePressed()"
+			value="google"
+			iconPath="assets/icons/google.svg"
+			variant="secondary"
+			bgColor="#DB4437"
+			color="#fff"
+		>
+		</mt-button>
+		<mt-button
+			(clicked)="onGithubPressed()"
+			value="GitHub"
+			iconPath="assets/icons/github.svg"
+			bgColor="#333"
+			color="#fff"
+			variant="link"
+		></mt-button>
+	</div>
+	<div class="inline">
+		<mt-button
+			(clicked)="onApplePressed()"
+			value="apple"
+			bgColor="#000"
+			color="#fff"
+			iconPath="assets/icons/apple.svg"
+		></mt-button>
+		<mt-button
+			(clicked)="onApplePressed()"
+			[disabled]="true"
+			value="facebook"
+			bgColor="#3b5998"
+			color="#fff"
+			iconPath="assets/icons/facebook.svg"
+		></mt-button>
+	</div>
 	<mt-button (clicked)="goToLanding()" value="Back"></mt-button>
 </div>
