@@ -17,8 +17,8 @@ export class ButtonComponent {
 
 	@Input()
 	public bgColor = '';
-	
-  @Input()
+
+	@Input()
 	public color = '';
 
 	@Input()
@@ -48,14 +48,16 @@ export class ButtonComponent {
 		return (
 			typeof this.iconPath === 'string' &&
 			this.iconPath.length >= 1 &&
-			this.iconPath !== undefined
+			this.iconPath !== undefined &&
+			!this.disabled
 		);
 	}
 	useFaIcon(): boolean {
 		return (
 			typeof this.iconPath !== 'string' &&
 			'icon' in this.iconPath &&
-			this.iconPath !== undefined
+			this.iconPath !== undefined &&
+			!this.disabled
 		);
 	}
 }
