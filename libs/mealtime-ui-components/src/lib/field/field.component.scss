@@ -13,8 +13,12 @@
 	.input-container {
 		border: none;
 		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 
-		width: max-content;
+		// width: max-content;
+		width: 400px;
 		height: max-content;
 
 		background: #ecf1f4;
@@ -31,6 +35,10 @@
 		transition: all 0.1s ease-in-out;
 
 		padding-left: 0.5rem;
+
+		&:hover {
+			box-shadow: inset 0 0 0px white, 0px 0px 0px 4px rgba(75, 77, 237, 0.2);
+		}
 
 		&:focus-within {
 			outline-width: 0.15rem;
@@ -56,19 +64,17 @@
 
 		.icon {
 			padding-right: 1rem;
-			margin-bottom: -0.4rem;
 			color: #4b4b68;
 
 			&.clear {
-					color: #4b4b68!important;
-					cursor: pointer;
-					transition: all 0.1s ease-in-out;
-					&:hover {
-						color: #303042!important;
-						transform: scale(1.2);
-					}
-					
+				color: #4b4b68 !important;
+				cursor: pointer;
+				transition: all 0.1s ease-in-out;
+				&:hover {
+					color: #303042 !important;
+					transform: scale(1.2);
 				}
+			}
 		}
 
 		&.valid {

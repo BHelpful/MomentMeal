@@ -1,4 +1,5 @@
 import {
+	AfterViewInit,
 	Component,
 	ElementRef,
 	EventEmitter,
@@ -40,7 +41,7 @@ export type InputTypes =
 	templateUrl: './field.component.html',
 	styleUrls: ['./field.component.scss'],
 })
-export class FieldComponent implements OnInit {
+export class FieldComponent implements OnInit, AfterViewInit {
 	hasFocus = false;
 	faError = faCircleExclamation;
 	faValid = faCircleCheck;
@@ -195,6 +196,10 @@ export class FieldComponent implements OnInit {
 		this.checkValidators(this.value);
 	}
 
+	ngAfterViewInit(): void {
+		this.checkValidators(this.value);
+	}
+
 	onFocus(e: Event) {
 		this.hasFocus = true;
 
@@ -203,6 +208,7 @@ export class FieldComponent implements OnInit {
 
 	onBlur(e: Event) {
 		this.hasFocus = false;
+		this.checkValidators(this.value);
 
 		this.blurred.emit(e);
 	}
@@ -340,9 +346,10 @@ export class FieldComponent implements OnInit {
 
      */
 
-	// TODO: make clear value show correct error message and not always valid
 	clearValue(e?: Event): void {
 		e?.preventDefault();
+
+		this.inputField.nativeElement.value = '';
 
 		this.value = '';
 
