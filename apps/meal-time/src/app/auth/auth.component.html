@@ -2,14 +2,14 @@
 	<img src="assets/icons/logo.svg" alt="logo" />
 	<h1 class="title">MealTime</h1>
 	<mt-field
-		[formControl]="emailFormControl"
+		[validation]="{ required: true, typeCheck: true }"
 		[label]="'Email'"
 		[placeholder]="'Enter your email'"
 		[helperText]="'We will never share your email with anyone else.'"
 		[type]="'email'"
 	></mt-field>
 	<mt-field
-		[formControl]="passwordFormControl"
+		[validation]="{ required: true, minLength: 8 }"
 		[label]="'Password'"
 		[placeholder]="'Enter your password'"
 		[helperText]="'Sample text'"
