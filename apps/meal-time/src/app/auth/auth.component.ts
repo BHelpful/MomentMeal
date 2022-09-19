@@ -23,10 +23,8 @@ export class AuthComponent implements OnInit {
 
 	passwordFormControl = new FormControl('', [
 		Validators.required,
-		// Password pattern
-		Validators.pattern(
-			'(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}'
-		),
+		Validators.pattern('^[a-zA-Z]+$'),
+		Validators.minLength(8),
 	]);
 
 	async ngOnInit(): Promise<void> {

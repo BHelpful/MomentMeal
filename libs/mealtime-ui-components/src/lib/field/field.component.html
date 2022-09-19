@@ -4,16 +4,13 @@
 	<div
 		class="input-container"
 		[class.disabled]="disabled"
-		[class.error]="(!valid && touched)"
-		[class.valid]="(valid && touched) || (valid && hasFocus)"
+		[class.error]="formControl.invalid && formControl.touched"
+		[class.valid]="formControl.valid"
 		(click)="focusInput()"
 	>
 		<input
 			#inputField
-			[attr.required]="validation.required ? 'required' : null"
-			[attr.maxlength]="validation.maxLength || null"
-			[attr.minlength]="validation.minLength || null"
-			[attr.pattern]="validation.pattern || null"
+			[formControl]="formControl"
 			[type]="type"
 			[placeholder]="placeholder"
 			[value]="value"
@@ -39,7 +36,7 @@
 	</div>
 	<p
 		class="field-helper-text"
-		[class.error]="(!valid && touched)"
+		[class.error]="formControl.invalid && formControl.touched"
 	>
 		{{ currentMessage }}
 	</p>

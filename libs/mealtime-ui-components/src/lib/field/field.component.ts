@@ -9,6 +9,7 @@ import {
 	Output,
 	ViewChild,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import {
 	faCircleCheck,
 	faCircleExclamation,
@@ -16,11 +17,7 @@ import {
 	faCircleXmark,
 	IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-	InputTranslations,
-	InputValidationAttributes,
-	InputValidator,
-} from './model/field';
+import { InputTranslations, InputValidator } from './model/field';
 
 export type InputTypes =
 	| 'color'
@@ -54,7 +51,6 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	faClear = faCircleXmark;
 
 	showClearIcon = false;
-	touched = false;
 
 	// viewchild
 	@ViewChild('inputField') inputField: ElementRef;
@@ -99,6 +95,8 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
 	@Input() public type: InputTypes = 'text';
 
+	@Input() public formControl: FormControl = new FormControl();
+
 	/**
 
      * list of validators to check input against
@@ -113,15 +111,6 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
 	@Input()
 	validators: InputValidator[] = [];
-
-	/**
-
-     * obj of native validation methods to check input against
-
-  */
-
-	@Input()
-	validation: InputValidationAttributes = { required: false, typeCheck: false };
 
 	/**
 
@@ -140,15 +129,6 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
 	@Input()
 	width = null;
-
-	/**
-
-     * unit placeholder
-
-     */
-
-	@Input()
-	unit: string;
 
 	/**
 	 * 
@@ -216,9 +196,6 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	onBlur(e: Event) {
 		this.hasFocus = false;
 
-		// TODO: figure out why min length is not working when checking on blur
-		this.touched = true;
-
 		this.checkValidators(this.value);
 
 		this.blurred.emit(e);
@@ -236,38 +213,52 @@ export class FieldComponent implements OnInit, AfterViewInit {
 		this.valueChanged.emit(target.value);
 	}
 
-	checkValueMissing(valueMissing: boolean) {
-		if (this.validation.required && valueMissing) {
+	checkRequired() {
+		if (
+			this.formControl.hasError('required') &&
+			this.formControl?.errors?.['required']
+		) {
 			this.currentMessage =
 				this.translations?.requiredValidationMessage ||
 				'required text is missing';
 		}
 	}
 
-	checkMaxLength(tooLong: boolean) {
-		if (this.validation.maxLength && tooLong) {
+	checkMaxLength() {
+		if (
+			this.formControl.hasError('maxlength') &&
+			this.formControl?.errors?.['maxlength']
+		) {
 			this.currentMessage =
 				this.translations?.tooLongMessage || 'too long text is missing';
 		}
 	}
 
-	checkMinLength(tooShort: boolean) {
-		if (this.validation.minLength && tooShort) {
+	checkMinLength() {
+		if (
+			this.formControl.hasError('minlength') &&
+			this.formControl?.errors?.['minlength']
+		) {
 			this.currentMessage =
 				this.translations?.tooShortMessage || 'too short text is missing';
 		}
 	}
 
-	checkTypeMismatch(typeMismatch: boolean) {
-		if (this.validation.typeCheck && typeMismatch) {
+	checkEmail() {
+		if (
+			this.formControl.hasError('email') &&
+			this.formControl?.errors?.['email']
+		) {
 			this.currentMessage =
-				this.translations?.typeMismatchMessage ||
-				'type mismatch text is missing';
+				this.translations?.invalidEmailMessage || 'email is not valid';
 		}
 	}
 
-	checkPatternMismatch(patternMismatch: boolean) {
-		if (this.validation.pattern && patternMismatch) {
+	checkPatternMismatch() {
+		if (
+			this.formControl.hasError('pattern') &&
+			this.formControl?.errors?.['pattern']
+		) {
 			this.currentMessage =
 				this.translations?.patternMismatchMessage ||
 				'pattern mismatch text is missing';
@@ -275,38 +266,21 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	}
 
 	checkValidity(): boolean {
-		let valid = true;
+		const validityChecks = [
+			this.checkPatternMismatch,
+			this.checkEmail,
+			this.checkMinLength,
+			this.checkMaxLength,
+			this.checkRequired,
+		];
 
-		const elementValidity = this.inputField?.nativeElement?.validity;
-
-		if (elementValidity && !elementValidity.valid) {
-			const { valueMissing, tooLong, tooShort, typeMismatch, patternMismatch } =
-				elementValidity;
-
-			valid = false;
-
-			// Required
-
-			this.checkValueMissing(valueMissing);
-
-			// maxLength
-
-			this.checkMaxLength(tooLong);
-
-			// minLength
-
-			this.checkMinLength(tooShort);
-
-			// type mismatch (email)
-
-			this.checkTypeMismatch(typeMismatch);
-
-			// pattern mismatch (regex)
-
-			this.checkPatternMismatch(patternMismatch);
+		if (this.formControl.touched) {
+			for (const check of validityChecks) {
+				check.call(this);
+			}
 		}
 
-		return valid;
+		return this.formControl.valid;
 	}
 
 	/**
@@ -342,11 +316,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			this.validChanged.emit(valid);
 		}
 
-		if (valid) {
-			this.currentMessage = this.helperText;
-		}
-
-		if (!this.touched) {
+		if (valid || !this.formControl.touched) {
 			this.currentMessage = this.helperText;
 		}
 
@@ -364,7 +334,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	clearValue(e?: Event): void {
 		e?.preventDefault();
 
-		this.inputField.nativeElement.value = '';
+		this.formControl.setValue('');
 
 		this.value = '';
 
@@ -403,9 +373,9 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	}
 
 	currentIcon(): IconDefinition {
-		if (!this.valid && this.touched) {
+		if (this.formControl.invalid && this.formControl.touched) {
 			return this.faError;
-		} else if ((this.valid && this.touched) || (this.valid && this.hasFocus)) {
+		} else if (this.formControl.valid) {
 			return this.faValid;
 		} else if (!this.disabled) {
 			return this.defaultIcon;

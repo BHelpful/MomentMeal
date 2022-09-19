@@ -23,7 +23,7 @@ export interface InputTranslations {
 
 	tooShortMessage?: string;
 
-	typeMismatchMessage?: string;
+	invalidEmailMessage?: string;
 
 	patternMismatchMessage?: string;
 }
