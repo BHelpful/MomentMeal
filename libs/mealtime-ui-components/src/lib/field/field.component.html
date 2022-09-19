@@ -4,8 +4,8 @@
 	<div
 		class="input-container"
 		[class.disabled]="disabled"
-		[class.error]="!valid"
-		[class.valid]="valid"
+		[class.error]="(!valid && touched)"
+		[class.valid]="(valid && touched) || (valid && hasFocus)"
 		(click)="focusInput()"
 	>
 		<input
@@ -37,5 +37,10 @@
 		></fa-icon>
 		<fa-icon class="icon" [icon]="currentIcon()" size="lg"></fa-icon>
 	</div>
-	<p class="field-helper-text" [class.error]="!valid">{{ currentMessage }}</p>
+	<p
+		class="field-helper-text"
+		[class.error]="(!valid && touched)"
+	>
+		{{ currentMessage }}
+	</p>
 </div>

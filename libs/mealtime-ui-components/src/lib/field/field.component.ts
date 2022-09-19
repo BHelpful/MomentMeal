@@ -1,5 +1,6 @@
 import {
 	AfterViewInit,
+	ChangeDetectorRef,
 	Component,
 	ElementRef,
 	EventEmitter,
@@ -42,12 +43,18 @@ export type InputTypes =
 	styleUrls: ['./field.component.scss'],
 })
 export class FieldComponent implements OnInit, AfterViewInit {
+	cd: ChangeDetectorRef;
+	constructor(cd: ChangeDetectorRef) {
+		this.cd = cd;
+	}
+
 	hasFocus = false;
 	faError = faCircleExclamation;
 	faValid = faCircleCheck;
 	faClear = faCircleXmark;
 
 	showClearIcon = false;
+	touched = false;
 
 	// viewchild
 	@ViewChild('inputField') inputField: ElementRef;
@@ -208,6 +215,10 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
 	onBlur(e: Event) {
 		this.hasFocus = false;
+
+		// TODO: figure out why min length is not working when checking on blur
+		this.touched = true;
+
 		this.checkValidators(this.value);
 
 		this.blurred.emit(e);
@@ -335,6 +346,10 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			this.currentMessage = this.helperText;
 		}
 
+		if (!this.touched) {
+			this.currentMessage = this.helperText;
+		}
+
 		return valid;
 	}
 
@@ -388,9 +403,9 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	}
 
 	currentIcon(): IconDefinition {
-		if (!this.valid) {
+		if (!this.valid && this.touched) {
 			return this.faError;
-		} else if (this.valid) {
+		} else if ((this.valid && this.touched) || (this.valid && this.hasFocus)) {
 			return this.faValid;
 		} else if (!this.disabled) {
 			return this.defaultIcon;
