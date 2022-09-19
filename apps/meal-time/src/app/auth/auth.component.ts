@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Session from 'supertokens-web-js/recipe/session';
 import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword';
 import { environment } from './../../environments/environment';
@@ -23,9 +23,17 @@ export class AuthComponent implements OnInit {
 
 	passwordFormControl = new FormControl('', [
 		Validators.required,
-		Validators.pattern('^[a-zA-Z]+$'),
+		// TODO: fix this
+		Validators.pattern(
+			'^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{0,}$'
+		),
 		Validators.minLength(8),
 	]);
+
+	authForm = new FormGroup({
+		email: this.emailFormControl,
+		password: this.passwordFormControl,
+	});
 
 	async ngOnInit(): Promise<void> {
 		// if there is an "error" query param on this page, it means that
@@ -42,9 +50,25 @@ export class AuthComponent implements OnInit {
 	}
 
 	async checkForSession() {
+		this.authForm.get('email');
 		if (await Session.doesSessionExist()) {
 			// since a session already exists, we redirect the user to the HomeView.vue component
 			window.location.assign('/home');
+		}
+	}
+
+	// TODO: make on submit be called by form and not button (enter key)
+	onSubmit(submitType: 'signUp' | 'signIn') {
+		console.log(this.authForm.value);
+		console.log(this.authForm.valid);
+
+		if (this.authForm.valid) {
+			const { email, password } = this.authForm.value;
+			if (submitType === 'signUp') {
+				this.signUp(email as string, password as string);
+			} else {
+				this.signIn(email as string, password as string);
+			}
 		}
 	}
 

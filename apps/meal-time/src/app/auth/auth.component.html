@@ -1,33 +1,37 @@
 <div class="container">
 	<img src="assets/icons/logo.svg" alt="logo" />
 	<h1 class="title">MealTime</h1>
-	<mt-field
-		[formControl]="emailFormControl"
-		[label]="'Email'"
-		[placeholder]="'Enter your email'"
-		[helperText]="'We will never share your email with anyone else.'"
-		[type]="'email'"
-	></mt-field>
-	<mt-field
-		[formControl]="passwordFormControl"
-		[label]="'Password'"
-		[placeholder]="'Enter your password'"
-		[helperText]="'User password'"
-		[type]="'password'"
-	></mt-field>
-	<!-- button -->
-	<div class="inline">
-		<mt-button
-			(clicked)="signUp('testMail@gmail.com', 'Password123+')"
-			value="Sign Up"
-			variant="secondary"
-		></mt-button>
-		<mt-button
-			(clicked)="signIn('testMail@gmail.com', 'Password123+')"
-			value="Sign In"
-			variant="primary"
-		></mt-button>
-	</div>
+	<form [formGroup]="authForm">
+		<mt-field
+			[formControl]="emailFormControl"
+			[label]="'Email'"
+			[placeholder]="'Enter your email'"
+			[helperText]="'We will never share your email with anyone else.'"
+			[type]="'email'"
+		></mt-field>
+		<mt-field
+			[formControl]="passwordFormControl"
+			[label]="'Password'"
+			[placeholder]="'Enter your password'"
+			[helperText]="'User password'"
+			[type]="'password'"
+		></mt-field>
+		<!-- button -->
+		<div class="inline">
+			<mt-button
+				(clicked)="onSubmit('signUp')"
+				value="Sign Up"
+				variant="secondary"
+				[disabled]="!authForm.valid"
+			></mt-button>
+			<mt-button
+				(clicked)="onSubmit('signIn')"
+				value="Sign In"
+				variant="primary"
+				[disabled]="!authForm.valid"
+			></mt-button>
+		</div>
+	</form>
 	<div class="inline">
 		<mt-button
 			(clicked)="onGooglePressed()"
