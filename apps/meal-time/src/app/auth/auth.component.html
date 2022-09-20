@@ -5,6 +5,7 @@
 		<mt-field
 			[formControl]="emailFormControl"
 			ngDefaultControl
+			[validators]="[customValidator]"
 			[label]="'Email'"
 			[placeholder]="'Enter your email'"
 			[helperText]="'We will never share your email with anyone else.'"
@@ -14,6 +15,7 @@
 		<mt-field
 			[formControl]="passwordFormControl"
 			ngDefaultControl
+			[validators]="[customValidator]"
 			[label]="'Password'"
 			[placeholder]="'Enter your password'"
 			[helperText]="'User password'"
@@ -21,7 +23,7 @@
 			(keyup.enter)="signIn()"
 		></mt-field>
 		<div class="error-container">
-			<p *ngIf="error" class="error">{{ errorMessage }}</p>
+			<p *ngIf="error" class="error">{{ formErrorMessage }}</p>
 		</div>
 		<!-- button -->
 		<div class="inline">

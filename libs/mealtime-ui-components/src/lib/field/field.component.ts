@@ -301,6 +301,10 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
 			if (errorMessage) {
 				valid = false;
+				this.formControl.setErrors({
+					incorrect: true,
+					customErrorMessage: errorMessage,
+				});
 
 				this.currentMessage = errorMessage;
 			}

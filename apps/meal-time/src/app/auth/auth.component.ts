@@ -18,9 +18,11 @@ type AuthForm = {
 export class AuthComponent implements OnInit {
 	// define params
 	error = false;
-	errorMessage = 'Something went wrong';
+	formErrorMessage = 'Something went wrong';
 	// define isLoggedIn as a property
 	isLoggedIn = false;
+
+	testCustomValidator: 'ENABLED' | 'DISABLED' = 'ENABLED';
 
 	emailFormControl = new FormControl('', [
 		Validators.required,
@@ -50,7 +52,7 @@ export class AuthComponent implements OnInit {
 		// for more context on this
 		const params = new URLSearchParams(window.location.search);
 		if (params.has('error')) {
-			this.errorMessage = 'Something went wrong';
+			this.formErrorMessage = 'Something went wrong';
 			this.error = true;
 		}
 		// this redirects the user to the HomeView.vue component if a session
@@ -64,6 +66,10 @@ export class AuthComponent implements OnInit {
 			// since a session already exists, we redirect the user to the HomeView.vue component
 			window.location.assign('/home');
 		}
+	}
+
+	public customValidator(value: string | number) {
+		return value === 'custom' ? 'some error message' : null;
 	}
 
 	// login function
@@ -92,7 +98,7 @@ export class AuthComponent implements OnInit {
 			this.isLoggedIn = true;
 		} else {
 			this.error = true;
-			this.errorMessage = response.formFields[0].error;
+			this.formErrorMessage = response.formFields[0].error;
 		}
 	}
 
@@ -122,7 +128,7 @@ export class AuthComponent implements OnInit {
 			this.isLoggedIn = true;
 		} else if (response.status === 'WRONG_CREDENTIALS_ERROR') {
 			this.error = true;
-			this.errorMessage = 'Wrong email or password';
+			this.formErrorMessage = 'Wrong email or password';
 		}
 	}
 
