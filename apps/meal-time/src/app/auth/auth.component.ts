@@ -24,7 +24,6 @@ export class AuthComponent implements OnInit {
 	strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*?])(?=.{8,})/;
 	passwordFormControl = new FormControl('', [
 		Validators.required,
-		// TODO: fix this
 		Validators.pattern(this.strongRegex),
 		Validators.minLength(8),
 	]);
