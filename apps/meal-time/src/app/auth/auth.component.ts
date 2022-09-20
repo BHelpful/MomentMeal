@@ -34,6 +34,11 @@ export class AuthComponent implements OnInit {
 	});
 
 	async ngOnInit(): Promise<void> {
+		this.authForm.statusChanges.subscribe((status) => {
+			if (status === 'VALID') {
+				this.error = false;
+			}
+		});
 		// if there is an "error" query param on this page, it means that
 		// social login has failed for some reason. See the AuthCallbackView.vue file
 		// for more context on this
