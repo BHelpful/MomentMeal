@@ -31,5 +31,16 @@
 
 			"webRoot": "${workspaceFolder}"
 		},
+		{
+			"name": "API",
+
+			"request": "launch",
+
+			"type": "chrome",
+
+			"url": "http://localhost:3333",
+
+			"webRoot": "${workspaceFolder}"
+		},
 	]
 }
