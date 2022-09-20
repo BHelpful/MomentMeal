@@ -2,7 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Session from 'supertokens-web-js/recipe/session';
 import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword';
+import { nonNullObject } from './../../../../../libs/utils/src/lib/ts-guards';
 import { environment } from './../../environments/environment';
+
+type AuthForm = {
+	email: string;
+	password: string;
+};
 
 @Component({
 	selector: 'meal-time-auth',
@@ -60,25 +66,15 @@ export class AuthComponent implements OnInit {
 		}
 	}
 
-	// TODO: make on submit be called by form and not button (enter key)
-	onSubmit(submitType: 'signUp' | 'signIn') {
-		console.log(this.authForm.value);
-		console.log(this.authForm.valid);
-
+	// login function
+	async signUp() {
 		const value = this.authForm?.value;
 
-		if (this.authForm.valid) {
-			const { email, password } = value;
-			if (submitType === 'signUp') {
-				this.signUp(email as string, password as string);
-			} else {
-				this.signIn(email as string, password as string);
-			}
+		if (!nonNullObject<AuthForm>(value)) {
+			return;
 		}
-	}
 
-	// login function
-	async signUp(email: string, password: string) {
+		const { email, password } = value;
 		const response = await ThirdPartyEmailPassword.emailPasswordSignUp({
 			formFields: [
 				{
@@ -101,7 +97,14 @@ export class AuthComponent implements OnInit {
 	}
 
 	// login function
-	async signIn(email: string, password: string) {
+	async signIn() {
+		const value = this.authForm?.value;
+
+		if (!nonNullObject<AuthForm>(value)) {
+			return;
+		}
+
+		const { email, password } = value;
 		const response = await ThirdPartyEmailPassword.emailPasswordSignIn({
 			formFields: [
 				{
@@ -148,7 +151,7 @@ export class AuthComponent implements OnInit {
 			);
 
 		// we redirect the user to sign in with google
-		window.location.href = googleAuthURL;
+		window.open(googleAuthURL, '_self');
 	}
 
 	// Apple sign in
@@ -162,7 +165,7 @@ export class AuthComponent implements OnInit {
 			);
 
 		// we redirect the user to sign in with apple
-		window.location.href = appleAuthURL;
+		window.open(appleAuthURL, '_self');
 	}
 
 	// Facebook sign in
@@ -176,7 +179,7 @@ export class AuthComponent implements OnInit {
 			);
 
 		// we redirect the user to sign in with facebook
-		window.location.href = facebookAuthURL;
+		window.open(facebookAuthURL, '_self');
 	}
 
 	// Github sign in
@@ -190,7 +193,7 @@ export class AuthComponent implements OnInit {
 			);
 
 		// we redirect the user to sign in with github
-		window.location.href = githubAuthURL;
+		window.open(githubAuthURL, '_self');
 	}
 
 	// goToLanding

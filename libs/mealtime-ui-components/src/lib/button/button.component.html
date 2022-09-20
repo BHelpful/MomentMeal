@@ -11,6 +11,7 @@
 		'padding-right': useStringIcon() || useFaIcon() ? '0.75rem' : 'undefined'
 	}"
 	class="btn"
+	[type]="type"
 	[ngClass]="[variant]"
 	[class.disabled]="disabled"
 	onclick="!disabled"

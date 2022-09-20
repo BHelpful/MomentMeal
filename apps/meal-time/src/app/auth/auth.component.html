@@ -1,7 +1,7 @@
 <div class="container">
 	<img src="assets/icons/logo.svg" alt="logo" />
 	<h1 class="title">MealTime</h1>
-	<form [formGroup]="authForm">
+	<form [formGroup]="authForm" (ngSubmit)="signIn()">
 		<mt-field
 			[formControl]="emailFormControl"
 			ngDefaultControl
@@ -9,6 +9,7 @@
 			[placeholder]="'Enter your email'"
 			[helperText]="'We will never share your email with anyone else.'"
 			[type]="'email'"
+			(keyup.enter)="signIn()"
 		></mt-field>
 		<mt-field
 			[formControl]="passwordFormControl"
@@ -17,6 +18,7 @@
 			[placeholder]="'Enter your password'"
 			[helperText]="'User password'"
 			[type]="'password'"
+			(keyup.enter)="signIn()"
 		></mt-field>
 		<div class="error-container">
 			<p *ngIf="error" class="error">{{ errorMessage }}</p>
@@ -24,16 +26,16 @@
 		<!-- button -->
 		<div class="inline">
 			<mt-button
-				(clicked)="onSubmit('signUp')"
+				(clicked)="signUp()"
 				value="Sign Up"
 				variant="secondary"
-				[disabled]="authForm.valid !== undefined && !authForm.valid"
+				[disabled]="!authForm.valid"
 			></mt-button>
 			<mt-button
-				(clicked)="onSubmit('signIn')"
+				type="submit"
 				value="Sign In"
 				variant="primary"
-				[disabled]="authForm.valid !== undefined && !authForm.valid"
+				[disabled]="!authForm.valid"
 			></mt-button>
 		</div>
 	</form>

@@ -3,6 +3,8 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'link';
 
+export type ButtonType = 'button' | 'submit' | 'reset';
+
 @Component({
 	selector: 'mt-button',
 	templateUrl: './button.component.html',
@@ -14,6 +16,9 @@ export class ButtonComponent {
 
 	@Input()
 	public variant: ButtonVariant = 'primary';
+
+	@Input()
+	public type: ButtonType = 'button';
 
 	@Input()
 	public bgColor = '';
