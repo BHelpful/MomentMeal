@@ -21,12 +21,11 @@ export class AuthComponent implements OnInit {
 		Validators.email,
 	]);
 
+	strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*?])(?=.{8,})/;
 	passwordFormControl = new FormControl('', [
 		Validators.required,
 		// TODO: fix this
-		Validators.pattern(
-			'^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{0,}$'
-		),
+		Validators.pattern(this.strongRegex),
 		Validators.minLength(8),
 	]);
 
@@ -62,8 +61,10 @@ export class AuthComponent implements OnInit {
 		console.log(this.authForm.value);
 		console.log(this.authForm.valid);
 
+		const value = this.authForm?.value;
+
 		if (this.authForm.valid) {
-			const { email, password } = this.authForm.value;
+			const { email, password } = value;
 			if (submitType === 'signUp') {
 				this.signUp(email as string, password as string);
 			} else {
@@ -89,6 +90,9 @@ export class AuthComponent implements OnInit {
 		if (response.status === 'OK') {
 			window.location.assign('/home');
 			this.isLoggedIn = true;
+		} else {
+			this.error = true;
+			this.errorMessage = response.formFields[0].error;
 		}
 	}
 
@@ -109,6 +113,9 @@ export class AuthComponent implements OnInit {
 		if (response.status === 'OK') {
 			window.location.assign('/home');
 			this.isLoggedIn = true;
+		} else if (response.status === 'WRONG_CREDENTIALS_ERROR') {
+			this.error = true;
+			this.errorMessage = 'Wrong email or password';
 		}
 	}
 

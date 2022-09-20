@@ -63,7 +63,7 @@
 		}
 
 		.icon {
-			padding-right: 1rem;
+			margin-right: 1rem;
 			color: #4b4b68;
 
 			&.clear {
@@ -71,8 +71,9 @@
 				cursor: pointer;
 				transition: all 0.1s ease-in-out;
 				&:hover {
-					color: #303042 !important;
-					transform: scale(1.2);
+					color: #353549 !important;
+
+					// transform: scale(1.2);
 				}
 			}
 		}

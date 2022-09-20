@@ -230,7 +230,8 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			this.formControl?.errors?.['maxlength']
 		) {
 			this.currentMessage =
-				this.translations?.tooLongMessage || 'too long text is missing';
+				this.translations?.tooLongMessage ||
+				`too long text: max ${this.formControl?.errors?.['maxlength']?.requiredLength} characters`;
 		}
 	}
 
@@ -240,7 +241,8 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			this.formControl?.errors?.['minlength']
 		) {
 			this.currentMessage =
-				this.translations?.tooShortMessage || 'too short text is missing';
+				this.translations?.tooShortMessage ||
+				`too short text: min ${this.formControl?.errors?.['minlength']?.requiredLength} characters`;
 		}
 	}
 
