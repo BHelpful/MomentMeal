@@ -19,20 +19,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { InputTranslations, InputValidator } from './model/field';
 
-export type InputTypes =
-	| 'color'
-	| 'date'
-	| 'datetime-local'
-	| 'email'
-	| 'month'
-	| 'number'
-	| 'password'
-	| 'search'
-	| 'tel'
-	| 'text'
-	| 'time'
-	| 'url'
-	| 'week';
+export type InputTypes = 'email' | 'number' | 'password' | 'search' | 'text';
 
 @Component({
 	selector: 'mt-field',

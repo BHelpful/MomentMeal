@@ -25,7 +25,7 @@ Here is the current overview of the code health of the repository measured by:
 - Sonarcloud: https://sonarcloud.io/summary/overall?id=BHelpful_BHelpful
 - CodeScene: https://codescene.io/projects/27963/jobs/584379/results
 
-### External links
+### External links for development
 -	Icons: https://fontawesome.com/search?s=solid&f=classic&o=r
 
 ### Overview of the repo structure

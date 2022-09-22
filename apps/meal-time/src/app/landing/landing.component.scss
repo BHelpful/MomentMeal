@@ -1,7 +1,6 @@
 @import 'tokens';
 
 .center {
-	// center vertically and horizontally
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -13,7 +12,7 @@
 		color: #474c59;
 	}
 
-	// background-color: $global-color-teal;
+	background-color: $global-color-teal;
 
 	> * {
 		margin: 1rem 1rem;

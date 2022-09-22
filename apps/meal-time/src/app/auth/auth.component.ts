@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { nonNullObject } from '@meal-time/utils';
 import Session from 'supertokens-web-js/recipe/session';
 import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword';
-import { nonNullObject } from './../../../../../libs/utils/src/lib/ts-guards';
 import { environment } from './../../environments/environment';
 
 type AuthForm = {
@@ -16,10 +16,8 @@ type AuthForm = {
 	styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
-	// define params
 	error = false;
 	formErrorMessage = 'Something went wrong';
-	// define isLoggedIn as a property
 	isLoggedIn = false;
 
 	testCustomValidator: 'ENABLED' | 'DISABLED' = 'ENABLED';
@@ -48,14 +46,14 @@ export class AuthComponent implements OnInit {
 			}
 		});
 		// if there is an "error" query param on this page, it means that
-		// social login has failed for some reason. See the AuthCallbackView.vue file
+		// social login has failed for some reason. See the callback component file
 		// for more context on this
 		const params = new URLSearchParams(window.location.search);
 		if (params.has('error')) {
 			this.formErrorMessage = 'Something went wrong';
 			this.error = true;
 		}
-		// this redirects the user to the HomeView.vue component if a session
+		// this redirects the user to the home component if a session
 		// already exists.
 		this.checkForSession();
 	}
@@ -63,7 +61,7 @@ export class AuthComponent implements OnInit {
 	async checkForSession() {
 		this.authForm.get('email');
 		if (await Session.doesSessionExist()) {
-			// since a session already exists, we redirect the user to the HomeView.vue component
+			// since a session already exists, we redirect the user to the home component
 			window.location.assign('/home');
 		}
 	}
@@ -72,7 +70,6 @@ export class AuthComponent implements OnInit {
 		return value === 'custom' ? 'some error message' : null;
 	}
 
-	// login function
 	async signUp() {
 		const value = this.authForm?.value;
 
@@ -102,7 +99,7 @@ export class AuthComponent implements OnInit {
 		}
 	}
 
-	// login function
+	// default submit function
 	async signIn() {
 		const value = this.authForm?.value;
 
@@ -132,13 +129,11 @@ export class AuthComponent implements OnInit {
 		}
 	}
 
-	// logout function
 	async signOut() {
 		Session.signOut();
 		this.isLoggedIn = false;
 	}
 
-	// check if user is logged in
 	async userLoggedIn() {
 		const isSignedIn = await Session.doesSessionExist();
 		this.isLoggedIn = isSignedIn;
@@ -146,7 +141,6 @@ export class AuthComponent implements OnInit {
 		return isSignedIn;
 	}
 
-	// Google sign in
 	async onGooglePressed() {
 		const googleAuthURL =
 			await ThirdPartyEmailPassword.getAuthorisationURLWithQueryParamsAndSetState(
@@ -156,11 +150,9 @@ export class AuthComponent implements OnInit {
 				}
 			);
 
-		// we redirect the user to sign in with google
 		window.open(googleAuthURL, '_self');
 	}
 
-	// Apple sign in
 	async onApplePressed() {
 		const appleAuthURL =
 			await ThirdPartyEmailPassword.getAuthorisationURLWithQueryParamsAndSetState(
@@ -170,11 +162,9 @@ export class AuthComponent implements OnInit {
 				}
 			);
 
-		// we redirect the user to sign in with apple
 		window.open(appleAuthURL, '_self');
 	}
 
-	// Facebook sign in
 	async onFacebookPressed() {
 		const facebookAuthURL =
 			await ThirdPartyEmailPassword.getAuthorisationURLWithQueryParamsAndSetState(
@@ -184,11 +174,9 @@ export class AuthComponent implements OnInit {
 				}
 			);
 
-		// we redirect the user to sign in with facebook
 		window.open(facebookAuthURL, '_self');
 	}
 
-	// Github sign in
 	async onGithubPressed() {
 		const githubAuthURL =
 			await ThirdPartyEmailPassword.getAuthorisationURLWithQueryParamsAndSetState(
@@ -198,11 +186,9 @@ export class AuthComponent implements OnInit {
 				}
 			);
 
-		// we redirect the user to sign in with github
 		window.open(githubAuthURL, '_self');
 	}
 
-	// goToLanding
 	goToLanding() {
 		window.location.assign('/');
 	}
