@@ -60,7 +60,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	public set value(value: string) {
 		this._value = value;
 
-		this.checkValidators(value);
+		this.runValidation(value);
 	}
 
 	@Input() public defaultIcon = faCircleInfo;
@@ -167,11 +167,11 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	currentMessage = '';
 
 	ngOnInit() {
-		this.checkValidators(this.value);
+		this.runValidation(this.value);
 	}
 
 	ngAfterViewInit(): void {
-		this.checkValidators(this.value);
+		this.runValidation(this.value);
 	}
 
 	onFocus(e: Event) {
@@ -183,7 +183,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	onBlur(e: Event) {
 		this.hasFocus = false;
 
-		this.checkValidators(this.value);
+		this.runValidation(this.value);
 
 		this.blurred.emit(e);
 	}
@@ -272,34 +272,40 @@ export class FieldComponent implements OnInit, AfterViewInit {
 		return this.formControl.valid;
 	}
 
+	private checkValidators(value: string | number | undefined, valid: boolean) {
+		let tmpValid = valid;
+		for (const validator of this.validators) {
+			const errorMessage = validator(value || this.value);
+
+			if (errorMessage) {
+				tmpValid = false;
+				this.formControl.setErrors({
+					incorrect: true,
+					customErrorMessage: errorMessage,
+				});
+
+				this.currentMessage = errorMessage;
+				break;
+			}
+		}
+		return tmpValid;
+	}
+
 	/**
 
      * validate input and set error message based on validators
 
      */
 
-	checkValidators(value?: string | number): boolean {
+	runValidation(value?: string | number): boolean {
 		let valid = true;
 
 		// check for native validity
 		valid = this.checkValidity();
 
-		// fn validations is highest priority and will on
+		// fn validations (custom)
 		if (valid) {
-			for (const validator of this.validators) {
-				const errorMessage = validator(value || this.value);
-
-				if (errorMessage) {
-					valid = false;
-					this.formControl.setErrors({
-						incorrect: true,
-						customErrorMessage: errorMessage,
-					});
-
-					this.currentMessage = errorMessage;
-					break;
-				}
-			}
+			valid = this.checkValidators(value, valid);
 		}
 
 		if (valid !== this.valid) {
