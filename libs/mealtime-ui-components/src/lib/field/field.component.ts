@@ -281,26 +281,25 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	checkValidators(value?: string | number): boolean {
 		let valid = true;
 
-		// fn validations is highest priority and will on
-
-		for (const validator of this.validators) {
-			const errorMessage = validator(value || this.value);
-
-			if (errorMessage) {
-				valid = false;
-				this.formControl.setErrors({
-					incorrect: true,
-					customErrorMessage: errorMessage,
-				});
-
-				this.currentMessage = errorMessage;
-			}
-		}
-
 		// check for native validity
+		valid = this.checkValidity();
 
+		// fn validations is highest priority and will on
 		if (valid) {
-			valid = this.checkValidity();
+			for (const validator of this.validators) {
+				const errorMessage = validator(value || this.value);
+
+				if (errorMessage) {
+					valid = false;
+					this.formControl.setErrors({
+						incorrect: true,
+						customErrorMessage: errorMessage,
+					});
+
+					this.currentMessage = errorMessage;
+					break;
+				}
+			}
 		}
 
 		if (valid !== this.valid) {
@@ -366,9 +365,9 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	}
 
 	currentIcon(): IconDefinition {
-		if (this.formControl.invalid && this.formControl.touched) {
+		if (!this.valid && this.formControl.touched) {
 			return this.faError;
-		} else if (this.formControl.valid) {
+		} else if (this.valid) {
 			return this.faValid;
 		} else if (!this.disabled) {
 			return this.defaultIcon;

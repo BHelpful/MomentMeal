@@ -22,15 +22,10 @@ export class AuthComponent implements OnInit {
 
 	testCustomValidator: 'ENABLED' | 'DISABLED' = 'ENABLED';
 
-	emailFormControl = new FormControl('', [
-		Validators.required,
-		Validators.email,
-	]);
+	emailFormControl = new FormControl('', [Validators.required]);
 
-	strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*?])(?=.{8,})/;
 	passwordFormControl = new FormControl('', [
 		Validators.required,
-		Validators.pattern(this.strongRegex),
 		Validators.minLength(8),
 	]);
 
@@ -66,8 +61,37 @@ export class AuthComponent implements OnInit {
 		}
 	}
 
-	public customValidator(value: string | number) {
-		return value === 'custom' ? 'some error message' : null;
+	public passwordValidator(value: string | number) {
+		if (typeof value !== 'string') {
+			return null;
+		}
+		const hasTwoDigits = /\d.*\d/.test(value);
+		const hasTwoUppercase = /[A-Z].*[A-Z]/.test(value);
+		const hasThreeLowercase = /[a-z].*[a-z].*[a-z]/.test(value);
+		const hasSpecial = /[!@#$%^&*?]/.test(value);
+
+		if (!hasTwoUppercase) {
+			return 'Ensure string has two uppercase letters.';
+		} else if (!hasSpecial) {
+			return 'Ensure string has one special case letter.';
+		} else if (!hasTwoDigits) {
+			return 'Ensure string has two digits.';
+		} else if (!hasThreeLowercase) {
+			return 'Ensure string has three lowercase letters.';
+		} 
+
+		return null;
+	}
+
+	public emailValidator(value: string | number) {
+		if (typeof value !== 'string') {
+			return null;
+		}
+		const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+		if (!emailRegex.test(value)) {
+			return 'Invalid email address';
+		}
+		return null;
 	}
 
 	async signUp() {

@@ -5,7 +5,7 @@
 		<mt-field
 			[formControl]="emailFormControl"
 			ngDefaultControl
-			[validators]="[customValidator]"
+			[validators]="[emailValidator]"
 			[label]="'Email'"
 			[placeholder]="'Enter your email'"
 			[helperText]="'We will never share your email with anyone else.'"
@@ -15,7 +15,7 @@
 		<mt-field
 			[formControl]="passwordFormControl"
 			ngDefaultControl
-			[validators]="[customValidator]"
+			[validators]="[passwordValidator]"
 			[label]="'Password'"
 			[placeholder]="'Enter your password'"
 			[helperText]="'User password'"

@@ -1,11 +1,13 @@
 <div class="field-container">
-	<h1 class="field-label">{{ label }}</h1>
+	<h1 class="field-label">
+		{{ label + ((formControl.errors?.['required']) ? '*' : '') }}
+	</h1>
 
 	<div
 		class="input-container"
 		[class.disabled]="disabled"
 		[class.error]="formControl.invalid && formControl.touched"
-		[class.valid]="formControl.valid"
+		[class.valid]="this.valid"
 		(click)="focusInput()"
 	>
 		<input
@@ -36,7 +38,7 @@
 	</div>
 	<p
 		class="field-helper-text"
-		[class.error]="formControl.invalid && formControl.touched"
+		[class.error]="!this.valid && formControl.touched"
 	>
 		{{ currentMessage }}
 	</p>
