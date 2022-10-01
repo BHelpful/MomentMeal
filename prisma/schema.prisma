@@ -43,3 +43,11 @@ model Stores {
   updatedAt DateTime @updatedAt
   name      String   @unique
 }
+
+model Categories {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String @unique
+  type String[]
+}
