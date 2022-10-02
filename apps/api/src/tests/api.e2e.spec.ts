@@ -33,22 +33,25 @@ describe('App e2e', () => {
 	});
 
 	describe('Stores', () => {
+		const remaDto: CreateStoreDto = {
+			name: 'Rema 1000',
+		};
 		describe('Create store', () => {
-			const dto: CreateStoreDto = {
-				name: 'Rema 1000',
-			};
-
 			it('should create store', async () => {
 				return pactum
 					.spec()
 					.post('/stores')
-					.withBody(dto)
+					.withBody(remaDto)
 					.expectStatus(201)
 					.stores('storeId', 'id');
 			});
 
 			it('should not create same store', async () => {
-				return pactum.spec().post('/stores').withBody(dto).expectStatus(403);
+				return pactum
+					.spec()
+					.post('/stores')
+					.withBody(remaDto)
+					.expectStatus(403);
 			});
 		});
 
@@ -58,11 +61,7 @@ describe('App e2e', () => {
 					.spec()
 					.get('/stores')
 					.expectStatus(200)
-					.expectJsonLike([
-						{
-							name: 'Rema 1000',
-						},
-					]);
+					.expectJsonLike([remaDto]);
 			});
 
 			it('should get a specific store', async () => {

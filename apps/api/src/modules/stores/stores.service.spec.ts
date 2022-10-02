@@ -3,7 +3,6 @@ import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../../services/prisma/prisma.service';
 import { StoresService } from './stores.service';
-import { STORES_EXCEPTION_MSG } from './stores.exceptionMessages';
 
 describe('StoresService', () => {
 	let module: TestingModule;
@@ -43,7 +42,7 @@ describe('StoresService', () => {
 
 		return expect(async () => {
 			await service.create(dto2);
-		}).rejects.toThrow(STORES_EXCEPTION_MSG.ALREADY_EXISTS);
+		}).rejects.toThrow(service.storeExceptionMessages.ALREADY_EXISTS());
 	});
 
 	it('should find all stores', async () => {
@@ -77,7 +76,7 @@ describe('StoresService', () => {
 	it('should not find store that does not exist', async () => {
 		return expect(async () => {
 			await service.findOne(10000);
-		}).rejects.toThrow(STORES_EXCEPTION_MSG.NOT_FOUND);
+		}).rejects.toThrow(service.storeExceptionMessages.NOT_FOUND());
 	});
 
 	it('should update store', async () => {
@@ -112,7 +111,7 @@ describe('StoresService', () => {
 
 		return expect(async () => {
 			await service.update(store.id, udto);
-		}).rejects.toThrow(STORES_EXCEPTION_MSG.ALREADY_EXISTS);
+		}).rejects.toThrow(service.storeExceptionMessages.ALREADY_EXISTS());
 	});
 
 	it('should not update store that does not exist', async () => {
@@ -121,7 +120,7 @@ describe('StoresService', () => {
 		};
 		return expect(async () => {
 			await service.update(10000, udto);
-		}).rejects.toThrow(STORES_EXCEPTION_MSG.NOT_FOUND);
+		}).rejects.toThrow(service.storeExceptionMessages.NOT_FOUND());
 	});
 
 	it('should remove store', async () => {
@@ -147,6 +146,6 @@ describe('StoresService', () => {
 	it('should not remove store that does not exist', async () => {
 		return expect(async () => {
 			await service.remove(10000);
-		}).rejects.toThrow(STORES_EXCEPTION_MSG.NOT_FOUND);
+		}).rejects.toThrow(service.storeExceptionMessages.NOT_FOUND());
 	});
 });

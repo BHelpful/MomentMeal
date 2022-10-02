@@ -38,11 +38,14 @@ Press enter to use default value, using all defaults _should_ work on all system
 
 Start database (this you can keep running in the background in docker):
 
+**NOTE** ATM. you need to run the following command in bash since `COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1` is not supported in powershell
+
 ```
 make db
 ```
 
 Start the application
+
 ```
 yarn start
 ```

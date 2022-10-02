@@ -1,34 +1,81 @@
 <div class="container">
-  <h1>Authentication</h1>
-</div>
-<div class="container">
-  <!-- button -->
-  <mt-button
-    (clicked)="signUp('testMail@gmail.com', 'Password123+')"
-    value="Sign Up"
-    variant="primary"
-  ></mt-button>
-  <mt-button
-    (clicked)="signIn('testMail@gmail.com', 'Password123+')"
-    value="Sign In"
-    variant="secondary"
-  ></mt-button>
-  <mt-button
-    (clicked)="onGooglePressed()"
-    value="Sign in with google"
-    variant="tertiary"
-  ></mt-button>
-  <mt-button
-    (clicked)="onGithubPressed()"
-    value="Sign in with GitHub"
-    variant="link"
-  ></mt-button>
-  <mt-button
-    (clicked)="onApplePressed()"
-    [disabled]="true"
-    value="Sign in with apple"
-  ></mt-button>
-</div>
-<div class="container">
-  <mt-button (clicked)="goToLanding()" value="Back"></mt-button>
+	<img src="assets/icons/logo.svg" alt="logo" />
+	<h1 class="title">MealTime</h1>
+	<form [formGroup]="authForm" (ngSubmit)="signIn()">
+		<mt-field
+			[formControl]="emailFormControl"
+			ngDefaultControl
+			[validators]="[emailValidator]"
+			[label]="'Email'"
+			[placeholder]="'Enter your email'"
+			[helperText]="'We will never share your email with anyone else.'"
+			[type]="'email'"
+			(keyup.enter)="signIn()"
+		></mt-field>
+		<mt-field
+			[formControl]="passwordFormControl"
+			ngDefaultControl
+			[validators]="[passwordValidator]"
+			[label]="'Password'"
+			[placeholder]="'Enter your password'"
+			[helperText]="'User password'"
+			[type]="'password'"
+			(keyup.enter)="signIn()"
+		></mt-field>
+		<div class="error-container">
+			<p *ngIf="error" class="error">{{ formErrorMessage }}</p>
+		</div>
+		<!-- button -->
+		<div class="inline">
+			<mt-button
+				(clicked)="signUp()"
+				value="Sign Up"
+				variant="secondary"
+				[disabled]="!authForm.valid"
+			></mt-button>
+			<mt-button
+				type="submit"
+				value="Sign In"
+				variant="primary"
+				[disabled]="!authForm.valid"
+			></mt-button>
+		</div>
+	</form>
+	<div class="inline">
+		<mt-button
+			(clicked)="onGooglePressed()"
+			value="google"
+			iconPath="assets/icons/google.svg"
+			variant="secondary"
+			bgColor="#DB4437"
+			color="#fff"
+		>
+		</mt-button>
+		<mt-button
+			(clicked)="onGithubPressed()"
+			value="GitHub"
+			iconPath="assets/icons/github.svg"
+			bgColor="#333"
+			color="#fff"
+			variant="link"
+		></mt-button>
+	</div>
+	<div class="inline">
+		<mt-button
+			(clicked)="onApplePressed()"
+			value="apple"
+			bgColor="#000"
+			color="#fff"
+			iconPath="assets/icons/apple.svg"
+		></mt-button>
+		<mt-button
+			(clicked)="onApplePressed()"
+			[disabled]="true"
+			value="facebook"
+			bgColor="#3b5998"
+			color="#fff"
+			iconPath="assets/icons/facebook.svg"
+		></mt-button>
+	</div>
+	<mt-button (clicked)="goToLanding()" value="Back"></mt-button>
 </div>

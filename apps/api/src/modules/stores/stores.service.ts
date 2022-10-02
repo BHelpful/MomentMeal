@@ -1,17 +1,18 @@
 import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
 import {
 	BadRequestException,
-	ForbiddenException,
 	Injectable,
-	InternalServerErrorException,
 	NotFoundException,
 } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from '../../services/prisma/prisma.service';
-import { STORES_EXCEPTION_MSG } from './stores.exceptionMessages';
+import { ExceptionMessages } from '../../utils/exceptionMessages';
+import { prismaErrorException } from '../../utils/prismaErrorHandler';
 
 @Injectable()
 export class StoresService {
+	public storeExceptionMessages = new ExceptionMessages('Store');
+
 	constructor(private prisma: PrismaService) {}
 
 	async create(createStoreDto: CreateStoreDto) {
@@ -22,42 +23,44 @@ export class StoresService {
 				},
 			})
 			.catch((error: PrismaClientKnownRequestError) => {
-				if (error.code === 'P2002') {
-					throw new ForbiddenException(STORES_EXCEPTION_MSG.ALREADY_EXISTS);
-				} else {
-					throw new InternalServerErrorException(
-						STORES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR
-					);
-				}
+				throw prismaErrorException(error, this.storeExceptionMessages);
 			});
 	}
 
 	async findAll() {
-		const stores = await this.prisma.stores.findMany({
-			orderBy: {
-				id: 'asc',
-			},
-		});
-		return stores;
+		return this.prisma.stores
+			.findMany({
+				orderBy: {
+					id: 'asc',
+				},
+			})
+			.catch((error: PrismaClientKnownRequestError) => {
+				throw prismaErrorException(error, this.storeExceptionMessages);
+			});
 	}
 
 	async findOne(id: number) {
 		if (isNaN(id)) {
-			throw new BadRequestException(STORES_EXCEPTION_MSG.BAD_REQUEST);
+			throw new BadRequestException(this.storeExceptionMessages.BAD_REQUEST());
 		}
-		const store = await this.prisma.stores.findUnique({
-			where: {
-				id: id,
-			},
-		});
+		const store = await this.prisma.stores
+			.findUnique({
+				where: {
+					id: id,
+				},
+			})
+			.catch((error: PrismaClientKnownRequestError) => {
+				throw prismaErrorException(error, this.storeExceptionMessages);
+			});
 
-		if (!store) throw new NotFoundException(STORES_EXCEPTION_MSG.NOT_FOUND);
+		if (!store)
+			throw new NotFoundException(this.storeExceptionMessages.NOT_FOUND());
 		return store;
 	}
 
 	async update(id: number, updateStoreDto: UpdateStoreDto) {
 		if (isNaN(id)) {
-			throw new BadRequestException(STORES_EXCEPTION_MSG.BAD_REQUEST);
+			throw new BadRequestException(this.storeExceptionMessages.BAD_REQUEST());
 		}
 		return this.prisma.stores
 			.update({
@@ -69,34 +72,35 @@ export class StoresService {
 				},
 			})
 			.catch((error: PrismaClientKnownRequestError) => {
-				if (error.code === 'P2025') {
-					throw new NotFoundException(STORES_EXCEPTION_MSG.NOT_FOUND);
-				} else if (error.code === 'P2002') {
-					throw new ForbiddenException(STORES_EXCEPTION_MSG.ALREADY_EXISTS);
-				} else {
-					throw new InternalServerErrorException(
-						STORES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR
-					);
-				}
+				throw prismaErrorException(error, this.storeExceptionMessages);
 			});
 	}
 
 	async remove(id: number) {
 		if (isNaN(id)) {
-			throw new BadRequestException(STORES_EXCEPTION_MSG.BAD_REQUEST);
+			throw new BadRequestException(this.storeExceptionMessages.BAD_REQUEST());
 		}
-		const store = await this.prisma.stores.findUnique({
-			where: {
-				id,
-			},
-		});
+		const store = await this.prisma.stores
+			.findUnique({
+				where: {
+					id,
+				},
+			})
+			.catch((error: PrismaClientKnownRequestError) => {
+				throw prismaErrorException(error, this.storeExceptionMessages);
+			});
 
-		if (!store) throw new NotFoundException(STORES_EXCEPTION_MSG.NOT_FOUND);
+		if (!store)
+			throw new NotFoundException(this.storeExceptionMessages.NOT_FOUND());
 
-		return this.prisma.stores.delete({
-			where: {
-				id,
-			},
-		});
+		return this.prisma.stores
+			.delete({
+				where: {
+					id,
+				},
+			})
+			.catch((error: PrismaClientKnownRequestError) => {
+				throw prismaErrorException(error, this.storeExceptionMessages);
+			});
 	}
 }

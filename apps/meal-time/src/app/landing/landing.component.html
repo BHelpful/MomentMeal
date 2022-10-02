@@ -1,3 +1,12 @@
 <div class="center">
-  <mt-button (clicked)="goToAuth()" value="Go to Auth"></mt-button>
+	<!-- display icon from assets folder -->
+	<img src="assets/icons/logo.svg" alt="logo" />
+	<h1 class="title">MealTime</h1>
+	<mt-button (clicked)="goToAuth()" value="Go to Auth"></mt-button>
+
+	<!-- Button to open new tab with https://mealtime.hellonext.co/ -->
+	<mt-button
+		(clicked)="openFeedbackLink()"
+		value="Request a feature"
+	></mt-button>
 </div>
