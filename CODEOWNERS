@@ -3,10 +3,10 @@
 * @BHelpful/MealTime
 
 # Owns scss files
-*.scss @BHelpful/Front-end-design
+# *.scss @BHelpful/Front-end-design
 
 # Owns all in the app folder
-/apps/meal-time/ @BHelpful/Angular
+# /apps/meal-time/ @BHelpful/Angular
 
 # Owns the cypress folder (this overrules the rule before as it comes later)
 /apps/meal-time-e2e/ @BHelpful/Cypress
@@ -15,4 +15,4 @@
 /prisma @BHelpful/database
 
 # Owns all in the api folder
-/apps/api/ @BHelpful/RESTful-API
+# /apps/api/ @BHelpful/RESTful-API
