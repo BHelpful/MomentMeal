@@ -316,13 +316,13 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/pwa@^14.1.0":
-  version "14.1.3"
-  resolved "https://registry.yarnpkg.com/@angular/pwa/-/pwa-14.1.3.tgz#8a8c14b80feaf364a354a0d5e7ccc45cff492146"
-  integrity sha512-zEsNBEidPEzCWuthLoi/veuaCP389aopc3L75UJAy+pSkCVed95SunG1uZ+WFRqmbF8IboeKh8lJQUXYmeBGUA==
+"@angular/pwa@^14.2.5":
+  version "14.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/pwa/-/pwa-14.2.5.tgz#9db703b15b59680fcc518f381d988bc43a6f372b"
+  integrity sha512-QYgC5s8jyFjIGMoeTTWqJLPjJjk5dZHJNLvufZQwvSCXbmc6bLTC2WE9kslUzC9qiGkVckGSLq7zOyT3CnDFcg==
   dependencies:
-    "@angular-devkit/schematics" "14.1.3"
-    "@schematics/angular" "14.1.3"
+    "@angular-devkit/schematics" "14.2.5"
+    "@schematics/angular" "14.2.5"
     parse5-html-rewriting-stream "6.0.1"
 
 "@angular/router@14.1.0":
@@ -410,27 +410,6 @@
     semver "^6.3.0"
 
 "@babel/core@^7.0.1", "@babel/core@^7.1.0", "@babel/core@^7.11.6", "@babel/core@^7.12.10", "@babel/core@^7.12.3", "@babel/core@^7.15.0", "@babel/core@^7.17.2", "@babel/core@^7.7.2", "@babel/core@^7.8.0":
-  version "7.19.3"
-  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.19.3.tgz#2519f62a51458f43b682d61583c3810e7dcee64c"
-  integrity sha512-WneDJxdsjEvyKtXKsaBGbDeiyOjR5vYq4HcShxnIbG0qixpoHjI3MqeZM9NDvsojNCEBItQE4juOo/bU6e72gQ==
-  dependencies:
-    "@ampproject/remapping" "^2.1.0"
-    "@babel/code-frame" "^7.18.6"
-    "@babel/generator" "^7.19.3"
-    "@babel/helper-compilation-targets" "^7.19.3"
-    "@babel/helper-module-transforms" "^7.19.0"
-    "@babel/helpers" "^7.19.0"
-    "@babel/parser" "^7.19.3"
-    "@babel/template" "^7.18.10"
-    "@babel/traverse" "^7.19.3"
-    "@babel/types" "^7.19.3"
-    convert-source-map "^1.7.0"
-    debug "^4.1.0"
-    gensync "^1.0.0-beta.2"
-    json5 "^2.2.1"
-    semver "^6.3.0"
-
-"@babel/core@^7.11.6":
   version "7.19.3"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.19.3.tgz#2519f62a51458f43b682d61583c3810e7dcee64c"
   integrity sha512-WneDJxdsjEvyKtXKsaBGbDeiyOjR5vYq4HcShxnIbG0qixpoHjI3MqeZM9NDvsojNCEBItQE4juOo/bU6e72gQ==
@@ -3453,15 +3432,6 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@schematics/angular@14.1.3", "@schematics/angular@~14.1.0":
-  version "14.1.3"
-  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-14.1.3.tgz#8ffeba77cc81bb81f0263768f0fdb2dab4f92950"
-  integrity sha512-hhH4MGfBD1oxrd9PFZwgaqXAT9dYTK/6AtoIcr40OwEbnS5ZoZwzrgb0OOT2NW3bmL0dg3YeJei3Sf89hlI5eg==
-  dependencies:
-    "@angular-devkit/core" "14.1.3"
-    "@angular-devkit/schematics" "14.1.3"
-    jsonc-parser "3.1.0"
-
 "@schematics/angular@14.2.5":
   version "14.2.5"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-14.2.5.tgz#e861c4c1c9e984b8962a130c298ca56d9bb77156"
@@ -3469,6 +3439,15 @@
   dependencies:
     "@angular-devkit/core" "14.2.5"
     "@angular-devkit/schematics" "14.2.5"
+    jsonc-parser "3.1.0"
+
+"@schematics/angular@~14.1.0":
+  version "14.1.3"
+  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-14.1.3.tgz#8ffeba77cc81bb81f0263768f0fdb2dab4f92950"
+  integrity sha512-hhH4MGfBD1oxrd9PFZwgaqXAT9dYTK/6AtoIcr40OwEbnS5ZoZwzrgb0OOT2NW3bmL0dg3YeJei3Sf89hlI5eg==
+  dependencies:
+    "@angular-devkit/core" "14.1.3"
+    "@angular-devkit/schematics" "14.1.3"
     jsonc-parser "3.1.0"
 
 "@sideway/address@^4.1.3":
