@@ -409,7 +409,7 @@
     json5 "^2.2.1"
     semver "^6.3.0"
 
-"@babel/core@^7.0.1", "@babel/core@^7.1.0", "@babel/core@^7.11.6", "@babel/core@^7.12.10", "@babel/core@^7.12.3", "@babel/core@^7.15.0", "@babel/core@^7.17.2", "@babel/core@^7.7.2", "@babel/core@^7.8.0":
+"@babel/core@^7.0.1", "@babel/core@^7.1.0", "@babel/core@^7.12.10", "@babel/core@^7.12.3", "@babel/core@^7.15.0", "@babel/core@^7.17.2", "@babel/core@^7.7.2", "@babel/core@^7.8.0":
   version "7.19.3"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.19.3.tgz#2519f62a51458f43b682d61583c3810e7dcee64c"
   integrity sha512-WneDJxdsjEvyKtXKsaBGbDeiyOjR5vYq4HcShxnIbG0qixpoHjI3MqeZM9NDvsojNCEBItQE4juOo/bU6e72gQ==
