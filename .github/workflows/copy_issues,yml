@@ -3,4 +3,4 @@ with:
   keyword: "/copy"
   targetRepository: BHelpful/MealTime
   githubToken: ${{ secrets.GITHUB_TOKEN }}
-  contentOfNewIssue: 'prefix of newly created issue'
+  contentOfNewIssue: ''
