@@ -2,7 +2,7 @@ import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
 import {
 	BadRequestException,
 	Injectable,
-	NotFoundException,
+	NotFoundException
 } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from '../../services/prisma/prisma.service';
@@ -43,7 +43,15 @@ export class StoresService {
 		if (isNaN(id)) {
 			throw new BadRequestException(this.storeExceptionMessages.BAD_REQUEST());
 		}
-		const store = await this.prisma.stores
+		const store = await this.findStore(id);
+
+		if (!store)
+			throw new NotFoundException(this.storeExceptionMessages.NOT_FOUND());
+		return store;
+	}
+
+	private async findStore(id: number) {
+		return this.prisma.stores
 			.findUnique({
 				where: {
 					id: id,
@@ -52,10 +60,6 @@ export class StoresService {
 			.catch((error: PrismaClientKnownRequestError) => {
 				throw prismaErrorException(error, this.storeExceptionMessages);
 			});
-
-		if (!store)
-			throw new NotFoundException(this.storeExceptionMessages.NOT_FOUND());
-		return store;
 	}
 
 	async update(id: number, updateStoreDto: UpdateStoreDto) {
@@ -77,18 +81,7 @@ export class StoresService {
 	}
 
 	async remove(id: number) {
-		if (isNaN(id)) {
-			throw new BadRequestException(this.storeExceptionMessages.BAD_REQUEST());
-		}
-		const store = await this.prisma.stores
-			.findUnique({
-				where: {
-					id,
-				},
-			})
-			.catch((error: PrismaClientKnownRequestError) => {
-				throw prismaErrorException(error, this.storeExceptionMessages);
-			});
+		const store = await this.findStore(id);
 
 		if (!store)
 			throw new NotFoundException(this.storeExceptionMessages.NOT_FOUND());
