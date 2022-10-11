@@ -7,6 +7,8 @@
 
 This repository contains all the main applications and utilities of MealTime.
 
+For development management we are using [ZenHub Board](https://app.zenhub.com/workspaces/mealtime-63451d87af35b0d2cfc42e0c/board).
+
 ### Information and HOW_TOs
 
 If you need information about the repo, our design patterns or how-to guides, go to the folder [`DOCS/`](https://github.com/BHelpful/BHelpful/tree/master/DOCS/).
