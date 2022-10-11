@@ -7,7 +7,7 @@
 
 This repository contains all the main applications and utilities of MealTime.
 
-For development management we are using [ZenHub Board](https://app.zenhub.com/workspaces/mealtime-63451d87af35b0d2cfc42e0c/board).
+For development management we are using [ZenHub Board](https://app.zenhub.com/workspaces/mealtime-63451d87af35b0d2cfc42e0c/board). It is recommended to install the browser [extension for ZenHub](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd?hl=en), to be able to view information from our ZenHub board within GitHub.
 
 ### Information and HOW_TOs
 
