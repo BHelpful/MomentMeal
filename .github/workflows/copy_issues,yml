@@ -1,6 +1,0 @@
-uses: soichisumi/issue-copy-action@v0.2.0
-with:
-  keyword: "/copy"
-  targetRepository: BHelpful/MealTime
-  githubToken: ${{ secrets.MY_GITHUB_TOKEN }}
-  contentOfNewIssue: ''
