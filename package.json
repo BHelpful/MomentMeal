@@ -80,7 +80,7 @@
 		"@nestjs/testing": "9.1.4",
 		"@nrwl/cli": "14.8.3",
 		"@nrwl/cypress": "14.8.3",
-		"@nrwl/devkit": "14.5.0",
+		"@nrwl/devkit": "14.8.3",
 		"@nrwl/eslint-plugin-nx": "14.5.0",
 		"@nrwl/jest": "14.5.0",
 		"@nrwl/linter": "14.8.3",
