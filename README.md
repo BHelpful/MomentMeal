@@ -3,13 +3,17 @@
 [![CodeScene Code Health](https://codescene.io/projects/27963/status-badges/code-health)](https://codescene.io/projects/27963)
 [![CodeScene System Mastery](https://codescene.io/projects/27963/status-badges/system-mastery)](https://codescene.io/projects/27963)
 
-# MealTime MonoRepo - [Board](https://app.zenhub.com/workspaces/mealtime-63451d87af35b0d2cfc42e0c/board)
+# MealTime MonoRepo
 
 This repository contains all the main applications and utilities of MealTime.
 
+## [Project Board](https://app.zenhub.com/workspaces/mealtime-63451d87af35b0d2cfc42e0c/board)
+**IMPORTANT**: In order to see our project board on ZenHub, you need to have an account and have connected it with your GitHub account.
+
 For development management we are using [ZenHub Board](https://app.zenhub.com/workspaces/mealtime-63451d87af35b0d2cfc42e0c/board). It is recommended to install the browser [extension for ZenHub](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd?hl=en), to be able to view information from our ZenHub board within GitHub.
 
-### Information and HOW_TOs
+
+## Information and HOW_TOs
 
 If you need information about the repo, our design patterns or how-to guides, go to the folder [`DOCS/`](https://github.com/BHelpful/BHelpful/tree/master/DOCS/).
 
@@ -20,7 +24,7 @@ The most important documents are:
 - [`CODE_OF_CONDUCT.md`](https://github.com/BHelpful/MealTime/blob/master/DOCS/CODE_OF_CONDUCT.md) - Contains all the sets of rules outlining the norms, rules, and responsibilitie/proper practices of MealTime.
 
 
-### Repo health information
+## Repo health information
 
 Here is the current overview of the code health of the repository measured by:
 
