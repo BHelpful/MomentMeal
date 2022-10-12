@@ -17385,18 +17385,18 @@ supertokens-node@^12.0.3:
     twilio "^3.76.0"
     verify-apple-id-token "^2.1.0"
 
-supertokens-web-js@^0.1.3:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/supertokens-web-js/-/supertokens-web-js-0.1.5.tgz#167e1f0ac506defc0d366c9f0efb13033d166d44"
-  integrity sha512-xvGIjnSNwEbJ6DearwzKz3GNaU8bnQihJGHiMiXFVzARKXdpKOSj3sZIASr0mHxmwmF4gSXtnIm1TalZunxDNw==
+supertokens-web-js@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/supertokens-web-js/-/supertokens-web-js-0.2.1.tgz#ac69ff5a75eeabf3175d3ba8ad863297c7e0478e"
+  integrity sha512-qiQO9ydlbeAS8P0/Lrk8S2GkkZ+8jxtDl2ntAaa4facMiaUWeI7/qDt/7fmdKJ2n0ssp9v6WLRRd0CHZi7dF2Q==
   dependencies:
     supertokens-js-override "0.0.4"
-    supertokens-website "^13.0.2"
+    supertokens-website "^13.1.0"
 
-supertokens-website@^13.0.2:
-  version "13.0.2"
-  resolved "https://registry.yarnpkg.com/supertokens-website/-/supertokens-website-13.0.2.tgz#c1eba0d1745ee2d7c019fa88eb9d7029309fc6e9"
-  integrity sha512-WVCHky05ndJhPXW2khAWy3CBlWn1ZwRF32TPTiGgYLrpQYO9q5doHJi9z2H1OiSmOEFJDEKWtaPW9HxAHABo1Q==
+supertokens-website@^13.1.0:
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/supertokens-website/-/supertokens-website-13.1.0.tgz#cfd207399d6b81130427e5214763765cad85cff5"
+  integrity sha512-dX5EhkfdPb899EUgD0yAW9d5hWZbXk3iQ4VrP9oZud+CVjk94J5kpyJXN/MLoUAutwwDXebzb+VhOXM9YAslSQ==
   dependencies:
     browser-tabs-lock "^1.2.14"
     supertokens-js-override "^0.0.4"
