@@ -7,13 +7,6 @@
 	"cli": {
 		"packageManager": "npm"
 	},
-	"implicitDependencies": {
-		"package.json": {
-			"dependencies": "*",
-			"devDependencies": "*"
-		},
-		".eslintrc.json": "*"
-	},
 	"tasksRunnerOptions": {
 		"default": {
 			"runner": "@nrwl/nx-cloud",
@@ -25,7 +18,20 @@
 	},
 	"targetDefaults": {
 		"build": {
-			"dependsOn": ["^build"]
+			"dependsOn": ["^build"],
+			"inputs": ["production", "^production"]
+		},
+		"e2e": {
+			"inputs": ["default", "^production"]
+		},
+		"test": {
+			"inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+		},
+		"lint": {
+			"inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+		},
+		"build-storybook": {
+			"inputs": ["default", "^production", "{workspaceRoot}/.storybook/**/*"]
 		}
 	},
 	"generators": {
@@ -43,5 +49,18 @@
 			"style": "scss"
 		}
 	},
-	"defaultProject": "meal-time"
+	"defaultProject": "meal-time",
+	"namedInputs": {
+		"default": ["{projectRoot}/**/*", "sharedGlobals"],
+		"sharedGlobals": [],
+		"production": [
+			"default",
+			"!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+			"!{projectRoot}/tsconfig.spec.json",
+			"!{projectRoot}/jest.config.[jt]s",
+			"!{projectRoot}/.eslintrc.json",
+			"!{projectRoot}/.storybook/**/*",
+			"!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)"
+		]
+	}
 }
