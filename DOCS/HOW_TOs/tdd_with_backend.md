@@ -33,4 +33,4 @@ Run tests in watch mode:
 yarn test --watch
 ```
 
-The test is using the environment variables `.env`. The main difference being the ports for the databases are different, so the development database port does not clash with the test database port. To see how to generate the test environment variables look at [Getting Started](https://github.com/BHelpful/MealTime/blob/master/DOCS/HOW_TOs/HOW_TO_get_started.md).
+The test is using the environment variables `.env`. The main difference being the ports for the databases are different, so the development database port does not clash with the test database port. To see how to generate the test environment variables look at [Getting Started](https://github.com/BHelpful/MealTime/blob/master/DOCS/HOW_TOs/getting_started.md).

@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class LandingComponent {
 	// go to auth route
 	goToAuth() {
-		window.location.href = '/auth';
+		window.open('/home', '_self', 'noopener');
 	}
 
 	// open new tab with https://mealtime.hellonext.co/
