@@ -35,4 +35,9 @@ export class UserEntity implements Omit<Users, 'password'> {
 		default: 'Doe',
 	})
 	readonly lastName: string;
+
+	@ApiProperty({
+		description: 'Access token of user',
+	})
+	readonly accessToken: string;
 }

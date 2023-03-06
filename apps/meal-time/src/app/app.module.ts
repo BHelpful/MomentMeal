@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
 import { HomeModule } from './home/home.module';
 import { LandingModule } from './landing/landing.module';
 
@@ -10,15 +9,24 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 
 import { MealtimeUiComponentsModule } from 'mealtime-ui-components';
+import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './auth/login/login.component';
+import { AuthModule } from './auth/services/auth.module';
+import { errorInterceptorProvider } from './auth/services/error.interceptor';
+import { jwtInterceptorProvider } from './auth/services/jwt-interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-	declarations: [AppComponent],
+	declarations: [AppComponent, LoginComponent],
 	imports: [
 		MealtimeUiComponentsModule,
 		LandingModule,
 		HomeModule,
 		BrowserModule,
-		RouterModule,
+		AppRoutingModule,
+		AuthModule,
+		FormsModule,
+		ReactiveFormsModule,
 		HttpClientModule,
 		ServiceWorkerModule.register('ngsw-worker.js', {
 			enabled: environment.production,
@@ -27,7 +35,7 @@ import { MealtimeUiComponentsModule } from 'mealtime-ui-components';
 			registrationStrategy: 'registerWhenStable:30000',
 		}),
 	],
-	providers: [],
+	providers: [jwtInterceptorProvider, errorInterceptorProvider],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -24,7 +24,7 @@ import { LocalAuthGuard } from './local-auth.guard';
 
 export const userExceptionMessages = new ExceptionMessages('User');
 
-@ApiTags('Users')
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
 	constructor(private authService: AuthService) {}

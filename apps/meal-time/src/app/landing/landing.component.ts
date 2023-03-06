@@ -10,6 +10,9 @@ export class LandingComponent {
 	goToAuth() {
 		window.open('/home', '_self', 'noopener');
 	}
+	goToNewAuth() {
+		window.open('/login', '_self', 'noopener');
+	}
 
 	// open new tab with https://mealtime.hellonext.co/
 	openFeedbackLink() {
