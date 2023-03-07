@@ -2,10 +2,10 @@ import { LoginUserDto } from '@meal-time/api-interfaces';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { PrismaService } from '../services/prisma/prisma.service';
-import { ExceptionMessages } from '../utils/exceptionMessages';
-import { comparePasswords } from '../utils/passwordUtils';
-import { prismaErrorException } from '../utils/prismaErrorHandler';
+import { PrismaService } from '../../services/prisma/prisma.service';
+import { ExceptionMessages } from '../../utils/exceptionMessages';
+import { comparePasswords } from '../../utils/passwordUtils';
+import { prismaErrorException } from '../../utils/prismaErrorHandler';
 
 @Injectable()
 export class UsersService {

@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Users } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
-import { UsersService } from '../users/users.service';
+import { UsersService } from '../modules/users/users.service';
 
 @Injectable()
 export class AuthService {

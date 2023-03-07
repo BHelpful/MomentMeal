@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"scripts": {
 		"ng": "nx",
-		"prestart": "yarn prisma:generate && yarn prisma:seed",
+		"prestart": "yarn prisma:seed",
 		"start": "nx run-many --target=serve --projects=api,meal-time",
 		"start:clean": "yarn db:reset && yarn start",
 		"prebuild": "yarn prisma:generate",

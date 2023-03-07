@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './modules/users/users.module';
 
 import { CategoriesModule } from './modules/categories/categories.module';
 import { IngredientsModule } from './modules/ingredients/ingredients.module';
