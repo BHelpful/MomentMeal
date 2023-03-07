@@ -142,6 +142,6 @@ export class LoginComponent implements OnInit {
 	}
 
 	goToLanding() {
-		window.open('/', '_self');
+		this.router.navigate(['/']);
 	}
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'meal-time-landing',
@@ -6,12 +7,10 @@ import { Component } from '@angular/core';
 	styleUrls: ['./landing.component.scss'],
 })
 export class LandingComponent {
-	// go to auth route
+	constructor(private router: Router) {}
+
 	goToAuth() {
-		window.open('/home', '_self', 'noopener');
-	}
-	goToNewAuth() {
-		window.open('/login', '_self', 'noopener');
+		this.router.navigate(['/login']);
 	}
 
 	// open new tab with https://mealtime.hellonext.co/

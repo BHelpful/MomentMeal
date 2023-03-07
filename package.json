@@ -6,6 +6,7 @@
 		"ng": "nx",
 		"prestart": "yarn prisma:seed",
 		"start": "nx run-many --target=serve --projects=api,meal-time",
+		"start:clean": "yarn db:reset && yarn start",
 		"build": "nx affected --target=build --base=origin/master --parallel",
 		"build:meal-time": "nx build meal-time",
 		"build:api": "nx build api",
