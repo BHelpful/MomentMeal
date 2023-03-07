@@ -119,6 +119,28 @@ export class LoginComponent implements OnInit {
 			);
 	}
 
+	onSignup() {
+		this.submitted = true;
+
+		const value = this.authForm?.value;
+
+		if (!nonNullObject<AuthForm>(value)) {
+			return;
+		}
+
+		const { email, password } = value;
+
+		this.authService.register(email, password).subscribe(
+			() => {
+				this.errorStr = '';
+				this.router.navigate([this.returnUrl]);
+			},
+			(error) => {
+				this.errorStr = error;
+			}
+		);
+	}
+
 	goToLanding() {
 		window.open('/', '_self');
 	}

@@ -27,16 +27,22 @@ export class AuthService {
 		return this.currentUserSubject.value;
 	}
 
-	login(username: string, password: string) {
+	register(email: string, password: string) {
+		return this.http.post<UserEntity>('/api/auth/register', {
+			email,
+			password,
+		});
+	}
+
+	login(email: string, password: string) {
 		return this.http
-			.post<UserEntity>('/api/auth/login', { username, password })
+			.post<UserEntity>('/api/auth/login', { email, password })
 			.pipe(
 				map((user) => {
 					// login successful if there's a jwt token in the response
 					if (user && user.accessToken) {
-						// store; user; details; and; jwt; token in local
-						// storage; to; keep; user; logged in between; page; refreshes;
-
+						// store user details and jwt token in local
+						// storage to keep user logged in between page refreshes
 						localStorage.setItem('currentUser', JSON.stringify(user));
 						this.currentUserSubject.next(user);
 					}
@@ -50,5 +56,9 @@ export class AuthService {
 		// remove user from local storage to log user out
 		localStorage.removeItem('currentUser');
 		this.currentUserSubject.next(null);
+	}
+
+	isLoggedIn() {
+		return !!this.currentUserValue;
 	}
 }

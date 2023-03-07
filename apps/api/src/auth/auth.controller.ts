@@ -1,4 +1,8 @@
-import { CreateUserDto, UserEntity } from '@meal-time/api-interfaces';
+import {
+	CreateUserDto,
+	LoginUserDto,
+	UserEntity,
+} from '@meal-time/api-interfaces';
 import {
 	BadRequestException,
 	Body,
@@ -7,9 +11,6 @@ import {
 	InternalServerErrorException,
 	NotFoundException,
 	Post,
-	Request,
-	Response,
-	UseGuards,
 } from '@nestjs/common';
 import {
 	ApiCreatedResponse,
@@ -20,7 +21,6 @@ import {
 import { ExceptionMessages } from '../utils/exceptionMessages';
 
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './local-auth.guard';
 
 export const userExceptionMessages = new ExceptionMessages('User');
 
@@ -58,16 +58,29 @@ export class AuthController {
 		);
 	}
 
-	@UseGuards(LocalAuthGuard)
+	@ApiOperation({
+		summary: 'Login a user',
+		description: 'Login a user',
+	})
+	@ApiCreatedResponse({ type: UserEntity })
+	@ApiResponse({
+		status: new ForbiddenException().getStatus(),
+		description: userExceptionMessages.UNAUTHORIZED(),
+	})
+	@ApiResponse({
+		status: new InternalServerErrorException().getStatus(),
+		description: userExceptionMessages.INTERNAL_SERVER_ERROR(),
+	})
+	@ApiResponse({
+		status: new NotFoundException().getStatus(),
+		description: userExceptionMessages.NOT_FOUND(),
+	})
+	@ApiResponse({
+		status: new BadRequestException().getStatus(),
+		description: userExceptionMessages.BAD_REQUEST(),
+	})
 	@Post('login')
-	async login(@Request() req, @Response() res) {
-		try {
-			const accessToken = this.authService.login(req.user);
-			return res.status(200).json(accessToken);
-		} catch (err) {
-			return res.status(403);
-		}
-  }
-  
-  
+	public async login(@Body() loginUserDto: LoginUserDto) {
+		return await this.authService.login(loginUserDto);
+	}
 }

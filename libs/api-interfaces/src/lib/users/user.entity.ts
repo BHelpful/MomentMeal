@@ -6,7 +6,7 @@ export class UserEntity implements Omit<Users, 'password'> {
 		description: 'Id of user',
 		default: '1',
 	})
-	id: number;
+	id: string;
 
 	@ApiProperty({
 		description: 'Date of user creation',

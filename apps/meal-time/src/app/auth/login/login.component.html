@@ -10,7 +10,7 @@
 			[placeholder]="'Enter your email'"
 			[helperText]="'We will never share your email with anyone else.'"
 			[type]="'email'"
-			(keyup.enter)="goToLanding()"
+			(keyup.enter)="onSubmit()"
 		></mt-field>
 		<mt-field
 			[formControl]="passwordFormControl"
@@ -20,7 +20,7 @@
 			[placeholder]="'Enter your password'"
 			[helperText]="'User password'"
 			[type]="'password'"
-			(keyup.enter)="goToLanding()"
+			(keyup.enter)="onSubmit()"
 		></mt-field>
 		<div class="error-container">
 			<p *ngIf="error" class="error">{{ formErrorMessage }}</p>
@@ -28,7 +28,7 @@
 		<!-- button -->
 		<div class="inline">
 			<mt-button
-				(clicked)="onSubmit()"
+				(clicked)="onSignup()"
 				value="Sign Up"
 				variant="secondary"
 				[disabled]="!authForm.valid"

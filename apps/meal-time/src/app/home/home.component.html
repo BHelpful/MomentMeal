@@ -1,7 +1,10 @@
 <!-- btn to sign out -->
 <div class="container">
-  <h1>Homepage signed in</h1>
+	<h1>Homepage signed in</h1>
 </div>
 <div class="container">
-  <mt-button (clicked)="signOut()" value="Sign Out"></mt-button>
+	<mt-button (clicked)="signOut()" value="Sign Out"></mt-button>
+
+	<h1>Welcome {{ user?.email }}!</h1>
+  <h2>Test: {{user?.id}}</h2>
 </div>

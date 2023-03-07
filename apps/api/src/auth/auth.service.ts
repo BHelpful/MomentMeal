@@ -1,3 +1,4 @@
+import { LoginUserDto, UserEntity } from '@meal-time/api-interfaces';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Users } from '@prisma/client';
@@ -40,15 +41,21 @@ export class AuthService {
 		return null;
 	}
 
-	login(user: Omit<Users, 'password'> | null) {
-		if (user == null) {
-			throw new Error('Invalid User');
-		}
+	async login(loginUserDto: LoginUserDto): Promise<UserEntity> {
+		// find user in db
+		const user = await this.usersService.findByLogin(loginUserDto);
+
+		const accessToken = this._createToken(user);
 
 		return {
-			access_token: this.jwtService.sign({
-				sub: user.id,
-			}),
+			...user,
+			accessToken,
 		};
+	}
+
+	private _createToken({ email }: Omit<Users, 'password'>) {
+		const user = { email };
+		const accessToken = this.jwtService.sign(user);
+		return accessToken;
 	}
 }

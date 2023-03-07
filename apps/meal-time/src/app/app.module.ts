@@ -8,22 +8,23 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { MealtimeUiComponentsModule } from 'mealtime-ui-components';
-import { AppRoutingModule } from './app-routing.module';
+import { routes } from './app.routes';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthModule } from './auth/services/auth.module';
 import { errorInterceptorProvider } from './auth/services/error.interceptor';
 import { jwtInterceptorProvider } from './auth/services/jwt-interceptor';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [AppComponent, LoginComponent],
 	imports: [
+		RouterModule.forRoot(routes),
 		MealtimeUiComponentsModule,
 		LandingModule,
 		HomeModule,
 		BrowserModule,
-		AppRoutingModule,
 		AuthModule,
 		FormsModule,
 		ReactiveFormsModule,
