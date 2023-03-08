@@ -22,7 +22,11 @@ describe('AuthController', () => {
 
 		controller = app.get<AuthController>(AuthController);
 		authService = app.get<AuthService>(AuthService);
-	});
+  });
+  
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
 
 	describe('login', () => {
 		it('should return UserEntity', async () => {
