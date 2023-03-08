@@ -14,6 +14,8 @@
 		"lint": "nx affected --target=lint --base=origin/master --parallel",
 		"test": "nx affected --target=test --base=origin/master --parallel",
 		"test:cov": "nx affected --target=test --base=origin/master --parallel --codeCoverage",
+		"pretest:ci": "yarn db:reset",
+		"test:ci": "nx affected --target=test --base=origin/master --parallel --codeCoverage --maxWorkers=1",
 		"e2e": "yarn e2e:script -- 'nx affected:e2e --base=origin/master --parallel'",
 		"e2e:watch": "yarn e2e:script -- 'nx affected:e2e --base=origin/master --parallel --watch'",
 		"e2e:script": "start-server-and-test \"nx serve api\" http://localhost:3333/api",
