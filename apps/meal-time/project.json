@@ -22,7 +22,13 @@
 				"stylePreprocessorOptions": {
 					"includePaths": ["libs/mealtime-ui-components/src/lib/tokens"]
 				},
-				"styles": ["apps/meal-time/src/styles.scss"],
+				"styles": [
+					"apps/meal-time/src/styles.scss",
+					"node_modules/primeflex/primeflex.css",
+					"node_modules/primeicons/primeicons.css",
+					"node_modules/primeng/resources/themes/vela-green/theme.css",
+					"node_modules/primeng/resources/primeng.min.css"
+				],
 				"scripts": [],
 				"serviceWorker": true,
 				"ngswConfigPath": "apps/meal-time/ngsw-config.json"
