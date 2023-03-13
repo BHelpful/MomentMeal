@@ -7,7 +7,7 @@
 			"root": "apps/api",
 			"targets": {
 				"serve": {
-					"executor": "@nrwl/workspace:run-commands",
+					"executor": "nx:run-commands",
 					"options": {
 						"commands": [
 							{
@@ -34,7 +34,7 @@
 			"targets": {
 				"build": {
 					"executor": "@nrwl/angular:package",
-					"outputs": ["dist/libs/mealtime-ui-components"],
+					"outputs": ["{workspaceRoot}/dist/libs/mealtime-ui-components"],
 					"options": {
 						"project": "libs/mealtime-ui-components/ng-package.json"
 					},
@@ -50,7 +50,7 @@
 				},
 				"test": {
 					"executor": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/mealtime-ui-components"],
+					"outputs": ["{workspaceRoot}/coverage/libs/mealtime-ui-components"],
 					"options": {
 						"jestConfig": "libs/mealtime-ui-components/jest.config.ts",
 						"passWithNoTests": true
@@ -111,7 +111,7 @@
 				},
 				"test": {
 					"executor": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/utils"],
+					"outputs": ["{workspaceRoot}/coverage/libs/utils"],
 					"options": {
 						"jestConfig": "libs/utils/jest.config.ts",
 						"passWithNoTests": true
