@@ -2,9 +2,9 @@ import { LoginUserDto, UserEntity } from '@meal-time/api-interfaces';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Users } from '@prisma/client';
-import * as bcrypt from 'bcrypt';
 
 import { UsersService } from '../modules/users/users.service';
+import { comparePasswords, hashPassword } from '../utils/passwordUtils';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +14,7 @@ export class AuthService {
 	) {}
 
 	async register(email: string, password: string) {
-		const hashedPassword = await bcrypt.hash(password, 10);
+		const hashedPassword = await hashPassword(password);
 		return this.usersService.create({
 			email,
 			password: hashedPassword,
@@ -31,7 +31,7 @@ export class AuthService {
 			return null;
 		}
 
-		const isPasswordMatch = await bcrypt.compare(password, user.password);
+		const isPasswordMatch = await comparePasswords(user.password, password);
 		if (isPasswordMatch) {
 			// return user without password
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
