@@ -20,4 +20,8 @@ export class ExceptionMessages {
 	public BAD_REQUEST(): string {
 		return `Bad Request`;
 	}
+
+	public UNAUTHORIZED(): string {
+		return `Unauthorized`;
+	}
 }

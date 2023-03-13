@@ -3,7 +3,6 @@ services:
   dev-db:
     image: postgres:12
     container_name: dev-db
-    command: postgres -c listen_addresses=0.0.0.0 -c port=${DB_PORT}
     ports:
       - ${DB_PORT}:5432
     environment:
@@ -13,66 +12,21 @@ services:
     networks:
       - mealtime
     restart: unless-stopped
+    # healthcheck:
     healthcheck:
-      test: ['CMD', 'pg_isready -U supertokens_user']
-      interval: 30s
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
       timeout: 5s
-      start_period: 40s
       retries: 5
-  db-migration:
-    container_name: db-migration
+  dev-db-healthcheck:
+    image: postgres:12
+    container_name: dev-db-healthcheck
+    command: ["pg_isready", "-U", "${POSTGRES_USER}"]
     depends_on:
-      dev-db:
-        condition: service_started
-    environment:
-      - cmd=docker:prisma:deploy
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    restart: on-failure
-    networks:
-      - mealtime
-  supertokens:
-    image: registry.supertokens.io/supertokens/supertokens-postgresql
-    container_name: supertokens
-    depends_on:
-      db-migration:
-        condition: service_completed_successfully
-    ports:
-      - 3567:3567
-    environment:
-      POSTGRESQL_CONNECTION_URI: '${DATABASE_URL}'
+      - dev-db
     networks:
       - mealtime
     restart: unless-stopped
-    healthcheck:
-      test: >
-        bash -c 'exec 3<>/dev/tcp/127.0.0.1/3567 && echo -e "GET /hello HTTP/1.1\r\nhost: 127.0.0.1:3567\r\nConnection: close\r\n\r\n" >&3 && cat <&3 | grep "Hello"'
-      interval: 10s
-      timeout: 5s
-      retries: 5
-  meal-time:
-    container_name: meal-time
-    depends_on:
-      supertokens:
-        condition: service_healthy
-    environment:
-      - cmd=docker:start
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    ports:
-      - 4200:4200
-      - 3333:3333
-    restart: on-failure
-    networks:
-      - mealtime
-    healthcheck:
-      test: curl --fail http://localhost:3333/api || exit 1
-      interval: 10s
-      start_period: 10s
-      timeout: 5s
-      retries: 5
 
 networks:
   mealtime:

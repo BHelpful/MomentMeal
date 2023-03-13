@@ -1,17 +1,10 @@
-import { HomeComponent } from './home.component';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { MealtimeUiComponentsModule } from 'mealtime-ui-components';
-
-const routes: Routes = [{ path: 'home', component: HomeComponent }];
+import { HomeComponent } from './home.component';
 
 @NgModule({
-  declarations: [HomeComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forRoot(routes),
-    MealtimeUiComponentsModule,
-  ],
+	declarations: [HomeComponent],
+	imports: [CommonModule, MealtimeUiComponentsModule],
 })
 export class HomeModule {}
