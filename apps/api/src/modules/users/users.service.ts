@@ -1,25 +1,64 @@
-import { CreateUserDto, UpdateUserDto } from '@meal-time/api-interfaces';
-import { Injectable } from '@nestjs/common';
+import { LoginUserDto } from '@meal-time/api-interfaces';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { PrismaService } from '../../services/prisma/prisma.service';
+import { ExceptionMessages } from '../../utils/exceptionMessages';
+import { comparePasswords } from '../../utils/passwordUtils';
+import { prismaErrorException } from '../../utils/prismaErrorHandler';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
+	public userExceptionMessages = new ExceptionMessages('User');
 
-  findAll() {
-    return `This action returns all users`;
-  }
+	constructor(private readonly prisma: PrismaService) {}
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+	async findOne(findUniqueUserArgs: Prisma.UsersWhereUniqueInput) {
+		return await this.prisma.users
+			.findUnique({
+				where: findUniqueUserArgs,
+			})
+			.catch((error: PrismaClientKnownRequestError) => {
+				throw prismaErrorException(error, this.userExceptionMessages);
+			});
+	}
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+	async create(createUserArgs: Prisma.UsersCreateInput) {
+		return await this.prisma.users
+			.create({
+				data: createUserArgs,
+			})
+			.catch((error: PrismaClientKnownRequestError) => {
+				throw prismaErrorException(error, this.userExceptionMessages);
+			});
+	}
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+	async findByLogin({ email, password }: LoginUserDto) {
+		const user = await this.prisma.users
+			.findUnique({ where: { email } })
+			.catch((error: PrismaClientKnownRequestError) => {
+				throw prismaErrorException(error, this.userExceptionMessages);
+			});
+
+		if (!user) {
+			throw new UnauthorizedException(
+				this.userExceptionMessages.UNAUTHORIZED()
+			);
+		}
+
+		// compare passwords
+		const areEqual = await comparePasswords(user.password, password);
+
+		if (!areEqual) {
+			throw new UnauthorizedException(
+				this.userExceptionMessages.UNAUTHORIZED()
+			);
+		}
+
+		// strip password from user object
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const { password: _, ...result } = user;
+
+		return result;
+	}
 }

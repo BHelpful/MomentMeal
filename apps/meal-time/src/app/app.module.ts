@@ -1,53 +1,42 @@
-import { HomeModule } from './home/home.module';
-import { LandingModule } from './landing/landing.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { HomeModule } from './home/home.module';
+import { LandingModule } from './landing/landing.module';
 
-import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { AppComponent } from './app.component';
 
-import SuperTokens from 'supertokens-web-js';
-import Session from 'supertokens-web-js/recipe/session';
-import EmailPassword from 'supertokens-web-js/recipe/emailpassword';
-import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword';
-import { AuthModule } from './auth/auth.module';
-import { CallbackComponent } from './auth/callback/callback.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { MealtimeUiComponentsModule } from 'mealtime-ui-components';
-
-SuperTokens.init({
-  appInfo: {
-    apiDomain: 'http://localhost:3333',
-    apiBasePath: '/api',
-    appName: 'meal-time',
-  },
-  recipeList: [
-    EmailPassword.init(),
-    ThirdPartyEmailPassword.init(),
-    Session.init(),
-  ],
-});
+import { routes } from './app.routes';
+import { LoginComponent } from './auth/login/login.component';
+import { AuthModule } from './auth/services/auth.module';
+import { errorInterceptorProvider } from './auth/services/error.interceptor';
+import { jwtInterceptorProvider } from './auth/services/jwt-interceptor';
 
 @NgModule({
-  declarations: [AppComponent, CallbackComponent],
-  imports: [
-    MealtimeUiComponentsModule,
-    LandingModule,
-    AuthModule,
-    HomeModule,
-    BrowserModule,
-    RouterModule,
-    HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000',
-    }),
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
+	declarations: [AppComponent, LoginComponent],
+	imports: [
+		RouterModule.forRoot(routes),
+		MealtimeUiComponentsModule,
+		LandingModule,
+		HomeModule,
+		BrowserModule,
+		AuthModule,
+		FormsModule,
+		ReactiveFormsModule,
+		HttpClientModule,
+		ServiceWorkerModule.register('ngsw-worker.js', {
+			enabled: environment.production,
+			// Register the ServiceWorker as soon as the application is stable
+			// or after 30 seconds (whichever comes first).
+			registrationStrategy: 'registerWhenStable:30000',
+		}),
+	],
+	providers: [jwtInterceptorProvider, errorInterceptorProvider],
+	bootstrap: [AppComponent],
 })
 export class AppModule {}

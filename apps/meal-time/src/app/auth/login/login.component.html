@@ -1,0 +1,45 @@
+<div class="container">
+	<img src="assets/icons/logo.svg" alt="logo" />
+	<h1 class="title">MealTime</h1>
+	<form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+		<mt-field
+			[formControl]="emailFormControl"
+			ngDefaultControl
+			[validators]="[emailValidator]"
+			[label]="'Email'"
+			[placeholder]="'Enter your email'"
+			[helperText]="'We will never share your email with anyone else.'"
+			[type]="'email'"
+			(keyup.enter)="onSubmit()"
+		></mt-field>
+		<mt-field
+			[formControl]="passwordFormControl"
+			ngDefaultControl
+			[validators]="[passwordValidator]"
+			[label]="'Password'"
+			[placeholder]="'Enter your password'"
+			[helperText]="'User password'"
+			[type]="'password'"
+			(keyup.enter)="onSubmit()"
+		></mt-field>
+		<div class="error-container">
+			<p *ngIf="error" class="error">{{ formErrorMessage }}</p>
+		</div>
+		<!-- button -->
+		<div class="inline">
+			<mt-button
+				(clicked)="onSignup()"
+				value="Sign Up"
+				variant="secondary"
+				[disabled]="!authForm.valid"
+			></mt-button>
+			<mt-button
+				type="submit"
+				value="Sign In"
+				variant="primary"
+				[disabled]="!authForm.valid"
+			></mt-button>
+		</div>
+	</form>
+	<mt-button (clicked)="goToLanding()" value="Back"></mt-button>
+</div>
