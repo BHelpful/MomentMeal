@@ -1,31 +1,32 @@
 import {
+	CategoriesEntity,
 	CreateCategoryDto,
 	UpdateCategoryDto,
-	CategoriesEntity,
 } from '@meal-time/api-interfaces';
 import {
-	Controller,
-	Get,
-	Post,
+	BadRequestException,
 	Body,
-	Patch,
-	Param,
+	Controller,
 	Delete,
 	ForbiddenException,
+	Get,
 	InternalServerErrorException,
 	NotFoundException,
-	BadRequestException,
+	Param,
+	Patch,
+	Post,
 } from '@nestjs/common';
 import {
-	ApiTags,
-	ApiOperation,
 	ApiCreatedResponse,
-	ApiResponse,
 	ApiOkResponse,
+	ApiOperation,
+	ApiResponse,
+	ApiTags,
 } from '@nestjs/swagger';
+import { ExceptionMessages } from '../../utils/exceptionMessages';
 import { CategoriesService } from './categories.service';
-import { CATEGORIES_EXCEPTION_MSG } from './categories.exceptionMessages';
 
+export const categoriesExceptionMessages = new ExceptionMessages('Category');
 @ApiTags('Categories')
 @Controller('categories')
 export class CategoriesController {
@@ -38,11 +39,11 @@ export class CategoriesController {
 	@ApiCreatedResponse({ type: CategoriesEntity })
 	@ApiResponse({
 		status: new ForbiddenException().getStatus(),
-		description: CATEGORIES_EXCEPTION_MSG.ALREADY_EXISTS,
+		description: categoriesExceptionMessages.ALREADY_EXISTS(),
 	})
 	@ApiResponse({
 		status: new InternalServerErrorException().getStatus(),
-		description: CATEGORIES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR,
+		description: categoriesExceptionMessages.INTERNAL_SERVER_ERROR(),
 	})
 	@Post()
 	create(@Body() createCategoryDto: CreateCategoryDto) {
@@ -66,11 +67,11 @@ export class CategoriesController {
 	@ApiOkResponse({ type: CategoriesEntity })
 	@ApiResponse({
 		status: new NotFoundException().getStatus(),
-		description: CATEGORIES_EXCEPTION_MSG.NOT_FOUND,
+		description: categoriesExceptionMessages.NOT_FOUND(),
 	})
 	@ApiResponse({
 		status: new BadRequestException().getStatus(),
-		description: CATEGORIES_EXCEPTION_MSG.BAD_REQUEST,
+		description: categoriesExceptionMessages.BAD_REQUEST(),
 	})
 	@Get(':id')
 	findOne(@Param('id') id: string) {
@@ -84,19 +85,19 @@ export class CategoriesController {
 	@ApiOkResponse({ type: CategoriesEntity })
 	@ApiResponse({
 		status: new NotFoundException().getStatus(),
-		description: CATEGORIES_EXCEPTION_MSG.NOT_FOUND,
+		description: categoriesExceptionMessages.NOT_FOUND(),
 	})
 	@ApiResponse({
 		status: new ForbiddenException().getStatus(),
-		description: CATEGORIES_EXCEPTION_MSG.ALREADY_EXISTS,
+		description: categoriesExceptionMessages.ALREADY_EXISTS(),
 	})
 	@ApiResponse({
 		status: new BadRequestException().getStatus(),
-		description: CATEGORIES_EXCEPTION_MSG.BAD_REQUEST,
+		description: categoriesExceptionMessages.BAD_REQUEST(),
 	})
 	@ApiResponse({
 		status: new InternalServerErrorException().getStatus(),
-		description: CATEGORIES_EXCEPTION_MSG.INTERNAL_SERVER_ERROR,
+		description: categoriesExceptionMessages.INTERNAL_SERVER_ERROR(),
 	})
 	@Patch(':id')
 	update(
@@ -113,11 +114,11 @@ export class CategoriesController {
 	@ApiOkResponse({ type: CategoriesEntity })
 	@ApiResponse({
 		status: new NotFoundException().getStatus(),
-		description: CATEGORIES_EXCEPTION_MSG.NOT_FOUND,
+		description: categoriesExceptionMessages.NOT_FOUND(),
 	})
 	@ApiResponse({
 		status: new BadRequestException().getStatus(),
-		description: CATEGORIES_EXCEPTION_MSG.BAD_REQUEST,
+		description: categoriesExceptionMessages.BAD_REQUEST(),
 	})
 	@Delete(':id')
 	remove(@Param('id') id: string) {
