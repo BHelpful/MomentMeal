@@ -9,7 +9,7 @@
 			}
 		},
 		{
-			"src": "package.json",
+			"src": "apps/api/main.ts",
 			"use": "@vercel/node",
 			"config": {
 				"distDir": "dist/apps/api"
