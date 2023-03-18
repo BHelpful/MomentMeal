@@ -44,3 +44,4 @@ Here is the current overview of the code health of the repository measured by:
 - **apps**: Contains each application under this monorepo
 - **tools**: Contains generators and other tools to easily setup a developer environment
 - **prisma**: Contains the database ORM code related to the srtucture of the database as well as seeding the database
+
