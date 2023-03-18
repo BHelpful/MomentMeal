@@ -2,14 +2,17 @@
 	"version": 2,
 	"builds": [
 		{
-			"src": "apps/api/package.json",
-			"use": "@vercel/node"
+			"src": "package.json",
+			"use": "@vercel/next",
+			"config": {
+				"distDir": "dist/apps/meal-time"
+			}
 		},
 		{
-			"src": "apps/web/package.json",
-			"use": "@vercel/static-build",
+			"src": "package.json",
+			"use": "@vercel/node",
 			"config": {
-				"distDir": "dist/apps/web"
+				"distDir": "dist/apps/api"
 			}
 		}
 	],
