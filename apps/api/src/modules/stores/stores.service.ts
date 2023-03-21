@@ -2,7 +2,7 @@ import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
 import {
 	BadRequestException,
 	Injectable,
-	NotFoundException
+	NotFoundException,
 } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from '../../services/prisma/prisma.service';
@@ -65,6 +65,10 @@ export class StoresService {
 	async update(id: number, updateStoreDto: UpdateStoreDto) {
 		if (isNaN(id)) {
 			throw new BadRequestException(this.storeExceptionMessages.BAD_REQUEST());
+		}
+		const store = await this.findStore(id);
+		if (!store) {
+			throw new NotFoundException(this.storeExceptionMessages.NOT_FOUND());
 		}
 		return this.prisma.stores
 			.update({
