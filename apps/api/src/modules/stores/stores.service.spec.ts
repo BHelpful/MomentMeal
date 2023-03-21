@@ -5,11 +5,10 @@ import { PrismaService } from '../../services/prisma/prisma.service';
 import { StoresService } from './stores.service';
 
 describe('StoresService', () => {
-	let module: TestingModule;
 	let service: StoresService;
 	let prisma: PrismaService;
 	beforeAll(async () => {
-		module = await Test.createTestingModule({
+		const module: TestingModule = await Test.createTestingModule({
 			providers: [StoresService, PrismaService, ConfigService],
 		}).compile();
 

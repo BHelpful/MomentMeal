@@ -7,11 +7,10 @@ import { StoresService } from './stores.service';
 
 describe('StoresController', () => {
 	let controller: StoresController;
-	let module: TestingModule;
 	let prisma: PrismaService;
 
 	beforeAll(async () => {
-		module = await Test.createTestingModule({
+		const module: TestingModule = await Test.createTestingModule({
 			controllers: [StoresController],
 			providers: [StoresService, PrismaService, ConfigService],
 		}).compile();
