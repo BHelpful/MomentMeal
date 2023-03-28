@@ -9,6 +9,12 @@
 	},
 	"tasksRunnerOptions": {
 		"default": {
+			"runner": "mx/tasks-runners/default",
+			"options": {
+				"cacheDirectory": "/tmp/nx-cache"
+			}
+		},
+		"local": {
 			"runner": "@nrwl/nx-cloud",
 			"options": {
 				"cacheableOperations": ["build", "lint", "test", "e2e"],
