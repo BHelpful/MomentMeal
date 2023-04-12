@@ -1,4 +1,5 @@
-import { LoginUserDto } from '@meal-time/api-interfaces';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { LoginUserDto } from '../../../../../libs/api-interfaces/src/index';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';

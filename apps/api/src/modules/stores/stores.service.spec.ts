@@ -1,4 +1,8 @@
-import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import {
+	CreateStoreDto,
+	UpdateStoreDto,
+} from '../../../../../libs/api-interfaces/src/index';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../../services/prisma/prisma.service';

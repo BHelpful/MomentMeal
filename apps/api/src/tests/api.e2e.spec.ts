@@ -1,4 +1,8 @@
-import { CreateStoreDto, UpdateStoreDto } from '@meal-time/api-interfaces';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import {
+	CreateStoreDto,
+	UpdateStoreDto,
+} from '../../../../libs/api-interfaces/src/index';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as pactum from 'pactum';

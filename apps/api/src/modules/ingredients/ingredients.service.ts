@@ -1,4 +1,8 @@
-import { CreateIngredientDto, UpdateIngredientDto } from '@meal-time/api-interfaces';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import {
+	CreateIngredientDto,
+	UpdateIngredientDto,
+} from '../../../../../libs/api-interfaces/src/index';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
