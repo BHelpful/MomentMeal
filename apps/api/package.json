@@ -2,7 +2,7 @@
 	"name": "@meal-time/api",
 	"version": "0.0.1",
 	"description": "Meal Time API",
-	"dependencies": {
+	"peerDependencies": {
 		"@meal-time/api-interfaces": "0.0.1"
 	}
 }
