@@ -1,4 +1,5 @@
-import { LoginUserDto, UserEntity } from '@meal-time/api-interfaces';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { LoginUserDto, UserEntity } from '../../../../libs/api-interfaces/src/index';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
