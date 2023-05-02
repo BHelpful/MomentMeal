@@ -1,6 +1,5 @@
 {
 	"version": 2,
-	"buildCommand": "yarn prisma:generate && yarn db:push && yarn build:api",
 	"builds": [
 		{
 			"src": "src/main.ts",
