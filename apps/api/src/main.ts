@@ -37,7 +37,10 @@ async function bootstrap() {
 		.setLicense('GPLv3', 'https://www.gnu.org/licenses/gpl-3.0.en.html')
 		.build();
 	const document = SwaggerModule.createDocument(app, config);
-	SwaggerModule.setup('api', app, document);
+	SwaggerModule.setup('api', app, document, {
+		customCssUrl:
+			'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
+	});
 
 	await app.listen(port);
 	Logger.log(
