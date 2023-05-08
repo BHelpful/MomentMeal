@@ -74,8 +74,8 @@ export class CategoriesService {
 			);
 		}
 
-		const category = this.findCategory(id);
-		if (!category) {
+		const category = await this.findCategory(id);
+		if (category) {
 			throw new NotFoundException(this.categoriesExeptionMessages.NOT_FOUND());
 		}
 
@@ -100,7 +100,7 @@ export class CategoriesService {
 			);
 		}
 
-		const category = this.findCategory(id);
+		const category = await this.findCategory(id);
 		if (!category) {
 			throw new NotFoundException(this.categoriesExeptionMessages.NOT_FOUND());
 		}
