@@ -30,4 +30,22 @@ describe('CategoriesService', () => {
 		const category = await service.create(dto);
 		return expect(category.name).toEqual('Paprika');
 	});
+
+	it('should not create category that already exists', async () => {
+		const dto: CreateCategoryDto = {
+			name: 'Paprika',
+			type: ['Spicy', 'Powder'],
+		};
+
+		const dto2: CreateCategoryDto = {
+			name: 'Paprika',
+			type: ['Spicy', 'Powder'],
+		};
+
+		await service.create(dto);
+
+		return expect(async () => {
+			await service.create(dto2);
+		}).rejects.toThrow(service.categoriesExeptionMessages.ALREADY_EXISTS());
+	});
 });
