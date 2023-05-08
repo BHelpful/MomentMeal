@@ -1,8 +1,9 @@
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
 	CreateStoreDto,
 	StoreEntity,
 	UpdateStoreDto,
-} from '@meal-time/api-interfaces';
+} from '../../../../../libs/api-interfaces/src/index';
 import {
 	BadRequestException,
 	Body,

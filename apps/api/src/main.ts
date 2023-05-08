@@ -7,7 +7,10 @@ import { AppModule } from './app.module';
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 	app.enableCors({
-		origin: ['http://localhost:4200'],
+		origin: [
+			'http://localhost:4200',
+			'https://*.bhelpful.net/'
+		],
 		credentials: true,
 	});
 	const globalPrefix = 'api';
@@ -34,7 +37,14 @@ async function bootstrap() {
 		.setLicense('GPLv3', 'https://www.gnu.org/licenses/gpl-3.0.en.html')
 		.build();
 	const document = SwaggerModule.createDocument(app, config);
-	SwaggerModule.setup('api', app, document);
+	SwaggerModule.setup('api', app, document, {
+		customCssUrl:
+			'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
+		customJs: [
+			'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js',
+			'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.js',
+		],
+	});
 
 	await app.listen(port);
 	Logger.log(

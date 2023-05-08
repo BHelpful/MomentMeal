@@ -9,7 +9,11 @@ import {
 } from '@nestjs/common';
 import { IngredientsService } from './ingredients.service';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateIngredientDto, UpdateIngredientDto } from '@meal-time/api-interfaces';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import {
+	CreateIngredientDto,
+	UpdateIngredientDto,
+} from '../../../../../libs/api-interfaces/src/index';
 
 @ApiTags('Ingredients')
 @Controller('ingredients')

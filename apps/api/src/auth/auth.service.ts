@@ -1,4 +1,8 @@
-import { LoginUserDto, UserEntity } from '@meal-time/api-interfaces';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import {
+	LoginUserDto,
+	UserEntity,
+} from '../../../../libs/api-interfaces/src/index';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Users } from '@prisma/client';

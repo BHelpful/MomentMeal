@@ -9,7 +9,11 @@ import {
   Delete,
 } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
-import { CreateRecipeDto, UpdateRecipeDto } from '@meal-time/api-interfaces';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import {
+	CreateRecipeDto,
+	UpdateRecipeDto,
+} from '../../../../../libs/api-interfaces/src/index';
 
 @ApiTags('Recipes')
 @Controller('recipes')
