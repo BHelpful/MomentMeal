@@ -3,7 +3,8 @@
 [![CodeQL](https://github.com/BHelpful/BHelpful/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BHelpful/BHelpful/actions/workflows/codeql-analysis.yml)
 [![CodeScene Code Health](https://codescene.io/projects/27963/status-badges/code-health)](https://codescene.io/projects/27963)
 [![CodeScene System Mastery](https://codescene.io/projects/27963/status-badges/system-mastery)](https://codescene.io/projects/27963)
-
+# Currently on pause, while working on a re-write of the project
+## Looking forward to your contributions, once it is up and running again.
 # MealTime MonoRepo
 
 This repository contains all the main applications and utilities of MealTime.
