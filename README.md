@@ -1,47 +1,44 @@
-<a href="https://app.zenhub.com/workspaces/mealtime-63451d87af35b0d2cfc42e0c/board"><img src="https://dxssrr2j0sq4w.cloudfront.net/3.2.0/img/external/zenhub-badge.png" alt="ZenHub logo"></a>
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=BHelpful_BHelpful&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=BHelpful_BHelpful)
-[![CodeQL](https://github.com/BHelpful/BHelpful/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BHelpful/BHelpful/actions/workflows/codeql-analysis.yml)
-[![CodeScene Code Health](https://codescene.io/projects/27963/status-badges/code-health)](https://codescene.io/projects/27963)
-[![CodeScene System Mastery](https://codescene.io/projects/27963/status-badges/system-mastery)](https://codescene.io/projects/27963)
-# Currently on pause, while working on a re-write of the project
-## Looking forward to your contributions, once it is up and running again.
-# MealTime MonoRepo
+# Quill - A Modern Fullstack SaaS-Platform
 
-This repository contains all the main applications and utilities of MealTime.
+Built with the Next.js 13.5 App Router, tRPC, TypeScript, Prisma & Tailwind
 
-## [Project Board](https://app.zenhub.com/workspaces/mealtime-63451d87af35b0d2cfc42e0c/board)
+![Project Image](https://github.com/joschan21/quill/blob/master/public/thumbnail.png)
 
-**IMPORTANT**: In order to see our project board on ZenHub, you need to have an account and have connected it with your GitHub account.
+## Features
 
-For development management we are using [ZenHub Board](https://app.zenhub.com/workspaces/mealtime-63451d87af35b0d2cfc42e0c/board). It is recommended to install the browser [extension for ZenHub](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd?hl=en), to be able to view information from our ZenHub board within GitHub.
+- 🛠️ Complete SaaS Built From Scratch
+- 💻 Beautiful Landing Page & Pricing Page Included
+- 💳 Free & Pro Plan Using Stripe
+- 📄 A Beautiful And Highly Functional PDF Viewer
+- 🔄 Streaming API Responses in Real-Time
+- 🔒 Authentication Using Kinde
+- 🎨 Clean, Modern UI Using 'shadcn-ui'
+- 🚀 Optimistic UI Updates for a Great UX
+- ⚡ Infinite Message Loading for Performance
+- 📤 Intuitive Drag n’ Drop Uploads
+- ✨ Instant Loading States
+- 🔧 Modern Data Fetching Using tRPC & Zod
+- 🧠 LangChain for Infinite AI Memory
+- 🌲 Pinecone as our Vector Storage
+- 📊 Prisma as our ORM
+- 🔤 100% written in TypeScript
+- 🎁 ...much more
 
-## Information and HOW_TOs
+## Getting started
 
-Starting out with the project? Check out the [Getting Started](https://github.com/BHelpful/MealTime/blob/master/DOCS/HOW_TOs/getting_started.md) guide.
+To get started with this project, run
 
-If you need information about the repo, our design patterns or how-to guides, go to the folder [`DOCS/`](https://github.com/BHelpful/BHelpful/tree/master/DOCS/).
+```bash
+  git clone https://github.com/joschan21/quill.git
+```
 
-The most important documents are:
+and copy the .env.example variables into a separate .env file, fill them out & and that's all you need to get started!
 
-- [`DESIGN_PATTERNS.md`](https://github.com/BHelpful/MealTime/blob/master/DOCS/DESIGN_PATTERNS.md) - Contains all the design patterns used in the project (READ THROUGH before developing).
-- [`CONTRIBUTING.md`](https://github.com/BHelpful/MealTime/blob/master/DOCS/CONTRIBUTING.md) - Contains all the information about how to contribute to the project.
-- [`CODE_OF_CONDUCT.md`](https://github.com/BHelpful/MealTime/blob/master/DOCS/CODE_OF_CONDUCT.md) - Contains all the sets of rules outlining the norms, rules, and responsibilitie/proper practices of MealTime.
 
-## Repo health information
+## Acknowledgements
 
-Here is the current overview of the code health of the repository measured by:
+- [Kinde Auth](https://link.joshtriedcoding.com/kinde) for making this project possible
 
-- Sonarcloud: https://sonarcloud.io/summary/overall?id=BHelpful_BHelpful
-- CodeScene: https://codescene.io/projects/27963/jobs/584379/results
+## License
 
-### External links for development
-
-- Icons: https://fontawesome.com/search?s=solid&f=classic&o=r
-
-### Overview of the repo structure
-
-- **DOCS**: Useful information, readmes and guides.
-  - **HOW_TOs**: Guides/requirements to setup applications
-- **apps**: Contains each application under this monorepo
-- **tools**: Contains generators and other tools to easily setup a developer environment
-- **prisma**: Contains the database ORM code related to the srtucture of the database as well as seeding the database
+[MIT](https://choosealicense.com/licenses/mit/)
