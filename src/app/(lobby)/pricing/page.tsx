@@ -4,7 +4,7 @@ import { ArrowRight, Check, HelpCircle, Minus } from "lucide-react"
 
 import { PLANS } from "@/config/stripe"
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
 	Tooltip,
 	TooltipContent,
@@ -12,7 +12,6 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
-import UpgradeButton from "@/components/UpgradeButton"
 
 const Page = async () => {
 	const user = await currentUser()
@@ -20,16 +19,12 @@ const Page = async () => {
 	const pricingItems = [
 		{
 			plan: "Free",
-			tagline: "For small side projects.",
-			quota: 10,
+			tagline: "For those just getting started with MealTime.",
+			quota: PLANS.find((p) => p.slug === "free")!.quota,
 			features: [
 				{
-					text: "5 pages per PDF",
-					footnote: "The maximum amount of pages per PDF-file.",
-				},
-				{
-					text: "4MB file size limit",
-					footnote: "The maximum file size of a single PDF file.",
+					text: "Create and share recipes",
+					footnote: "Begin your culinary journey today.",
 				},
 				{
 					text: "Mobile-friendly interface",
@@ -48,16 +43,34 @@ const Page = async () => {
 		},
 		{
 			plan: "Pro",
-			tagline: "For larger projects with higher needs.",
+			tagline: "For those who want more out of MealTime.",
 			quota: PLANS.find((p) => p.slug === "pro")!.quota,
 			features: [
 				{
-					text: "25 pages per PDF",
-					footnote: "The maximum amount of pages per PDF-file.",
+					text: "Create and share recipes",
+					footnote: "Begin your culinary journey today.",
 				},
 				{
-					text: "16MB file size limit",
-					footnote: "The maximum file size of a single PDF file.",
+					text: "Mobile-friendly interface",
+				},
+				{
+					text: "Higher-quality responses",
+					footnote:
+						"Better algorithmic responses for enhanced content quality",
+				},
+				{
+					text: "Priority support",
+				},
+			],
+		},
+		{
+			plan: "Business",
+			tagline: "For those who want the best of MealTime.",
+			quota: PLANS.find((p) => p.slug === "business")!.quota,
+			features: [
+				{
+					text: "Create and share recipes",
+					footnote: "Begin your culinary journey today.",
 				},
 				{
 					text: "Mobile-friendly interface",
@@ -85,7 +98,7 @@ const Page = async () => {
 					</p>
 				</div>
 
-				<div className="grid grid-cols-1 gap-10 pt-12 lg:grid-cols-2">
+				<div className="grid grid-cols-1 gap-10 pt-12 lg:grid-cols-3">
 					<TooltipProvider>
 						{pricingItems.map(
 							({ plan, tagline, quota, features }) => {
@@ -93,6 +106,12 @@ const Page = async () => {
 									PLANS.find(
 										(p) => p.slug === plan.toLowerCase()
 									)?.price.amount || 0
+
+								// if quota is null, then it's unlimited else quota.toLocaleString()
+								const quataThing =
+									quota === null
+										? "Unlimited"
+										: quota.toLocaleString()
 
 								return (
 									<div
@@ -131,8 +150,7 @@ const Page = async () => {
 										<div className="flex h-20 items-center justify-center border-b border-t border-secondary-200 bg-secondary-50">
 											<div className="flex items-center space-x-1">
 												<p>
-													{quota.toLocaleString()}{" "}
-													PDFs/mo included
+													{quataThing} recipes saved
 												</p>
 
 												<Tooltip delayDuration={300}>
@@ -140,8 +158,11 @@ const Page = async () => {
 														<HelpCircle className="h-4 w-4 text-secondary-500" />
 													</TooltipTrigger>
 													<TooltipContent className="w-80 bg-primary-50 p-2">
-														How many PDFs you can
-														upload per month.
+														Your quota is the number
+														of recipes you can save
+														to MealTime. You can
+														upgrade to Pro at any
+														time to get more quota.
 													</TooltipContent>
 												</Tooltip>
 											</div>
@@ -186,7 +207,7 @@ const Page = async () => {
 																	<TooltipTrigger className="ml-1.5 cursor-default">
 																		<HelpCircle className="h-4 w-4 text-secondary-500" />
 																	</TooltipTrigger>
-																	<TooltipContent className="w-80 p-2">
+																	<TooltipContent className="w-80 bg-primary-50 p-2">
 																		{
 																			footnote
 																		}
@@ -230,19 +251,23 @@ const Page = async () => {
 													<ArrowRight className="ml-1.5 h-5 w-5" />
 												</Link>
 											) : user ? (
-												<UpgradeButton />
-											) : (
-												<Link
-													href="/signup"
+												<Button
+													disabled
 													className={buttonVariants({
 														className: "w-full",
 													})}
 												>
-													{user
-														? "Upgrade now"
-														: "Sign up"}
-													<ArrowRight className="ml-1.5 h-5 w-5" />
-												</Link>
+													Comming Soon
+												</Button>
+											) : (
+												<Button
+													disabled
+													className={buttonVariants({
+														className: "w-full",
+													})}
+												>
+													Comming Soon
+												</Button>
 											)}
 										</div>
 									</div>

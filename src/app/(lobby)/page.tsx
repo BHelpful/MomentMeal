@@ -15,14 +15,13 @@ export default function Home() {
 					</p>
 				</div>
 				<h1 className="max-w-4xl text-5xl font-bold text-secondary-500 md:text-6xl lg:text-7xl">
-					Chat with your{" "}
-					<span className="text-primary-500">documents</span> in
-					seconds.
+					<span className="text-primary-500">Elevate</span> your
+					cooking
 				</h1>
 				<p className="mt-5 max-w-prose text-secondary-700 sm:text-lg">
-					MealTime allows you to have conversations with any PDF
-					document. Simply upload your file and start asking questions
-					right away.
+					Mealtime is a marketplace for food and recipes. We help you
+					create and share your recipes with the world. Begin your
+					culinary journey today.
 				</p>
 				<Link
 					href="/dashboard"
@@ -56,7 +55,7 @@ export default function Home() {
 							<div className="mt-16 flow-root sm:mt-24">
 								<div className="-m-2 rounded-xl bg-secondary-900/5 p-2 ring-1 ring-inset ring-secondary-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
 									<Image
-										src="/dashboard-preview.jpg"
+										src="/images/bundle.webp"
 										alt="product preview"
 										width={1364}
 										height={866}
@@ -88,11 +87,16 @@ export default function Home() {
 				<div className="mb-12 px-6 lg:px-8">
 					<div className="mx-auto max-w-2xl sm:text-center">
 						<h2 className="mt-2 text-4xl font-bold text-secondary-900 sm:text-5xl">
-							Start chatting in minutes
+							{/* Start chatting in minutes */}
+							Start sharing your recipes in minutes
 						</h2>
 						<p className="mt-4 text-lg text-secondary-600">
-							Chatting to your PDF files has never been easier
-							than with MealTime.
+							{/* Chatting to your PDF files has never been easier
+							than with MealTime. */}
+							With MealTime you can add your recipes and share
+							them with the world. You can also discover new
+							recipes and even make money by selling your own
+							recipes.
 						</p>
 					</div>
 				</div>
@@ -126,11 +130,15 @@ export default function Home() {
 								Step 2
 							</span>
 							<span className="text-xl font-semibold">
-								Upload your PDF file
+								{/* Upload your PDF file */}
+								Add your recipes
 							</span>
 							<span className="mt-2 text-secondary-700">
-								We&apos;ll process your file and make it ready
-								for you to chat with.
+								{/* We&apos;ll process your file and make it ready
+								for you to chat with. */}
+								You can upload your recipes and we&apos;ll
+								process them and make them ready for you to
+								share with the world.
 							</span>
 						</div>
 					</li>
@@ -140,11 +148,15 @@ export default function Home() {
 								Step 3
 							</span>
 							<span className="text-xl font-semibold">
-								Start asking questions
+								{/* Start asking questions */}
+								Share your recipes
 							</span>
 							<span className="mt-2 text-secondary-700">
-								It&apos;s that simple. Try out Quill today - it
-								really takes less than a minute.
+								{/* It&apos;s that simple. Try out Quill today - it
+								really takes less than a minute. */}
+								You can share your recipes with the world and if
+								you're a pro user you can even earn money from
+								them.
 							</span>
 						</div>
 					</li>
@@ -154,7 +166,7 @@ export default function Home() {
 					<div className="mt-16 flow-root sm:mt-24">
 						<div className="-m-2 rounded-xl bg-secondary-900/5 p-2 ring-1 ring-inset ring-secondary-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
 							<Image
-								src="/file-upload-preview.jpg"
+								src="/images/bundle.webp"
 								alt="uploading preview"
 								width={1419}
 								height={732}
