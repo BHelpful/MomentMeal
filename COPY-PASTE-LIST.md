@@ -117,7 +117,7 @@ messages: [
     ],
 ```
 
-### Logo Icon - src/components/Icons.tsx
+### Logo Icon - src/components/icons.tsx
 
 ```
 <svg {...props} viewBox='0 0 24 24'>

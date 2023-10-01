@@ -1,0 +1,150 @@
+const plugin = require("tailwindcss/plugin")
+
+const iOsHeight = plugin(function ({ addUtilities }) {
+	const supportsTouchRule = "@supports (-webkit-touch-callout: none)"
+	const webkitFillAvailable = "-webkit-fill-available"
+
+	const utilities = {
+		".min-h-screen-ios": {
+			[supportsTouchRule]: {
+				minHeight: webkitFillAvailable,
+			},
+		},
+		".h-screen-ios": {
+			[supportsTouchRule]: {
+				height: webkitFillAvailable,
+			},
+		},
+	}
+
+	addUtilities(utilities, ["responsive"])
+})
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+	darkMode: ["class"],
+	content: [
+		"./pages/**/*.{ts,tsx}",
+		"./components/**/*.{ts,tsx}",
+		"./app/**/*.{ts,tsx}",
+		"./src/**/*.{ts,tsx}",
+	],
+	theme: {
+		container: {
+			center: true,
+			padding: "2rem",
+			screens: {
+				"2xl": "1400px",
+			},
+		},
+		extend: {
+			backgroundImage: {
+				gradient:
+					"linear-gradient(145.37deg, rgba(255, 255, 255, 0.09) -8.75%, rgba(255, 255, 255, 0.027) 83.95%)",
+				gradientHover:
+					"linear-gradient(145.37deg, rgba(255, 255, 255, 0.1) -8.75%, rgba(255, 255, 255, 0.057) 83.95%)",
+				shine: "linear-gradient(45deg, rgba(255,255,255,0) 45%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 55%,rgba(255,255,255,0) 100%)",
+			},
+			colors: {
+				text: {
+					50: "hsl(var(--text-50))",
+					100: "hsl(var(--text-100))",
+					200: "hsl(var(--text-200))",
+					300: "hsl(var(--text-300))",
+					400: "hsl(var(--text-400))",
+					500: "hsl(var(--text-500))",
+					600: "hsl(var(--text-600))",
+					700: "hsl(var(--text-700))",
+					800: "hsl(var(--text-800))",
+					900: "hsl(var(--text-900))",
+					950: "hsl(var(--text-950))",
+				},
+				background: {
+					50: "hsl(var(--background-50))",
+					100: "hsl(var(--background-100))",
+					200: "hsl(var(--background-200))",
+					300: "hsl(var(--background-300))",
+					400: "hsl(var(--background-400))",
+					500: "hsl(var(--background-500))",
+					600: "hsl(var(--background-600))",
+					700: "hsl(var(--background-700))",
+					800: "hsl(var(--background-800))",
+					900: "hsl(var(--background-900))",
+					950: "hsl(var(--background-950))",
+				},
+				primary: {
+					50: "hsl(var(--primary-50))",
+					100: "hsl(var(--primary-100))",
+					200: "hsl(var(--primary-200))",
+					300: "hsl(var(--primary-300))",
+					400: "hsl(var(--primary-400))",
+					500: "hsl(var(--primary-500))",
+					600: "hsl(var(--primary-600))",
+					700: "hsl(var(--primary-700))",
+					800: "hsl(var(--primary-800))",
+					900: "hsl(var(--primary-900))",
+					950: "hsl(var(--primary-950))",
+				},
+				secondary: {
+					50: "hsl(var(--secondary-50))",
+					100: "hsl(var(--secondary-100))",
+					200: "hsl(var(--secondary-200))",
+					300: "hsl(var(--secondary-300))",
+					400: "hsl(var(--secondary-400))",
+					500: "hsl(var(--secondary-500))",
+					600: "hsl(var(--secondary-600))",
+					700: "hsl(var(--secondary-700))",
+					800: "hsl(var(--secondary-800))",
+					900: "hsl(var(--secondary-900))",
+					950: "hsl(var(--secondary-950))",
+				},
+				accent: {
+					50: "hsl(var(--accent-50))",
+					100: "hsl(var(--accent-100))",
+					200: "hsl(var(--accent-200))",
+					300: "hsl(var(--accent-300))",
+					400: "hsl(var(--accent-400))",
+					500: "hsl(var(--accent-500))",
+					600: "hsl(var(--accent-600))",
+					700: "hsl(var(--accent-700))",
+					800: "hsl(var(--accent-800))",
+					900: "hsl(var(--accent-900))",
+					950: "hsl(var(--accent-950))",
+				},
+			},
+
+			borderRadius: {
+				lg: "var(--radius)",
+				md: "calc(var(--radius) - 2px)",
+				sm: "calc(var(--radius) - 4px)",
+			},
+			keyframes: {
+				"accordion-down": {
+					from: { height: 0 },
+					to: { height: "var(--radix-accordion-content-height)" },
+				},
+				"accordion-up": {
+					from: { height: "var(--radix-accordion-content-height)" },
+					to: { height: 0 },
+				},
+				shine: {
+					"0%": { backgroundPosition: "-100%" },
+					"100%": { backgroundPosition: "100%" },
+				},
+				dash: {
+					"0%": { strokeDashoffset: 1000 },
+					"100%": { strokeDashoffset: 0 },
+				},
+			},
+			animation: {
+				"accordion-down": "accordion-down 0.2s ease-out",
+				"accordion-up": "accordion-up 0.2s ease-out",
+			},
+		},
+	},
+	plugins: [
+		require("tailwindcss-animate"),
+		require("@tailwindcss/typography"),
+		[iOsHeight],
+	],
+}
