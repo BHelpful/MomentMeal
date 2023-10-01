@@ -28,7 +28,7 @@ export const PLANS = [
 	{
 		name: "Business",
 		slug: "business",
-		quota: null, // Unlimited
+		quota: 0, // Unlimited
 		pagesPerPdf: 50,
 		price: {
 			amount: 29,

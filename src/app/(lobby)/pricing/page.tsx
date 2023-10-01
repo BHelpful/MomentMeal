@@ -107,9 +107,9 @@ const Page = async () => {
 										(p) => p.slug === plan.toLowerCase()
 									)?.price.amount || 0
 
-								// if quota is null, then it's unlimited else quota.toLocaleString()
+								// if quota is 0, then it's unlimited else quota.toLocaleString()
 								const quataThing =
-									quota === null
+									quota === 0
 										? "Unlimited"
 										: quota.toLocaleString()
 
