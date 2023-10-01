@@ -60,6 +60,7 @@
     "react-pdf": "^7.3.3",
     "react-resize-detector": "^9.1.0",
     "react-textarea-autosize": "^8.5.3",
+    "react-wrap-balancer": "^1.1.0",
     "simplebar-react": "^3.2.4",
     "sonner": "^1.0.3",
     "stripe": "^13.7.0",
