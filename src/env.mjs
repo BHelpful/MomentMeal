@@ -7,12 +7,6 @@ export const env = createEnv({
 	 * isn't built with invalid env vars.
 	 */
 	server: {
-		KINDE_CLIENT_ID: z.string(),
-		KINDE_CLIENT_SECRET: z.string(),
-		KINDE_ISSUER_URL: z.string().url(),
-		KINDE_SITE_URL: z.string().url(),
-		KINDE_POST_LOGOUT_REDIRECT_URL: z.string().url(),
-		KINDE_POST_LOGIN_REDIRECT_URL: z.string().url(),
 		NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
 		CLERK_SECRET_KEY: z.string(),
 		DATABASE_URL: z.string(),
@@ -41,14 +35,6 @@ export const env = createEnv({
 	 */
 	runtimeEnv: {
 		NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
-		KINDE_CLIENT_ID: process.env.KINDE_CLIENT_ID,
-		KINDE_CLIENT_SECRET: process.env.KINDE_CLIENT_SECRET,
-		KINDE_ISSUER_URL: process.env.KINDE_ISSUER_URL,
-		KINDE_SITE_URL: process.env.KINDE_SITE_URL,
-		KINDE_POST_LOGOUT_REDIRECT_URL:
-			process.env.KINDE_POST_LOGOUT_REDIRECT_URL,
-		KINDE_POST_LOGIN_REDIRECT_URL:
-			process.env.KINDE_POST_LOGIN_REDIRECT_URL,
 		NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
 			process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
 		CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
