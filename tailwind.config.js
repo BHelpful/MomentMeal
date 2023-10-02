@@ -1,33 +1,11 @@
-const plugin = require("tailwindcss/plugin")
-
-const iOsHeight = plugin(function ({ addUtilities }) {
-	const supportsTouchRule = "@supports (-webkit-touch-callout: none)"
-	const webkitFillAvailable = "-webkit-fill-available"
-
-	const utilities = {
-		".min-h-screen-ios": {
-			[supportsTouchRule]: {
-				minHeight: webkitFillAvailable,
-			},
-		},
-		".h-screen-ios": {
-			[supportsTouchRule]: {
-				height: webkitFillAvailable,
-			},
-		},
-	}
-
-	addUtilities(utilities, ["responsive"])
-})
+import { fontFamily } from "tailwindcss/defaultTheme"
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	darkMode: ["class"],
 	content: [
-		"./pages/**/*.{ts,tsx}",
-		"./components/**/*.{ts,tsx}",
-		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
+		"./src/**/*.{js,ts,jsx,tsx}",
+		"./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
 	],
 	theme: {
 		container: {
@@ -38,85 +16,143 @@ module.exports = {
 			},
 		},
 		extend: {
-			backgroundImage: {
-				gradient:
-					"linear-gradient(145.37deg, rgba(255, 255, 255, 0.09) -8.75%, rgba(255, 255, 255, 0.027) 83.95%)",
-				gradientHover:
-					"linear-gradient(145.37deg, rgba(255, 255, 255, 0.1) -8.75%, rgba(255, 255, 255, 0.057) 83.95%)",
-				shine: "linear-gradient(45deg, rgba(255,255,255,0) 45%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 55%,rgba(255,255,255,0) 100%)",
+			screens: {
+				xs: "480px",
+				xxs: "380px",
+			},
+			flex: {
+				full: "0 0 100%",
 			},
 			colors: {
-				text: {
-					50: "hsl(var(--text-50))",
-					100: "hsl(var(--text-100))",
-					200: "hsl(var(--text-200))",
-					300: "hsl(var(--text-300))",
-					400: "hsl(var(--text-400))",
-					500: "hsl(var(--text-500))",
-					600: "hsl(var(--text-600))",
-					700: "hsl(var(--text-700))",
-					800: "hsl(var(--text-800))",
-					900: "hsl(var(--text-900))",
-					950: "hsl(var(--text-950))",
-				},
-				background: {
-					50: "hsl(var(--background-50))",
-					100: "hsl(var(--background-100))",
-					200: "hsl(var(--background-200))",
-					300: "hsl(var(--background-300))",
-					400: "hsl(var(--background-400))",
-					500: "hsl(var(--background-500))",
-					600: "hsl(var(--background-600))",
-					700: "hsl(var(--background-700))",
-					800: "hsl(var(--background-800))",
-					900: "hsl(var(--background-900))",
-					950: "hsl(var(--background-950))",
-				},
+				border: "hsl(var(--border))",
+				input: "hsl(var(--input))",
+				ring: "hsl(var(--ring))",
+				background: "hsl(var(--background))",
+				foreground: "hsl(var(--foreground))",
 				primary: {
-					50: "hsl(var(--primary-50))",
-					100: "hsl(var(--primary-100))",
-					200: "hsl(var(--primary-200))",
-					300: "hsl(var(--primary-300))",
-					400: "hsl(var(--primary-400))",
-					500: "hsl(var(--primary-500))",
-					600: "hsl(var(--primary-600))",
-					700: "hsl(var(--primary-700))",
-					800: "hsl(var(--primary-800))",
-					900: "hsl(var(--primary-900))",
-					950: "hsl(var(--primary-950))",
+					DEFAULT: "hsl(var(--primary))",
+					foreground: "hsl(var(--primary-foreground))",
 				},
 				secondary: {
-					50: "hsl(var(--secondary-50))",
-					100: "hsl(var(--secondary-100))",
-					200: "hsl(var(--secondary-200))",
-					300: "hsl(var(--secondary-300))",
-					400: "hsl(var(--secondary-400))",
-					500: "hsl(var(--secondary-500))",
-					600: "hsl(var(--secondary-600))",
-					700: "hsl(var(--secondary-700))",
-					800: "hsl(var(--secondary-800))",
-					900: "hsl(var(--secondary-900))",
-					950: "hsl(var(--secondary-950))",
+					DEFAULT: "hsl(var(--secondary))",
+					foreground: "hsl(var(--secondary-foreground))",
+				},
+				destructive: {
+					DEFAULT: "hsl(var(--destructive))",
+					foreground: "hsl(var(--destructive-foreground))",
+				},
+				muted: {
+					DEFAULT: "hsl(var(--muted))",
+					foreground: "hsl(var(--muted-foreground))",
 				},
 				accent: {
-					50: "hsl(var(--accent-50))",
-					100: "hsl(var(--accent-100))",
-					200: "hsl(var(--accent-200))",
-					300: "hsl(var(--accent-300))",
-					400: "hsl(var(--accent-400))",
-					500: "hsl(var(--accent-500))",
-					600: "hsl(var(--accent-600))",
-					700: "hsl(var(--accent-700))",
-					800: "hsl(var(--accent-800))",
-					900: "hsl(var(--accent-900))",
-					950: "hsl(var(--accent-950))",
+					DEFAULT: "hsl(var(--accent))",
+					foreground: "hsl(var(--accent-foreground))",
+				},
+				popover: {
+					DEFAULT: "hsl(var(--popover))",
+					foreground: "hsl(var(--popover-foreground))",
+				},
+				card: {
+					DEFAULT: "hsl(var(--card))",
+					foreground: "hsl(var(--card-foreground))",
+				},
+				// tremor
+				// light mode
+				tremor: {
+					brand: {
+						faint: "#eff6ff", // blue-50
+						muted: "#bfdbfe", // blue-200
+						subtle: "#60a5fa", // blue-400
+						DEFAULT: "#3b82f6", // blue-500
+						emphasis: "#1d4ed8", // blue-700
+						inverted: "#ffffff", // white
+					},
+					background: {
+						muted: "#f9fafb", // gray-50
+						subtle: "#f3f4f6", // gray-100
+						DEFAULT: "hsl(var(--background))",
+						emphasis: "#374151", // gray-700
+					},
+					border: {
+						DEFAULT: "#e5e7eb", // gray-200
+					},
+					ring: {
+						DEFAULT: "#e5e7eb", // gray-200
+					},
+					content: {
+						subtle: "#9ca3af", // gray-400
+						DEFAULT: "#6b7280", // gray-500
+						emphasis: "#374151", // gray-700
+						strong: "#111827", // gray-900
+						inverted: "#ffffff", // white
+					},
+				},
+				// dark mode
+				"dark-tremor": {
+					brand: {
+						faint: "#0B1229", // custom
+						muted: "#172554", // blue-950
+						subtle: "#1e40af", // blue-800
+						DEFAULT: "#3b82f6", // blue-500
+						emphasis: "#60a5fa", // blue-400
+						inverted: "#030712", // gray-950
+					},
+					background: {
+						muted: "#131A2B", // custom
+						subtle: "#1f2937", // gray-800
+						DEFAULT: "hsl(var(--background))",
+						emphasis: "#d1d5db", // gray-300
+					},
+					border: {
+						DEFAULT: "#1f2937", // gray-800
+					},
+					ring: {
+						DEFAULT: "#1f2937", // gray-800
+					},
+					content: {
+						subtle: "#4b5563", // gray-600
+						DEFAULT: "#6b7280", // gray-600
+						emphasis: "#e5e7eb", // gray-200
+						strong: "#f9fafb", // gray-50
+						inverted: "#000000", // black
+					},
 				},
 			},
-
+			boxShadow: {
+				// tremor
+				// light
+				"tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+				"tremor-card":
+					"0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+				"tremor-dropdown":
+					"0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+				// dark
+				"dark-tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+				"dark-tremor-card":
+					"0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+				"dark-tremor-dropdown":
+					"0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+			},
 			borderRadius: {
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",
 				sm: "calc(var(--radius) - 4px)",
+				// tremor
+				"tremor-small": "0.375rem",
+				"tremor-default": "0.5rem",
+				"tremor-full": "9999px",
+			},
+			fontFamily: {
+				sans: ["var(--font-sans)", ...fontFamily.sans],
+				heading: ["var(--font-heading)", ...fontFamily.sans],
+			},
+			fontSize: {
+				// tremor
+				"tremor-label": ["0.75rem"],
+				"tremor-default": ["0.875rem", { lineHeight: "1.25rem" }],
+				"tremor-title": ["1.125rem", { lineHeight: "1.75rem" }],
+				"tremor-metric": ["1.875rem", { lineHeight: "2.25rem" }],
 			},
 			keyframes: {
 				"accordion-down": {
@@ -142,9 +178,39 @@ module.exports = {
 			},
 		},
 	},
+	// tremor
+	safelist: [
+		{
+			pattern:
+				/^(bg-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+			variants: ["hover", "ui-selected"],
+		},
+		{
+			pattern:
+				/^(text-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+			variants: ["hover", "ui-selected"],
+		},
+		{
+			pattern:
+				/^(border-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+			variants: ["hover", "ui-selected"],
+		},
+		{
+			pattern:
+				/^(ring-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+		},
+		{
+			pattern:
+				/^(stroke-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+		},
+		{
+			pattern:
+				/^(fill-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+		},
+	],
 	plugins: [
 		require("tailwindcss-animate"),
 		require("@tailwindcss/typography"),
-		[iOsHeight],
+		require("@headlessui/tailwindcss"),
 	],
 }

@@ -18,8 +18,8 @@ export function absoluteUrl(path: string) {
 }
 
 export function constructMetadata({
-	title = "MealTime - the SaaS for students",
-	description = "MealTime is an open-source software to make chatting to your PDF files easy.",
+	title = "MealTime - A marketplace for food and recipes.",
+	description = "Mealtime is a marketplace for food and recipes. We help you create and share your recipes with the world. Begin your culinary journey today.",
 	image = "/thumbnail.png",
 	icons = "/favicon.ico",
 	noIndex = false,

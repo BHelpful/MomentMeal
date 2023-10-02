@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import { SignOutButton } from "@clerk/nextjs"
 import { Gem } from "lucide-react"
 
 import { getUserSubscriptionPlan } from "@/lib/stripe"
@@ -91,7 +90,7 @@ const UserAccountNav = async ({
 				<DropdownMenuSeparator />
 
 				<DropdownMenuItem className="cursor-pointer">
-					<SignOutButton>Log out</SignOutButton>
+					<Link href="/signout">Log Out</Link>
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
