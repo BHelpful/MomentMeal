@@ -15,8 +15,7 @@ export default function Home() {
 					</p>
 				</div>
 				<h1 className="max-w-4xl text-5xl font-bold text-secondary-500 md:text-6xl lg:text-7xl">
-					<span className="text-primary-500">Elevate</span> your
-					cooking
+					<span className="text-primary">Elevate</span> your cooking
 				</h1>
 				<p className="mt-5 max-w-prose text-secondary-700 sm:text-lg">
 					Mealtime is a marketplace for food and recipes. We help you
