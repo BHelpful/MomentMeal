@@ -166,11 +166,11 @@ export default function Home() {
 					<div className="mt-16 flow-root sm:mt-24">
 						<div className="bg-foreground/5 ring-foreground/10 -m-2 rounded-xl p-2 ring-1 ring-inset lg:-m-4 lg:rounded-2xl lg:p-4">
 							<Image
-								src="/images/bundle.webp"
+								src="/images/dinner.webp"
 								alt="uploading preview"
 								width={1419}
 								height={732}
-								quality={100}
+								quality={10}
 								className="ring-foreground/10 rounded-md bg-primary-50 shadow-2xl ring-1"
 							/>
 						</div>

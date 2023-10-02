@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
-import { authMiddleware, clerkClient } from "@clerk/nextjs"
+import { clerkClient } from "@clerk/nextjs"
+import { authMiddleware } from "@clerk/nextjs/server"
 
 export default authMiddleware({
 	// Public routes are routes that don't require authentication
@@ -9,18 +10,11 @@ export default authMiddleware({
 		"/signup(.*)",
 		"/sso-callback(.*)",
 		"/categories(.*)",
-		"/product(.*)",
 		"/products(.*)",
 		"/product(.*)",
-		"/stores(.*)",
-		"/store(.*)",
 		"/build-a-board(.*)",
 		"/email-preferences(.*)",
 		"/blog(.*)",
-		"/about(.*)",
-		"/contact(.*)",
-		"/terms(.*)",
-		"/privacy(.*)",
 		"/api(.*)",
 		"/pricing(.*)",
 	],
@@ -60,5 +54,5 @@ export default authMiddleware({
 })
 
 export const config = {
-	matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api)(.*)"],
+	matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 }
