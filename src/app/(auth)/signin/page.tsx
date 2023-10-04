@@ -1,9 +1,6 @@
-import { type Metadata } from "next"
-import Link from "next/link"
-import { redirect } from "next/navigation"
-import { env } from "@/env.mjs"
-import { currentUser } from "@clerk/nextjs"
-
+import { OAuthSignIn } from '@/components/auth/oauth-signin';
+import { SignInForm } from '@/components/forms/signin-form';
+import { Shell } from '@/components/shells/shell';
 import {
   Card,
   CardContent,
@@ -11,20 +8,22 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { OAuthSignIn } from "@/components/auth/oauth-signin"
-import { SignInForm } from "@/components/forms/signin-form"
-import { Shell } from "@/components/shells/shell"
+} from '@/components/ui/card';
+import { env } from '@/env.mjs';
+import { currentUser } from '@clerk/nextjs';
+import { type Metadata } from 'next';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
-  title: "Sign In",
-  description: "Sign in to your account",
-}
+  title: 'Sign In',
+  description: 'Sign in to your account',
+};
 
 export default async function SignInPage() {
-  const user = await currentUser()
-  if (user) redirect("/")
+  const user = await currentUser();
+  if (user) redirect('/');
 
   return (
     <Shell className="max-w-lg">
@@ -42,7 +41,7 @@ export default async function SignInPage() {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
+              <span className="bg-background text-muted-foreground px-2">
                 Or continue with
               </span>
             </div>
@@ -50,7 +49,7 @@ export default async function SignInPage() {
           <SignInForm />
         </CardContent>
         <CardFooter className="flex flex-wrap items-center justify-between gap-2">
-          <div className="text-sm text-muted-foreground">
+          <div className="text-muted-foreground text-sm">
             <span className="mr-1 hidden sm:inline-block">
               Don&apos;t have an account?
             </span>
@@ -65,12 +64,12 @@ export default async function SignInPage() {
           <Link
             aria-label="Reset password"
             href="/signin/reset-password"
-            className="text-sm text-primary underline-offset-4 transition-colors hover:underline"
+            className="text-primary text-sm underline-offset-4 transition-colors hover:underline"
           >
             Reset password
           </Link>
         </CardFooter>
       </Card>
     </Shell>
-  )
+  );
 }
