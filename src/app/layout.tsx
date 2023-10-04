@@ -1,7 +1,10 @@
+import { Analytics } from '@/components/analytics';
 import Providers from '@/components/providers';
+import { TailwindIndicator } from '@/components/tailwind-indicator';
 import { Toaster } from '@/components/ui/toaster';
 import { siteConfig } from '@/config/site';
 import { env } from '@/env.mjs';
+import { fontMono, fontSans } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
@@ -64,18 +67,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="light">
-      <body
-        className={cn(
-          'min-h-screen bg-background-50 font-sans  antialiased',
-          inter.className
-        )}
-      >
-        <Providers attribute="class" defaultTheme="system" enableSystem>
-          <ClerkProvider>{children}</ClerkProvider>
-        </Providers>
-        <Toaster />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className="light">
+        <body
+          className={cn(
+            'bg-background min-h-screen font-sans antialiased',
+            fontSans.variable,
+            fontMono.variable
+          )}
+        >
+          <Providers attribute="class" defaultTheme="system" enableSystem>
+            {children}
+            <TailwindIndicator />
+            <Analytics />
+          </Providers>
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
