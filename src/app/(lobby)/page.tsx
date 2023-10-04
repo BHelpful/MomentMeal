@@ -25,7 +25,7 @@ export default function Home() {
             <span className="text-primary">Elevate</span> your cooking
           </h1>
           <Balancer className="text-muted-foreground max-w-[46rem] text-lg sm:text-xl">
-            Mealtime is a marketplace for food and recipes. We help you find and
+            MealTime is a marketplace for food and recipes. We help you find and
             create the best recipes and meal plans for you.
           </Balancer>
           <Link
