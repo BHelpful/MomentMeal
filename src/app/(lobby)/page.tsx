@@ -1,37 +1,47 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import Balancer from "react-wrap-balancer"
 
 import { buttonVariants } from "@/components/ui/button"
-import MaxWidthWrapper from "@/components/MaxWidthWrapper"
+import { Icons } from "@/components/icons"
+import { Shell } from "@/components/shells/shell"
 
 export default function Home() {
 	return (
 		<>
-			<MaxWidthWrapper className="mb-12 mt-28 flex flex-col items-center justify-center text-center sm:mt-40">
-				<div className="hover:bg-primary/50 mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-secondary-200 bg-primary-50 px-7 py-2 shadow-md backdrop-blur transition-all hover:border-secondary-300">
-					<p className="text-sm font-semibold text-secondary-700">
-						MealTime is in Alpha development!
-					</p>
-				</div>
-				<h1 className="max-w-4xl text-5xl font-bold text-secondary-500 md:text-6xl lg:text-7xl">
-					<span className="text-primary">Elevate</span> your cooking
-				</h1>
-				<p className="mt-5 max-w-prose text-secondary-700 sm:text-lg">
-					Mealtime is a marketplace for food and recipes. We help you
-					create and share your recipes with the world. Begin your
-					culinary journey today.
-				</p>
-				<Link
-					href="/dashboard"
-					className={buttonVariants({
-						size: "lg",
-						className: "mt-5",
-					})}
+			<Shell className="gap-8">
+				<section
+					id="hero"
+					aria-labelledby="hero-heading"
+					className="mx-auto flex w-full max-w-[64rem] flex-col items-center justify-center gap-4 pb-8 pt-6 text-center md:pb-2 md:pt-10 lg:py-28 lg:pb-2"
 				>
-					Get started <ArrowRight className="ml-1.5 h-5 w-5" />
-				</Link>
-			</MaxWidthWrapper>
+					<Icons.logo className="h-32 w-32" aria-hidden="true" />
+					<div className="hover:bg-primary/50 mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-secondary-200 bg-primary-50 px-7 py-2 shadow-md backdrop-blur transition-all hover:border-secondary-300">
+						<p className="text-sm font-semibold text-secondary-700">
+							MealTime is in Alpha development!
+						</p>
+					</div>
+					<h1 className="max-w-4xl text-5xl font-bold text-secondary-500 md:text-6xl lg:text-7xl">
+						<span className="text-primary">Elevate</span> your
+						cooking
+					</h1>
+					<Balancer className="text-muted-foreground max-w-[46rem] text-lg sm:text-xl">
+						Mealtime is a marketplace for food and recipes. We help
+						you find and create the best recipes and meal plans for
+						you.
+					</Balancer>
+					<Link
+						href="/dashboard"
+						className={buttonVariants({
+							size: "lg",
+							className: "mt-5",
+						})}
+					>
+						Get started <ArrowRight className="ml-1.5 h-5 w-5" />
+					</Link>
+				</section>
+			</Shell>
 
 			{/* value proposition section */}
 			<div>

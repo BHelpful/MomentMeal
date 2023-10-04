@@ -2,7 +2,7 @@ import { Inter } from "next/font/google"
 import { ClerkProvider } from "@clerk/nextjs"
 
 import { cn, constructMetadata } from "@/lib/utils"
-import Providers from "@/components/Providers"
+import Providers from "@/components/providers"
 
 import "@/styles/globals.css"
 import "react-loading-skeleton/dist/skeleton.css"
