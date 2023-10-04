@@ -1,7 +1,7 @@
 import { SiteFooter } from '@/components/layouts/site-footer';
 import { SiteHeader } from '@/components/layouts/site-header';
 import { cn } from '@/lib/utils';
-import { currentUser } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs/server';
 import { Inter } from 'next/font/google';
 
 export const metadata = {
