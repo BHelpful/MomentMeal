@@ -8,6 +8,7 @@ import { fontMono, fontSans } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -80,6 +81,7 @@ export default function RootLayout({
             {children}
             <TailwindIndicator />
             <Analytics />
+            <VercelAnalytics />
           </Providers>
           <Toaster />
         </body>
