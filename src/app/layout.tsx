@@ -1,6 +1,6 @@
 import { Analytics } from '@/components/analytics';
 import Providers from '@/components/providers';
-import { TailwindIndicator } from '@/components/tailwind-indicator';
+import { TailwindIndicator } from '@/components/ui/tailwind-indicator';
 import { Toaster } from '@/components/ui/toaster';
 import { siteConfig } from '@/config/site';
 import { env } from '@/env.mjs';

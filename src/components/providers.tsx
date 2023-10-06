@@ -1,34 +1,17 @@
 'use client';
 
-import { trpc } from '@/app/_trpc/client';
+import TrpcProvider from '@/app/_trpc/provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { absoluteUrl } from '@/lib/utils';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { httpBatchLink } from '@trpc/client';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { type ThemeProviderProps } from 'next-themes/dist/types';
-import { useState } from 'react';
 
 const Providers = ({ children, ...props }: ThemeProviderProps) => {
-  const [queryClient] = useState(() => new QueryClient());
-  const [trpcClient] = useState(() =>
-    trpc.createClient({
-      links: [
-        httpBatchLink({
-          url: absoluteUrl('/api/trpc'),
-        }),
-      ],
-    })
-  );
-
   return (
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        <NextThemesProvider {...props}>
-          <TooltipProvider>{children}</TooltipProvider>
-        </NextThemesProvider>
-      </QueryClientProvider>
-    </trpc.Provider>
+    <TrpcProvider>
+      <NextThemesProvider {...props}>
+        <TooltipProvider>{children}</TooltipProvider>
+      </NextThemesProvider>
+    </TrpcProvider>
   );
 };
 

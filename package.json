@@ -1,5 +1,10 @@
 {
   "name": "mealtime",
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +12,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "prisma": "prisma",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "prisma db seed",
+    "prisma:reset": "prisma db push --force-reset",
+    "prisma:push": "prisma db push"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.25.1",
@@ -47,7 +59,7 @@
     "@trpc/next": "^10.38.4",
     "@trpc/react-query": "^10.38.4",
     "@trpc/server": "^10.38.4",
-    "@types/node": "20.6.3",
+    "@types/node": "^20.8.2",
     "@types/react": "18.2.22",
     "@types/react-dom": "18.2.7",
     "@uploadthing/react": "^5.6.1",
@@ -84,10 +96,13 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "5.2.2",
+    "typescript": "^5.2.2",
     "uploadthing": "^5.6.1",
     "vaul": "^0.6.8",
     "zod": "^3.21.4"
+  },
+  "prisma": {
+    "seed": "ts-node  --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
@@ -96,6 +111,7 @@
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.4",
-    "rehype-pretty-code": "^0.10.1"
+    "rehype-pretty-code": "^0.10.1",
+    "ts-node": "^10.9.1"
   }
 }

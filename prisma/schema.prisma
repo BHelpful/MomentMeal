@@ -11,52 +11,59 @@ datasource db {
   relationMode = "prisma"
 }
 
-model User {
-  id    String @id @unique //matches kinde user id
-  email String @unique
-
-  File    File[]
-  Message Message[]
-
-  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
-  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
-  stripePriceId          String?   @map(name: "stripe_price_id")
-  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+model Recipe {
+  id             Int                    @id @default(autoincrement())
+  title          String
+  description    String?
+  isPublic       Boolean                @default(false)
+  userId         String
+  timeInKitchen  Int?
+  waitingTime    Int?
+  numberOfPeople Int?
+  ratings        RecipeRating[]
+  ingredients    IngredientsOnRecipes[]
+  steps          Step[]
 }
 
-enum UploadStatus {
-  PENDING
-  PROCESSING
-  FAILED
-  SUCCESS
+model RecipeRating {
+  id       Int    @id @default(autoincrement())
+  rating   Int
+  userId   String
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+  recipeId Int
+
+  @@unique([userId, recipeId])
+  @@index([recipeId])
 }
 
-model File {
-  id   String @id @default(cuid())
-  name String
-
-  uploadStatus UploadStatus @default(PENDING)
-
-  url      String
-  key      String
-  messages Message[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?
+model Ingredient {
+  id      Int                    @id @default(autoincrement())
+  name    String
+  unit    String?
+  userId  String
+  recipes IngredientsOnRecipes[]
 }
 
-model Message {
-  id   String @id @default(cuid())
-  text String @db.Text()
+model IngredientsOnRecipes {
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId Int
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  recipeId     Int
+  quantity     Float
+  assignedAt   DateTime   @default(now())
+  assignedBy   String?
 
-  isUserMessage Boolean
+  @@id([ingredientId, recipeId])
+  @@index([ingredientId])
+  @@index([recipeId])
+  @@index([assignedBy])
+}
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?
-  File      File?    @relation(fields: [fileId], references: [id])
-  fileId    String?
+model Step {
+  id       Int    @id @default(autoincrement())
+  content  String
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+  recipeId Int
+
+  @@index([recipeId])
 }
