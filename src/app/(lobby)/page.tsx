@@ -29,7 +29,7 @@ export default function Home() {
             create the best recipes and meal plans for you.
           </Balancer>
           <Link
-            href="/dashboard"
+            href="/recipes"
             className={buttonVariants({
               size: 'lg',
               className: 'mt-5',
