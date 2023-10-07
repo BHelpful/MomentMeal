@@ -82,7 +82,7 @@ export const recipeRouter = router({
   }),
 
   getRecipe: privateProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       const { userId } = ctx;
 
@@ -108,7 +108,7 @@ export const recipeRouter = router({
     }),
 
   getPublicRecipe: publicProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       const recipe = await db.recipe.findFirst({
         where: {

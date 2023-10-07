@@ -12,14 +12,12 @@ interface ProductPageProps {
 }
 
 export async function generateMetadata({ params }: ProductPageProps) {
-  const recipeId = Number(params.recipeId);
-
-  if (!recipeId || Number.isNaN(params.recipeId)) {
+  if (!params.recipeId) {
     return {};
   }
 
   const recipe = await serverClient.recipe
-    .getPublicRecipe({ id: recipeId })
+    .getPublicRecipe({ id: params.recipeId })
     .catch(() => null);
 
   if (!recipe) {
@@ -33,14 +31,12 @@ export async function generateMetadata({ params }: ProductPageProps) {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const recipeId = Number(params.recipeId);
-
-  if (!recipeId || Number.isNaN(params.recipeId)) {
+  if (!params.recipeId) {
     notFound();
   }
 
   const recipe = await serverClient.recipe
-    .getPublicRecipe({ id: recipeId })
+    .getPublicRecipe({ id: params.recipeId })
     .catch(() => null);
 
   if (!recipe) {

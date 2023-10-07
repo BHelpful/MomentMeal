@@ -12,7 +12,7 @@ datasource db {
 }
 
 model Recipe {
-  id             Int                    @id @default(autoincrement())
+  id             String                 @id @default(cuid())
   title          String
   description    String?
   isPublic       Boolean                @default(false)
@@ -26,18 +26,18 @@ model Recipe {
 }
 
 model RecipeRating {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(cuid())
   rating   Int
   userId   String
   recipe   Recipe @relation(fields: [recipeId], references: [id])
-  recipeId Int
+  recipeId String
 
   @@unique([userId, recipeId])
   @@index([recipeId])
 }
 
 model Ingredient {
-  id      Int                    @id @default(autoincrement())
+  id      String                 @id @default(cuid())
   name    String
   unit    String?
   userId  String
@@ -46,9 +46,9 @@ model Ingredient {
 
 model IngredientsOnRecipes {
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
-  ingredientId Int
+  ingredientId String
   recipe       Recipe     @relation(fields: [recipeId], references: [id])
-  recipeId     Int
+  recipeId     String
   quantity     Float
   assignedAt   DateTime   @default(now())
   assignedBy   String?
@@ -60,10 +60,10 @@ model IngredientsOnRecipes {
 }
 
 model Step {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(cuid())
   content  String
   recipe   Recipe @relation(fields: [recipeId], references: [id])
-  recipeId Int
+  recipeId String
 
   @@index([recipeId])
 }

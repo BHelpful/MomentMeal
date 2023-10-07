@@ -8,7 +8,7 @@ export default function RecipeView({
   id,
   initialRecipe,
 }: {
-  id: number;
+  id: string;
   initialRecipe: Awaited<
     ReturnType<(typeof serverClient)['recipe']['getPublicRecipe']>
   >;
