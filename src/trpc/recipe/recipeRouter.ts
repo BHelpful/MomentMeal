@@ -117,8 +117,22 @@ export const recipeRouter = router({
         },
         include: {
           ingredients: {
-            include: {
+            // TODO: Figure out why it is nessesary to use select avoiding getting the assignedAt field
+            // 	Types of property assignedAt are incompatible.
+            // Type is Date not assignable to type string
+            // Might be related to a trpc bug with inconsistent types between `Awaited<
+            // ReturnType<(typeof serverClient)['recipe']['getPublicRecipe']>` and const recipe = trpc.recipe.getPublicRecipe.useQuery(
+            //   { id },
+            //   {
+            //     initialData: initialRecipe,
+            //     refetchOnMount: false,
+            //     refetchOnReconnect: false,
+            //   }
+            // );
+            // In recipeView.tsx
+            select: {
               ingredient: true,
+              quantity: true,
             },
           },
           steps: true,
