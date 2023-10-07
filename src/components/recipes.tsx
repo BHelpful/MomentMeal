@@ -2,6 +2,7 @@
 
 import { trpc } from '@/app/_trpc/client';
 import { serverClient } from '@/app/_trpc/serverClient';
+import { Shell } from '@/components/shells/shell';
 
 export default function RecipeList({
   initialRecipes,
@@ -17,7 +18,7 @@ export default function RecipeList({
   });
 
   return (
-    <div className="flex flex-col gap-4">
+    <Shell>
       {recipes.data.map((recipe) => (
         <div className="flex flex-col gap-2" key={recipe.id}>
           <div className="flex flex-col gap-2">
@@ -26,6 +27,6 @@ export default function RecipeList({
           </div>
         </div>
       ))}
-    </div>
+    </Shell>
   );
 }
