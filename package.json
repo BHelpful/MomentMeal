@@ -12,6 +12,7 @@
     "build": "contentlayer build && next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "contentlayer build && tsc --noEmit",
     "postinstall": "prisma generate",
     "prisma": "prisma",
     "prisma:generate": "prisma generate",
