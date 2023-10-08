@@ -1,5 +1,5 @@
-import { ErrorCard } from '@/components/cards/error-card';
-import { Shell } from '@/components/shells/shell';
+import { ErrorCard } from "@/components/cards/error-card"
+import { Shell } from "@/components/shells/shell"
 
 export default function PageNotFound() {
   return (
@@ -11,5 +11,5 @@ export default function PageNotFound() {
         retryLinkText="Go to Home"
       />
     </Shell>
-  );
+  )
 }

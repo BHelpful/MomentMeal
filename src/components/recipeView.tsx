@@ -3,6 +3,8 @@
 import { trpc } from '@/app/_trpc/client';
 import { serverClient } from '@/app/_trpc/serverClient';
 import { Shell } from '@/components/shells/shell';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function RecipeView({
   id,
@@ -13,6 +15,7 @@ export default function RecipeView({
     ReturnType<(typeof serverClient)['recipe']['getPublicRecipe']>
   >;
 }) {
+  const router = useRouter();
   const recipe = trpc.recipe.getPublicRecipe.useQuery(
     { id },
     {
@@ -22,8 +25,29 @@ export default function RecipeView({
     }
   );
 
+  const deleteRecipe = trpc.recipe.deleteRecipe.useMutation({
+    onSuccess: () => {
+      recipe.refetch();
+      return router.push('/recipes');
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
   return (
     <Shell>
+      {/* delete button */}
+      <div className="flex justify-end">
+        <button
+          className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+          onClick={() => {
+            deleteRecipe.mutate({ id });
+          }}
+        >
+          Delete
+        </button>
+      </div>
       <div className="text-lg font-bold">{recipe.data.title}</div>
       <div className="text-gray-500">{recipe.data.description}</div>
       <div className="mt-4">

@@ -135,13 +135,13 @@ export const siteConfig = {
           external: false,
         },
         {
-          title: 'Terms',
-          href: '/terms',
+          title: 'Privacy',
+          href: '/privacy',
           external: false,
         },
         {
-          title: 'Privacy',
-          href: '/privacy',
+          title: 'Terms',
+          href: '/terms',
           external: false,
         },
       ],
