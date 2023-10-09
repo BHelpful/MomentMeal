@@ -5,7 +5,7 @@ import { Toaster as RadToaster } from 'sonner';
 export function Toaster() {
   return (
     <RadToaster
-      position="top-center"
+      position="bottom-center"
       toastOptions={{
         style: {
           background: 'hsl(var(--background))',
