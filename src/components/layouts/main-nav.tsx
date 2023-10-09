@@ -1,10 +1,6 @@
-"use client"
+'use client';
 
-import type { MainNavItem } from "@/types"
-import Link from "next/link"
-import * as React from "react"
-
-import { Icons } from "@/components/icons"
+import { Icons } from '@/components/icons';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,12 +9,27 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
-import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
+} from '@/components/ui/navigation-menu';
+import { siteConfig } from '@/config/site';
+import { cn } from '@/lib/utils';
+import type { MainNavItem, NavItemWithOptionalChildren } from '@/types';
+import Link from 'next/link';
+import * as React from 'react';
 
 interface MainNavProps {
-  items?: MainNavItem[]
+  items?: MainNavItem[];
+}
+
+function isTouchDevice() {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    return true;
+  }
+
+  return (
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0 ||
+    window.matchMedia('(pointer: coarse)').matches
+  );
 }
 
 export function MainNav({ items }: MainNavProps) {
@@ -35,24 +46,20 @@ export function MainNav({ items }: MainNavProps) {
         <NavigationMenuList>
           {items?.[0]?.items ? (
             <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
-                <NavigationMenuTrigger className="h-auto">
-                  {items[0].title}
-                </NavigationMenuTrigger>
-              </Link>
+              <MainResponsiveNavbarItem title={items[0].title} />
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
                         href="/"
-                        className="from-muted/50 to-muted flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b p-6 no-underline outline-none focus:shadow-md"
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                       >
                         <Icons.logo className="h-6 w-6" aria-hidden="true" />
                         <div className="mb-2 mt-4 text-lg font-medium">
                           {siteConfig.name}
                         </div>
-                        <p className="text-muted-foreground text-sm leading-tight">
+                        <p className="text-sm leading-tight text-muted-foreground">
                           {siteConfig.description}
                         </p>
                         <span className="sr-only">Home</span>
@@ -77,15 +84,7 @@ export function MainNav({ items }: MainNavProps) {
             .map((item) =>
               item?.items ? (
                 <NavigationMenuItem key={item.title}>
-                  <Link
-                    href={item.items[0]?.href ?? ""}
-                    legacyBehavior
-                    passHref
-                  >
-                    <NavigationMenuTrigger className="h-auto capitalize">
-                      {item.title}
-                    </NavigationMenuTrigger>
-                  </Link>
+                  <ResponsiveNavbarItem item={item} />
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                       {item.items.map((item) => (
@@ -105,7 +104,7 @@ export function MainNav({ items }: MainNavProps) {
                   <NavigationMenuItem key={item.title}>
                     <Link href={item.href} legacyBehavior passHref>
                       <NavigationMenuLink
-                        className={cn(navigationMenuTriggerStyle(), "h-auto")}
+                        className={cn(navigationMenuTriggerStyle(), 'h-auto')}
                       >
                         {item.title}
                       </NavigationMenuLink>
@@ -117,12 +116,12 @@ export function MainNav({ items }: MainNavProps) {
         </NavigationMenuList>
       </NavigationMenu>
     </div>
-  )
+  );
 }
 
 const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
+  React.ElementRef<'a'>,
+  React.ComponentPropsWithoutRef<'a'>
 >(({ className, title, children, href, ...props }, ref) => {
   return (
     <li>
@@ -131,18 +130,64 @@ const ListItem = React.forwardRef<
           ref={ref}
           href={String(href)}
           className={cn(
-            "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
             className
           )}
           {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
         </Link>
       </NavigationMenuLink>
     </li>
-  )
-})
-ListItem.displayName = "ListItem"
+  );
+});
+ListItem.displayName = 'ListItem';
+
+interface ResponsiveNavbarItemProps {
+  item: NavItemWithOptionalChildren;
+}
+
+const MainResponsiveNavbarItem = ({ title }: { title: string }) => {
+  if (isTouchDevice()) {
+    return (
+      <NavigationMenuTrigger className="h-auto">{title}</NavigationMenuTrigger>
+    );
+  }
+  return (
+    <Link href="/" legacyBehavior passHref>
+      <NavigationMenuTrigger className="h-auto">{title}</NavigationMenuTrigger>
+    </Link>
+  );
+};
+
+function ResponsiveNavbarItem({ item }: ResponsiveNavbarItemProps) {
+  if (isTouchDevice()) {
+    return (
+      <NavigationMenuTrigger className="h-auto capitalize">
+        {item.title}
+      </NavigationMenuTrigger>
+    );
+  }
+
+  // 'item.items' is possibly 'undefined'
+  if (!item.items) {
+    return (
+      <Link href={item.href ?? ''} legacyBehavior passHref>
+        <NavigationMenuTrigger className="h-auto capitalize">
+          {item.title}
+        </NavigationMenuTrigger>
+      </Link>
+    );
+  }
+
+  return (
+    <Link href={item.items[0]?.href ?? ''} legacyBehavior passHref>
+      <NavigationMenuTrigger className="h-auto capitalize">
+        {item.title}
+      </NavigationMenuTrigger>
+    </Link>
+  );
+}
