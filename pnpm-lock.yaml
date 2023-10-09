@@ -29,8 +29,14 @@ dependencies:
   '@pinecone-database/pinecone':
     specifier: ^1.0.1
     version: 1.1.0
+  '@planetscale/database':
+    specifier: ^1.11.0
+    version: 1.11.0
+  '@prisma/adapter-planetscale':
+    specifier: ^5.4.1
+    version: 5.4.1(@planetscale/database@1.11.0)
   '@prisma/client':
-    specifier: ^5.3.1
+    specifier: ^5.4.1
     version: 5.4.1(prisma@5.4.1)
   '@radix-ui/react-accordion':
     specifier: ^1.1.2
@@ -157,7 +163,7 @@ dependencies:
     version: 2.30.0
   langchain:
     specifier: ^0.0.153
-    version: 0.0.153(@pinecone-database/pinecone@1.1.0)(pdf-parse@1.1.1)
+    version: 0.0.153(@pinecone-database/pinecone@1.1.0)(@planetscale/database@1.11.0)(pdf-parse@1.1.1)
   lucide-react:
     specifier: ^0.279.0
     version: 0.279.0(react@18.2.0)
@@ -180,7 +186,7 @@ dependencies:
     specifier: 8.4.30
     version: 8.4.30
   prisma:
-    specifier: ^5.3.1
+    specifier: ^5.4.1
     version: 5.4.1
   react:
     specifier: 18.2.0
@@ -1664,6 +1670,22 @@ packages:
       typescript: 4.9.5
     dev: false
 
+  /@planetscale/database@1.11.0:
+    resolution: {integrity: sha512-aWbU+D/IRHoDE9975y+Q4c+EwwAWxCPwFId+N1AhQVFXzbeJMkj6KN2iQtoi03elcLMRdfT+V3i9Z4WRw+/oIA==}
+    engines: {node: '>=16'}
+    dev: false
+
+  /@prisma/adapter-planetscale@5.4.1(@planetscale/database@1.11.0):
+    resolution: {integrity: sha512-K03+n2YDUUy5nO2m3BNHSaMi0HePpEAd0lNz7dnueyiYY6J0VgNXKmSN9pjaDgxF6df7i+NHeGwXCxw4kNhdzw==}
+    peerDependencies:
+      '@planetscale/database': ^1.11.0
+    dependencies:
+      '@planetscale/database': 1.11.0
+      '@prisma/driver-adapter-utils': 5.4.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@prisma/client@5.4.1(prisma@5.4.1):
     resolution: {integrity: sha512-xyD0DJ3gRNfLbPsC+YfMBBuLJtZKQfy1OD2qU/PZg+HKrr7SO+09174LMeTlWP0YF2wca9LxtVd4HnAiB5ketQ==}
     engines: {node: '>=16.13'}
@@ -1676,6 +1698,14 @@ packages:
     dependencies:
       '@prisma/engines-version': 5.4.1-1.2f302df92bd8945e20ad4595a73def5b96afa54f
       prisma: 5.4.1
+    dev: false
+
+  /@prisma/driver-adapter-utils@5.4.1:
+    resolution: {integrity: sha512-muYjkzf6qdxz4uGBi7nKyPaGRGLnSgiRautqAhZiMwbTOr9hMgyNI+aCJTCaKfYfNWjYCx2r5J6R1mJtPhzFhQ==}
+    dependencies:
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@prisma/engines-version@5.4.1-1.2f302df92bd8945e20ad4595a73def5b96afa54f:
@@ -6095,7 +6125,7 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /langchain@0.0.153(@pinecone-database/pinecone@1.1.0)(pdf-parse@1.1.1):
+  /langchain@0.0.153(@pinecone-database/pinecone@1.1.0)(@planetscale/database@1.11.0)(pdf-parse@1.1.1):
     resolution: {integrity: sha512-CzNwKN8Zb6CM2nrnIj7vL+4zOpLdV6Bu9XzlUb6srpCpqb6CpzpEaLriZLZsF3ZWlOKGNDtxI8zYiDiSp6DzTA==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -6346,6 +6376,7 @@ packages:
     dependencies:
       '@anthropic-ai/sdk': 0.6.2
       '@pinecone-database/pinecone': 1.1.0
+      '@planetscale/database': 1.11.0
       ansi-styles: 5.2.0
       binary-extensions: 2.2.0
       camelcase: 6.3.0
