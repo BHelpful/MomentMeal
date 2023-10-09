@@ -1,7 +1,7 @@
-import { Ingredient } from '@prisma/client';
+import { type Ingredient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
-import { createRecipeInput } from './recipeRouter';
+import { type z } from 'zod';
+import { type createRecipeInput } from './recipeRouter';
 
 export function computeIngredientsToCreateOrConnect(
   ingredients: Ingredient[],

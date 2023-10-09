@@ -16,15 +16,15 @@ export default function Home() {
           className="mx-auto flex w-full max-w-[64rem] flex-col items-center justify-center gap-4 pb-8 pt-6 text-center md:pb-2 md:pt-10 lg:py-28 lg:pb-2"
         >
           <Icons.logo className="h-32 w-32" aria-hidden="true" />
-          <div className="hover:bg-primary/50 mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-secondary-200 bg-primary-50 px-7 py-2 shadow-md backdrop-blur transition-all hover:border-secondary-300">
-            <p className="text-sm font-semibold text-secondary-700">
+          <div className="border-secondary-200 bg-primary-50 hover:border-secondary-300 mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border px-7 py-2 shadow-md backdrop-blur transition-all hover:bg-primary/50">
+            <p className="text-secondary-700 text-sm font-semibold">
               MealTime is in Alpha development!
             </p>
           </div>
-          <h1 className="max-w-4xl text-5xl font-bold text-secondary-500 md:text-6xl lg:text-7xl">
+          <h1 className="text-secondary-500 max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
             <span className="text-primary">Elevate</span> your cooking
           </h1>
-          <Balancer className="text-muted-foreground max-w-[46rem] text-lg sm:text-xl">
+          <Balancer className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
             MealTime is a marketplace for food and recipes. We help you find and
             create the best recipes and meal plans for you.
           </Balancer>
@@ -59,7 +59,7 @@ export default function Home() {
           <div>
             <div className="mx-auto max-w-6xl px-6 lg:px-8">
               <div className="mt-16 flow-root sm:mt-24">
-                <div className="bg-foreground/5 ring-foreground/10 -m-2 rounded-xl p-2 ring-1 ring-inset lg:-m-4 lg:rounded-2xl lg:p-4">
+                <div className="-m-2 rounded-xl bg-foreground/5 p-2 ring-1 ring-inset ring-foreground/10 lg:-m-4 lg:rounded-2xl lg:p-4">
                   <Image
                     src="/images/bundle.webp"
                     alt="product preview"
@@ -67,7 +67,7 @@ export default function Home() {
                     height={866}
                     quality={1}
                     priority
-                    className="ring-foreground/10 rounded-md bg-primary-50 shadow-2xl ring-1"
+                    className="bg-primary-50 rounded-md shadow-2xl ring-1 ring-foreground/10"
                   />
                 </div>
               </div>
@@ -90,14 +90,14 @@ export default function Home() {
       </div>
 
       {/* Feature section */}
-      <div className="mx-auto mb-32 mt-32 max-w-5xl sm:mt-56">
+      <div className="mx-auto my-32 max-w-5xl sm:mt-56">
         <div className="mb-12 px-6 lg:px-8">
           <div className="mx-auto max-w-2xl sm:text-center">
-            <h2 className="mt-2 text-4xl font-bold text-secondary-900 sm:text-5xl">
+            <h2 className="text-secondary-900 mt-2 text-4xl font-bold sm:text-5xl">
               {/* Start chatting in minutes */}
               Start sharing your recipes in minutes
             </h2>
-            <p className="mt-4 text-lg text-secondary-600">
+            <p className="text-secondary-600 mt-4 text-lg">
               {/* Chatting to your PDF files has never been easier
 							than with MealTime. */}
               With MealTime you can add your recipes and share them with the
@@ -110,14 +110,14 @@ export default function Home() {
         {/* steps */}
         <ol className="my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0">
           <li className="md:flex-1">
-            <div className="flex flex-col space-y-2 border-l-4 border-secondary-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
-              <span className="text-sm font-medium text-primary-700">
+            <div className="border-secondary-300 flex flex-col space-y-2 border-l-4 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
+              <span className="text-primary-700 text-sm font-medium">
                 Step 1
               </span>
               <span className="text-xl font-semibold">
                 Sign up for an account
               </span>
-              <span className="mt-2 text-secondary-700">
+              <span className="text-secondary-700 mt-2">
                 Either starting out with a free plan or choose our{' '}
                 <Link
                   href="/pricing"
@@ -130,15 +130,15 @@ export default function Home() {
             </div>
           </li>
           <li className="md:flex-1">
-            <div className="flex flex-col space-y-2 border-l-4 border-secondary-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
-              <span className="text-sm font-medium text-primary-700">
+            <div className="border-secondary-300 flex flex-col space-y-2 border-l-4 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
+              <span className="text-primary-700 text-sm font-medium">
                 Step 2
               </span>
               <span className="text-xl font-semibold">
                 {/* Upload your PDF file */}
                 Add your recipes
               </span>
-              <span className="mt-2 text-secondary-700">
+              <span className="text-secondary-700 mt-2">
                 {/* We&apos;ll process your file and make it ready
 								for you to chat with. */}
                 You can upload your recipes and we&apos;ll process them and make
@@ -147,19 +147,19 @@ export default function Home() {
             </div>
           </li>
           <li className="md:flex-1">
-            <div className="flex flex-col space-y-2 border-l-4 border-secondary-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
-              <span className="text-sm font-medium text-primary-700">
+            <div className="border-secondary-300 flex flex-col space-y-2 border-l-4 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
+              <span className="text-primary-700 text-sm font-medium">
                 Step 3
               </span>
               <span className="text-xl font-semibold">
                 {/* Start asking questions */}
                 Share your recipes
               </span>
-              <span className="mt-2 text-secondary-700">
+              <span className="text-secondary-700 mt-2">
                 {/* It&apos;s that simple. Try out Quill today - it
 								really takes less than a minute. */}
-                You can share your recipes with the world and if you're a pro
-                user you can even earn money from them.
+                You can share your recipes with the world and if you&apos;re a
+                pro user you can even earn money from them.
               </span>
             </div>
           </li>
@@ -167,7 +167,7 @@ export default function Home() {
 
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="mt-16 flow-root sm:mt-24">
-            <div className="bg-foreground/5 ring-foreground/10 -m-2 rounded-xl p-2 ring-1 ring-inset lg:-m-4 lg:rounded-2xl lg:p-4">
+            <div className="-m-2 rounded-xl bg-foreground/5 p-2 ring-1 ring-inset ring-foreground/10 lg:-m-4 lg:rounded-2xl lg:p-4">
               <Image
                 src="/images/dinner.webp"
                 alt="uploading preview"
@@ -175,7 +175,7 @@ export default function Home() {
                 height={732}
                 quality={1}
                 loading="lazy"
-                className="ring-foreground/10 rounded-md bg-primary-50 shadow-2xl ring-1"
+                className="bg-primary-50 rounded-md shadow-2xl ring-1 ring-foreground/10"
               />
             </div>
           </div>

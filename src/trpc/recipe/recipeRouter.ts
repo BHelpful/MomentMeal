@@ -83,7 +83,7 @@ export const recipeRouter = router({
     });
   }),
 
-  getPublicRecipes: publicProcedure.query(async ({ ctx }) => {
+  getPublicRecipes: publicProcedure.query(async () => {
     const recipes = await db.recipe.findMany({
       where: {
         isPublic: true,

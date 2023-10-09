@@ -1,7 +1,7 @@
 'use client';
 
 import { trpc } from '@/app/_trpc/client';
-import { serverClient } from '@/app/_trpc/serverClient';
+import { type serverClient } from '@/app/_trpc/serverClient';
 import { Shell } from '@/components/shells/shell';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -26,8 +26,8 @@ export default function RecipeView({
   );
 
   const deleteRecipe = trpc.recipe.deleteRecipe.useMutation({
-    onSuccess: () => {
-      recipe.refetch();
+    onSuccess: async () => {
+      await recipe.refetch();
       return router.push('/recipes');
     },
     onError: (err) => {
