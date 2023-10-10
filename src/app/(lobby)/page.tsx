@@ -1,11 +1,11 @@
 import { Icons } from '@/components/icons';
 import { Shell } from '@/components/shells/shell';
 import { buttonVariants } from '@/components/ui/button';
+import { clerkClient } from '@clerk/nextjs/server';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Balancer from 'react-wrap-balancer';
-import { clerkClient } from "@clerk/nextjs/server";
 
 export default async function Home() {
   const totalUsers = await clerkClient.users.getCount();
@@ -30,14 +30,19 @@ export default async function Home() {
             MealTime is a marketplace for food and recipes. We help you find and
             create the best recipes and meal plans for you.
           </Balancer>
-          <Balancer className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
-            {totalUsers} users have already started their journey!
+          <Balancer className="border-secondary-200 bg-primary-50 hover:border-secondary-300 mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border px-7 py-2 shadow-md backdrop-blur transition-all hover:bg-primary/50">
+            <div className="flex items-center space-x-2">
+              <p className="text-base text-muted-foreground">
+                Used by {totalUsers}
+              </p>
+              <Icons.users className="h-5 w-5 text-muted-foreground" />
+            </div>
           </Balancer>
           <Link
             href="/recipes"
             className={buttonVariants({
               size: 'lg',
-              className: 'mt-5',
+              className: '',
             })}
           >
             Get started <ArrowRight className="ml-1.5 h-5 w-5" />
