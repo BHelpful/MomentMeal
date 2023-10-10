@@ -5,8 +5,10 @@ import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Balancer from 'react-wrap-balancer';
+import { clerkClient } from "@clerk/nextjs/server";
 
 export default function Home() {
+  const totalUsers = await clerkClient.users.getCount();
   return (
     <>
       <Shell className="gap-8">
@@ -27,6 +29,9 @@ export default function Home() {
           <Balancer className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
             MealTime is a marketplace for food and recipes. We help you find and
             create the best recipes and meal plans for you.
+          </Balancer>
+          <Balancer className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
+            {totalUsers} has already started their journey!
           </Balancer>
           <Link
             href="/recipes"
