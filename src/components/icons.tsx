@@ -38,6 +38,7 @@ import {
   Plus,
   PlusCircle,
   RefreshCw,
+  Salad,
   Search,
   Send,
   Settings,
@@ -118,6 +119,7 @@ export const Icons = {
   clock: Clock,
   users: Users,
   heart: Heart,
+  recipe: Salad,
   logo: (props: LucideProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"

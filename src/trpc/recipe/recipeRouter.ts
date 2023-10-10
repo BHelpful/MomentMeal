@@ -5,7 +5,7 @@ import { privateProcedure, publicProcedure, router } from '../trpc';
 import { computeIngredientsToCreateOrConnect } from './recipeUtil';
 
 export const createRecipeInput = z.object({
-  title: z.string(),
+  title: z.string().min(3).max(50),
   description: z.string(),
   isPublic: z.boolean(),
   ingredients: z.array(

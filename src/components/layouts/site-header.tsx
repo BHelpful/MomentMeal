@@ -75,17 +75,17 @@ export function SiteHeader({ user }: SiteHeaderProps) {
                           aria-hidden="true"
                         />
                         Account
-                        <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
+                        <DropdownMenuShortcut>A</DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/dashboard">
-                        <Icons.terminal
+                      <Link href="/dashboard/recipes">
+                        <Icons.recipe
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />
-                        Dashboard
-                        <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                        Recipes
+                        <DropdownMenuShortcut>R</DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild disabled>
@@ -95,21 +95,21 @@ export function SiteHeader({ user }: SiteHeaderProps) {
                           aria-hidden="true"
                         />
                         Settings
-                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                        <DropdownMenuShortcut>S</DropdownMenuShortcut>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/signout">
+                        <Icons.logout
+                          className="mr-2 h-4 w-4"
+                          aria-hidden="true"
+                        />
+                        Quit (Log out)
+                        <DropdownMenuShortcut>Q</DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link href="/signout">
-                      <Icons.logout
-                        className="mr-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                      Log out
-                      <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                    </Link>
-                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (

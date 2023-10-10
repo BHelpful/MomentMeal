@@ -13,6 +13,12 @@ export const dashboardConfig: DashboardConfig = {
       items: [],
     },
     {
+      title: 'Recipes',
+      href: '/dashboard/recipes',
+      icon: 'recipe',
+      items: [],
+    },
+    {
       title: 'Billing',
       href: '/dashboard/billing',
       icon: 'billing',

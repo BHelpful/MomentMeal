@@ -16,6 +16,8 @@ export const env = createEnv({
     STRIPE_SECRET_KEY: z.string(),
     STRIPE_WEBHOOK_SECRET: z.string(),
     PINECONE_API_KEY: z.string(),
+    STRIPE_STD_MONTHLY_PRICE_ID: z.string(),
+    STRIPE_PRO_MONTHLY_PRICE_ID: z.string(),
   },
 
   /**
@@ -48,6 +50,8 @@ export const env = createEnv({
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     PINECONE_API_KEY: process.env.PINECONE_API_KEY,
+    STRIPE_STD_MONTHLY_PRICE_ID: process.env.STRIPE_STD_MONTHLY_PRICE_ID,
+    STRIPE_PRO_MONTHLY_PRICE_ID: process.env.STRIPE_PRO_MONTHLY_PRICE_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
