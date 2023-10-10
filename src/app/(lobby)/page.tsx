@@ -31,7 +31,7 @@ export default async function Home() {
             create the best recipes and meal plans for you.
           </Balancer>
           <Balancer className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
-            {totalUsers} has already started their journey!
+            {totalUsers} users has already started their journey!
           </Balancer>
           <Link
             href="/recipes"
