@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Balancer from 'react-wrap-balancer';
 import { clerkClient } from "@clerk/nextjs/server";
 
-export default function Home() {
+export default async function Home() {
   const totalUsers = await clerkClient.users.getCount();
   return (
     <>
