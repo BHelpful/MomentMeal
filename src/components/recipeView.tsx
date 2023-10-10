@@ -36,6 +36,7 @@ export default function RecipeView({
     }
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const deleteRecipe = trpc.recipe.deleteRecipe.useMutation({
     onSuccess: async () => {
       await recipe.refetch();

@@ -9,12 +9,9 @@ import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
-import { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { type Metadata } from 'next';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'simplebar-react/dist/simplebar.min.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -69,10 +66,10 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en" className="light">
+      <html lang="en">
         <body
           className={cn(
-            'bg-background min-h-screen font-sans antialiased',
+            'min-h-screen bg-background font-sans antialiased',
             fontSans.variable,
             fontMono.variable
           )}

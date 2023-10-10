@@ -1,7 +1,7 @@
 import { isClerkAPIResponseError } from '@clerk/nextjs';
 import type { User } from '@clerk/nextjs/server';
 import { clsx, type ClassValue } from 'clsx';
-import { Metadata } from 'next';
+import { type Metadata } from 'next';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import * as z from 'zod';

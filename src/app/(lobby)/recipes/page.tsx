@@ -12,12 +12,10 @@ const Page = async () => {
         aria-labelledby="hero-heading"
         className="mx-auto flex w-full max-w-[64rem] flex-col items-center justify-center gap-4 pb-8 pt-6 text-center md:pb-2 md:pt-10 lg:py-28 lg:pb-2"
       >
-        <div className="hover:bg-primary/50 mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-secondary-200 bg-primary-50 px-7 py-2 shadow-md backdrop-blur transition-all hover:border-secondary-300">
-          <p className="text-sm font-semibold text-secondary-700">
-            Look at all those recipes
-          </p>
+        <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border px-7 py-2 shadow-md backdrop-blur transition-all hover:bg-primary/50">
+          <p className="text-sm font-semibold">Look at all those recipes</p>
         </div>
-        <h1 id="hero-heading" className="text-primary text-3xl font-extrabold">
+        <h1 id="hero-heading" className="text-3xl font-extrabold text-primary">
           Recipes
         </h1>
         <RecipeList initialRecipes={recipes} />

@@ -1,7 +1,7 @@
 'use client';
 
 import { trpc } from '@/app/_trpc/client';
-import { serverClient } from '@/app/_trpc/serverClient';
+import { type serverClient } from '@/app/_trpc/serverClient';
 import { Shell } from '@/components/shells/shell';
 import Link from 'next/link';
 

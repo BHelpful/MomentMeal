@@ -43,7 +43,7 @@ export function LogOutButtons() {
 				<Skeleton
 					className={cn(
 						buttonVariants({ size: "sm" }),
-						"bg-muted text-muted-foreground w-full"
+						"w-full bg-muted text-muted-foreground"
 					)}
 				>
 					Log out

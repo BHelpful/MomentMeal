@@ -1,3 +1,43 @@
+# .prettierignore
 PULL_REQUEST_TEMPLATE.md
-bun.lockb
+pnpm-lock.yaml
 coverage/
+node_modules/
+
+# Ignore all .env files in the root directory
+!.env*
+
+# Ignore all log files and build output
+**/logs/*
+**/build/*
+**/dist/*
+**/coverage/*
+**/node_modules/*
+**/pnpm-lock.yaml
+**/pnpm-workspace.yaml
+
+# Ignore all files in the .github directory
+.github/*
+!.github/ISSUE_TEMPLATE/
+!.github/PULL_REQUEST_TEMPLATE/
+
+# Ignore all files in the .vscode directory
+.vscode/*
+
+# Ignore all files in the .idea directory
+.idea/*
+
+# Ignore all files in the .vs directory
+.vs/*
+
+# Ignore all files in the .next directory
+.next/*
+
+# Ignore all files in the .cache directory
+.cache/*
+
+# Ignore all files in the .DS_Store directory
+.DS_Store
+
+# Ignore all files in the .git directory
+.git/*

@@ -88,7 +88,7 @@ const Page = async () => {
       <MaxWidthWrapper className="mb-8 mt-24 max-w-5xl text-center">
         <div className="mx-auto mb-10 sm:max-w-lg">
           <h1 className="text-6xl font-bold sm:text-7xl">Pricing</h1>
-          <p className="mt-5 text-secondary-600 sm:text-lg">
+          <p className="mt-5 sm:text-lg">
             Whether you&apos;re just trying out our service or need more,
             we&apos;ve got you covered.
           </p>
@@ -108,41 +108,37 @@ const Page = async () => {
               return (
                 <div
                   key={plan}
-                  className={cn(
-                    'relative rounded-2xl bg-primary-50 shadow-lg',
-                    {
-                      'border-2 border-primary-600 shadow-primary-200':
-                        plan === 'Pro',
-                      'border border-secondary-200': plan !== 'Pro',
-                    }
-                  )}
+                  className={cn('relative rounded-2xl shadow-lg', {
+                    // TODO: fix the tailwind classnames here as "-someNumber" is not valid for primary, secondary, etc.
+                    'border-primary-600 shadow-primary-200 border-2':
+                      plan === 'Pro',
+                    'border-secondary-200 border': plan !== 'Pro',
+                  })}
                 >
                   {plan === 'Pro' && (
-                    <div className="text-primary absolute -top-5 left-0 right-0 mx-auto w-32 rounded-full bg-gradient-to-r from-primary-600 to-cyan-600 px-3 py-2 text-sm font-medium">
+                    <div className="absolute inset-x-0 -top-5 mx-auto w-32 rounded-full bg-gradient-to-r to-cyan-600 px-3 py-2 text-sm font-medium text-primary">
                       Upgrade now
                     </div>
                   )}
 
                   <div className="p-5">
-                    <h3 className="font-display my-3 text-center text-3xl font-bold">
+                    <h3 className="my-3 text-center text-3xl font-bold">
                       {plan}
                     </h3>
-                    <p className="text-secondary-500">{tagline}</p>
-                    <p className="font-display my-5 text-6xl font-semibold">
-                      ${price}
-                    </p>
-                    <p className="text-secondary-500">per month</p>
+                    <p className="">{tagline}</p>
+                    <p className="my-5 text-6xl font-semibold">${price}</p>
+                    <p className="">per month</p>
                   </div>
 
-                  <div className="flex h-20 items-center justify-center border-b border-t border-secondary-200 bg-secondary-50">
+                  <div className="flex h-20 items-center justify-center border-y">
                     <div className="flex items-center space-x-1">
                       <p>{quataThing} recipes saved</p>
 
                       <Tooltip delayDuration={300}>
                         <TooltipTrigger className="ml-1.5 cursor-default">
-                          <HelpCircle className="h-4 w-4 text-secondary-500" />
+                          <HelpCircle className="h-4 w-4" />
                         </TooltipTrigger>
-                        <TooltipContent className="w-80 bg-primary-50 p-2">
+                        <TooltipContent className="w-80 p-2">
                           Your quota is the number of recipes you can save to
                           MealTime. You can upgrade to Pro at any time to get
                           more quota.
@@ -154,17 +150,18 @@ const Page = async () => {
                   <ul className="my-10 space-y-5 px-8">
                     {features.map(({ text, footnote, negative }) => (
                       <li key={text} className="flex space-x-5">
-                        <div className="flex-shrink-0">
+                        <div className="shrink-0">
                           {negative ? (
-                            <Minus className="h-6 w-6 text-secondary-300" />
+                            <Minus className="h-6 w-6" />
                           ) : (
-                            <Check className="h-6 w-6 text-primary-500" />
+                            <Check className="h-6 w-6" />
                           )}
                         </div>
                         {footnote ? (
                           <div className="flex items-center space-x-1">
                             <p
-                              className={cn('text-secondary-600', {
+                              className={cn('', {
+                                // TODO: fix the tailwind classnames here as "-someNumber" is not valid for primary, secondary, etc.
                                 'text-secondary-400': negative,
                               })}
                             >
@@ -172,16 +169,17 @@ const Page = async () => {
                             </p>
                             <Tooltip delayDuration={300}>
                               <TooltipTrigger className="ml-1.5 cursor-default">
-                                <HelpCircle className="h-4 w-4 text-secondary-500" />
+                                <HelpCircle className="h-4 w-4" />
                               </TooltipTrigger>
-                              <TooltipContent className="w-80 bg-primary-50 p-2">
+                              <TooltipContent className="w-80 p-2">
                                 {footnote}
                               </TooltipContent>
                             </Tooltip>
                           </div>
                         ) : (
                           <p
-                            className={cn('text-secondary-600', {
+                            className={cn('', {
+                              // TODO: fix the tailwind classnames here as "-someNumber" is not valid for primary, secondary, etc.
                               'text-secondary-400': negative,
                             })}
                           >
@@ -191,7 +189,7 @@ const Page = async () => {
                       </li>
                     ))}
                   </ul>
-                  <div className="border-t border-secondary-200" />
+                  <div className="border-t" />
                   <div className="p-5">
                     {plan === 'Free' ? (
                       <Link

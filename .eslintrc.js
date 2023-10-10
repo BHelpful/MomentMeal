@@ -20,11 +20,17 @@ const config = {
       },
     ],
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    'tailwindcss/no-custom-classname': [
+      'error',
+      {
+        config: require('./tailwind.config'),
+      },
+    ],
   },
   settings: {
     tailwindcss: {
       callees: ['cn', 'cva'],
-      config: './tailwind.config.ts',
+      config: require('./tailwind.config'),
       classRegex: '^(class(Name)?|tw)$',
     },
     next: {

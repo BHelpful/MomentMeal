@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TextareaAutosize, {
-  TextareaAutosizeProps,
+  type TextareaAutosizeProps,
 } from 'react-textarea-autosize'
 
 import { cn } from '@/lib/utils'

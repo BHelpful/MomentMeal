@@ -10,7 +10,7 @@ import { Shell } from "@/components/shells/shell"
 
 export function SiteFooter() {
 	return (
-		<footer className="bg-background w-full border-t">
+		<footer className="w-full border-t bg-background">
 			<Shell as="div">
 				<section
 					id="footer-content"
@@ -36,7 +36,7 @@ export function SiteFooter() {
 					<section
 						id="footer-links"
 						aria-labelledby="footer-links-heading"
-						className="xxs:grid-cols-2 grid flex-1 grid-cols-1 gap-10 sm:grid-cols-3"
+						className="grid flex-1 grid-cols-1 gap-10 xxs:grid-cols-2 sm:grid-cols-3"
 					>
 						{siteConfig.footerNav.map((item) => (
 							<div key={item.title} className="space-y-3">
@@ -58,7 +58,7 @@ export function SiteFooter() {
 														? "noreferrer"
 														: undefined
 												}
-												className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+												className="text-sm text-muted-foreground transition-colors hover:text-foreground"
 											>
 												{link.title}
 												<span className="sr-only">
@@ -87,13 +87,13 @@ export function SiteFooter() {
 					aria-labelledby="footer-bottom-heading"
 					className="flex items-center space-x-4"
 				>
-					<div className="text-muted-foreground flex-1 text-left text-sm leading-loose">
+					<div className="flex-1 text-left text-sm leading-loose text-muted-foreground">
 						Built by{" "}
 						<Link
 							href="https://www.linkedin.com/company/bhelpful"
 							target="_blank"
 							rel="noreferrer"
-							className="hover:text-foreground font-semibold transition-colors"
+							className="font-semibold transition-colors hover:text-foreground"
 						>
 							BHelpful
 							<span className="sr-only">LinkedIn</span>
