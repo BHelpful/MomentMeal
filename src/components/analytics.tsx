@@ -1,11 +1,11 @@
-import Loglib from "@loglib/tracker/react"
+import Loglib from '@loglib/tracker/react';
 
 export function Analytics() {
   return (
     <Loglib
       config={{
-        id: "mealtime_bhelpful",
+        id: 'mealtime_bhelpful',
       }}
     />
-  )
+  );
 }

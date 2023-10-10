@@ -1,56 +1,52 @@
-import { notFound } from "next/navigation"
-import { allAuthors, allPosts } from "contentlayer/generated"
-
-import { Mdx } from "@/components/mdx/mdx-components"
-
-import "@/styles/mdx.css"
-
-import { type Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
-import { env } from "@/env.mjs"
-
-import { absoluteUrl, cn, formatDate } from "@/lib/utils"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { buttonVariants } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { Icons } from "@/components/icons"
-import { MdxPager } from "@/components/pagers/mdx-pager"
-import { Shell } from "@/components/shells/shell"
+import { Mdx } from '@/components/mdx/mdx-components';
+import { allAuthors, allPosts } from 'contentlayer/generated';
+import { notFound } from 'next/navigation';
+import '@/styles/mdx.css';
+import { Icons } from '@/components/icons';
+import { MdxPager } from '@/components/pagers/mdx-pager';
+import { Shell } from '@/components/shells/shell';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { buttonVariants } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { env } from '@/env.mjs';
+import { absoluteUrl, cn, formatDate } from '@/lib/utils';
+import { type Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface PostPageProps {
   params: {
-    slug: string[]
-  }
+    slug: string[];
+  };
 }
 
 // eslint-disable-next-line @typescript-eslint/require-await
-async function getPostFromParams(params: PostPageProps["params"]) {
-  const slug = params?.slug?.join("/")
-  const post = allPosts.find((post) => post.slugAsParams === slug)
+async function getPostFromParams(params: PostPageProps['params']) {
+  const slug = params?.slug?.join('/');
+  const post = allPosts.find((post) => post.slugAsParams === slug);
 
   if (!post) {
-    null
+    null;
   }
 
-  return post
+  return post;
 }
 
 export async function generateMetadata({
   params,
 }: PostPageProps): Promise<Metadata> {
-  const post = await getPostFromParams(params)
+  const post = await getPostFromParams(params);
 
   if (!post) {
-    return {}
+    return {};
   }
 
-  const url = env.NEXT_PUBLIC_APP_URL
+  const url = env.NEXT_PUBLIC_APP_URL;
 
-  const ogUrl = new URL(`${url}/api/og`)
-  ogUrl.searchParams.set("title", post.title)
-  ogUrl.searchParams.set("type", "Blog Post")
-  ogUrl.searchParams.set("mode", "dark")
+  const ogUrl = new URL(`${url}/api/og`);
+  ogUrl.searchParams.set('title', post.title);
+  ogUrl.searchParams.set('type', 'Blog Post');
+  ogUrl.searchParams.set('mode', 'dark');
 
   return {
     title: post.title,
@@ -61,7 +57,7 @@ export async function generateMetadata({
     openGraph: {
       title: post.title,
       description: post.description,
-      type: "article",
+      type: 'article',
       url: absoluteUrl(post.slug),
       images: [
         {
@@ -73,41 +69,41 @@ export async function generateMetadata({
       ],
     },
     twitter: {
-      card: "summary_large_image",
+      card: 'summary_large_image',
       title: post.title,
       description: post.description,
       images: [ogUrl.toString()],
     },
-  }
+  };
 }
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function generateStaticParams(): Promise<
-  PostPageProps["params"][]
+  PostPageProps['params'][]
 > {
   return allPosts.map((post) => ({
-    slug: post.slugAsParams.split("/"),
-  }))
+    slug: post.slugAsParams.split('/'),
+  }));
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const post = await getPostFromParams(params)
+  const post = await getPostFromParams(params);
 
   if (!post) {
-    notFound()
+    notFound();
   }
 
   const authors = post.authors.map((author) =>
-    allAuthors.find((a) => a.title === author?.replace(/\r$/, ""))
-  )
+    allAuthors.find((a) => a.title === author?.replace(/\r$/, ''))
+  );
 
   return (
     <Shell as="article" variant="markdown">
       <Link
         href="/blog"
         className={cn(
-          buttonVariants({ variant: "ghost" }),
-          "absolute left-[-200px] top-14 hidden xl:inline-flex"
+          buttonVariants({ variant: 'ghost' }),
+          'absolute left-[-200px] top-14 hidden xl:inline-flex'
         )}
       >
         <Icons.chevronLeft className="mr-2 h-4 w-4" />
@@ -171,7 +167,7 @@ export default async function PostPage({ params }: PostPageProps) {
       <Link
         href="/blog"
         className={cn(
-          buttonVariants({ variant: "ghost", className: "mx-auto mt-4 w-fit" })
+          buttonVariants({ variant: 'ghost', className: 'mx-auto mt-4 w-fit' })
         )}
       >
         <Icons.chevronLeft className="mr-2 h-4 w-4" aria-hidden="true" />
@@ -179,5 +175,5 @@ export default async function PostPage({ params }: PostPageProps) {
         <span className="sr-only">See all posts</span>
       </Link>
     </Shell>
-  )
+  );
 }

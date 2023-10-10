@@ -1,47 +1,46 @@
-"use client"
+'use client';
 
-import * as React from "react"
-import Link from "next/link"
-import { useSelectedLayoutSegment } from "next/navigation"
-import type { MainNavItem, SidebarNavItem } from "@/types"
-
-import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
+import { Icons } from '@/components/icons';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Icons } from "@/components/icons"
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { siteConfig } from '@/config/site';
+import { cn } from '@/lib/utils';
+import type { MainNavItem, SidebarNavItem } from '@/types';
+import Link from 'next/link';
+import { useSelectedLayoutSegment } from 'next/navigation';
+import * as React from 'react';
 
 interface MobileNavProps {
-  mainNavItems?: MainNavItem[]
-  sidebarNavItems: SidebarNavItem[]
+  mainNavItems?: MainNavItem[];
+  sidebarNavItems: SidebarNavItem[];
 }
 
 export function MobileNav({ mainNavItems, sidebarNavItems }: MobileNavProps) {
-  const segment = useSelectedLayoutSegment()
-  const [isOpen, setIsOpen] = React.useState(false)
+  const segment = useSelectedLayoutSegment();
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const navItems = React.useMemo(() => {
-    const items = mainNavItems ?? []
+    const items = mainNavItems ?? [];
     const myAccountItem = {
-      title: "My Account",
+      title: 'My Account',
       items: sidebarNavItems,
-    }
+    };
     const myAccountIndex = items.findIndex(
-      (item) => item.title === "My Account"
-    )
+      (item) => item.title === 'My Account'
+    );
     if (myAccountIndex !== -1) {
-      items.splice(myAccountIndex, 1)
+      items.splice(myAccountIndex, 1);
     }
-    items.splice(1, 0, myAccountItem)
-    return items
-  }, [mainNavItems, sidebarNavItems])
+    items.splice(1, 0, myAccountItem);
+    return items;
+  }, [mainNavItems, sidebarNavItems]);
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -109,15 +108,15 @@ export function MobileNav({ mainNavItems, sidebarNavItems }: MobileNavProps) {
         </ScrollArea>
       </SheetContent>
     </Sheet>
-  )
+  );
 }
 
 interface MobileLinkProps {
-  children?: React.ReactNode
-  href: string
-  disabled?: boolean
-  segment: string
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  children?: React.ReactNode;
+  href: string;
+  disabled?: boolean;
+  segment: string;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function MobileLink({
@@ -131,13 +130,13 @@ function MobileLink({
     <Link
       href={href}
       className={cn(
-        "text-foreground/70 transition-colors hover:text-foreground",
-        href.includes(segment) && "text-foreground",
-        disabled && "pointer-events-none opacity-60"
+        'text-foreground/70 transition-colors hover:text-foreground',
+        href.includes(segment) && 'text-foreground',
+        disabled && 'pointer-events-none opacity-60'
       )}
       onClick={() => setIsOpen(false)}
     >
       {children}
     </Link>
-  )
+  );
 }

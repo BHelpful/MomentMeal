@@ -1,9 +1,6 @@
-import { type Metadata } from "next"
-import Link from "next/link"
-import { redirect } from "next/navigation"
-import { env } from "@/env.mjs"
-import { currentUser } from "@clerk/nextjs"
-
+import { OAuthSignIn } from '@/components/auth/oauth-signin';
+import { SignUpForm } from '@/components/forms/signup-form';
+import { Shell } from '@/components/shells/shell';
 import {
   Card,
   CardContent,
@@ -11,20 +8,22 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { OAuthSignIn } from "@/components/auth/oauth-signin"
-import { SignUpForm } from "@/components/forms/signup-form"
-import { Shell } from "@/components/shells/shell"
+} from '@/components/ui/card';
+import { env } from '@/env.mjs';
+import { currentUser } from '@clerk/nextjs';
+import { type Metadata } from 'next';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
-  title: "Sign Up",
-  description: "Sign up for an account",
-}
+  title: 'Sign Up',
+  description: 'Sign up for an account',
+};
 
 export default async function SignUpPage() {
-  const user = await currentUser()
-  if (user) redirect("/")
+  const user = await currentUser();
+  if (user) redirect('/');
 
   return (
     <Shell className="max-w-lg">
@@ -51,7 +50,7 @@ export default async function SignUpPage() {
         </CardContent>
         <CardFooter>
           <div className="text-sm text-muted-foreground">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <Link
               aria-label="Sign in"
               href="/signin"
@@ -63,5 +62,5 @@ export default async function SignUpPage() {
         </CardFooter>
       </Card>
     </Shell>
-  )
+  );
 }

@@ -1,72 +1,71 @@
 // Modified from: https://github.com/shadcn-ui/ui/blob/main/apps/www/components/page-header.tsx
 
-import { cva, type VariantProps } from "class-variance-authority"
-import { Balancer } from "react-wrap-balancer"
-
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { Balancer } from 'react-wrap-balancer';
 
 interface PageHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  as?: React.ElementType
+  as?: React.ElementType;
 }
 
 function PageHeader({
   className,
   children,
-  as: Comp = "section",
+  as: Comp = 'section',
   ...props
 }: PageHeaderProps) {
   return (
-    <Comp className={cn("grid gap-1", className)} {...props}>
+    <Comp className={cn('grid gap-1', className)} {...props}>
       {children}
     </Comp>
-  )
+  );
 }
 
 const headingVariants = cva(
-  "font-bold leading-tight tracking-tighter lg:leading-[1.1]",
+  'font-bold leading-tight tracking-tighter lg:leading-[1.1]',
   {
     variants: {
       size: {
-        default: "text-3xl md:text-4xl",
-        sm: "text-2xl md:text-3xl",
-        lg: "text-4xl md:text-5xl",
+        default: 'text-3xl md:text-4xl',
+        sm: 'text-2xl md:text-3xl',
+        lg: 'text-4xl md:text-5xl',
       },
     },
     defaultVariants: {
-      size: "default",
+      size: 'default',
     },
   }
-)
+);
 
 interface PageHeaderHeadingProps
   extends React.HTMLAttributes<HTMLHeadingElement>,
     VariantProps<typeof headingVariants> {
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
 function PageHeaderHeading({
   className,
   size,
-  as: Comp = "h1",
+  as: Comp = 'h1',
   ...props
 }: PageHeaderHeadingProps) {
   return (
     <Comp className={cn(headingVariants({ size, className }))} {...props} />
-  )
+  );
 }
 
-const descriptionVariants = cva("max-w-[750px] text-muted-foreground", {
+const descriptionVariants = cva('max-w-[750px] text-muted-foreground', {
   variants: {
     size: {
-      default: "text-base sm:text-lg",
-      sm: "text-sm sm:text-base",
-      lg: "text-lg sm:text-xl",
+      default: 'text-base sm:text-lg',
+      sm: 'text-sm sm:text-base',
+      lg: 'text-lg sm:text-xl',
     },
   },
   defaultVariants: {
-    size: "default",
+    size: 'default',
   },
-})
+});
 
 interface PageHeaderDescriptionProps
   extends React.ComponentProps<typeof Balancer>,
@@ -83,7 +82,7 @@ function PageHeaderDescription({
       className={cn(descriptionVariants({ size, className }))}
       {...props}
     />
-  )
+  );
 }
 
-export { PageHeader, PageHeaderDescription, PageHeaderHeading }
+export { PageHeader, PageHeaderDescription, PageHeaderHeading };

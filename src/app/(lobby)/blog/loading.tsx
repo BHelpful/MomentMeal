@@ -1,13 +1,13 @@
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { Separator } from "@/components/ui/separator"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Icons } from "@/components/icons"
+import { Icons } from '@/components/icons';
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/page-header"
-import { Shell } from "@/components/shells/shell"
+} from '@/components/page-header';
+import { Shell } from '@/components/shells/shell';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function BlogLoading() {
   return (
@@ -47,5 +47,5 @@ export default function BlogLoading() {
         ))}
       </section>
     </Shell>
-  )
+  );
 }

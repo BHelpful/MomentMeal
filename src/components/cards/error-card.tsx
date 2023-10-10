@@ -1,8 +1,6 @@
-import * as React from "react"
-import Link from "next/link"
-
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { ClientButton } from '@/components/client-button';
+import { Icons } from '@/components/icons';
+import { buttonVariants } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -10,17 +8,18 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { ClientButton } from "@/components/client-button"
-import { Icons } from "@/components/icons"
+} from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import * as React from 'react';
 
 interface ErrorCardProps extends React.ComponentPropsWithoutRef<typeof Card> {
-  icon?: keyof typeof Icons
-  title: string
-  description: string
-  retryLink?: string
-  retryLinkText?: string
-  reset?: () => void
+  icon?: keyof typeof Icons;
+  title: string;
+  description: string;
+  retryLink?: string;
+  retryLinkText?: string;
+  reset?: () => void;
 }
 
 export function ErrorCard({
@@ -28,12 +27,12 @@ export function ErrorCard({
   title,
   description,
   retryLink,
-  retryLinkText = "Go back",
+  retryLinkText = 'Go back',
   reset,
   className,
   ...props
 }: ErrorCardProps) {
-  const Icon = Icons[icon ?? "warning"]
+  const Icon = Icons[icon ?? 'warning'];
 
   return (
     <Card
@@ -41,7 +40,7 @@ export function ErrorCard({
       role="alert"
       aria-live="assertive"
       aria-atomic="true"
-      className={cn("grid w-full place-items-center", className)}
+      className={cn('grid w-full place-items-center', className)}
       {...props}
     >
       <CardHeader>
@@ -61,7 +60,7 @@ export function ErrorCard({
             href={retryLink}
             className={cn(
               buttonVariants({
-                variant: "ghost",
+                variant: 'ghost',
               })
             )}
           >
@@ -78,5 +77,5 @@ export function ErrorCard({
         </CardFooter>
       ) : null}
     </Card>
-  )
+  );
 }

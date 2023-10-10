@@ -1,10 +1,10 @@
-import { Skeleton } from "@/components/ui/skeleton"
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/page-header"
-import { Shell } from "@/components/shells/shell"
+} from '@/components/page-header';
+import { Shell } from '@/components/shells/shell';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function SignOutLoading() {
   return (
@@ -20,5 +20,5 @@ export default function SignOutLoading() {
         <Skeleton className="h-8 w-20" />
       </div>
     </Shell>
-  )
+  );
 }

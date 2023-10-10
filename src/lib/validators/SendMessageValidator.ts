@@ -1,6 +1,6 @@
-import {z} from "zod"
+import { z } from 'zod';
 
 export const SendMessageValidator = z.object({
-    fileId: z.string(),
-    message: z.string()
-})
+  fileId: z.string(),
+  message: z.string(),
+});
