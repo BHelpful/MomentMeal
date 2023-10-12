@@ -1,8 +1,8 @@
-# MealTime - A marketplace for food and recipes.
+# MomentMeal - A marketplace for food and recipes.
 
 Built with the Next.js 13.5 App Router, tRPC, TypeScript, Prisma & Tailwind
 
-![Project Image](https://github.com/BHelpful/MealTime/assets/39928082/74cb09ba-d29d-4ab2-a361-5a31e7e392bd)
+![Project Image](https://github.com/BHelpful/MomentMeal/assets/39928082/74cb09ba-d29d-4ab2-a361-5a31e7e392bd)
 
 # Credits
 

@@ -17,8 +17,8 @@ export function absoluteUrl(path: string) {
 }
 
 export function constructMetadata({
-  title = 'MealTime - A marketplace for food and recipes.',
-  description = 'MealTime is a marketplace for food and recipes. We help you create and share your recipes with the world. Begin your culinary journey today.',
+  title = 'MomentMeal - A marketplace for food and recipes.',
+  description = 'MomentMeal is a marketplace for food and recipes. We help you create and share your recipes with the world. Begin your culinary journey today.',
   image = '/thumbnail.png',
   icons = '/favicon.ico',
   noIndex = false,
@@ -49,7 +49,7 @@ export function constructMetadata({
       creator: '@andreasgdp',
     },
     icons,
-    metadataBase: new URL('https://mealtime.bhelpful.net/'),
+    metadataBase: new URL('https://momentmeal.com/'),
     themeColor: '#FFF',
     ...(noIndex && {
       robots: {

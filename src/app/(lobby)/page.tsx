@@ -20,15 +20,15 @@ export default async function Home() {
           <Icons.logo className="h-32 w-32" aria-hidden="true" />
           <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border px-7 py-2 shadow-md backdrop-blur transition-all hover:bg-primary/50">
             <p className="text-sm font-semibold">
-              MealTime is in Alpha development!
+              MomentMeal is in Alpha development!
             </p>
           </div>
           <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
             <span className="text-primary">Elevate</span> your cooking
           </h1>
           <Balancer className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
-            MealTime is a marketplace for food and recipes. We help you find and
-            create the best recipes and meal plans for you.
+            MomentMeal is a marketplace for food and recipes. We help you find
+            and create the best recipes and meal plans for you.
           </Balancer>
           <Balancer className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border px-7 py-2 shadow-md backdrop-blur transition-all hover:bg-primary/50">
             <div className="flex items-center space-x-2">
@@ -109,8 +109,8 @@ export default async function Home() {
             </h2>
             <p className="mt-4 text-lg">
               {/* Chatting to your PDF files has never been easier
-							than with MealTime. */}
-              With MealTime you can add your recipes and share them with the
+							than with MomentMeal. */}
+              With MomentMeal you can add your recipes and share them with the
               world. You can also discover new recipes and even make money by
               selling your own recipes.
             </p>

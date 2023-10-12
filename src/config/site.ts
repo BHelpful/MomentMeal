@@ -4,17 +4,17 @@ export type SiteConfig = typeof siteConfig;
 
 const links = {
   twitter: 'https://twitter.com/AndreasGuldberg',
-  github: 'https://github.com/bhelpful/mealtime',
+  github: 'https://github.com/bhelpful/momentmeal',
   githubAccount: 'https://github.com/bhelpful',
   discord: 'https://discord.com/users/bhelpful',
 };
 
 export const siteConfig = {
-  name: 'MealTime',
+  name: 'MomentMeal',
   description:
     'A marketplace for food and recipes. We help you create and share your recipes with the world. Begin your culinary journey today.',
-  url: 'https://mealtime.bhelpful.net',
-  ogImage: 'https://mealtime.bhelpful.net/opengraph-image.png',
+  url: 'https://momentmeal.com',
+  ogImage: 'https://momentmeal.com/opengraph-image.png',
   mainNav: [
     {
       title: 'Home',

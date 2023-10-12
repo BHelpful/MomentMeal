@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     'Tailwind CSS',
     'Server Components',
     'Server Actions',
-    'MealTime',
+    'MomentMeal',
   ],
   authors: [
     {

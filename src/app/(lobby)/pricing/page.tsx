@@ -18,7 +18,7 @@ const Page = async () => {
   const pricingItems = [
     {
       plan: 'Free',
-      tagline: 'For those just getting started with MealTime.',
+      tagline: 'For those just getting started with MomentMeal.',
       quota: PLANS.find((p) => p.slug === 'free')!.quota,
       features: [
         {
@@ -41,7 +41,7 @@ const Page = async () => {
     },
     {
       plan: 'Pro',
-      tagline: 'For those who want more out of MealTime.',
+      tagline: 'For those who want more out of MomentMeal.',
       quota: PLANS.find((p) => p.slug === 'pro')!.quota,
       features: [
         {
@@ -62,7 +62,7 @@ const Page = async () => {
     },
     {
       plan: 'Business',
-      tagline: 'For those who want the best of MealTime.',
+      tagline: 'For those who want the best of MomentMeal.',
       quota: PLANS.find((p) => p.slug === 'business')!.quota,
       features: [
         {
@@ -140,7 +140,7 @@ const Page = async () => {
                         </TooltipTrigger>
                         <TooltipContent className="w-80 p-2">
                           Your quota is the number of recipes you can save to
-                          MealTime. You can upgrade to Pro at any time to get
+                          MomentMeal. You can upgrade to Pro at any time to get
                           more quota.
                         </TooltipContent>
                       </Tooltip>
