@@ -1,21 +1,21 @@
 import { type Ingredient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { type z } from 'zod';
-import { type createRecipeInput } from './recipeRouter';
+import { type ingredientsArrayForRecipe } from './recipeRouter';
 
 export function computeIngredientsToCreateOrConnect(
   ingredients: Ingredient[],
-  input: z.infer<typeof createRecipeInput>,
+  ingredientsInput: z.infer<typeof ingredientsArrayForRecipe>,
   userId: string
 ) {
   const ingredientNames = ingredients.map((ingredient) => ingredient.name);
 
-  const ingredientsToCreate = input.ingredients.filter(
+  const ingredientsToCreate = ingredientsInput.filter(
     (ingredient) => !ingredientNames.includes(ingredient.name)
   );
 
-  // ingredientsToConnect should also have the quantity from the input.ingredients array
-  const ingredientsToConnect = input.ingredients
+  // ingredientsToConnect should also have the quantity from the ingredientsInput array
+  const ingredientsToConnect = ingredientsInput
     .filter((ingredient) => ingredientNames.includes(ingredient.name))
     .map((ingredient) => {
       const ingredientToConnect = ingredients.find(
@@ -31,8 +31,6 @@ export function computeIngredientsToCreateOrConnect(
     });
 
   const createIngredients = ingredientsToCreate.map((ingredient) => ({
-    assignedBy: userId,
-    assignedAt: new Date(),
     quantity: ingredient.quantity,
     ingredient: {
       create: {
@@ -45,8 +43,6 @@ export function computeIngredientsToCreateOrConnect(
   }));
 
   const connectIngredients = ingredientsToConnect.map((ingredient) => ({
-    assignedBy: userId,
-    assignedAt: new Date(),
     quantity: ingredient.quantity,
     ingredient: {
       connect: {

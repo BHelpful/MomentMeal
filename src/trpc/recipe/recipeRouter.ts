@@ -1,42 +1,64 @@
 import { db } from '@/db';
+import { faker } from '@faker-js/faker';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { privateProcedure, publicProcedure, router } from '../trpc';
 import { computeIngredientsToCreateOrConnect } from './recipeUtil';
 
+export const ingredientsArrayForRecipe = z.array(
+  z.object({
+    name: z.string().min(3).max(50),
+    quantity: z.number().min(1),
+    unit: z.string().min(1).max(50),
+  })
+);
+
+// TODO: ensure all required fields are present for creating a recipe (look at schema tables for reference)
 export const createRecipeInput = z.object({
   title: z.string().min(3).max(50),
   description: z.string(),
-  isPublic: z.boolean(),
-  ingredients: z.array(
+  isPublic: z.boolean().default(false),
+  ingredients: ingredientsArrayForRecipe,
+  steps: z.array(
     z.object({
-      name: z.string(),
-      quantity: z.number(),
-      unit: z.string().optional(),
+      step: z.string(),
     })
   ),
-  steps: z.array(z.string()),
 });
 
+// TODO: ensure all required fields are present for creating a recipe (look at schema tables for reference)
 export const updateRecipeInput = z.object({
   id: z.string(),
   title: z.string(),
   description: z.string(),
   isPublic: z.boolean(),
-  ingredients: z.array(
-    z.object({
-      name: z.string(),
-      quantity: z.number(),
-      unit: z.string().optional(),
-    })
-  ),
+  ingredients: ingredientsArrayForRecipe,
   steps: z.array(z.string()),
+});
+
+export const generateRecipeInput = z.object({
+  count: z.number(),
 });
 
 export const recipeRouter = router({
   createRecipe: privateProcedure
     .input(createRecipeInput)
     .mutation(async ({ ctx, input }) => {
+      // TODO: implement optimisation by adding an optional id to the ingredient in the input, so that the ingredient.findMany is not needed anymore. This can be done once the ingredients are fetched for the user in the UI for creating/editing a recipe.
+      // TODO: do a connectOrCreate on the inner most ingredient using the existing ingredients information
+      // Example:
+      // ingredient: {
+      //   connectOrCreate: {
+      //     where: {
+      //       id: the id of the ingredient,
+      //     },
+      //     create: {
+      //       name: ingredientName,
+      //       unit: ingredientUnit,
+      //       userId,
+      //     },
+      //   },
+      // },
       const { userId } = ctx;
 
       const existingIngredients = await db.ingredient.findMany({
@@ -46,7 +68,11 @@ export const recipeRouter = router({
       });
 
       const { createIngredients, connectIngredients } =
-        computeIngredientsToCreateOrConnect(existingIngredients, input, userId);
+        computeIngredientsToCreateOrConnect(
+          existingIngredients,
+          input.ingredients,
+          userId
+        );
 
       const allIngredients = [...createIngredients, ...connectIngredients];
 
@@ -61,7 +87,7 @@ export const recipeRouter = router({
           },
           steps: {
             create: input.steps.map((step) => ({
-              content: step,
+              content: step.step,
             })),
           },
         },
@@ -187,7 +213,11 @@ export const recipeRouter = router({
       });
 
       const { createIngredients, connectIngredients } =
-        computeIngredientsToCreateOrConnect(existingIngredients, input, userId);
+        computeIngredientsToCreateOrConnect(
+          existingIngredients,
+          input.ingredients,
+          userId
+        );
 
       const allIngredients = [...createIngredients, ...connectIngredients];
 
@@ -264,5 +294,55 @@ export const recipeRouter = router({
       });
 
       return recipeDeleted;
+    }),
+  generateRecipes: privateProcedure
+    .input(generateRecipeInput)
+    .mutation(async ({ ctx, input }) => {
+      const { count } = input;
+      const { userId } = ctx;
+
+      // loop over recipes and create them one by one recipe[0], recipe[1], recipe[2]...
+      for (let i = 0; i < count; i++) {
+        await db.recipe.create({
+          data: {
+            title: faker.commerce.productName(),
+            description: faker.lorem.paragraph(),
+            isPublic: faker.datatype.boolean(),
+            userId: faker.string.uuid(),
+            timeInKitchen: faker.number.int({ min: 1, max: 60 }),
+            waitingTime: faker.number.int({ min: 1, max: 60 }),
+            numberOfPeople: faker.number.int({ min: 1, max: 10 }),
+            ingredients: {
+              create: Array.from({ length: 10 }, () => ({
+                ingredient: {
+                  create: {
+                    name: faker.commerce.productName(),
+                    unit: faker.science.unit().symbol,
+                    userId,
+                  },
+                },
+                quantity: faker.number.int({ min: 1, max: 10 }),
+                assignedBy: userId,
+              })),
+            },
+            steps: {
+              create: Array.from({ length: 20 }, () => ({
+                content: faker.lorem.paragraph(),
+              })),
+            },
+            ratings: {
+              create: Array.from(
+                { length: faker.number.int({ min: 1, max: 30 }) },
+                () => ({
+                  rating: faker.number.int({ min: 1, max: 5 }),
+                  userId: faker.string.uuid(),
+                })
+              ),
+            },
+          },
+        });
+      }
+
+      return;
     }),
 });

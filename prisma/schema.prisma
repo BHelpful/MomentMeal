@@ -15,7 +15,7 @@ datasource db {
 model Recipe {
   id             String                 @id @default(cuid())
   title          String
-  description    String?
+  description    String?                @db.LongText
   isPublic       Boolean                @default(false)
   userId         String
   timeInKitchen  Int?
@@ -62,7 +62,7 @@ model IngredientsOnRecipes {
 
 model Step {
   id       String @id @default(cuid())
-  content  String
+  content  String @db.LongText
   recipe   Recipe @relation(fields: [recipeId], references: [id])
   recipeId String
 

@@ -6,8 +6,11 @@ import * as React from 'react';
 import {
   Controller,
   FormProvider,
+  useFieldArray,
   useFormContext,
+  type Control,
   type ControllerProps,
+  type FieldArrayPath,
   type FieldPath,
   type FieldValues,
 } from 'react-hook-form';
@@ -35,6 +38,68 @@ const FormField = <
     <FormFieldContext.Provider value={{ name: props.name }}>
       <Controller {...props} />
     </FormFieldContext.Provider>
+  );
+};
+
+type FormFieldArrayProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldArrayPath<TFieldValues> = FieldArrayPath<TFieldValues>,
+> = {
+  control: Control<TFieldValues>;
+  name: TName;
+  render: (args: {
+    fields: {
+      id: string;
+      name: string;
+      key: string;
+    }[];
+    remove: (index: number) => void;
+    append: (value: TFieldValues[TName][number] | TFieldValues[TName]) => void;
+    prepend: (value: TFieldValues[TName][number] | TFieldValues[TName]) => void;
+    insert: (
+      index: number,
+      value: TFieldValues[TName][number] | TFieldValues[TName]
+    ) => void;
+    move: (from: number, to: number) => void;
+    swap: (indexA: number, indexB: number) => void;
+  }) => React.ReactNode;
+};
+
+const FormFieldArray = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldArrayPath<TFieldValues> = FieldArrayPath<TFieldValues>,
+>({
+  control,
+  name,
+  render,
+}: FormFieldArrayProps<TFieldValues, TName>) => {
+  const { fields, append, prepend, insert, move, swap, remove } = useFieldArray<
+    TFieldValues,
+    TName
+  >({
+    control,
+    name,
+  });
+
+  const mappedFields = fields.map((field, index) => ({
+    id: `${field.id}-${index}`,
+    name: `${name}.${index}`,
+    key: field.id,
+    remove: () => remove(index),
+  }));
+
+  return (
+    <>
+      {render({
+        fields: mappedFields,
+        append,
+        prepend,
+        insert,
+        move,
+        swap,
+        remove,
+      })}
+    </>
   );
 };
 
@@ -191,13 +256,14 @@ const UncontrolledFormMessage = React.forwardRef<
 UncontrolledFormMessage.displayName = 'UncontrolledFormMessage';
 
 export {
-  useFormField,
   Form,
-  FormItem,
-  FormLabel,
   FormControl,
   FormDescription,
+  FormField,
+  FormFieldArray,
+  FormItem,
+  FormLabel,
   FormMessage,
   UncontrolledFormMessage,
-  FormField,
+  useFormField,
 };

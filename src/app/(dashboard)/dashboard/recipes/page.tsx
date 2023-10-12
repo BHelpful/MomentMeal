@@ -1,5 +1,6 @@
 import { serverClient } from '@/app/_trpc/serverClient';
 import { RecipeCard } from '@/components/cards/recipe-card';
+import { GenerateButton } from '@/components/generate-button';
 import {
   PageHeader,
   PageHeaderDescription,
@@ -75,6 +76,7 @@ export default async function RecipesPage() {
         <PageHeaderDescription size="sm">
           Manage your recipes
         </PageHeaderDescription>
+        {env.NODE_ENV !== 'production' && <GenerateButton />}
       </PageHeader>
       <Alert
         id="dashboard-recipes-page-alert"
