@@ -2,8 +2,7 @@
 
 import { trpc } from '@/app/_trpc/client';
 import { type serverClient } from '@/app/_trpc/serverClient';
-import { Shell } from '@/components/shells/shell';
-import Link from 'next/link';
+import { RecipeCard } from './cards/recipe-card';
 
 export default function RecipeList({
   initialRecipes,
@@ -19,17 +18,16 @@ export default function RecipeList({
   });
 
   return (
-    <Shell>
-      {recipes.data.map((recipe) => (
-        <Link href={`/recipe/${recipe.id}`} key={recipe.id}>
-          <div className="flex flex-col gap-2" key={recipe.id}>
-            <div className="flex flex-col gap-2">
-              <h2 className="text-xl font-bold">{recipe.title}</h2>
-              <p className="text-secondary">{recipe.description}</p>
-            </div>
-          </div>
-        </Link>
-      ))}
-    </Shell>
+    <section className="flex flex-col space-y-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {recipes.data.map((recipe) => (
+          <RecipeCard
+            recipe={recipe}
+            key={recipe.id}
+            href={`/recipe/${recipe.id}`}
+          />
+        ))}
+      </div>
+    </section>
   );
 }

@@ -196,3 +196,16 @@ export function isMacOs() {
 
   return window.navigator.userAgent.includes('Mac');
 }
+
+/**
+ *
+ * @param ms Time in milliseconds to wait
+ *
+ * This method is used for development purposes only.
+ * It is useful when you want to test loading states, and have time to see them.
+ *
+ * @returns
+ */
+export async function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}

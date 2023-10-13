@@ -1,33 +1,44 @@
 import { Shell } from '@/components/shells/shell';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ProductsLoading() {
   return (
-    <Shell className="gap-8">
-      <section
-        id="hero"
-        aria-labelledby="hero-heading"
-        className="mx-auto flex w-full max-w-[64rem] flex-col items-center justify-center gap-4 pb-8 pt-6 text-center md:pb-2 md:pt-10 lg:py-28 lg:pb-2"
-      >
-        <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border px-7 py-2 shadow-md backdrop-blur transition-all hover:bg-primary/50">
-          <p className="text-sm font-semibold">
-            <Skeleton className="h-4 w-56" />
-          </p>
-        </div>
-        <h1 id="hero-heading" className="text-3xl font-extrabold text-primary">
-          <Skeleton className="h-12 w-56" />
-        </h1>
-        <Shell className="items-center">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div className="flex flex-col gap-2" key={i}>
-              <div className="flex flex-col items-center gap-2">
-                <Skeleton className="h-4 w-56" />
-                <Skeleton className="h-4 w-96" />
-              </div>
-            </div>
+    <Shell>
+      <div className="space-y-2">
+        <Skeleton className="h-10 w-28" />
+        <Skeleton className="h-4 w-48" />
+      </div>
+      <div className="flex flex-col space-y-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <Card key={i} className="h-full overflow-hidden">
+              <AspectRatio ratio={21 / 9}>
+                <div className="absolute inset-0 bg-gradient-to-t from-transparent to-zinc-950/50" />
+                <div className="flex h-full flex-1 items-center justify-center rounded-t-md border-b bg-accent/30">
+                  <Skeleton className="h-9 w-9 text-muted-foreground" />
+                </div>
+              </AspectRatio>
+              <CardHeader>
+                <Skeleton className="line-clamp-1 text-lg" />
+                <Skeleton className="line-clamp-2" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="line-clamp-3" />
+              </CardContent>
+              <CardFooter>
+                <Skeleton className="line-clamp-1" />
+              </CardFooter>
+            </Card>
           ))}
-        </Shell>
-      </section>
+        </div>
+      </div>
     </Shell>
   );
 }
