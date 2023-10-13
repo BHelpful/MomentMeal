@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: ProductPageProps) {
   }
 
   const recipe = await serverClient.recipe
-    .getPublicRecipe({ id: params.recipeId })
+    .getRecipe({ id: params.recipeId })
     .catch(() => null);
 
   if (!recipe) {
@@ -39,7 +39,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const user = await currentUser();
 
   const recipe = await serverClient.recipe
-    .getPublicRecipe({ id: params.recipeId })
+    .getRecipe({ id: params.recipeId })
     .catch(() => null);
 
   if (!recipe) {
@@ -51,12 +51,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <Breadcrumbs
         segments={[
           {
-            title: 'Recipes',
-            href: '/recipes',
+            title: 'My Recipes',
+            href: '/dashboard/recipes',
           },
           {
             title: recipe.title,
-            href: `/recipe/${recipe.id}`,
+            href: `/dashboard/recipe/${recipe.id}`,
           },
         ]}
       />
@@ -64,7 +64,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         id={recipe.id}
         initialRecipe={recipe}
         userId={user?.id}
-        onDeleteHref="/recipes"
+        onDeleteHref="/dashboard/recipes"
       />
     </Shell>
   );

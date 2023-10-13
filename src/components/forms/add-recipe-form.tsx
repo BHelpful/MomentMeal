@@ -1,6 +1,7 @@
 'use client';
 
-import { serverClient } from '@/app/_trpc/serverClient';
+import { trpc } from '@/app/_trpc/client';
+import { createRecipeRevalidate } from '@/app/actions';
 import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,6 +23,7 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
+import { Separator } from '../ui/separator';
 
 type Inputs = z.infer<typeof createRecipeInput>;
 
@@ -29,23 +31,34 @@ export function AddRecipeForm({}) {
   const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
 
+  const createRecipe = trpc.recipe.createRecipe.useMutation();
+
   // react-hook-form
   const form = useForm<Inputs>({
     resolver: zodResolver(createRecipeInput),
     defaultValues: {
       title: '',
       description: '',
+      ingredients: [{ name: '', quantity: '1', unit: 'g' }],
+      steps: [{ step: '' }],
+      timeInKitchen: '15',
+      waitingTime: '30',
+      numberOfPeople: '2',
     },
+    mode: 'onTouched',
   });
 
   function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
+        console.log('data', data);
+
         // TODO use client trpc for this call, as it is on the client side
-        await serverClient.recipe.createRecipe(data);
+        await createRecipe.mutateAsync(data);
 
         form.reset();
         toast.success('Recipe added successfully.');
+        await createRecipeRevalidate();
         router.push('/dashboard/recipes');
         router.refresh(); // Workaround for the inconsistency of cache revalidation
       } catch (err) {
@@ -57,7 +70,7 @@ export function AddRecipeForm({}) {
   return (
     <Form {...form}>
       <form
-        className="grid w-full max-w-xl gap-5"
+        className="grid w-full gap-4"
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
       >
         <FormField
@@ -89,13 +102,61 @@ export function AddRecipeForm({}) {
             </FormItem>
           )}
         />
+        <Separator />
+        <h2 className="mb-4 text-xl font-bold">Time</h2>
+        <div className="flex flex-wrap gap-4">
+          <FormField
+            control={form.control}
+            name="timeInKitchen"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Time In Kitchen</FormLabel>
+                <FormControl>
+                  <Input placeholder="15" type="number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="waitingTime"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Waiting Time</FormLabel>
+                <FormControl>
+                  <Input placeholder="30" type="number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="numberOfPeople"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Number Of People</FormLabel>
+                <FormControl>
+                  <Input placeholder="2" type="number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <Separator />
+        <h2 className="mb-4 text-xl font-bold">Ingredients</h2>
         <FormFieldArray
           control={form.control}
           name="ingredients"
           render={({ fields, remove, append }) => (
             <>
               {fields.map((ingredient, index) => (
-                <div key={ingredient.id}>
+                <div
+                  key={ingredient.id}
+                  className="flex w-full justify-center gap-4"
+                >
                   <FormField
                     control={form.control}
                     name={`ingredients.${index}.name`}
@@ -119,7 +180,11 @@ export function AddRecipeForm({}) {
                       <FormItem>
                         <FormLabel>Amount</FormLabel>
                         <FormControl>
-                          <Input placeholder="Type amount here." {...field} />
+                          <Input
+                            type="number"
+                            placeholder="Type amount here."
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -140,34 +205,44 @@ export function AddRecipeForm({}) {
                     )}
                   />
                   <Button
-                    className="mt-4 bg-red-500/90 hover:bg-red-500"
-                    onClick={() => remove(index)}
+                    className="mt-8 bg-red-500/90 hover:bg-red-500"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      remove(index);
+                      form.setFocus(`ingredients.${index - 1}.name`);
+                    }}
+                    disabled={fields.length === 1}
                   >
-                    Remove Ingredient
+                    <Icons.trash className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </div>
               ))}
               <Button
-                className="bg-cyan-600/90 hover:bg-cyan-600"
-                onClick={() => append({ name: '', quantity: 1, unit: 'g' })}
+                className="mx-auto w-fit bg-cyan-600/90 hover:bg-cyan-600"
+                onClick={(event) => {
+                  event.preventDefault();
+                  append({ name: '', quantity: '1', unit: 'g' });
+                }}
               >
-                Add Ingredient
+                <Icons.add className="h-4 w-4" aria-hidden="true" />
               </Button>
             </>
           )}
         />
+        <Separator />
+        <h2 className="mb-4 text-xl font-bold">Steps</h2>
         <FormFieldArray
           control={form.control}
           name="steps"
           render={({ fields, remove, append }) => (
             <>
               {fields.map((step, index) => (
-                <div key={step.id}>
+                <div key={step.id} className="flex w-full justify-center gap-4">
                   <FormField
                     control={form.control}
-                    name={`steps.${index}.step`} // change this to "steps"
+                    name={`steps.${index}.step`}
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="w-full">
                         <FormLabel>Step</FormLabel>
                         <FormControl>
                           <Textarea placeholder="Type step here." {...field} />
@@ -177,28 +252,47 @@ export function AddRecipeForm({}) {
                     )}
                   />
                   <Button
-                    className="mt-4 bg-red-500/90 hover:bg-red-500"
-                    onClick={() => remove(index)}
+                    className="mt-8 bg-red-500/90 hover:bg-red-500"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      remove(index);
+                      form.setFocus(`steps.${index - 1}.step`);
+                    }}
+                    disabled={fields.length === 1}
                   >
-                    Remove Step
+                    <Icons.trash className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </div>
               ))}
               <Button
-                className="bg-cyan-600/90 hover:bg-cyan-600"
-                onClick={() => append({ step: '' })}
+                className="mx-auto w-fit bg-cyan-600/90 hover:bg-cyan-600"
+                onClick={(event) => {
+                  event.preventDefault();
+                  append([{ step: '' }]);
+                }}
               >
-                Add Step
+                <Icons.add className="h-4 w-4" aria-hidden="true" />
               </Button>
             </>
           )}
         />
+        <Separator />
         <Button
-          onClick={() =>
-            void form.trigger(['title', 'description', 'ingredients', 'steps'])
-          }
+          onClick={() => {
+            void form.trigger([
+              'title',
+              'description',
+              'ingredients',
+              'steps',
+              'timeInKitchen',
+              'waitingTime',
+              'numberOfPeople',
+            ]);
+          }}
           className="w-fit"
-          disabled={isPending}
+          disabled={
+            isPending || !form.formState.isDirty || !form.formState.isValid
+          }
         >
           {isPending && (
             <Icons.spinner

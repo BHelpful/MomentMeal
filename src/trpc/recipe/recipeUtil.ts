@@ -1,11 +1,11 @@
 import { type Ingredient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { type z } from 'zod';
+import { z, type z as zodType } from 'zod';
 import { type ingredientsArrayForRecipe } from './recipeRouter';
 
 export function computeIngredientsToCreateOrConnect(
   ingredients: Ingredient[],
-  ingredientsInput: z.infer<typeof ingredientsArrayForRecipe>,
+  ingredientsInput: zodType.infer<typeof ingredientsArrayForRecipe>,
   userId: string
 ) {
   const ingredientNames = ingredients.map((ingredient) => ingredient.name);
@@ -26,12 +26,12 @@ export function computeIngredientsToCreateOrConnect(
 
       return {
         id: ingredientToConnect.id,
-        quantity: ingredient.quantity,
+        quantity: z.coerce.number().parse(ingredient.quantity),
       };
     });
 
   const createIngredients = ingredientsToCreate.map((ingredient) => ({
-    quantity: ingredient.quantity,
+    quantity: z.coerce.number().parse(ingredient.quantity),
     ingredient: {
       create: {
         name: ingredient.name,
@@ -43,7 +43,7 @@ export function computeIngredientsToCreateOrConnect(
   }));
 
   const connectIngredients = ingredientsToConnect.map((ingredient) => ({
-    quantity: ingredient.quantity,
+    quantity: z.coerce.number().parse(ingredient.quantity),
     ingredient: {
       connect: {
         id: ingredient.id,

@@ -7,8 +7,12 @@ import { computeIngredientsToCreateOrConnect } from './recipeUtil';
 
 export const ingredientsArrayForRecipe = z.array(
   z.object({
-    name: z.string().min(3).max(50),
-    quantity: z.number().min(1),
+    name: z.string().min(1).max(50),
+    quantity: z
+      .string()
+      .min(1)
+      .regex(/^[0-9]+$/, 'Must be a whole number')
+      .regex(/(?!\.)/, 'Must be a whole number'),
     unit: z.string().min(1).max(50),
   })
 );
@@ -18,10 +22,25 @@ export const createRecipeInput = z.object({
   title: z.string().min(3).max(50),
   description: z.string(),
   isPublic: z.boolean().default(false),
+  timeInKitchen: z
+    .string()
+    .min(1)
+    .regex(/^[0-9]+$/, 'Must be a whole number')
+    .regex(/(?!\.)/, 'Must be a whole number'),
+  waitingTime: z
+    .string()
+    .min(1)
+    .regex(/^[0-9]+$/, 'Must be a whole number')
+    .regex(/(?!\.)/, 'Must be a whole number'),
+  numberOfPeople: z
+    .string()
+    .min(1)
+    .regex(/^[0-9]+$/, 'Must be a whole number')
+    .regex(/(?!\.)/, 'Must be a whole number'),
   ingredients: ingredientsArrayForRecipe,
   steps: z.array(
     z.object({
-      step: z.string(),
+      step: z.string().min(1),
     })
   ),
 });
@@ -81,6 +100,9 @@ export const recipeRouter = router({
           title: input.title,
           description: input.description,
           isPublic: input.isPublic,
+          timeInKitchen: z.coerce.number().parse(input.timeInKitchen),
+          waitingTime: z.coerce.number().parse(input.waitingTime),
+          numberOfPeople: z.coerce.number().parse(input.numberOfPeople),
           userId,
           ingredients: {
             create: allIngredients,
@@ -308,7 +330,7 @@ export const recipeRouter = router({
             title: faker.commerce.productName(),
             description: faker.lorem.paragraph(),
             isPublic: faker.datatype.boolean(),
-            userId: faker.string.uuid(),
+            userId,
             timeInKitchen: faker.number.int({ min: 1, max: 60 }),
             waitingTime: faker.number.int({ min: 1, max: 60 }),
             numberOfPeople: faker.number.int({ min: 1, max: 10 }),
