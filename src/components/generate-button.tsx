@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { toast } from 'sonner';
 
-export function GenerateButton({}) {
+export function GenerateButton() {
   const [isPending, startTransition] = React.useTransition();
   const generateRecipes = trpc.recipe.generateRecipes.useMutation();
   const router = useRouter();
