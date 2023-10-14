@@ -47,7 +47,7 @@ export default async function Home() {
                 className: '',
               })}
             >
-              Get started <Icons.User className="ml-1.5 h-5 w-5" />
+              Get started
             </Link>
             <Link
               href="/recipes"
