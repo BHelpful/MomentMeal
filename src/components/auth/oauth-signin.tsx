@@ -28,7 +28,7 @@ export function OAuthSignIn() {
       await signIn.authenticateWithRedirect({
         strategy: provider,
         redirectUrl: '/sso-callback',
-        redirectUrlComplete: '/',
+        redirectUrlComplete: '/dashboard/recipes',
       });
     } catch (error) {
       setIsLoading(null);

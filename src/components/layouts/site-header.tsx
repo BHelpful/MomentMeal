@@ -70,7 +70,7 @@ export function SiteHeader({ user }: SiteHeaderProps) {
                   <DropdownMenuGroup>
                     <DropdownMenuItem asChild>
                       <Link href="/dashboard/account">
-                        <Icons.user
+                        <Icons.User
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />
@@ -80,7 +80,7 @@ export function SiteHeader({ user }: SiteHeaderProps) {
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link href="/dashboard/recipes">
-                        <Icons.recipe
+                        <Icons.Recipe
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />

@@ -2,7 +2,6 @@ import { Icons } from '@/components/icons';
 import { Shell } from '@/components/shells/shell';
 import { buttonVariants } from '@/components/ui/button';
 import { clerkClient } from '@clerk/nextjs/server';
-import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Balancer from 'react-wrap-balancer';
@@ -35,18 +34,29 @@ export default async function Home() {
               <p className="text-base text-muted-foreground">
                 Used by {totalUsers}
               </p>
-              <Icons.users className="h-5 w-5 text-muted-foreground" />
+              <Icons.Users className="h-5 w-5 text-muted-foreground" />
             </div>
           </Balancer>
-          <Link
-            href="/recipes"
-            className={buttonVariants({
-              size: 'lg',
-              className: '',
-            })}
-          >
-            Get started <ArrowRight className="ml-1.5 h-5 w-5" />
-          </Link>
+          <div className="flex gap-4">
+            <Link
+              href="/dashboard/recipes"
+              className={buttonVariants({
+                size: 'lg',
+                className: '',
+              })}
+            >
+              Get started <Icons.view className="ml-1.5 h-5 w-5" />
+            </Link>
+            <Link
+              href="/recipes"
+              className={buttonVariants({
+                size: 'lg',
+                variant: 'outline',
+              })}
+            >
+              Explore <Icons.Recipe className="ml-1.5 h-5 w-5" />
+            </Link>
+          </div>
         </section>
       </Shell>
 

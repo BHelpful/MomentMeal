@@ -112,7 +112,7 @@ export default function RecipeView({
               </div>
 
               <div className="flex items-center space-x-2">
-                <Icons.users className="h-5 w-5 text-muted-foreground" />
+                <Icons.Users className="h-5 w-5 text-muted-foreground" />
                 <p className="text-base text-muted-foreground">
                   {recipe.data.numberOfPeople} servings
                 </p>
