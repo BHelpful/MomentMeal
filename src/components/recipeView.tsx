@@ -2,6 +2,7 @@
 
 import { trpc } from '@/app/_trpc/client';
 import { type serverClient } from '@/app/_trpc/serverClient';
+import { deleteRecipeRevalidate } from '@/app/actions';
 import { Icons } from '@/components/icons';
 import { Shell } from '@/components/shells/shell';
 import {
@@ -16,15 +17,20 @@ import { Separator } from '@/components/ui/separator';
 import { type RecipeRating } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { Button } from './ui/button';
 
 export default function RecipeView({
   id,
   initialRecipe,
+  userId,
+  onDeleteHref,
 }: {
   id: string;
   initialRecipe: Awaited<
     ReturnType<(typeof serverClient)['recipe']['getPublicRecipe']>
   >;
+  userId?: string;
+  onDeleteHref?: string;
 }) {
   const router = useRouter();
   const recipe = trpc.recipe.getPublicRecipe.useQuery(
@@ -38,9 +44,12 @@ export default function RecipeView({
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const deleteRecipe = trpc.recipe.deleteRecipe.useMutation({
-    onSuccess: async () => {
-      await recipe.refetch();
-      return router.push('/recipes');
+    onSettled: async () => {
+      toast.success('Recipe deleted');
+
+      await deleteRecipeRevalidate(id);
+      router.push(onDeleteHref ?? '/');
+      router.refresh();
     },
     onError: (err) => {
       toast.error(err.message);
@@ -132,7 +141,8 @@ export default function RecipeView({
                     >
                       <Checkbox className="h-5 w-5" />
                       <Label>
-                        {ingredient.ingredient.name} - {ingredient.quantity}
+                        {ingredient.ingredient.name} - {ingredient.quantity} -
+                        {ingredient.ingredient.unit}
                       </Label>
                     </li>
                   ))}
@@ -159,6 +169,14 @@ export default function RecipeView({
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+          {userId && recipe.data.userId === userId && (
+            <Button
+              className="self-start bg-red-500 hover:bg-red-600"
+              onClick={() => deleteRecipe.mutate({ id })}
+            >
+              Delete Recipe
+            </Button>
+          )}
         </div>
       </div>
     </Shell>

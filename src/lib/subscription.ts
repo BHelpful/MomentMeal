@@ -20,13 +20,15 @@ export function getDashboardRedirectPath(input: {
   const { recipeCount, subscriptionPlan } = input;
 
   const minRecipesWithProductCount = {
-    basic: 5,
-    standard: 15,
-    pro: 50,
+    basic: 15,
+    standard: 50,
+    pro: -1,
   }[subscriptionPlan?.id ?? 'basic'];
 
   const isActive = subscriptionPlan?.isActive ?? false;
-  const hasEnoughRecipes = recipeCount >= minRecipesWithProductCount;
+  const hasEnoughRecipes =
+    recipeCount >= minRecipesWithProductCount ||
+    minRecipesWithProductCount === -1;
 
   return isActive && hasEnoughRecipes
     ? '/dashboard/billing'

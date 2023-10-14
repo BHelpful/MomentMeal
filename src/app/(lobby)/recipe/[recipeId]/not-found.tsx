@@ -7,7 +7,7 @@ export default function RecipeNotFound() {
       <ErrorCard
         title="Recipe not found"
         description="The recipe you are looking for does not exist."
-        retryLink="/recipes"
+        retryLink="/dashboard/recipes"
         retryLinkText="Go to Recipes"
       />
     </Shell>

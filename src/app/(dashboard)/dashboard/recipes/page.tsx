@@ -1,5 +1,6 @@
 import { serverClient } from '@/app/_trpc/serverClient';
 import { RecipeCard } from '@/components/cards/recipe-card';
+import { GenerateButton } from '@/components/generate-button';
 import {
   PageHeader,
   PageHeaderDescription,
@@ -33,7 +34,7 @@ export default async function RecipesPage() {
   }
 
   // TODO: Should be getRecipes, as it is only for the current user
-  const recipes = await serverClient.recipe.getPublicRecipes();
+  const recipes = await serverClient.recipe.getRecipes();
 
   const subscriptionPlanStub: UserSubscriptionPlan = {
     ...(mealTimeSubscriptionPlans[0]! satisfies SubscriptionPlan),
@@ -75,6 +76,7 @@ export default async function RecipesPage() {
         <PageHeaderDescription size="sm">
           Manage your recipes
         </PageHeaderDescription>
+        {env.NODE_ENV !== 'production' && <GenerateButton />}
       </PageHeader>
       <Alert
         id="dashboard-recipes-page-alert"
@@ -104,7 +106,7 @@ export default async function RecipesPage() {
           <RecipeCard
             key={recipe.id}
             recipe={recipe}
-            href={`/dashboard/recipes/${recipe.id}`}
+            href={`/dashboard/recipe/${recipe.id}`}
           />
         ))}
       </section>

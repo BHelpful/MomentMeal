@@ -99,7 +99,7 @@ export function SignInForm() {
         />
         <Button type="submit" disabled={isPending}>
           {isPending && (
-            <Icons.spinner
+            <Icons.Spinner
               className="mr-2 h-4 w-4 animate-spin"
               aria-hidden="true"
             />

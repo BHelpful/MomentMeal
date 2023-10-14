@@ -1,3 +1,4 @@
+import util from 'util';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -76,7 +77,6 @@ async function main() {
       steps: true,
     },
   });
-  const util = require('util');
 
   console.log(
     'Recipe Check',

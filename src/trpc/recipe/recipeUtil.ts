@@ -1,21 +1,21 @@
 import { type Ingredient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { type z } from 'zod';
-import { type createRecipeInput } from './recipeRouter';
+import { z, type z as zodType } from 'zod';
+import { type ingredientsArrayForRecipe } from './recipeRouter';
 
 export function computeIngredientsToCreateOrConnect(
   ingredients: Ingredient[],
-  input: z.infer<typeof createRecipeInput>,
+  ingredientsInput: zodType.infer<typeof ingredientsArrayForRecipe>,
   userId: string
 ) {
   const ingredientNames = ingredients.map((ingredient) => ingredient.name);
 
-  const ingredientsToCreate = input.ingredients.filter(
+  const ingredientsToCreate = ingredientsInput.filter(
     (ingredient) => !ingredientNames.includes(ingredient.name)
   );
 
-  // ingredientsToConnect should also have the quantity from the input.ingredients array
-  const ingredientsToConnect = input.ingredients
+  // ingredientsToConnect should also have the quantity from the ingredientsInput array
+  const ingredientsToConnect = ingredientsInput
     .filter((ingredient) => ingredientNames.includes(ingredient.name))
     .map((ingredient) => {
       const ingredientToConnect = ingredients.find(
@@ -26,14 +26,12 @@ export function computeIngredientsToCreateOrConnect(
 
       return {
         id: ingredientToConnect.id,
-        quantity: ingredient.quantity,
+        quantity: z.coerce.number().parse(ingredient.quantity),
       };
     });
 
   const createIngredients = ingredientsToCreate.map((ingredient) => ({
-    assignedBy: userId,
-    assignedAt: new Date(),
-    quantity: ingredient.quantity,
+    quantity: z.coerce.number().parse(ingredient.quantity),
     ingredient: {
       create: {
         name: ingredient.name,
@@ -45,9 +43,7 @@ export function computeIngredientsToCreateOrConnect(
   }));
 
   const connectIngredients = ingredientsToConnect.map((ingredient) => ({
-    assignedBy: userId,
-    assignedAt: new Date(),
-    quantity: ingredient.quantity,
+    quantity: z.coerce.number().parse(ingredient.quantity),
     ingredient: {
       connect: {
         id: ingredient.id,

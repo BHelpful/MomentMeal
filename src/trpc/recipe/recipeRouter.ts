@@ -1,36 +1,58 @@
 import { db } from '@/db';
+import { faker } from '@faker-js/faker';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { privateProcedure, publicProcedure, router } from '../trpc';
 import { computeIngredientsToCreateOrConnect } from './recipeUtil';
 
-export const createRecipeInput = z.object({
+export const ingredientsArrayForRecipe = z.array(
+  z.object({
+    name: z.string().min(1).max(50),
+    quantity: z
+      .string()
+      .min(1)
+      .regex(/^\d+$/, 'Must be a whole number')
+      .regex(/(?!\.)/, 'Must be a whole number'),
+    unit: z.string().min(1).max(50),
+  })
+);
+
+const createAndUpdateRecipeInput = z.object({
   title: z.string().min(3).max(50),
   description: z.string(),
-  isPublic: z.boolean(),
-  ingredients: z.array(
+  isPublic: z.boolean().default(false),
+  timeInKitchen: z
+    .string()
+    .min(1)
+    .regex(/^\d+$/, 'Must be a whole number')
+    .regex(/(?!\.)/, 'Must be a whole number'),
+  waitingTime: z
+    .string()
+    .min(1)
+    .regex(/^\d+$/, 'Must be a whole number')
+    .regex(/(?!\.)/, 'Must be a whole number'),
+  numberOfPeople: z
+    .string()
+    .min(1)
+    .regex(/^\d+$/, 'Must be a whole number')
+    .regex(/(?!\.)/, 'Must be a whole number'),
+  ingredients: ingredientsArrayForRecipe,
+  steps: z.array(
     z.object({
-      name: z.string(),
-      quantity: z.number(),
-      unit: z.string().optional(),
+      step: z.string().min(1),
     })
   ),
-  steps: z.array(z.string()),
 });
+
+export const createRecipeInput = createAndUpdateRecipeInput;
 
 export const updateRecipeInput = z.object({
   id: z.string(),
-  title: z.string(),
-  description: z.string(),
-  isPublic: z.boolean(),
-  ingredients: z.array(
-    z.object({
-      name: z.string(),
-      quantity: z.number(),
-      unit: z.string().optional(),
-    })
-  ),
-  steps: z.array(z.string()),
+  ...createAndUpdateRecipeInput.shape,
+});
+
+export const generateRecipeInput = z.object({
+  count: z.number(),
 });
 
 export const recipeRouter = router({
@@ -46,7 +68,11 @@ export const recipeRouter = router({
       });
 
       const { createIngredients, connectIngredients } =
-        computeIngredientsToCreateOrConnect(existingIngredients, input, userId);
+        computeIngredientsToCreateOrConnect(
+          existingIngredients,
+          input.ingredients,
+          userId
+        );
 
       const allIngredients = [...createIngredients, ...connectIngredients];
 
@@ -55,13 +81,16 @@ export const recipeRouter = router({
           title: input.title,
           description: input.description,
           isPublic: input.isPublic,
+          timeInKitchen: z.coerce.number().parse(input.timeInKitchen),
+          waitingTime: z.coerce.number().parse(input.waitingTime),
+          numberOfPeople: z.coerce.number().parse(input.numberOfPeople),
           userId,
           ingredients: {
             create: allIngredients,
           },
           steps: {
             create: input.steps.map((step) => ({
-              content: step,
+              content: step.step,
             })),
           },
         },
@@ -132,19 +161,6 @@ export const recipeRouter = router({
         },
         include: {
           ingredients: {
-            // TODO: Figure out why it is nessesary to use select avoiding getting the assignedAt field
-            // 	Types of property assignedAt are incompatible.
-            // Type is Date not assignable to type string
-            // Might be related to a trpc bug with inconsistent types between `Awaited<
-            // ReturnType<(typeof serverClient)['recipe']['getPublicRecipe']>` and const recipe = trpc.recipe.getPublicRecipe.useQuery(
-            //   { id },
-            //   {
-            //     initialData: initialRecipe,
-            //     refetchOnMount: false,
-            //     refetchOnReconnect: false,
-            //   }
-            // );
-            // In recipeView.tsx
             select: {
               ingredient: true,
               quantity: true,
@@ -187,7 +203,11 @@ export const recipeRouter = router({
       });
 
       const { createIngredients, connectIngredients } =
-        computeIngredientsToCreateOrConnect(existingIngredients, input, userId);
+        computeIngredientsToCreateOrConnect(
+          existingIngredients,
+          input.ingredients,
+          userId
+        );
 
       const allIngredients = [...createIngredients, ...connectIngredients];
 
@@ -210,7 +230,7 @@ export const recipeRouter = router({
           steps: {
             deleteMany: {},
             create: input.steps.map((step) => ({
-              content: step,
+              content: step.step,
             })),
           },
         },
@@ -264,5 +284,53 @@ export const recipeRouter = router({
       });
 
       return recipeDeleted;
+    }),
+  generateRecipes: privateProcedure
+    .input(generateRecipeInput)
+    .mutation(async ({ ctx, input }) => {
+      const { count } = input;
+      const { userId } = ctx;
+
+      // loop over recipes and create them one by one recipe[0], recipe[1], recipe[2]...
+      for (let i = 0; i < count; i++) {
+        await db.recipe.create({
+          data: {
+            title: faker.commerce.productName(),
+            description: faker.lorem.paragraph(),
+            isPublic: faker.datatype.boolean(),
+            userId,
+            timeInKitchen: faker.number.int({ min: 1, max: 60 }),
+            waitingTime: faker.number.int({ min: 1, max: 60 }),
+            numberOfPeople: faker.number.int({ min: 1, max: 10 }),
+            ingredients: {
+              create: Array.from({ length: 10 }, () => ({
+                ingredient: {
+                  create: {
+                    name: faker.commerce.productName(),
+                    unit: faker.science.unit().symbol,
+                    userId,
+                  },
+                },
+                quantity: faker.number.int({ min: 1, max: 10 }),
+                assignedBy: userId,
+              })),
+            },
+            steps: {
+              create: Array.from({ length: 20 }, () => ({
+                content: faker.lorem.paragraph(),
+              })),
+            },
+            ratings: {
+              create: Array.from(
+                { length: faker.number.int({ min: 1, max: 30 }) },
+                () => ({
+                  rating: faker.number.int({ min: 1, max: 5 }),
+                  userId: faker.string.uuid(),
+                })
+              ),
+            },
+          },
+        });
+      }
     }),
 });

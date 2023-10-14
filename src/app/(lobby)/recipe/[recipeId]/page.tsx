@@ -3,6 +3,7 @@ import { Breadcrumbs } from '@/components/pagers/breadcrumbs';
 import RecipeView from '@/components/recipeView';
 import { Shell } from '@/components/shells/shell';
 import { toTitleCase } from '@/lib/utils';
+import { currentUser } from '@clerk/nextjs/server';
 import { notFound } from 'next/navigation';
 
 interface ProductPageProps {
@@ -35,6 +36,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  const user = await currentUser();
+
   const recipe = await serverClient.recipe
     .getPublicRecipe({ id: params.recipeId })
     .catch(() => null);
@@ -53,11 +56,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
           },
           {
             title: recipe.title,
-            href: `/recipes/${recipe.id}`,
+            href: `/recipe/${recipe.id}`,
           },
         ]}
       />
-      <RecipeView id={recipe.id} initialRecipe={recipe} />
+      <RecipeView
+        id={recipe.id}
+        initialRecipe={recipe}
+        userId={user?.id}
+        onDeleteHref="/recipes"
+      />
     </Shell>
   );
 }

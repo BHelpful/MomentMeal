@@ -1,12 +1,10 @@
 import { SiteFooter } from '@/components/layouts/site-footer';
 import { SiteHeader } from '@/components/layouts/site-header';
+import { fontHeading, fontMono, fontSans } from '@/lib/fonts';
 import { cn, constructMetadata } from '@/lib/utils';
 import { currentUser } from '@clerk/nextjs/server';
-import { Inter } from 'next/font/google';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'simplebar-react/dist/simplebar.min.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = constructMetadata();
 
@@ -18,7 +16,14 @@ export default async function RootLayout({
   const user = await currentUser();
 
   return (
-    <div className={cn('relative flex min-h-screen flex-col', inter.className)}>
+    <div
+      className={cn(
+        'min-h-screen bg-background font-sans antialiased',
+        fontSans.variable,
+        fontMono.variable,
+        fontHeading.variable
+      )}
+    >
       {/* <Navbar /> */}
       <SiteHeader user={user} />
       <main className="flex-1">{children}</main>
