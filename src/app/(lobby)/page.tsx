@@ -29,14 +29,16 @@ export default async function Home() {
             MomentMeal is a marketplace for food and recipes. We help you find
             and create the best recipes and meal plans for you.
           </Balancer>
-          <Balancer className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border px-7 py-2 shadow-md backdrop-blur transition-all hover:bg-primary/50">
-            <div className="flex items-center space-x-2">
-              <p className="text-base text-muted-foreground">
-                Used by {totalUsers}
-              </p>
-              <Icons.Users className="h-5 w-5 text-muted-foreground" />
-            </div>
-          </Balancer>
+          {totalUsers >= 20 && (
+            <Balancer className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border px-7 py-2 shadow-md backdrop-blur transition-all hover:bg-primary/50">
+              <div className="flex items-center space-x-2">
+                <p className="text-base text-muted-foreground">
+                  Used by {totalUsers}
+                </p>
+                <Icons.Users className="h-5 w-5 text-muted-foreground" />
+              </div>
+            </Balancer>
+          )}
           <div className="flex gap-4">
             <Link
               href="/dashboard/recipes"
