@@ -2,7 +2,6 @@
 'use server';
 
 import { env } from '@/env.mjs';
-// TODO: figure out if revalidatePath is for all clients or only the current one
 import { revalidatePath } from 'next/cache';
 
 export async function createRecipeRevalidate() {

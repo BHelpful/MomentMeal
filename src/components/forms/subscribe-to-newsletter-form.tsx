@@ -96,7 +96,7 @@ export function SubscribeToNewsletterForm() {
                 disabled={isPending}
               >
                 {isPending ? (
-                  <Icons.spinner
+                  <Icons.Spinner
                     className="h-3 w-3 animate-spin"
                     aria-hidden="true"
                   />

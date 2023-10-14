@@ -27,7 +27,7 @@ import { Separator } from '../ui/separator';
 
 type Inputs = z.infer<typeof createRecipeInput>;
 
-export function AddRecipeForm({}) {
+export function AddRecipeForm() {
   const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
 
@@ -51,9 +51,6 @@ export function AddRecipeForm({}) {
   function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        console.log('data', data);
-
-        // TODO use client trpc for this call, as it is on the client side
         await createRecipe.mutateAsync(data);
 
         form.reset();
@@ -190,7 +187,6 @@ export function AddRecipeForm({}) {
                       </FormItem>
                     )}
                   />
-                  {/* TODO: Make this into a searchable dropdown and add units as an integrated part of the site, for the user to select from instead of the user manually adding only. */}
                   <FormField
                     control={form.control}
                     name={`ingredients.${index}.unit`}
@@ -213,7 +209,7 @@ export function AddRecipeForm({}) {
                     }}
                     disabled={fields.length === 1}
                   >
-                    <Icons.trash className="h-4 w-4" aria-hidden="true" />
+                    <Icons.Trash className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </div>
               ))}
@@ -224,7 +220,7 @@ export function AddRecipeForm({}) {
                   append({ name: '', quantity: '1', unit: 'g' });
                 }}
               >
-                <Icons.add className="h-4 w-4" aria-hidden="true" />
+                <Icons.Add className="h-4 w-4" aria-hidden="true" />
               </Button>
             </>
           )}
@@ -260,7 +256,7 @@ export function AddRecipeForm({}) {
                     }}
                     disabled={fields.length === 1}
                   >
-                    <Icons.trash className="h-4 w-4" aria-hidden="true" />
+                    <Icons.Trash className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </div>
               ))}
@@ -271,7 +267,7 @@ export function AddRecipeForm({}) {
                   append([{ step: '' }]);
                 }}
               >
-                <Icons.add className="h-4 w-4" aria-hidden="true" />
+                <Icons.Add className="h-4 w-4" aria-hidden="true" />
               </Button>
             </>
           )}
@@ -295,7 +291,7 @@ export function AddRecipeForm({}) {
           }
         >
           {isPending && (
-            <Icons.spinner
+            <Icons.Spinner
               className="mr-2 h-4 w-4 animate-spin"
               aria-hidden="true"
             />

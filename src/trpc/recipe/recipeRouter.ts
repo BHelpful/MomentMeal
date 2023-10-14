@@ -11,31 +11,30 @@ export const ingredientsArrayForRecipe = z.array(
     quantity: z
       .string()
       .min(1)
-      .regex(/^[0-9]+$/, 'Must be a whole number')
+      .regex(/^\d+$/, 'Must be a whole number')
       .regex(/(?!\.)/, 'Must be a whole number'),
     unit: z.string().min(1).max(50),
   })
 );
 
-// TODO: ensure all required fields are present for creating a recipe (look at schema tables for reference)
-export const createRecipeInput = z.object({
+const createAndUpdateRecipeInput = z.object({
   title: z.string().min(3).max(50),
   description: z.string(),
   isPublic: z.boolean().default(false),
   timeInKitchen: z
     .string()
     .min(1)
-    .regex(/^[0-9]+$/, 'Must be a whole number')
+    .regex(/^\d+$/, 'Must be a whole number')
     .regex(/(?!\.)/, 'Must be a whole number'),
   waitingTime: z
     .string()
     .min(1)
-    .regex(/^[0-9]+$/, 'Must be a whole number')
+    .regex(/^\d+$/, 'Must be a whole number')
     .regex(/(?!\.)/, 'Must be a whole number'),
   numberOfPeople: z
     .string()
     .min(1)
-    .regex(/^[0-9]+$/, 'Must be a whole number')
+    .regex(/^\d+$/, 'Must be a whole number')
     .regex(/(?!\.)/, 'Must be a whole number'),
   ingredients: ingredientsArrayForRecipe,
   steps: z.array(
@@ -45,14 +44,11 @@ export const createRecipeInput = z.object({
   ),
 });
 
-// TODO: ensure all required fields are present for creating a recipe (look at schema tables for reference)
+export const createRecipeInput = createAndUpdateRecipeInput;
+
 export const updateRecipeInput = z.object({
   id: z.string(),
-  title: z.string(),
-  description: z.string(),
-  isPublic: z.boolean(),
-  ingredients: ingredientsArrayForRecipe,
-  steps: z.array(z.string()),
+  ...createAndUpdateRecipeInput.shape,
 });
 
 export const generateRecipeInput = z.object({
@@ -63,21 +59,6 @@ export const recipeRouter = router({
   createRecipe: privateProcedure
     .input(createRecipeInput)
     .mutation(async ({ ctx, input }) => {
-      // TODO: implement optimisation by adding an optional id to the ingredient in the input, so that the ingredient.findMany is not needed anymore. This can be done once the ingredients are fetched for the user in the UI for creating/editing a recipe.
-      // TODO: do a connectOrCreate on the inner most ingredient using the existing ingredients information
-      // Example:
-      // ingredient: {
-      //   connectOrCreate: {
-      //     where: {
-      //       id: the id of the ingredient,
-      //     },
-      //     create: {
-      //       name: ingredientName,
-      //       unit: ingredientUnit,
-      //       userId,
-      //     },
-      //   },
-      // },
       const { userId } = ctx;
 
       const existingIngredients = await db.ingredient.findMany({
@@ -180,19 +161,6 @@ export const recipeRouter = router({
         },
         include: {
           ingredients: {
-            // TODO: Figure out why it is nessesary to use select avoiding getting the assignedAt field
-            // 	Types of property assignedAt are incompatible.
-            // Type is Date not assignable to type string
-            // Might be related to a trpc bug with inconsistent types between `Awaited<
-            // ReturnType<(typeof serverClient)['recipe']['getPublicRecipe']>` and const recipe = trpc.recipe.getPublicRecipe.useQuery(
-            //   { id },
-            //   {
-            //     initialData: initialRecipe,
-            //     refetchOnMount: false,
-            //     refetchOnReconnect: false,
-            //   }
-            // );
-            // In recipeView.tsx
             select: {
               ingredient: true,
               quantity: true,
@@ -262,7 +230,7 @@ export const recipeRouter = router({
           steps: {
             deleteMany: {},
             create: input.steps.map((step) => ({
-              content: step,
+              content: step.step,
             })),
           },
         },
@@ -364,7 +332,5 @@ export const recipeRouter = router({
           },
         });
       }
-
-      return;
     }),
 });
