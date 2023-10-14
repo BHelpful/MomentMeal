@@ -15,9 +15,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { type RecipeRating } from '@prisma/client';
+import { Tooltip } from '@radix-ui/react-tooltip';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { Button } from './ui/button';
+import { TooltipContent, TooltipTrigger } from './ui/tooltip';
 
 export default function RecipeView({
   id,
@@ -97,26 +99,49 @@ export default function RecipeView({
             </div>
             {/* waitingTime, timeInKitchen, number of people with icons */}
             <div className="flex flex-wrap gap-2">
-              <div className="flex items-center space-x-2">
-                <Icons.clock className="h-5 w-5 text-muted-foreground" />
-                <p className="text-base text-muted-foreground">
-                  {recipe.data.waitingTime} min
-                </p>
-              </div>
+              <Tooltip delayDuration={300}>
+                <TooltipContent className="w-80 p-2">
+                  Time in kitchen is the time you will spend preparing the
+                  ingredients, chopping, cooking, etc.
+                </TooltipContent>
+                <TooltipTrigger className=" cursor-default">
+                  <div className="flex items-center space-x-2">
+                    <Icons.ChefHat className="h-5 w-5 text-muted-foreground" />
+                    <p className="text-base text-muted-foreground">
+                      {recipe.data.timeInKitchen} min
+                    </p>
+                  </div>
+                </TooltipTrigger>
+              </Tooltip>
 
-              <div className="flex items-center space-x-2">
-                <Icons.clock className="h-5 w-5 text-muted-foreground" />
-                <p className="text-base text-muted-foreground">
-                  {recipe.data.timeInKitchen} min
-                </p>
-              </div>
+              <Tooltip delayDuration={300}>
+                <TooltipContent className="w-80 p-2">
+                  Waiting time is the time you will spend waiting for the dish
+                  to cook, bake, etc.
+                </TooltipContent>
+                <TooltipTrigger className="ml-1.5 cursor-default">
+                  <div className="flex items-center space-x-2">
+                    <Icons.Clock className="h-5 w-5 text-muted-foreground" />
+                    <p className="text-base text-muted-foreground">
+                      {recipe.data.waitingTime} min
+                    </p>
+                  </div>
+                </TooltipTrigger>
+              </Tooltip>
 
-              <div className="flex items-center space-x-2">
-                <Icons.Users className="h-5 w-5 text-muted-foreground" />
-                <p className="text-base text-muted-foreground">
-                  {recipe.data.numberOfPeople} servings
-                </p>
-              </div>
+              <Tooltip delayDuration={300}>
+                <TooltipContent className="w-80 p-2">
+                  The number of people this recipe is intended for.
+                </TooltipContent>
+                <TooltipTrigger className="ml-1.5 cursor-default">
+                  <div className="flex items-center space-x-2">
+                    <Icons.Users className="h-5 w-5 text-muted-foreground" />
+                    <p className="text-base text-muted-foreground">
+                      {recipe.data.numberOfPeople} servings
+                    </p>
+                  </div>
+                </TooltipTrigger>
+              </Tooltip>
             </div>
           </div>
           <Accordion type="single" collapsible className="w-full">
