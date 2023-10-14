@@ -1,6 +1,16 @@
 import { withContentlayer } from 'next-contentlayer';
+import withPWA from 'next-pwa';
 
-/** @type {import('next').NextConfig} */
+const pwaConfig = {
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development',
+};
+
+const withPwaConfig = withPWA(pwaConfig);
+
+/** @type {import('next').NextConfig}*/
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -21,4 +31,4 @@ const nextConfig = {
   },
 };
 
-export default withContentlayer(nextConfig);
+export default withPwaConfig(withContentlayer(nextConfig));

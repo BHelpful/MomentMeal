@@ -44,3 +44,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 .contentlayer
+
+# PWA
+public/sw.js
+public/workbox-*
