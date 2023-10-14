@@ -59,6 +59,7 @@ export default function RecipeView({
   });
 
   function calculateRating(ratings: RecipeRating[]) {
+    if (ratings.length === 0) return 0;
     return (
       ratings.reduce((acc, curr) => acc + curr.rating, 0) / ratings.length
     ).toFixed(1);
