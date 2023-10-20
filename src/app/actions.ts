@@ -9,11 +9,19 @@ export async function createRecipeRevalidate() {
   revalidatePath('/dashboard/recipes');
 }
 
+export async function updateRecipeRevalidate(id: string) {
+  revalidatePath('/recipes');
+  revalidatePath(`/recipe/${id}`);
+  revalidatePath(`/dashboard/recipes`);
+  revalidatePath(`/dashboard/recipe/${id}`);
+  revalidatePath(`/dashboard/recipe/${id}/edit`);
+}
+
 export async function deleteRecipeRevalidate(id: string) {
   revalidatePath('/recipes');
-  revalidatePath(`/recipes/${id}`);
+  revalidatePath(`/recipe/${id}`);
   revalidatePath(`/dashboard/recipes`);
-  revalidatePath(`/dashboard/recipes/${id}`);
+  revalidatePath(`/dashboard/recipe/${id}`);
 }
 
 // For development

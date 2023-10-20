@@ -23,7 +23,6 @@ async function main() {
               },
             },
             quantity: 10,
-            assignedBy: '1',
           },
           {
             ingredient: {
@@ -34,7 +33,6 @@ async function main() {
               },
             },
             quantity: 5,
-            assignedBy: '1',
           },
         ],
       },

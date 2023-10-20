@@ -14,11 +14,13 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
 import { type RecipeRating } from '@prisma/client';
 import { Tooltip } from '@radix-ui/react-tooltip';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { Button } from './ui/button';
+import { Button, buttonVariants } from './ui/button';
 import { TooltipContent, TooltipTrigger } from './ui/tooltip';
 
 export default function RecipeView({
@@ -196,12 +198,24 @@ export default function RecipeView({
             </AccordionItem>
           </Accordion>
           {userId && recipe.data.userId === userId && (
-            <Button
-              className="self-start bg-red-500 hover:bg-red-600"
-              onClick={() => deleteRecipe.mutate({ id })}
-            >
-              Delete Recipe
-            </Button>
+            <>
+              <Button
+                className="self-start bg-red-500 hover:bg-red-600"
+                onClick={() => deleteRecipe.mutate({ id })}
+              >
+                Delete Recipe
+              </Button>
+              <Link
+                className={cn(
+                  buttonVariants({
+                    size: 'sm',
+                  })
+                )}
+                href={`/dashboard/recipe/${recipe.data.id}/edit`}
+              >
+                Edit Recipe
+              </Link>
+            </>
           )}
         </div>
       </div>

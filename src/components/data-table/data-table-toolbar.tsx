@@ -1,26 +1,25 @@
-"use client"
+'use client';
 
-import * as React from "react"
-import Link from "next/link"
+import { DataTableFacetedFilter } from '@/components/data-table/data-table-faceted-filter';
+import { DataTableViewOptions } from '@/components/data-table/data-table-view-options';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import type {
   DataTableFilterableColumn,
   DataTableSearchableColumn,
-} from "@/types"
-import { Cross2Icon, PlusCircledIcon, TrashIcon } from "@radix-ui/react-icons"
-import type { Table } from "@tanstack/react-table"
-
-import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter"
-import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
+} from '@/types';
+import { Cross2Icon, PlusCircledIcon, TrashIcon } from '@radix-ui/react-icons';
+import type { Table } from '@tanstack/react-table';
+import Link from 'next/link';
+import * as React from 'react';
 
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>
-  filterableColumns?: DataTableFilterableColumn<TData>[]
-  searchableColumns?: DataTableSearchableColumn<TData>[]
-  newRowLink?: string
-  deleteRowsAction?: React.MouseEventHandler<HTMLButtonElement>
+  table: Table<TData>;
+  filterableColumns?: DataTableFilterableColumn<TData>[];
+  searchableColumns?: DataTableSearchableColumn<TData>[];
+  newRowLink?: string;
+  deleteRowsAction?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export function DataTableToolbar<TData>({
@@ -30,8 +29,8 @@ export function DataTableToolbar<TData>({
   newRowLink,
   deleteRowsAction,
 }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0
-  const [isPending, startTransition] = React.useTransition()
+  const isFiltered = table.getState().columnFilters.length > 0;
+  const [isPending, startTransition] = React.useTransition();
 
   return (
     <div className="flex w-full items-center justify-between space-x-2 overflow-auto p-1">
@@ -39,14 +38,14 @@ export function DataTableToolbar<TData>({
         {searchableColumns.length > 0 &&
           searchableColumns.map(
             (column) =>
-              table.getColumn(column.id ? String(column.id) : "") && (
+              table.getColumn(column.id ? String(column.id) : '') && (
                 <Input
                   key={String(column.id)}
                   placeholder={`Filter ${column.title}...`}
                   value={
                     (table
                       .getColumn(String(column.id))
-                      ?.getFilterValue() as string) ?? ""
+                      ?.getFilterValue() as string) ?? ''
                   }
                   onChange={(event) =>
                     table
@@ -60,10 +59,10 @@ export function DataTableToolbar<TData>({
         {filterableColumns.length > 0 &&
           filterableColumns.map(
             (column) =>
-              table.getColumn(column.id ? String(column.id) : "") && (
+              table.getColumn(column.id ? String(column.id) : '') && (
                 <DataTableFacetedFilter
                   key={String(column.id)}
-                  column={table.getColumn(column.id ? String(column.id) : "")}
+                  column={table.getColumn(column.id ? String(column.id) : '')}
                   title={column.title}
                   options={column.options}
                 />
@@ -90,9 +89,9 @@ export function DataTableToolbar<TData>({
             className="h-8"
             onClick={(event) => {
               startTransition(() => {
-                table.toggleAllPageRowsSelected(false)
-                deleteRowsAction(event)
-              })
+                table.toggleAllPageRowsSelected(false);
+                deleteRowsAction(event);
+              });
             }}
             disabled={isPending}
           >
@@ -104,9 +103,9 @@ export function DataTableToolbar<TData>({
             <div
               className={cn(
                 buttonVariants({
-                  variant: "outline",
-                  size: "sm",
-                  className: "h-8",
+                  variant: 'outline',
+                  size: 'sm',
+                  className: 'h-8',
                 })
               )}
             >
@@ -118,5 +117,5 @@ export function DataTableToolbar<TData>({
         <DataTableViewOptions table={table} />
       </div>
     </div>
-  )
+  );
 }

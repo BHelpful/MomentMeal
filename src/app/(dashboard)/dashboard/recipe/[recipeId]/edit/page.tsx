@@ -1,8 +1,7 @@
 import { serverClient } from '@/app/_trpc/serverClient';
+import { EditRecipeForm } from '@/components/forms/recipe/UpdateRecipeForm';
 import { Breadcrumbs } from '@/components/pagers/breadcrumbs';
-import RecipeView from '@/components/recipeView';
 import { Shell } from '@/components/shells/shell';
-import { toTitleCase } from '@/lib/utils';
 import { currentUser } from '@clerk/nextjs/server';
 import { notFound } from 'next/navigation';
 
@@ -12,26 +11,7 @@ interface ProductPageProps {
   };
 }
 
-export async function generateMetadata({ params }: ProductPageProps) {
-  if (!params.recipeId) {
-    return {};
-  }
-
-  const recipe = await serverClient.recipe
-    .getRecipe({ id: params.recipeId })
-    .catch(() => null);
-
-  if (!recipe) {
-    return {};
-  }
-
-  return {
-    title: toTitleCase(recipe.title),
-    description: recipe.description ?? undefined,
-  };
-}
-
-export default async function RecipeViewPage({
+export default async function RecipeEditPage({
   params,
 }: Readonly<ProductPageProps>) {
   if (!params.recipeId) {
@@ -44,7 +24,7 @@ export default async function RecipeViewPage({
     .getRecipe({ id: params.recipeId })
     .catch(() => null);
 
-  if (!recipe) {
+  if (!recipe || !user || recipe.userId !== user.id) {
     notFound();
   }
 
@@ -62,12 +42,7 @@ export default async function RecipeViewPage({
           },
         ]}
       />
-      <RecipeView
-        id={recipe.id}
-        initialRecipe={recipe}
-        userId={user?.id}
-        onDeleteHref="/dashboard/recipes"
-      />
+      <EditRecipeForm recipeId={recipe.id} initialRecipe={recipe} />
     </Shell>
   );
 }
