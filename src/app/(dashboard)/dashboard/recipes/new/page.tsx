@@ -1,4 +1,4 @@
-import { AddRecipeForm } from '@/components/forms/add-recipe-form';
+import { AddRecipeForm } from '@/components/forms/recipe/AddRecipeForm';
 import {
   PageHeader,
   PageHeaderDescription,

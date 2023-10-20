@@ -36,7 +36,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "noErrorTruncation": true
   },
   "include": [
     ".eslintrc.js",

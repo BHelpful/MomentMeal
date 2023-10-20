@@ -7,13 +7,11 @@ import { computeIngredientsToCreateOrConnect } from './recipeUtil';
 
 export const ingredientsArrayForRecipe = z.array(
   z.object({
-    name: z.string().min(1).max(50),
-    quantity: z
-      .string()
-      .min(1)
-      .regex(/^\d+$/, 'Must be a whole number')
-      .regex(/(?!\.)/, 'Must be a whole number'),
-    unit: z.string().min(1).max(50),
+    ingredient: z.object({
+      name: z.string().min(1).max(50),
+      unit: z.string().min(1).max(50),
+    }),
+    quantity: z.number().min(1),
   })
 );
 
@@ -21,25 +19,13 @@ const createAndUpdateRecipeInput = z.object({
   title: z.string().min(3).max(50),
   description: z.string(),
   isPublic: z.boolean().default(false),
-  timeInKitchen: z
-    .string()
-    .min(1)
-    .regex(/^\d+$/, 'Must be a whole number')
-    .regex(/(?!\.)/, 'Must be a whole number'),
-  waitingTime: z
-    .string()
-    .min(1)
-    .regex(/^\d+$/, 'Must be a whole number')
-    .regex(/(?!\.)/, 'Must be a whole number'),
-  numberOfPeople: z
-    .string()
-    .min(1)
-    .regex(/^\d+$/, 'Must be a whole number')
-    .regex(/(?!\.)/, 'Must be a whole number'),
+  timeInKitchen: z.number().min(1).int(),
+  waitingTime: z.number().min(1).int(),
+  numberOfPeople: z.number().min(1).int(),
   ingredients: ingredientsArrayForRecipe,
   steps: z.array(
     z.object({
-      step: z.string().min(1),
+      content: z.string().min(1),
     })
   ),
 });
@@ -67,9 +53,23 @@ export const recipeRouter = router({
         },
       });
 
+      const ingredientsAlreadyOnRecipe = await db.ingredientsOnRecipes.findMany(
+        {
+          where: {
+            ingredient: {
+              userId,
+            },
+          },
+          include: {
+            ingredient: true,
+          },
+        }
+      );
+
       const { createIngredients, connectIngredients } =
         computeIngredientsToCreateOrConnect(
           existingIngredients,
+          ingredientsAlreadyOnRecipe,
           input.ingredients,
           userId
         );
@@ -90,7 +90,7 @@ export const recipeRouter = router({
           },
           steps: {
             create: input.steps.map((step) => ({
-              content: step.step,
+              content: step.content,
             })),
           },
         },
@@ -137,8 +137,9 @@ export const recipeRouter = router({
         },
         include: {
           ingredients: {
-            include: {
+            select: {
               ingredient: true,
+              quantity: true,
             },
           },
           steps: true,
@@ -202,9 +203,21 @@ export const recipeRouter = router({
         },
       });
 
+      const ingredientsAlreadyOnRecipe = await db.ingredientsOnRecipes.findMany(
+        {
+          where: {
+            recipeId: input.id,
+          },
+          include: {
+            ingredient: true,
+          },
+        }
+      );
+
       const { createIngredients, connectIngredients } =
         computeIngredientsToCreateOrConnect(
           existingIngredients,
+          ingredientsAlreadyOnRecipe,
           input.ingredients,
           userId
         );
@@ -218,6 +231,9 @@ export const recipeRouter = router({
         data: {
           title: input.title,
           description: input.description,
+          timeInKitchen: input.timeInKitchen,
+          waitingTime: input.waitingTime,
+          numberOfPeople: input.numberOfPeople,
           isPublic: input.isPublic,
           ingredients: {
             deleteMany: {
@@ -230,7 +246,7 @@ export const recipeRouter = router({
           steps: {
             deleteMany: {},
             create: input.steps.map((step) => ({
-              content: step.step,
+              content: step.content,
             })),
           },
         },
@@ -312,7 +328,6 @@ export const recipeRouter = router({
                   },
                 },
                 quantity: faker.number.int({ min: 1, max: 10 }),
-                assignedBy: userId,
               })),
             },
             steps: {

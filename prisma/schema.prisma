@@ -15,12 +15,12 @@ datasource db {
 model Recipe {
   id             String                 @id @default(cuid())
   title          String
-  description    String?                @db.LongText
+  description    String                 @db.LongText
   isPublic       Boolean                @default(false)
   userId         String
-  timeInKitchen  Int?
-  waitingTime    Int?
-  numberOfPeople Int?
+  timeInKitchen  Int
+  waitingTime    Int
+  numberOfPeople Int
   ratings        RecipeRating[]
   ingredients    IngredientsOnRecipes[]
   steps          Step[]
@@ -40,7 +40,7 @@ model RecipeRating {
 model Ingredient {
   id      String                 @id @default(cuid())
   name    String
-  unit    String?
+  unit    String
   userId  String
   recipes IngredientsOnRecipes[]
 }
@@ -52,12 +52,10 @@ model IngredientsOnRecipes {
   recipeId     String
   quantity     Float
   assignedAt   DateTime   @default(now())
-  assignedBy   String?
 
   @@id([ingredientId, recipeId])
   @@index([ingredientId])
   @@index([recipeId])
-  @@index([assignedBy])
 }
 
 model Step {

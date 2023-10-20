@@ -1,7 +1,5 @@
 'use client';
 
-import { trpc } from '@/app/_trpc/client';
-import { createRecipeRevalidate } from '@/app/actions';
 import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,52 +10,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  UncontrolledFormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { catchError } from '@/lib/utils';
 import { createRecipeInput } from '@/trpc/recipe/recipeRouter';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import type { z } from 'zod';
-import { Separator } from '../ui/separator';
 
-export type RecipeFormInput = z.infer<typeof createRecipeInput>;
+type Inputs = z.infer<typeof createRecipeInput>;
 
-export function AddRecipeForm() {
-  const router = useRouter();
+interface RecipeFormProps {
+  initialData: Inputs;
+  onSubmit: (data: Inputs) => Promise<void>;
+}
+
+export function RecipeForm({ initialData, onSubmit }: RecipeFormProps) {
   const [isPending, startTransition] = React.useTransition();
 
-  const createRecipe = trpc.recipe.createRecipe.useMutation();
-
   // react-hook-form
-  const form = useForm<RecipeFormInput>({
+  const form = useForm<Inputs>({
     resolver: zodResolver(createRecipeInput),
-    defaultValues: {
-      title: '',
-      description: '',
-      ingredients: [{ ingredient: { name: '', unit: 'g' }, quantity: 1 }],
-      steps: [{ content: '' }],
-      timeInKitchen: 15,
-      waitingTime: 30,
-      numberOfPeople: 2,
-    },
+    defaultValues: initialData,
     mode: 'onTouched',
   });
 
-  function onSubmit(data: RecipeFormInput) {
+  function handleSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        await createRecipe.mutateAsync(data);
+        await onSubmit(data);
 
         form.reset();
-        toast.success('Recipe added successfully.');
-        await createRecipeRevalidate();
-        router.push('/dashboard/recipes');
-        router.refresh(); // Workaround for the inconsistency of cache revalidation
       } catch (err) {
         catchError(err);
       }
@@ -68,7 +55,7 @@ export function AddRecipeForm() {
     <Form {...form}>
       <form
         className="grid w-full gap-4"
-        onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
+        onSubmit={(...args) => void form.handleSubmit(handleSubmit)(...args)}
       >
         <FormField
           control={form.control}
@@ -102,45 +89,54 @@ export function AddRecipeForm() {
         <Separator />
         <h2 className="mb-4 text-xl font-bold">Time</h2>
         <div className="flex flex-wrap gap-4">
-          <FormField
-            control={form.control}
-            name="timeInKitchen"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Time In Kitchen</FormLabel>
-                <FormControl>
-                  <Input placeholder="15" type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="waitingTime"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Waiting Time</FormLabel>
-                <FormControl>
-                  <Input placeholder="30" type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="numberOfPeople"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Number Of People</FormLabel>
-                <FormControl>
-                  <Input placeholder="2" type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <FormItem>
+            <FormLabel>Time In Kitchen</FormLabel>
+            <FormControl>
+              <Input
+                type="number"
+                inputMode="numeric"
+                placeholder="Type time in kitchen here."
+                {...form.register('timeInKitchen', {
+                  valueAsNumber: true,
+                })}
+              />
+            </FormControl>
+            <UncontrolledFormMessage
+              message={form.formState.errors.timeInKitchen?.message}
+            />
+          </FormItem>
+          <FormItem>
+            <FormLabel>Waiting Time</FormLabel>
+            <FormControl>
+              <Input
+                type="number"
+                inputMode="numeric"
+                placeholder="Type waiting time here."
+                {...form.register('waitingTime', {
+                  valueAsNumber: true,
+                })}
+              />
+            </FormControl>
+            <UncontrolledFormMessage
+              message={form.formState.errors.waitingTime?.message}
+            />
+          </FormItem>
+          <FormItem>
+            <FormLabel>Number Of People</FormLabel>
+            <FormControl>
+              <Input
+                type="number"
+                inputMode="numeric"
+                placeholder="Type number of people here."
+                {...form.register('numberOfPeople', {
+                  valueAsNumber: true,
+                })}
+              />
+            </FormControl>
+            <UncontrolledFormMessage
+              message={form.formState.errors.numberOfPeople?.message}
+            />
+          </FormItem>
         </div>
         <Separator />
         <h2 className="mb-4 text-xl font-bold">Ingredients</h2>
@@ -170,23 +166,25 @@ export function AddRecipeForm() {
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name={`ingredients.${index}.quantity`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Amount</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            placeholder="Type amount here."
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <FormItem>
+                    <FormLabel>Amount</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        inputMode="numeric"
+                        placeholder="Type amount here."
+                        {...form.register(`ingredients.${index}.quantity`, {
+                          valueAsNumber: true,
+                        })}
+                      />
+                    </FormControl>
+                    <UncontrolledFormMessage
+                      message={
+                        form.formState.errors.ingredients?.[index]?.quantity
+                          ?.message
+                      }
+                    />
+                  </FormItem>
                   <FormField
                     control={form.control}
                     name={`ingredients.${index}.ingredient.unit`}
@@ -296,8 +294,8 @@ export function AddRecipeForm() {
               aria-hidden="true"
             />
           )}
-          Add Recipe
-          <span className="sr-only">Add Recipe</span>
+          Submit
+          <span className="sr-only">Submit</span>
         </Button>
       </form>
     </Form>
