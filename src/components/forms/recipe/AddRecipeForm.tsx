@@ -5,8 +5,7 @@ import { createRecipeRevalidate } from '@/app/actions';
 import { catchError } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import type { RecipeFormInput } from '../add-recipe-form';
-import { RecipeForm } from './RecipeForm';
+import { RecipeForm, type RecipeFormInput } from './RecipeForm';
 
 export function AddRecipeForm() {
   const router = useRouter();

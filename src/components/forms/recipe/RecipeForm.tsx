@@ -22,24 +22,24 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-type Inputs = z.infer<typeof createRecipeInput>;
+export type RecipeFormInput = z.infer<typeof createRecipeInput>;
 
 interface RecipeFormProps {
-  initialData: Inputs;
-  onSubmit: (data: Inputs) => Promise<void>;
+  initialData: RecipeFormInput;
+  onSubmit: (data: RecipeFormInput) => Promise<void>;
 }
 
 export function RecipeForm({ initialData, onSubmit }: RecipeFormProps) {
   const [isPending, startTransition] = React.useTransition();
 
   // react-hook-form
-  const form = useForm<Inputs>({
+  const form = useForm<RecipeFormInput>({
     resolver: zodResolver(createRecipeInput),
     defaultValues: initialData,
     mode: 'onTouched',
   });
 
-  function handleSubmit(data: Inputs) {
+  function handleSubmit(data: RecipeFormInput) {
     startTransition(async () => {
       try {
         await onSubmit(data);

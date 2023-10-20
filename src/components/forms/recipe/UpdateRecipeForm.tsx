@@ -8,8 +8,7 @@ import type { createRecipeInput } from '@/trpc/recipe/recipeRouter';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import type { z } from 'zod';
-import type { RecipeFormInput } from '../add-recipe-form';
-import { RecipeForm } from './RecipeForm';
+import { RecipeForm, type RecipeFormInput } from './RecipeForm';
 
 interface EditRecipeFormProps {
   recipeId: string;
