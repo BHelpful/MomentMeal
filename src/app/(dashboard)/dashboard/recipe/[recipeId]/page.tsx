@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: ProductPageProps) {
   };
 }
 
-export default async function ProductPage({
+export default async function RecipeViewPage({
   params,
 }: Readonly<ProductPageProps>) {
   if (!params.recipeId) {
