@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -6,15 +6,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from '@/components/ui/table';
 
 interface DataTableLoadingProps {
-  columnCount: number
-  rowCount?: number
-  isNewRowCreatable?: boolean
-  isRowsDeletable?: boolean
-  searchableFieldCount?: number
-  filterableFieldCount?: number
+  columnCount: number;
+  rowCount?: number;
+  isNewRowCreatable?: boolean;
+  isRowsDeletable?: boolean;
+  searchableFieldCount?: number;
+  filterableFieldCount?: number;
 }
 
 export function DataTableLoading({
@@ -96,5 +96,5 @@ export function DataTableLoading({
         </div>
       </div>
     </div>
-  )
+  );
 }
