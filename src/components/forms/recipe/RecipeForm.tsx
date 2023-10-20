@@ -29,7 +29,10 @@ interface RecipeFormProps {
   onSubmit: (data: RecipeFormInput) => Promise<void>;
 }
 
-export function RecipeForm({ initialData, onSubmit }: RecipeFormProps) {
+export function RecipeForm({
+  initialData,
+  onSubmit,
+}: Readonly<RecipeFormProps>) {
   const [isPending, startTransition] = React.useTransition();
 
   // react-hook-form

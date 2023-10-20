@@ -20,7 +20,7 @@ interface EditRecipeFormProps {
 export function EditRecipeForm({
   recipeId,
   initialRecipe,
-}: EditRecipeFormProps) {
+}: Readonly<EditRecipeFormProps>) {
   const router = useRouter();
 
   const recipeQuery = trpc.recipe.getRecipe.useQuery(
