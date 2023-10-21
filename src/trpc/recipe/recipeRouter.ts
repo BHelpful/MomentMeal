@@ -19,8 +19,8 @@ const createAndUpdateRecipeInput = z.object({
   title: z.string().min(3).max(50),
   description: z.string(),
   isPublic: z.boolean().default(false),
-  timeInKitchen: z.number().min(1).int(),
-  waitingTime: z.number().min(1).int(),
+  timeInKitchen: z.number().min(0).int(),
+  waitingTime: z.number().min(0).int(),
   numberOfPeople: z.number().min(1).int(),
   ingredients: ingredientsArrayForRecipe,
   steps: z.array(
