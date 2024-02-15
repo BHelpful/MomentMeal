@@ -201,7 +201,7 @@ export default function RecipeView({
           </section>
           <section className="space-y-4 md:w-1/2">
             <h2 className="mb-4 text-2xl font-semibold" id="ingredients-title">
-              Description
+              Steps
             </h2>
             <ol className="list-inside list-decimal">
               {recipe.data.steps.map((step) => (
