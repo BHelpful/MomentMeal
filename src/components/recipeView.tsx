@@ -5,14 +5,7 @@ import { type serverClient } from '@/app/_trpc/serverClient';
 import { deleteRecipeRevalidate } from '@/app/actions';
 import { Icons } from '@/components/icons';
 import { Shell } from '@/components/shells/shell';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { type RecipeRating } from '@prisma/client';
@@ -29,12 +22,12 @@ export default function RecipeView({
   userId,
   onDeleteHref,
 }: {
-  id: string;
-  initialRecipe: Awaited<
+  readonly id: string;
+  readonly initialRecipe: Awaited<
     ReturnType<(typeof serverClient)['recipe']['getPublicRecipe']>
   >;
-  userId?: string;
-  onDeleteHref?: string;
+  readonly userId?: string;
+  readonly onDeleteHref?: string;
 }) {
   const router = useRouter();
   const recipe = trpc.recipe.getPublicRecipe.useQuery(
@@ -69,155 +62,165 @@ export default function RecipeView({
 
   return (
     <Shell>
-      <div className="flex flex-col gap-8 md:flex-row md:gap-16">
+      <div className="">
         {/* Recipe Image Carousel (placeholder for now untill we get image support) */}
-        <div className="w-full md:w-1/2">
-          <div className="flex h-96 w-full flex-1 items-center justify-center rounded-md bg-accent/30">
-            <Icons.placeholder
-              className="h-9 w-9 text-muted-foreground"
-              aria-hidden="true"
-            />
-          </div>
-        </div>
-
-        <Separator className="mt-4 md:hidden" />
-        <div className="flex w-full flex-col gap-4 md:w-1/2">
-          <div className="space-y-2">
-            <h2 className="line-clamp-1 text-2xl font-bold">
-              {recipe.data.title}
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              <div className="flex items-center space-x-2">
-                <Icons.star className="h-5 w-5 text-muted-foreground" />
-                <p className="text-base text-muted-foreground">
-                  Rating: {calculateRating(recipe.data.ratings)}
-                </p>
+        <article className="flex w-full flex-col gap-8 md:flex-row md:gap-16">
+          <div className="flex flex-col gap-4 md:w-1/2">
+            <section className="space-y-2">
+              <h2 className="line-clamp-1 text-2xl font-bold">
+                {recipe.data.title}
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                <div className="flex items-center space-x-2">
+                  <Icons.star className="h-5 w-5 text-muted-foreground" />
+                  <p className="text-base text-muted-foreground">
+                    Rating: {calculateRating(recipe.data.ratings)}
+                  </p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Icons.heart className="h-5 w-5 text-muted-foreground" />
+                  <p className="text-base text-muted-foreground">
+                    {recipe.data.ratings.length} ratings
+                  </p>
+                </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Icons.heart className="h-5 w-5 text-muted-foreground" />
-                <p className="text-base text-muted-foreground">
-                  {recipe.data.ratings.length} ratings
-                </p>
+              {/* waitingTime, timeInKitchen, number of people with icons */}
+              <div className="flex flex-wrap gap-2">
+                <Tooltip delayDuration={300}>
+                  <TooltipContent className="w-80 p-2">
+                    Time in kitchen is the time you will spend preparing the
+                    ingredients, chopping, cooking, etc.
+                  </TooltipContent>
+                  <TooltipTrigger className=" cursor-default">
+                    <div className="flex items-center space-x-2">
+                      <Icons.ChefHat className="h-5 w-5 text-muted-foreground" />
+                      <p className="text-base text-muted-foreground">
+                        {recipe.data.timeInKitchen} min
+                      </p>
+                    </div>
+                  </TooltipTrigger>
+                </Tooltip>
+
+                <Tooltip delayDuration={300}>
+                  <TooltipContent className="w-80 p-2">
+                    Waiting time is the time you will spend waiting for the dish
+                    to cook, bake, etc.
+                  </TooltipContent>
+                  <TooltipTrigger className="ml-1.5 cursor-default">
+                    <div className="flex items-center space-x-2">
+                      <Icons.Clock className="h-5 w-5 text-muted-foreground" />
+                      <p className="text-base text-muted-foreground">
+                        {recipe.data.waitingTime} min
+                      </p>
+                    </div>
+                  </TooltipTrigger>
+                </Tooltip>
+
+                <Tooltip delayDuration={300}>
+                  <TooltipContent className="w-80 p-2">
+                    The number of people this recipe is intended for.
+                  </TooltipContent>
+                  <TooltipTrigger className="ml-1.5 cursor-default">
+                    <div className="flex items-center space-x-2">
+                      <Icons.Users className="h-5 w-5 text-muted-foreground" />
+                      <p className="text-base text-muted-foreground">
+                        {recipe.data.numberOfPeople} servings
+                      </p>
+                    </div>
+                  </TooltipTrigger>
+                </Tooltip>
               </div>
-            </div>
-            {/* waitingTime, timeInKitchen, number of people with icons */}
-            <div className="flex flex-wrap gap-2">
-              <Tooltip delayDuration={300}>
-                <TooltipContent className="w-80 p-2">
-                  Time in kitchen is the time you will spend preparing the
-                  ingredients, chopping, cooking, etc.
-                </TooltipContent>
-                <TooltipTrigger className=" cursor-default">
-                  <div className="flex items-center space-x-2">
-                    <Icons.ChefHat className="h-5 w-5 text-muted-foreground" />
-                    <p className="text-base text-muted-foreground">
-                      {recipe.data.timeInKitchen} min
-                    </p>
-                  </div>
-                </TooltipTrigger>
-              </Tooltip>
-
-              <Tooltip delayDuration={300}>
-                <TooltipContent className="w-80 p-2">
-                  Waiting time is the time you will spend waiting for the dish
-                  to cook, bake, etc.
-                </TooltipContent>
-                <TooltipTrigger className="ml-1.5 cursor-default">
-                  <div className="flex items-center space-x-2">
-                    <Icons.Clock className="h-5 w-5 text-muted-foreground" />
-                    <p className="text-base text-muted-foreground">
-                      {recipe.data.waitingTime} min
-                    </p>
-                  </div>
-                </TooltipTrigger>
-              </Tooltip>
-
-              <Tooltip delayDuration={300}>
-                <TooltipContent className="w-80 p-2">
-                  The number of people this recipe is intended for.
-                </TooltipContent>
-                <TooltipTrigger className="ml-1.5 cursor-default">
-                  <div className="flex items-center space-x-2">
-                    <Icons.Users className="h-5 w-5 text-muted-foreground" />
-                    <p className="text-base text-muted-foreground">
-                      {recipe.data.numberOfPeople} servings
-                    </p>
-                  </div>
-                </TooltipTrigger>
-              </Tooltip>
-            </div>
-          </div>
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="description">
-              <AccordionTrigger>Description</AccordionTrigger>
-              <AccordionContent>
+              <p className="text-base">
                 {recipe.data.description ??
                   'No description is available for this recipe.'}
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="description">
-              <AccordionTrigger>Ingredients</AccordionTrigger>
-              <AccordionContent>
-                {/* ingredients in an unordered list */}
-                <ol className="list-inside list-decimal">
-                  {recipe.data.ingredients.map((ingredient) => (
-                    <li
-                      key={ingredient.ingredient.id}
-                      className="flex items-center space-x-2 p-2"
-                    >
-                      <Checkbox className="h-5 w-5" />
-                      <Label>
-                        {ingredient.ingredient.name} - {ingredient.quantity} -
-                        {ingredient.ingredient.unit}
-                      </Label>
-                    </li>
-                  ))}
-                </ol>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="description">
-              <AccordionTrigger>Steps</AccordionTrigger>
-              <AccordionContent>
-                {/* steps in an ordered list */}
-                <ol className="list-inside list-decimal">
-                  {recipe.data.steps.map((step) => (
-                    <li
-                      key={step.id}
-                      className="flex items-center space-x-2 p-2"
-                    >
-                      <Checkbox className="h-5 w-5" />
-                      <Label> {step.content}</Label>
-                    </li>
-                  ))}
-                </ol>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-          {userId && recipe.data.userId === userId && (
-            <>
-              <Button
-                className="self-start bg-red-500 hover:bg-red-600"
-                onClick={() => deleteRecipe.mutate({ id })}
-              >
-                Delete Recipe
-              </Button>
-              <Link
-                className={cn(
-                  buttonVariants({
-                    size: 'sm',
-                  })
-                )}
-                href={`/dashboard/recipe/${recipe.data.id}/edit`}
-              >
-                Edit Recipe
-              </Link>
-            </>
-          )}
-        </div>
+              </p>
+            </section>
+
+            {userId && recipe.data.userId === userId && (
+              <>
+                <Button
+                  className="self-start bg-red-500 hover:bg-red-600"
+                  onClick={() => deleteRecipe.mutate({ id })}
+                >
+                  Delete Recipe
+                </Button>
+                <Link
+                  className={cn(
+                    buttonVariants({
+                      size: 'sm',
+                    })
+                  )}
+                  href={`/dashboard/recipe/${recipe.data.id}/edit`}
+                >
+                  Edit Recipe
+                </Link>
+              </>
+            )}
+          </div>
+          <div className="w-full md:w-1/2">
+            <section className="mb-4 flex h-96 w-full flex-1 items-center justify-center rounded-md bg-accent/30">
+              <Icons.placeholder
+                className="h-9 w-9 text-muted-foreground"
+                aria-hidden="true"
+              />
+            </section>
+          </div>
+        </article>
+        <Separator className="mt-4 md:hidden" />
+        <article className="flex w-full flex-col gap-8 md:flex-row md:gap-16">
+          <section className="space-y-4 md:w-1/2">
+            <h2 className="mb-4 text-2xl font-semibold" id="ingredients-title">
+              Ingredients
+            </h2>
+            <div className="mb-4 flex items-center space-x-2">
+              <Button variant="outline">-</Button>
+              <span>{recipe.data.numberOfPeople} servings</span>
+              <Button variant="outline">+</Button>
+            </div>
+            <ol className="list-inside list-decimal">
+              {recipe.data.ingredients.map((ingredient) => (
+                <li key={ingredient.ingredient.id} className="block">
+                  <label
+                    htmlFor={`checkbox-${ingredient.ingredient.id}`}
+                    className="mb-2 flex cursor-pointer items-center space-x-2 rounded-lg bg-muted p-2 transition-colors duration-200 hover:bg-primary/10"
+                  >
+                    <Checkbox
+                      id={`checkbox-${ingredient.ingredient.id}`}
+                      className="h-5 w-5"
+                    />
+                    <span className="flex items-center space-x-2">
+                      <span className="font-bold">
+                        {ingredient.quantity} {ingredient.ingredient.unit}
+                      </span>
+                      <p>{ingredient.ingredient.name}</p>
+                    </span>
+                  </label>
+                </li>
+              ))}
+            </ol>
+          </section>
+          <section className="space-y-4 md:w-1/2">
+            <h2 className="mb-4 text-2xl font-semibold" id="ingredients-title">
+              Description
+            </h2>
+            <ol className="list-inside list-decimal">
+              {recipe.data.steps.map((step) => (
+                <li key={step.id} className="block">
+                  <label
+                    htmlFor={`checkbox-step-${step.id}`}
+                    className="mb-2 flex cursor-pointer items-center space-x-2 rounded-lg bg-muted p-2 transition-colors duration-200 hover:bg-primary/10"
+                  >
+                    <Checkbox
+                      id={`checkbox-step-${step.id}`}
+                      className="h-5 w-5"
+                    />
+                    <span>{step.content}</span>
+                  </label>
+                </li>
+              ))}
+            </ol>
+          </section>
+        </article>
       </div>
     </Shell>
   );
