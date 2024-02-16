@@ -47,7 +47,7 @@ export function RecipeForm({
       try {
         await onSubmit(data);
 
-        form.reset();
+        // form.reset();
       } catch (err) {
         catchError(err);
       }
