@@ -179,7 +179,7 @@ export function RecipeForm({
                     name={`ingredients.${index}.ingredient.name`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Ingredient Name</FormLabel>
+                        <FormLabel>Ingredient</FormLabel>
                         <FormControl>
                           <Input
                             onKeyDown={(event) => {
