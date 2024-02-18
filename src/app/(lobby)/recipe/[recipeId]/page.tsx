@@ -7,7 +7,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import { notFound } from 'next/navigation';
 
 interface ProductPageProps {
-  params: {
+  readonly params: {
     recipeId: string;
   };
 }

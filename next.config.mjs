@@ -16,9 +16,6 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: false,
   },
-  experimental: {
-    serverActions: true,
-  },
 };
 
 export default withContentlayer(nextConfig);

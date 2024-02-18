@@ -46,8 +46,6 @@ export function RecipeForm({
     startTransition(async () => {
       try {
         await onSubmit(data);
-
-        // form.reset();
       } catch (err) {
         catchError(err);
       }
@@ -67,7 +65,15 @@ export function RecipeForm({
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input placeholder="Type recipe title here." {...field} />
+                <Input
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter') {
+                      event.preventDefault();
+                    }
+                  }}
+                  placeholder="Type recipe title here."
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -102,6 +108,11 @@ export function RecipeForm({
                 {...form.register('timeInKitchen', {
                   valueAsNumber: true,
                 })}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault();
+                  }
+                }}
               />
             </FormControl>
             <UncontrolledFormMessage
@@ -118,6 +129,11 @@ export function RecipeForm({
                 {...form.register('waitingTime', {
                   valueAsNumber: true,
                 })}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault();
+                  }
+                }}
               />
             </FormControl>
             <UncontrolledFormMessage
@@ -134,6 +150,11 @@ export function RecipeForm({
                 {...form.register('numberOfPeople', {
                   valueAsNumber: true,
                 })}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault();
+                  }
+                }}
               />
             </FormControl>
             <UncontrolledFormMessage
@@ -161,6 +182,11 @@ export function RecipeForm({
                         <FormLabel>Ingredient Name</FormLabel>
                         <FormControl>
                           <Input
+                            onKeyDown={(event) => {
+                              if (event.key === 'Enter') {
+                                event.preventDefault();
+                              }
+                            }}
                             placeholder="Type ingredient name here."
                             {...field}
                           />
@@ -179,6 +205,11 @@ export function RecipeForm({
                         {...form.register(`ingredients.${index}.quantity`, {
                           valueAsNumber: true,
                         })}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter') {
+                            event.preventDefault();
+                          }
+                        }}
                       />
                     </FormControl>
                     <UncontrolledFormMessage
@@ -195,7 +226,15 @@ export function RecipeForm({
                       <FormItem>
                         <FormLabel>Unit</FormLabel>
                         <FormControl>
-                          <Input placeholder="Type unit here." {...field} />
+                          <Input
+                            onKeyDown={(event) => {
+                              if (event.key === 'Enter') {
+                                event.preventDefault();
+                              }
+                            }}
+                            placeholder="Type unit here."
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

@@ -3,7 +3,7 @@ import { TRPCError } from '@trpc/server';
 import { z, type z as zodType } from 'zod';
 import { type ingredientsArrayForRecipe } from './recipeRouter';
 
-export function computeIngredientsToCreateOrConnect(
+export function computeIngredientsToAddAndKeep(
   existingIngredients: Ingredient[],
   ingredientsAlreadyOnRecipe: { ingredient: Ingredient }[] &
     IngredientsOnRecipes[],
@@ -64,5 +64,17 @@ export function computeIngredientsToCreateOrConnect(
       },
     },
   }));
-  return { createIngredients, connectIngredients };
+
+  const ingredientsToAdd = [...createIngredients, ...connectIngredients];
+
+  // ingredients from ingredientsInput that are already in the database
+  const ingredientsToKeep = existingIngredients
+    .filter((ingredient) =>
+      ingredientsInput.some(
+        (inputIngredient) => inputIngredient.ingredient.name === ingredient.name
+      )
+    )
+    .map((ingredient) => ingredient.id);
+
+  return { ingredientsToAdd, ingredientsToKeep };
 }
