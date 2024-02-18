@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { privateProcedure, publicProcedure, router } from '../trpc';
-import { computeIngredientsToCreateOrConnect } from './recipeUtil';
+import { computeIngredientsToAddAndKeep } from './recipeUtil';
 
 export const ingredientsArrayForRecipe = z.array(
   z.object({
@@ -66,15 +66,13 @@ export const recipeRouter = router({
         }
       );
 
-      const { createIngredients, connectIngredients } =
-        computeIngredientsToCreateOrConnect(
+      const { ingredientsToAdd } =
+        computeIngredientsToAddAndKeep(
           existingIngredients,
           ingredientsAlreadyOnRecipe,
           input.ingredients,
           userId
         );
-
-      const allIngredients = [...createIngredients, ...connectIngredients];
 
       const recipe = db.recipe.create({
         data: {
@@ -86,7 +84,7 @@ export const recipeRouter = router({
           numberOfPeople: z.coerce.number().parse(input.numberOfPeople),
           userId,
           ingredients: {
-            create: allIngredients,
+            create: ingredientsToAdd,
           },
           steps: {
             create: input.steps.map((step) => ({
@@ -214,15 +212,13 @@ export const recipeRouter = router({
         }
       );
 
-      const { createIngredients, connectIngredients } =
-        computeIngredientsToCreateOrConnect(
+      const { ingredientsToAdd, ingredientsToKeep } =
+        computeIngredientsToAddAndKeep(
           existingIngredients,
           ingredientsAlreadyOnRecipe,
           input.ingredients,
           userId
         );
-
-      const allIngredients = [...createIngredients, ...connectIngredients];
 
       const recipe = await db.recipe.update({
         where: {
@@ -238,10 +234,10 @@ export const recipeRouter = router({
           ingredients: {
             deleteMany: {
               ingredientId: {
-                notIn: connectIngredients.map((i) => i.ingredient.connect.id),
+                notIn: ingredientsToKeep,
               },
             },
-            create: allIngredients,
+            create: ingredientsToAdd,
           },
           steps: {
             deleteMany: {},

@@ -46,8 +46,6 @@ export function RecipeForm({
     startTransition(async () => {
       try {
         await onSubmit(data);
-
-        // form.reset();
       } catch (err) {
         catchError(err);
       }
