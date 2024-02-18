@@ -67,7 +67,14 @@ export function computeIngredientsToAddAndKeep(
 
   const ingredientsToAdd = [...createIngredients, ...connectIngredients];
 
-  const ingredientsToKeep = existingIngredients.map((i) => i.id);
+  // ingredients from ingredientsInput that are already in the database
+  const ingredientsToKeep = existingIngredients
+    .filter((ingredient) =>
+      ingredientsInput.some(
+        (inputIngredient) => inputIngredient.ingredient.name === ingredient.name
+      )
+    )
+    .map((ingredient) => ingredient.id);
 
   return { ingredientsToAdd, ingredientsToKeep };
 }
