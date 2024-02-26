@@ -13,8 +13,9 @@ export default function RecipeList({
 }) {
   const recipes = trpc.recipe.getPublicRecipes.useQuery(undefined, {
     initialData: initialRecipes,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+    cacheTime: 0,
   });
 
   return (

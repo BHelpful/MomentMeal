@@ -34,8 +34,9 @@ export default function RecipeView({
     { id },
     {
       initialData: initialRecipe,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
+      refetchOnMount: true,
+      refetchOnReconnect: true,
+      cacheTime: 0,
     }
   );
 

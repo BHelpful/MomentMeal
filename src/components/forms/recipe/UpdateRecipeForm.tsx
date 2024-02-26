@@ -27,8 +27,9 @@ export function EditRecipeForm({
     { id: recipeId },
     {
       initialData: initialRecipe,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
+      refetchOnMount: true,
+      refetchOnReconnect: true,
+      cacheTime: 0,
     }
   );
   const updateRecipe = trpc.recipe.updateRecipe.useMutation();

@@ -33,7 +33,6 @@ export default async function RecipesPage() {
     redirect('/signin');
   }
 
-  // TODO: Should be getRecipes, as it is only for the current user
   const recipes = await serverClient.recipe.getRecipes();
 
   const subscriptionPlanStub: UserSubscriptionPlan = {
