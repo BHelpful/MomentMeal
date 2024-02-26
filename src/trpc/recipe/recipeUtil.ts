@@ -3,6 +3,7 @@ import { TRPCError } from '@trpc/server';
 import { z, type z as zodType } from 'zod';
 import { type ingredientsArrayForRecipe } from './recipeRouter';
 
+// TODO Add tests and refactor
 export function computeIngredientsToAddAndKeep(
   existingIngredients: Ingredient[],
   ingredientsAlreadyOnRecipe: { ingredient: Ingredient }[] &
@@ -10,27 +11,31 @@ export function computeIngredientsToAddAndKeep(
   ingredientsInput: zodType.infer<typeof ingredientsArrayForRecipe>,
   userId: string
 ) {
-  const existingIngredientNames = existingIngredients.map(
-    (ingredient) => ingredient.name
-  );
-
-  const ingredientsAlreadyOnRecipeNames = ingredientsAlreadyOnRecipe.map(
-    (ingredient) => ingredient.ingredient.name
-  );
-
   const ingredientsToCreate = ingredientsInput.filter(
     (ingredient) =>
-      !existingIngredientNames.includes(ingredient.ingredient.name)
+      !existingIngredients.some(
+        (dbIngredient) =>
+          dbIngredient.name === ingredient.ingredient.name &&
+          dbIngredient.unit === ingredient.ingredient.unit
+      )
   );
 
   // ingredientsToConnect should also have the quantity from the ingredientsInput array
   const ingredientsToConnect = ingredientsInput
     .filter((ingredient) =>
-      existingIngredientNames.includes(ingredient.ingredient.name)
+      existingIngredients.some(
+        (dbIngredient) =>
+          dbIngredient.name === ingredient.ingredient.name &&
+          dbIngredient.unit === ingredient.ingredient.unit
+      )
     )
     .filter(
       (ingredient) =>
-        !ingredientsAlreadyOnRecipeNames.includes(ingredient.ingredient.name)
+        !ingredientsAlreadyOnRecipe.some(
+          (ingredientOnRecipe) =>
+            ingredientOnRecipe.ingredient.name === ingredient.ingredient.name &&
+            ingredientOnRecipe.ingredient.unit === ingredient.ingredient.unit
+        )
     )
     .map((ingredient) => {
       const ingredientToConnect = existingIngredients.find(
@@ -68,7 +73,7 @@ export function computeIngredientsToAddAndKeep(
   const ingredientsToAdd = [...createIngredients, ...connectIngredients];
 
   // ingredients from ingredientsInput that are already in the database
-  const ingredientsToKeep = existingIngredients
+  const ingredientIDsToKeep = existingIngredients
     .filter((ingredient) =>
       ingredientsInput.some(
         (inputIngredient) => inputIngredient.ingredient.name === ingredient.name
@@ -76,5 +81,32 @@ export function computeIngredientsToAddAndKeep(
     )
     .map((ingredient) => ingredient.id);
 
-  return { ingredientsToAdd, ingredientsToKeep };
+  const ingredientsToUpdate = ingredientsInput
+    .filter((ingredient) =>
+      ingredientsAlreadyOnRecipe.some(
+        (ingredientOnRecipe) =>
+          ingredientOnRecipe.ingredient.name === ingredient.ingredient.name &&
+          ingredientOnRecipe.ingredient.unit === ingredient.ingredient.unit
+      )
+    )
+    .map((ingredient) => {
+      const ingredientToUpdate = ingredientsAlreadyOnRecipe.find(
+        (ingredientOnRecipe) =>
+          ingredientOnRecipe.ingredient.name === ingredient.ingredient.name &&
+          ingredientOnRecipe.ingredient.unit === ingredient.ingredient.unit
+      );
+
+      if (!ingredientToUpdate) throw new TRPCError({ code: 'NOT_FOUND' });
+
+      return {
+        where: {
+          ingredientId: ingredientToUpdate.ingredient.id,
+        },
+        data: {
+          quantity: z.coerce.number().parse(ingredient.quantity),
+        },
+      };
+    });
+
+  return { ingredientsToAdd, ingredientIDsToKeep, ingredientsToUpdate };
 }

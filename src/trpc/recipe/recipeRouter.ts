@@ -66,13 +66,12 @@ export const recipeRouter = router({
         }
       );
 
-      const { ingredientsToAdd } =
-        computeIngredientsToAddAndKeep(
-          existingIngredients,
-          ingredientsAlreadyOnRecipe,
-          input.ingredients,
-          userId
-        );
+      const { ingredientsToAdd } = computeIngredientsToAddAndKeep(
+        existingIngredients,
+        ingredientsAlreadyOnRecipe,
+        input.ingredients,
+        userId
+      );
 
       const recipe = db.recipe.create({
         data: {
@@ -212,7 +211,7 @@ export const recipeRouter = router({
         }
       );
 
-      const { ingredientsToAdd, ingredientsToKeep } =
+      const { ingredientsToAdd, ingredientIDsToKeep, ingredientsToUpdate } =
         computeIngredientsToAddAndKeep(
           existingIngredients,
           ingredientsAlreadyOnRecipe,
@@ -234,10 +233,11 @@ export const recipeRouter = router({
           ingredients: {
             deleteMany: {
               ingredientId: {
-                notIn: ingredientsToKeep,
+                notIn: ingredientIDsToKeep,
               },
             },
             create: ingredientsToAdd,
+            updateMany: ingredientsToUpdate,
           },
           steps: {
             deleteMany: {},

@@ -30,6 +30,10 @@ export default function RecipeView({
   readonly onDeleteHref?: string;
 }) {
   const router = useRouter();
+
+  // TODO figure out a way to use fitting router based on the environment i.e. public or private
+  // In this case it is always fetching public recipe also for private recipes, which will result in 404
+  // An idea is to create a wrapper component. One for public and one for private recipes. Then have the ui component be shared between them
   const recipe = trpc.recipe.getPublicRecipe.useQuery(
     { id },
     {
