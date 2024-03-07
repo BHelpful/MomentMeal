@@ -7,15 +7,17 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
+
+// Tables start here
 model Recipe {
   id             String                 @id @default(cuid())
   title          String
-  description    String                 @db.LongText
+  description    String                 @db.VarChar(2048)
   isPublic       Boolean                @default(false)
   userId         String
   timeInKitchen  Int
@@ -60,7 +62,7 @@ model IngredientsOnRecipes {
 
 model Step {
   id       String @id @default(cuid())
-  content  String @db.LongText
+  content  String @db.VarChar(2048)
   recipe   Recipe @relation(fields: [recipeId], references: [id])
   recipeId String
 
