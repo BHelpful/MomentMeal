@@ -1,6 +1,7 @@
 import { env } from '@/env.mjs';
 import { type SubscriptionPlan } from '@/types';
 
+// TODO: Replace with actual Stripe price IDs
 export const mealTimeSubscriptionPlans: SubscriptionPlan[] = [
   {
     id: 'basic',
@@ -16,7 +17,8 @@ export const mealTimeSubscriptionPlans: SubscriptionPlan[] = [
     description:
       'Perfect for food enthusiasts who want to discover new recipes.',
     features: ['Create up to 50 recipes'],
-    stripePriceId: env.STRIPE_STD_MONTHLY_PRICE_ID,
+    // stripePriceId: env.STRIPE_STD_MONTHLY_PRICE_ID,
+    stripePriceId: 'placeholder',
     price: 10,
   },
   {
@@ -25,7 +27,8 @@ export const mealTimeSubscriptionPlans: SubscriptionPlan[] = [
     description:
       'Perfect for chefs who want to create and share their own recipes.',
     features: ['Create unlimited recipes'],
-    stripePriceId: env.STRIPE_PRO_MONTHLY_PRICE_ID,
+    // stripePriceId: env.STRIPE_PRO_MONTHLY_PRICE_ID,
+    stripePriceId: 'placeholder',
     price: 20,
   },
 ];
