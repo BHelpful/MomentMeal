@@ -79,6 +79,7 @@
     "cmdk": "^0.2.0",
     "contentlayer": "^0.3.4",
     "date-fns": "^2.30.0",
+    "dotenv-expand": "^11.0.6",
     "langchain": "^0.0.153",
     "lodash": "^4.17.21",
     "lucide-react": "^0.279.0",

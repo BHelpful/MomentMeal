@@ -1,4 +1,7 @@
+import dotenvExpand from 'dotenv-expand';
 import { withContentlayer } from 'next-contentlayer';
+
+dotenvExpand.expand({ parsed: { ...process.env } });
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
