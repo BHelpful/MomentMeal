@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { type Metadata } from 'next';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'simplebar-react/dist/simplebar.min.css';
@@ -79,6 +80,7 @@ export default function RootLayout({
             <TailwindIndicator />
             <Analytics />
             <VercelAnalytics />
+            <SpeedInsights />
           </Providers>
           <Toaster />
         </body>
