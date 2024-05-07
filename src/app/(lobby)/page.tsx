@@ -1,13 +1,13 @@
 import { Icons } from '@/components/icons';
 import { Shell } from '@/components/shells/shell';
+import TotalUsers from '@/components/TotalUsers';
 import { buttonVariants } from '@/components/ui/button';
-import { clerkClient } from '@clerk/nextjs/server';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import Balancer from 'react-wrap-balancer';
 
-export default async function Home() {
-  const totalUsers = await clerkClient.users.getCount();
+export default function Home() {
   return (
     <>
       <Shell className="gap-8">
@@ -29,16 +29,9 @@ export default async function Home() {
             MomentMeal is a marketplace for food and recipes. We help you find
             and create the best recipes and meal plans for you.
           </Balancer>
-          {totalUsers >= 20 && (
-            <Balancer className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border px-7 py-2 shadow-md backdrop-blur transition-all hover:bg-primary/50">
-              <div className="flex items-center space-x-2">
-                <p className="text-base text-muted-foreground">
-                  Used by {totalUsers}
-                </p>
-                <Icons.Users className="h-5 w-5 text-muted-foreground" />
-              </div>
-            </Balancer>
-          )}
+          <Suspense fallback={null}>
+            <TotalUsers />
+          </Suspense>
           <div className="flex gap-4">
             <Link
               href="/dashboard/recipes"
