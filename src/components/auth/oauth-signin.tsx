@@ -2,7 +2,8 @@
 
 import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
-import { isClerkAPIResponseError, useSignIn } from '@clerk/nextjs';
+import { useSignIn } from '@clerk/nextjs';
+import { isClerkAPIResponseError } from '@clerk/nextjs/errors';
 import { type OAuthStrategy } from '@clerk/types';
 import * as React from 'react';
 import { toast } from 'sonner';

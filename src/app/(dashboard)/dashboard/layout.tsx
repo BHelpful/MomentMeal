@@ -3,7 +3,7 @@ import { SiteFooter } from '@/components/layouts/site-footer';
 import { SiteHeader } from '@/components/layouts/site-header';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { dashboardConfig } from '@/config/dashboard';
-import { currentUser } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 
 interface DashboardLayoutProps {

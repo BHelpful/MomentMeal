@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { env } from '@/env.mjs';
-import { currentUser } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs/server';
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 

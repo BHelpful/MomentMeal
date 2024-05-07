@@ -1,4 +1,4 @@
-import { isClerkAPIResponseError } from '@clerk/nextjs';
+import { isClerkAPIResponseError } from '@clerk/nextjs/errors';
 import type { User } from '@clerk/nextjs/server';
 import { clsx, type ClassValue } from 'clsx';
 import { type Metadata } from 'next';

@@ -14,7 +14,7 @@ import { env } from '@/env.mjs';
 import { getDashboardRedirectPath, getPlanFeatures } from '@/lib/subscription';
 import { cn } from '@/lib/utils';
 import { type SubscriptionPlan, type UserSubscriptionPlan } from '@/types';
-import { currentUser } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs/server';
 import { RocketIcon } from '@radix-ui/react-icons';
 import type { Metadata } from 'next';
 import Link from 'next/link';

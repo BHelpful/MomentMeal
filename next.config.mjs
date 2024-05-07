@@ -2,6 +2,9 @@ import { withContentlayer } from 'next-contentlayer';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    ppr: false,
+  },
   reactStrictMode: true,
   images: {
     domains: [
