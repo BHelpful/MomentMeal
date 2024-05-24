@@ -3,7 +3,9 @@ import { withContentlayer } from 'next-contentlayer';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    ppr: false,
+    ppr: 'incremental',
+    reactCompiler: true,
+    after: true,
   },
   reactStrictMode: true,
   images: {
@@ -19,6 +21,8 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: false,
   },
+  // Automatically bundle external packages in the Pages Router:
+  bundlePagesRouterDependencies: true,
 };
 
 export default withContentlayer(nextConfig);
