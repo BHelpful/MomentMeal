@@ -1,57 +1,20 @@
-import { authMiddleware, clerkClient } from '@clerk/nextjs/server';
-import { NextResponse } from 'next/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { env } from './env.mjs';
 
-export default authMiddleware({
-  // Public routes are routes that don't require authentication
-  publicRoutes: [
-    '/',
-    '/signin(.*)',
-    '/signup(.*)',
-    '/sso-callback(.*)',
-    '/recipes(.*)',
-    '/recipe(.*)',
-    '/email-preferences(.*)',
-    '/blog(.*)',
-    '/about(.*)',
-    '/contact(.*)',
-    '/terms(.*)',
-    '/privacy(.*)',
-    '/api(.*)',
-    '/pricing(.*)',
-  ],
-  async afterAuth(auth, req) {
-    if (auth.isPublicRoute) {
-      //  For public routes, we don't need to do anything
-      return NextResponse.next();
-    }
+const isProtectedRoute = createRouteMatcher([
+  '/dashboard(.*)',
+  '/dashboard/account(.*)',
+  '/signout',
+]);
 
-    if (!auth.userId) {
-      //  If user tries to access a private route without being authenticated,
-      //  redirect them to the sign in page
-      const url = new URL(req.nextUrl.origin);
-      url.pathname = '/signin';
-      url.searchParams.set('redirect_url', req.url);
-      return NextResponse.redirect(url);
-    }
-
-    // Set the user's role to user if it doesn't exist
-    const user = await clerkClient.users.getUser(auth.userId);
-
-    if (!user) {
-      throw new Error('User not found.');
-    }
-
-    // If the user doesn't have a role, set it to user
-    if (!user.privateMetadata.role) {
-      type UserRole = 'user';
-
-      await clerkClient.users.updateUserMetadata(auth.userId, {
-        privateMetadata: {
-          role: 'user' satisfies UserRole,
-        },
-      });
-    }
-  },
+export default clerkMiddleware((auth, req) => {
+  // Restrict dashboard routes to signed in users
+  if (isProtectedRoute(req)) {
+    auth().protect({
+      unauthenticatedUrl: env.NEXT_PUBLIC_APP_URL + '/signin',
+      unauthorizedUrl: env.NEXT_PUBLIC_APP_URL + '/signin',
+    });
+  }
 });
 
 export const config = {
