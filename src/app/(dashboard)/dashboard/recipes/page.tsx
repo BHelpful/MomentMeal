@@ -11,10 +11,10 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { buttonVariants } from '@/components/ui/button';
 import { mealTimeSubscriptionPlans } from '@/config/subscriptions';
 import { env } from '@/env.mjs';
+import { getCachedUser } from '@/lib/queries/user';
 import { getDashboardRedirectPath, getPlanFeatures } from '@/lib/subscription';
 import { cn } from '@/lib/utils';
 import { type SubscriptionPlan, type UserSubscriptionPlan } from '@/types';
-import { currentUser } from '@clerk/nextjs/server';
 import { RocketIcon } from '@radix-ui/react-icons';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RecipesPage() {
-  const user = await currentUser();
+  const user = await getCachedUser();
 
   if (!user) {
     redirect('/signin');

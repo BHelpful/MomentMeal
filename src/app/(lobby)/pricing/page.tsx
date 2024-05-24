@@ -7,13 +7,13 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { PLANS } from '@/config/stripe';
+import { getCachedUser } from '@/lib/queries/user';
 import { cn } from '@/lib/utils';
-import { currentUser } from '@clerk/nextjs/server';
 import { ArrowRight, Check, HelpCircle, Minus } from 'lucide-react';
 import Link from 'next/link';
 
 const Page = async () => {
-  const user = await currentUser();
+  const user = await getCachedUser();
 
   const pricingItems = [
     {

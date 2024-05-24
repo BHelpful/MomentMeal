@@ -11,12 +11,12 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { getCachedUser } from '@/lib/queries/user';
 import { getUserEmail } from '@/lib/utils';
-import { currentUser } from '@clerk/nextjs/server';
 import Link from 'next/link';
 
 export async function UserButton() {
-  const user = await currentUser();
+  const user = await getCachedUser();
   const initials = `${user?.firstName?.charAt(0) ?? ''} ${
     user?.lastName?.charAt(0) ?? ''
   }`;

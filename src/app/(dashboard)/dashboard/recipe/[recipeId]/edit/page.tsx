@@ -2,7 +2,7 @@ import { serverClient } from '@/app/_trpc/serverClient';
 import { EditRecipeForm } from '@/components/forms/recipe/UpdateRecipeForm';
 import { Breadcrumbs } from '@/components/pagers/breadcrumbs';
 import { Shell } from '@/components/shells/shell';
-import { currentUser } from '@clerk/nextjs/server';
+import { getCachedUser } from '@/lib/queries/user';
 import { notFound } from 'next/navigation';
 
 interface ProductPageProps {
@@ -18,7 +18,7 @@ export default async function RecipeEditPage({
     notFound();
   }
 
-  const user = await currentUser();
+  const user = await getCachedUser();
 
   const recipe = await serverClient.recipe
     .getRecipe({ id: params.recipeId })

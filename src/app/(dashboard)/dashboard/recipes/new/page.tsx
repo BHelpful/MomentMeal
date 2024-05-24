@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { env } from '@/env.mjs';
-import { currentUser } from '@clerk/nextjs/server';
+import { getCachedUser } from '@/lib/queries/user';
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 export default async function NewRecipePage() {
-  const user = await currentUser();
+  const user = await getCachedUser();
 
   if (!user) {
     redirect('/signin');

@@ -3,7 +3,7 @@ import { SiteFooter } from '@/components/layouts/site-footer';
 import { SiteHeader } from '@/components/layouts/site-header';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { dashboardConfig } from '@/config/dashboard';
-import { currentUser } from '@clerk/nextjs/server';
+import { getCachedUser } from '@/lib/queries/user';
 import { redirect } from 'next/navigation';
 
 interface DashboardLayoutProps {
@@ -13,7 +13,7 @@ interface DashboardLayoutProps {
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
-  const user = await currentUser();
+  const user = await getCachedUser();
 
   if (!user) {
     redirect('/signin');
