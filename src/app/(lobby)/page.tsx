@@ -1,10 +1,8 @@
 import { Icons } from '@/components/icons';
 import { Shell } from '@/components/shells/shell';
-import TotalUsers from '@/components/TotalUsers';
 import { buttonVariants } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense } from 'react';
 import Balancer from 'react-wrap-balancer';
 
 export default function Home() {
@@ -29,9 +27,6 @@ export default function Home() {
             MomentMeal is a marketplace for food and recipes. We help you find
             and create the best recipes and meal plans for you.
           </Balancer>
-          <Suspense fallback={null}>
-            <TotalUsers />
-          </Suspense>
           <div className="flex gap-4">
             <Link
               href="/dashboard/recipes"
