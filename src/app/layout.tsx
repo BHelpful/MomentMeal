@@ -10,9 +10,16 @@ import '@/styles/globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { type Metadata } from 'next';
+import { type Metadata, type Viewport } from 'next';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'simplebar-react/dist/simplebar.min.css';
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -36,10 +43,6 @@ export const metadata: Metadata = {
     },
   ],
   creator: 'bhelpful',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
   openGraph: {
     type: 'website',
     locale: 'en_US',
