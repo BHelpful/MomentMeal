@@ -67,11 +67,7 @@ export function MobileNav({ mainNavItems, sidebarNavItems }: MobileNavProps) {
         </div>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           <div className="pl-1 pr-7">
-            <Accordion
-              type="single"
-              defaultValue={navItems.map((item) => item.title)}
-              className="w-full"
-            >
+            <Accordion type="multiple" className="w-full">
               {navItems?.map((item, index) => (
                 <AccordionItem value={item.title} key={index}>
                   <AccordionTrigger className="text-sm capitalize">
