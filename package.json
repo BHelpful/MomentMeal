@@ -13,7 +13,7 @@
     "start": "next start",
     "lint:check": "next lint",
     "lint:write": "next lint --fix",
-    "format:check": "prettier .",
+    "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "typecheck": "contentlayer build && tsc --noEmit",
     "postinstall": "prisma generate",
