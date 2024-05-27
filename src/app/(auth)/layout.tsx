@@ -18,6 +18,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
           fill
           className="absolute inset-0 object-cover"
           priority
+          quality={10}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background to-background/60 md:to-background/40" />
