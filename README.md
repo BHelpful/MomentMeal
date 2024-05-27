@@ -1,3 +1,5 @@
+[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/vlb2.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+
 # MomentMeal - A marketplace for food and recipes.
 
 Built with the Next.js 13.5 App Router, tRPC, TypeScript, Prisma & Tailwind
