@@ -11,7 +11,7 @@ export function CopyButton({ value, ...props }: ButtonProps) {
     <Button
       variant="outline"
       size="sm"
-      className="absolute right-5 top-4 z-20 h-6 w-6 px-0"
+      className="absolute right-5 top-4 z-20 size-6 px-0"
       onClick={() => {
         if (typeof window === 'undefined') return;
         setIsCopied(true);
@@ -21,9 +21,9 @@ export function CopyButton({ value, ...props }: ButtonProps) {
       {...props}
     >
       {isCopied ? (
-        <Icons.check className="h-3 w-3" aria-hidden="true" />
+        <Icons.check className="size-3" aria-hidden="true" />
       ) : (
-        <Icons.copy className="h-3 w-3" aria-hidden="true" />
+        <Icons.copy className="size-3" aria-hidden="true" />
       )}
       <span className="sr-only">
         {isCopied ? 'Copied' : 'Copy to clipboard'}

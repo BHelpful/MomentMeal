@@ -249,7 +249,7 @@ export function RecipeForm({
                     }}
                     disabled={fields.length === 1}
                   >
-                    <Icons.Trash className="h-4 w-4" aria-hidden="true" />
+                    <Icons.Trash className="size-4" aria-hidden="true" />
                   </Button>
                 </div>
               ))}
@@ -260,7 +260,7 @@ export function RecipeForm({
                   append({ ingredient: { name: '', unit: 'g' }, quantity: 1 });
                 }}
               >
-                <Icons.Add className="h-4 w-4" aria-hidden="true" />
+                <Icons.Add className="size-4" aria-hidden="true" />
               </Button>
             </>
           )}
@@ -296,7 +296,7 @@ export function RecipeForm({
                     }}
                     disabled={fields.length === 1}
                   >
-                    <Icons.Trash className="h-4 w-4" aria-hidden="true" />
+                    <Icons.Trash className="size-4" aria-hidden="true" />
                   </Button>
                 </div>
               ))}
@@ -307,7 +307,7 @@ export function RecipeForm({
                   append([{ content: '' }]);
                 }}
               >
-                <Icons.Add className="h-4 w-4" aria-hidden="true" />
+                <Icons.Add className="size-4" aria-hidden="true" />
               </Button>
             </>
           )}
@@ -332,7 +332,7 @@ export function RecipeForm({
         >
           {isPending && (
             <Icons.Spinner
-              className="mr-2 h-4 w-4 animate-spin"
+              className="mr-2 size-4 animate-spin"
               aria-hidden="true"
             />
           )}

@@ -30,9 +30,9 @@ export async function UserButton() {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="secondary"
-                className="relative h-8 w-8 rounded-full"
+                className="relative size-8 rounded-full"
               >
-                <Avatar className="h-8 w-8">
+                <Avatar className="size-8">
                   <AvatarImage src={user.imageUrl} alt={user.username ?? ''} />
                   <AvatarFallback>{initials}</AvatarFallback>
                 </Avatar>
@@ -53,14 +53,14 @@ export async function UserButton() {
               <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
                   <Link href="/dashboard/account">
-                    <Icons.User className="mr-2 h-4 w-4" aria-hidden="true" />
+                    <Icons.User className="mr-2 size-4" aria-hidden="true" />
                     Account
                     <DropdownMenuShortcut>A</DropdownMenuShortcut>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/dashboard/recipes">
-                    <Icons.Recipe className="mr-2 h-4 w-4" aria-hidden="true" />
+                    <Icons.Recipe className="mr-2 size-4" aria-hidden="true" />
                     Recipes
                     <DropdownMenuShortcut>R</DropdownMenuShortcut>
                   </Link>
@@ -68,7 +68,7 @@ export async function UserButton() {
                 <DropdownMenuItem asChild disabled>
                   <Link href="/dashboard/settings">
                     <Icons.settings
-                      className="mr-2 h-4 w-4"
+                      className="mr-2 size-4"
                       aria-hidden="true"
                     />
                     Settings
@@ -78,7 +78,7 @@ export async function UserButton() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link href="/signout">
-                    <Icons.logout className="mr-2 h-4 w-4" aria-hidden="true" />
+                    <Icons.logout className="mr-2 size-4" aria-hidden="true" />
                     Quit (Log out)
                     <DropdownMenuShortcut>Q</DropdownMenuShortcut>
                   </Link>
@@ -106,8 +106,8 @@ export function UserButtonSkeleton() {
   return (
     <div className="flex flex-1 items-center justify-end space-x-4">
       <nav className="flex items-center space-x-2">
-        <Button variant="secondary" className="h-8 w-8 rounded-full">
-          <Avatar className="h-8 w-8">
+        <Button variant="secondary" className="size-8 rounded-full">
+          <Avatar className="size-8">
             <AvatarFallback />
           </Avatar>
         </Button>

@@ -12,7 +12,7 @@ export default async function TotalUsers() {
             <p className="text-base text-muted-foreground">
               Used by {totalUsers}
             </p>
-            <Icons.Users className="h-5 w-5 text-muted-foreground" />
+            <Icons.Users className="size-5 text-muted-foreground" />
           </div>
         </Balancer>
       )}

@@ -136,7 +136,7 @@ const Page = async () => {
 
                       <Tooltip delayDuration={300}>
                         <TooltipTrigger className="ml-1.5 cursor-default">
-                          <HelpCircle className="h-4 w-4" />
+                          <HelpCircle className="size-4" />
                         </TooltipTrigger>
                         <TooltipContent className="w-80 p-2">
                           Your quota is the number of recipes you can save to
@@ -152,9 +152,9 @@ const Page = async () => {
                       <li key={text} className="flex space-x-5">
                         <div className="shrink-0">
                           {negative ? (
-                            <Minus className="h-6 w-6" />
+                            <Minus className="size-6" />
                           ) : (
-                            <Check className="h-6 w-6" />
+                            <Check className="size-6" />
                           )}
                         </div>
                         {footnote ? (
@@ -169,7 +169,7 @@ const Page = async () => {
                             </p>
                             <Tooltip delayDuration={300}>
                               <TooltipTrigger className="ml-1.5 cursor-default">
-                                <HelpCircle className="h-4 w-4" />
+                                <HelpCircle className="size-4" />
                               </TooltipTrigger>
                               <TooltipContent className="w-80 p-2">
                                 {footnote}
@@ -200,7 +200,7 @@ const Page = async () => {
                         })}
                       >
                         {user ? 'Dashboard' : 'Sign up'}
-                        <ArrowRight className="ml-1.5 h-5 w-5" />
+                        <ArrowRight className="ml-1.5 size-5" />
                       </Link>
                     ) : user ? (
                       <Button

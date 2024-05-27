@@ -91,17 +91,17 @@ export function SubscribeToNewsletterForm() {
               </FormControl>
               <FormMessage />
               <Button
-                className="absolute right-[3.5px] top-[4px] z-20 h-7 w-7"
+                className="absolute right-[3.5px] top-[4px] z-20 size-7"
                 size="icon"
                 disabled={isPending}
               >
                 {isPending ? (
                   <Icons.Spinner
-                    className="h-3 w-3 animate-spin"
+                    className="size-3 animate-spin"
                     aria-hidden="true"
                   />
                 ) : (
-                  <Icons.send className="h-3 w-3" aria-hidden="true" />
+                  <Icons.send className="size-3" aria-hidden="true" />
                 )}
                 <span className="sr-only">Join newsletter</span>
               </Button>

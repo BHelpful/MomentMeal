@@ -23,7 +23,7 @@ export default function RecipesLoading() {
         </PageHeaderDescription>
       </PageHeader>
       <Card className="flex space-x-4 px-4 py-3">
-        <Skeleton className="mt-2 h-4 w-4 rounded" />
+        <Skeleton className="mt-2 size-4 rounded" />
         <div className="flex-1 space-y-2">
           <Skeleton className="h-5 w-14" />
           <Skeleton className="h-4 w-full" />
@@ -35,7 +35,7 @@ export default function RecipesLoading() {
           <Card key={i} className="h-full">
             <AspectRatio ratio={21 / 9}>
               <Skeleton className="absolute right-2 top-2 h-6 w-16" />
-              <Skeleton className="h-full w-full" />
+              <Skeleton className="size-full" />
             </AspectRatio>
             <CardHeader className="space-y-2.5">
               <Skeleton className="h-5 w-3/5" />

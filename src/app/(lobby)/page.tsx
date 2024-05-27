@@ -12,9 +12,9 @@ export default function Home() {
         <section
           id="hero"
           aria-labelledby="hero-heading"
-          className="mx-auto flex w-full max-w-[64rem] flex-col items-center justify-center gap-4 pb-8 pt-6 text-center md:pb-2 md:pt-10 lg:py-28 lg:pb-2"
+          className="mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-4 pb-8 pt-6 text-center md:pb-2 md:pt-10 lg:py-28 lg:pb-2"
         >
-          <Icons.logo className="h-32 w-32" aria-hidden="true" />
+          <Icons.logo className="size-32" aria-hidden="true" />
           <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border px-7 py-2 shadow-md backdrop-blur transition-all hover:bg-primary/50">
             <p className="text-sm font-semibold">
               MomentMeal is in Alpha development!
@@ -44,7 +44,7 @@ export default function Home() {
                 variant: 'outline',
               })}
             >
-              Explore <Icons.Recipe className="ml-1.5 h-5 w-5" />
+              Explore <Icons.Recipe className="ml-1.5 size-5" />
             </Link>
           </div>
         </section>

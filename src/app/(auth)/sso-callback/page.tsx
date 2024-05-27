@@ -5,7 +5,7 @@ import { AuthenticateWithRedirectCallback } from '@clerk/nextjs';
 export default function SSOCallbackPage() {
   return (
     <Shell className="max-w-lg">
-      <Icons.Spinner className="h-16 w-16 animate-spin" aria-hidden="true" />
+      <Icons.Spinner className="size-16 animate-spin" aria-hidden="true" />
       <AuthenticateWithRedirectCallback />
     </Shell>
   );

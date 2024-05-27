@@ -22,7 +22,7 @@ export default function ProductsLoading() {
               <AspectRatio ratio={21 / 9}>
                 <div className="absolute inset-0 bg-gradient-to-t from-transparent to-zinc-950/50" />
                 <div className="flex h-full flex-1 items-center justify-center rounded-t-md border-b bg-accent/30">
-                  <Skeleton className="h-9 w-9 text-muted-foreground" />
+                  <Skeleton className="size-9 text-muted-foreground" />
                 </div>
               </AspectRatio>
               <CardHeader>

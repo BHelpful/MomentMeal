@@ -26,7 +26,7 @@ export function RecipeSkeleton() {
           <Separator className="mb-2.5 mt-5" />
           <div className="flex items-center">
             <Skeleton className="h-7 w-16" />
-            <Skeleton className="ml-auto h-4 w-4" />
+            <Skeleton className="ml-auto size-4" />
           </div>
           <Separator className="mt-2.5" />
         </div>

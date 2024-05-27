@@ -81,7 +81,7 @@ export default async function RecipesPage() {
         id="dashboard-recipes-page-alert"
         aria-labelledby="dashboard-recipes-page-alert-heading"
       >
-        <RocketIcon className="h-4 w-4" aria-hidden="true" />
+        <RocketIcon className="size-4" aria-hidden="true" />
         <AlertTitle>Heads up!</AlertTitle>
         <AlertDescription>
           You are currently on the{' '}

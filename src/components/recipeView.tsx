@@ -77,13 +77,13 @@ export default function RecipeView({
               </h2>
               <div className="flex flex-wrap gap-2">
                 <div className="flex items-center space-x-2">
-                  <Icons.star className="h-5 w-5 text-muted-foreground" />
+                  <Icons.star className="size-5 text-muted-foreground" />
                   <p className="text-base text-muted-foreground">
                     Rating: {calculateRating(recipe.data.ratings)}
                   </p>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Icons.heart className="h-5 w-5 text-muted-foreground" />
+                  <Icons.heart className="size-5 text-muted-foreground" />
                   <p className="text-base text-muted-foreground">
                     {recipe.data.ratings.length} ratings
                   </p>
@@ -98,7 +98,7 @@ export default function RecipeView({
                   </TooltipContent>
                   <TooltipTrigger className=" cursor-default">
                     <div className="flex items-center space-x-2">
-                      <Icons.ChefHat className="h-5 w-5 text-muted-foreground" />
+                      <Icons.ChefHat className="size-5 text-muted-foreground" />
                       <p className="text-base text-muted-foreground">
                         {recipe.data.timeInKitchen} min
                       </p>
@@ -113,7 +113,7 @@ export default function RecipeView({
                   </TooltipContent>
                   <TooltipTrigger className="ml-1.5 cursor-default">
                     <div className="flex items-center space-x-2">
-                      <Icons.Clock className="h-5 w-5 text-muted-foreground" />
+                      <Icons.Clock className="size-5 text-muted-foreground" />
                       <p className="text-base text-muted-foreground">
                         {recipe.data.waitingTime} min
                       </p>
@@ -127,7 +127,7 @@ export default function RecipeView({
                   </TooltipContent>
                   <TooltipTrigger className="ml-1.5 cursor-default">
                     <div className="flex items-center space-x-2">
-                      <Icons.Users className="h-5 w-5 text-muted-foreground" />
+                      <Icons.Users className="size-5 text-muted-foreground" />
                       <p className="text-base text-muted-foreground">
                         {recipe.data.numberOfPeople} servings
                       </p>
@@ -165,7 +165,7 @@ export default function RecipeView({
           <div className="w-full md:w-1/2">
             <section className="mb-4 flex h-96 w-full flex-1 items-center justify-center rounded-md bg-accent/30">
               <Icons.placeholder
-                className="h-9 w-9 text-muted-foreground"
+                className="size-9 text-muted-foreground"
                 aria-hidden="true"
               />
             </section>
@@ -191,7 +191,7 @@ export default function RecipeView({
                   >
                     <Checkbox
                       id={`checkbox-${ingredient.ingredient.id}`}
-                      className="h-5 w-5"
+                      className="size-5"
                     />
                     <span className="flex items-center space-x-2">
                       <span className="font-bold">
@@ -217,7 +217,7 @@ export default function RecipeView({
                   >
                     <Checkbox
                       id={`checkbox-step-${step.id}`}
-                      className="h-5 w-5"
+                      className="size-5"
                     />
                     <span>{step.content}</span>
                   </label>

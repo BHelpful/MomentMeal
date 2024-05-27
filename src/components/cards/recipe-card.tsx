@@ -22,7 +22,7 @@ export function RecipeCard({ recipe, href }: RecipeCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-transparent to-zinc-950/50" />
           <div className="flex h-full flex-1 items-center justify-center rounded-t-md border-b bg-accent/30">
             <Icons.placeholder
-              className="h-9 w-9 text-muted-foreground"
+              className="size-9 text-muted-foreground"
               aria-hidden="true"
             />
           </div>

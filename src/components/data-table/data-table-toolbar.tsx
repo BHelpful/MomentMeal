@@ -76,7 +76,7 @@ export function DataTableToolbar<TData>({
             onClick={() => table.resetColumnFilters()}
           >
             Reset
-            <Cross2Icon className="ml-2 h-4 w-4" aria-hidden="true" />
+            <Cross2Icon className="ml-2 size-4" aria-hidden="true" />
           </Button>
         )}
       </div>
@@ -95,7 +95,7 @@ export function DataTableToolbar<TData>({
             }}
             disabled={isPending}
           >
-            <TrashIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+            <TrashIcon className="mr-2 size-4" aria-hidden="true" />
             Delete
           </Button>
         ) : newRowLink ? (
@@ -109,7 +109,7 @@ export function DataTableToolbar<TData>({
                 })
               )}
             >
-              <PlusCircledIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+              <PlusCircledIcon className="mr-2 size-4" aria-hidden="true" />
               New
             </div>
           </Link>

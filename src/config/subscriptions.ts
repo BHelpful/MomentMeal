@@ -1,4 +1,3 @@
-import { env } from '@/env.mjs';
 import { type SubscriptionPlan } from '@/types';
 
 // TODO: Replace with actual Stripe price IDs
