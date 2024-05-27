@@ -1,3 +1,4 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=BHelpful_BHelpful&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=BHelpful_BHelpful)
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/vlb2.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 
 # MomentMeal - A marketplace for food and recipes.
