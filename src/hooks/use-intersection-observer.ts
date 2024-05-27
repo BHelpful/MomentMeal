@@ -33,7 +33,6 @@ export function useIntersectionObserver(
     observer.observe(node);
 
     return () => observer.disconnect();
-
   }, [root, rootMargin, frozen, elementRef, threshold]);
 
   return entry;
