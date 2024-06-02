@@ -144,7 +144,7 @@ export default function Home() {
                 {/* Upload your PDF file */}
                 Add your recipes
               </span>
-              <span className=" mt-2">
+              <span className="mt-2">
                 {/* We&apos;ll process your file and make it ready
 								for you to chat with. */}
                 You can upload your recipes and we&apos;ll process them and make
@@ -159,7 +159,7 @@ export default function Home() {
                 {/* Start asking questions */}
                 Share your recipes
               </span>
-              <span className=" mt-2">
+              <span className="mt-2">
                 {/* It&apos;s that simple. Try out Quill today - it
 								really takes less than a minute. */}
                 You can share your recipes with the world and if you&apos;re a

@@ -96,7 +96,7 @@ export default function RecipeView({
                     Time in kitchen is the time you will spend preparing the
                     ingredients, chopping, cooking, etc.
                   </TooltipContent>
-                  <TooltipTrigger className=" cursor-default">
+                  <TooltipTrigger className="cursor-default">
                     <div className="flex items-center space-x-2">
                       <Icons.ChefHat className="size-5 text-muted-foreground" />
                       <p className="text-base text-muted-foreground">
