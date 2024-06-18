@@ -79,6 +79,7 @@ function PageHeaderDescription({
   return (
     <Balancer
       as="p"
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       className={cn(descriptionVariants({ size, className }))}
       {...props}
     />
