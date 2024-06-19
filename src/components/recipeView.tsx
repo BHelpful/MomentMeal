@@ -93,7 +93,7 @@ export default function RecipeView({
               <div className="flex flex-wrap gap-2">
                 <Tooltip delayDuration={300}>
                   <TooltipContent className="w-80 p-2">
-                    Time in kitchen is the time you will spend preparing the
+                    The time you will spend preparing the
                     ingredients, chopping, cooking, etc.
                   </TooltipContent>
                   <TooltipTrigger className="cursor-default">
@@ -108,7 +108,7 @@ export default function RecipeView({
 
                 <Tooltip delayDuration={300}>
                   <TooltipContent className="w-80 p-2">
-                    Waiting time is the time you will spend waiting for the dish
+                    The time you will spend waiting for the dish
                     to cook, bake, etc.
                   </TooltipContent>
                   <TooltipTrigger className="ml-1.5 cursor-default">
