@@ -231,13 +231,13 @@ export default function RecipeView({
                       id={`checkbox-${ingredient.ingredient.id}`}
                       className="size-5"
                     />
-                    <span className="flex items-center space-x-2">
+                    <div className="flex w-full justify-between">
+                      <p>{ingredient.ingredient.name}</p>
                       <span className="font-bold">
                         {scaleIngredientQuantity(ingredient.quantity)}{' '}
                         {ingredient.ingredient.unit}
                       </span>
-                      <p>{ingredient.ingredient.name}</p>
-                    </span>
+                    </div>
                   </label>
                 </li>
               ))}
