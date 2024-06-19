@@ -2,9 +2,11 @@
 
 import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormFieldArray,
   FormItem,
@@ -58,6 +60,26 @@ export function RecipeForm({
         className="grid w-full gap-4"
         onSubmit={(...args) => void form.handleSubmit(handleSubmit)(...args)}
       >
+        <FormField
+          control={form.control}
+          name="isPublic"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>Public</FormLabel>
+                <FormDescription>
+                  If checked, this recipe will be visible to everyone.
+                </FormDescription>
+              </div>
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="title"
@@ -323,12 +345,11 @@ export function RecipeForm({
               'timeInKitchen',
               'waitingTime',
               'numberOfPeople',
+              'isPublic',
             ]);
           }}
           className="w-fit"
-          disabled={
-            isPending || !form.formState.isDirty || !form.formState.isValid
-          }
+          disabled={isPending || !form.formState.isValid}
         >
           {isPending && (
             <Icons.Spinner
