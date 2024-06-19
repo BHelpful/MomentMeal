@@ -125,15 +125,25 @@ export const siteConfig = {
       title: 'Help',
       items: [
         {
+          title: 'Contact',
+          href: '/contact',
+          external: false,
+        },
+        {
           title: 'About',
           href: '/about',
           external: false,
         },
         {
-          title: 'Contact',
-          href: '/contact',
-          external: false,
+          title: 'Status',
+          href: 'https://status.momentmeal.com',
+          external: true,
         },
+      ],
+    },
+    {
+      title: 'Legal',
+      items: [
         {
           title: 'Privacy',
           href: '/privacy',
