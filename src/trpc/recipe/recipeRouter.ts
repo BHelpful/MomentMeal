@@ -315,7 +315,7 @@ export const recipeRouter = router({
             waitingTime: faker.number.int({ min: 1, max: 60 }),
             numberOfPeople: faker.number.int({ min: 1, max: 10 }),
             ingredients: {
-              create: Array.from({ length: 10 }, () => ({
+              create: Array.from({ length: 7 }, () => ({
                 ingredient: {
                   create: {
                     name: faker.commerce.productName(),
@@ -327,7 +327,7 @@ export const recipeRouter = router({
               })),
             },
             steps: {
-              create: Array.from({ length: 20 }, () => ({
+              create: Array.from({ length: 7 }, () => ({
                 content: faker.lorem.paragraph(),
               })),
             },
