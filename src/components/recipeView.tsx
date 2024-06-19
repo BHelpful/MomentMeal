@@ -12,6 +12,7 @@ import { type RecipeRating } from '@prisma/client';
 import { Tooltip } from '@radix-ui/react-tooltip';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 import { toast } from 'sonner';
 import { Button, buttonVariants } from './ui/button';
 import { TooltipContent, TooltipTrigger } from './ui/tooltip';
@@ -30,6 +31,28 @@ export default function RecipeView({
   readonly onDeleteHref?: string;
 }) {
   const router = useRouter();
+
+  const [currentServings, setCurrentServings] = useState(
+    initialRecipe.numberOfPeople
+  );
+  const [isAdjusted, setIsAdjusted] = useState(false);
+
+  const adjustServings = (newServings: number) => {
+    if (newServings >= 1 && newServings <= 20) {
+      setCurrentServings(newServings);
+      setIsAdjusted(newServings !== initialRecipe.numberOfPeople);
+    }
+  };
+
+  const resetServings = () => {
+    setCurrentServings(initialRecipe.numberOfPeople);
+    setIsAdjusted(false);
+  };
+
+  const scaleIngredientQuantity = (quantity: number) => {
+    const scale = currentServings / initialRecipe.numberOfPeople;
+    return quantity * scale;
+  };
 
   // TODO figure out a way to use fitting router based on the environment i.e. public or private
   // In this case it is always fetching public recipe also for private recipes, which will result in 404
@@ -93,8 +116,8 @@ export default function RecipeView({
               <div className="flex flex-wrap gap-2">
                 <Tooltip delayDuration={300}>
                   <TooltipContent className="w-80 p-2">
-                    The time you will spend preparing the
-                    ingredients, chopping, cooking, etc.
+                    The time you will spend preparing the ingredients, chopping,
+                    cooking, etc.
                   </TooltipContent>
                   <TooltipTrigger className="cursor-default">
                     <div className="flex items-center space-x-2">
@@ -108,8 +131,8 @@ export default function RecipeView({
 
                 <Tooltip delayDuration={300}>
                   <TooltipContent className="w-80 p-2">
-                    The time you will spend waiting for the dish
-                    to cook, bake, etc.
+                    The time you will spend waiting for the dish to cook, bake,
+                    etc.
                   </TooltipContent>
                   <TooltipTrigger className="ml-1.5 cursor-default">
                     <div className="flex items-center space-x-2">
@@ -178,9 +201,24 @@ export default function RecipeView({
               Ingredients
             </h2>
             <div className="mb-4 flex items-center space-x-2">
-              <Button variant="outline">-</Button>
-              <span>{recipe.data.numberOfPeople} servings</span>
-              <Button variant="outline">+</Button>
+              <Button
+                variant="outline"
+                onClick={() => adjustServings(currentServings - 1)}
+              >
+                -
+              </Button>
+              <span>{currentServings} servings</span>
+              <Button
+                variant="outline"
+                onClick={() => adjustServings(currentServings + 1)}
+              >
+                +
+              </Button>
+              {isAdjusted && (
+                <Button variant="outline" onClick={resetServings}>
+                  <Icons.reset className="size-5" />
+                </Button>
+              )}
             </div>
             <ol className="list-inside list-decimal">
               {recipe.data.ingredients.map((ingredient) => (
@@ -195,7 +233,8 @@ export default function RecipeView({
                     />
                     <span className="flex items-center space-x-2">
                       <span className="font-bold">
-                        {ingredient.quantity} {ingredient.ingredient.unit}
+                        {scaleIngredientQuantity(ingredient.quantity)}{' '}
+                        {ingredient.ingredient.unit}
                       </span>
                       <p>{ingredient.ingredient.name}</p>
                     </span>
