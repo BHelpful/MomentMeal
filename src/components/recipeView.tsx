@@ -205,6 +205,7 @@ export default function RecipeView({
                 Ingredients
               </h2>
               <div className="mb-4 flex items-center space-x-2 sm:flex-row-reverse md:flex-row lg:flex-row-reverse">
+                <div className="flex items-center space-x-2">
                 <Button
                   variant="outline"
                   onClick={() => adjustServings(currentServings - 1)}
@@ -218,8 +219,11 @@ export default function RecipeView({
                 >
                   +
                 </Button>
+              </div>
                 {isAdjusted && (
-                  <Button variant="outline" onClick={resetServings}>
+                  <Button
+                    className="!mr-2"
+                    variant="outline" onClick={resetServings}>
                     <Icons.reset className="size-5" />
                   </Button>
                 )}
