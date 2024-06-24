@@ -197,28 +197,33 @@ export default function RecipeView({
         <Separator className="mt-4 md:hidden" />
         <article className="flex w-full flex-col gap-8 md:flex-row md:gap-16">
           <section className="space-y-4 md:w-1/2">
-            <h2 className="mb-4 text-2xl font-semibold" id="ingredients-title">
-              Ingredients
-            </h2>
-            <div className="mb-4 flex items-center space-x-2">
-              <Button
-                variant="outline"
-                onClick={() => adjustServings(currentServings - 1)}
+            <div className="mt-4 flex flex-col justify-between sm:flex-row md:mt-0 md:flex-col lg:flex-row">
+              <h2
+                className="mb-4 text-2xl font-semibold"
+                id="ingredients-title"
               >
-                -
-              </Button>
-              <span>{currentServings} servings</span>
-              <Button
-                variant="outline"
-                onClick={() => adjustServings(currentServings + 1)}
-              >
-                +
-              </Button>
-              {isAdjusted && (
-                <Button variant="outline" onClick={resetServings}>
-                  <Icons.reset className="size-5" />
+                Ingredients
+              </h2>
+              <div className="mb-4 flex items-center space-x-2 sm:flex-row-reverse md:flex-row lg:flex-row-reverse">
+                <Button
+                  variant="outline"
+                  onClick={() => adjustServings(currentServings - 1)}
+                >
+                  -
                 </Button>
-              )}
+                <span>{currentServings} servings</span>
+                <Button
+                  variant="outline"
+                  onClick={() => adjustServings(currentServings + 1)}
+                >
+                  +
+                </Button>
+                {isAdjusted && (
+                  <Button variant="outline" onClick={resetServings}>
+                    <Icons.reset className="size-5" />
+                  </Button>
+                )}
+              </div>
             </div>
             <ol className="list-inside list-decimal">
               {recipe.data.ingredients.map((ingredient) => (
