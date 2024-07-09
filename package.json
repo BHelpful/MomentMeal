@@ -94,6 +94,8 @@
     "openai": "^4.51.0",
     "pdf-parse": "^1.1.1",
     "postcss": "8.4.31",
+    "posthog-js": "^1.145.0",
+    "posthog-node": "^4.0.1",
     "prisma": "^5.15.1",
     "react": "19.0.0-rc-935180c7e0-20240524",
     "react-day-picker": "^8.10.1",

@@ -187,7 +187,7 @@ importers:
         version: 2.30.0
       langchain:
         specifier: ^0.0.153
-        version: 0.0.153(@pinecone-database/pinecone@1.1.3)(@planetscale/database@1.18.0)(encoding@0.1.13)(ignore@5.3.1)(pdf-parse@1.1.1)
+        version: 0.0.153(@pinecone-database/pinecone@1.1.3)(@planetscale/database@1.18.0)(axios@1.7.2)(encoding@0.1.13)(ignore@5.3.1)(pdf-parse@1.1.1)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -212,6 +212,12 @@ importers:
       postcss:
         specifier: 8.4.31
         version: 8.4.31
+      posthog-js:
+        specifier: ^1.145.0
+        version: 1.145.0
+      posthog-node:
+        specifier: ^4.0.1
+        version: 4.0.1
       prisma:
         specifier: ^5.15.1
         version: 5.15.1
@@ -2884,6 +2890,9 @@ packages:
     resolution: {integrity: sha512-M0JtH+hlOL5pLQwHOLNYZaXuhqmvS8oExsqB1SBYgA4Dk7u/xx+YdGHXaK5pyUfed5mYXdlYiphWq3G8cRi5JQ==}
     engines: {node: '>=4'}
 
+  axios@1.7.2:
+    resolution: {integrity: sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==}
+
   axobject-query@3.2.1:
     resolution: {integrity: sha512-jsyHu61e6N4Vbz/v18DHwWYKK0bSWLqn47eeDSKPB7m8tqMHF9YJ+mhIk2lVteyZrY8tnSj/jHOv4YiTCuCJgg==}
 
@@ -3593,6 +3602,9 @@ packages:
   fault@2.0.1:
     resolution: {integrity: sha512-WtySTkS4OKev5JtpHXnib4Gxiurzh5NCGvWrFaZ34m6JehfTUhKZvn9njTfw48t6JumVQOmrKqpmGcdwxnhqBQ==}
 
+  fflate@0.4.8:
+    resolution: {integrity: sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==}
+
   file-entry-cache@6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -3619,6 +3631,15 @@ packages:
 
   flatted@3.3.1:
     resolution: {integrity: sha512-X8cqMLLie7KsNUDSdzeN8FYK9rEt4Dt67OsG/DNGnYTSDBG4uFAJFBnUeiV+zCVAvwFy56IjM9sH51jVaEhNxw==}
+
+  follow-redirects@1.15.6:
+    resolution: {integrity: sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
 
   for-each@0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
@@ -5269,6 +5290,16 @@ packages:
   postgres-range@1.1.4:
     resolution: {integrity: sha512-i/hbxIE9803Alj/6ytL7UHQxRvZkI9O4Sy+J3HGc4F4oo/2eQAjTSNJ0bfxyse3bH0nuVesCk+3IRLaMtG3H6w==}
 
+  posthog-js@1.145.0:
+    resolution: {integrity: sha512-LQdH6S2Ks3mnCI0q9aD5SZS0Uujc/90nuJuEeGDeGkWkVkYOSQJt4n0UHrIWEsZdmIKZf0a6OIBhTmO+yUiY3w==}
+
+  posthog-node@4.0.1:
+    resolution: {integrity: sha512-rtqm2h22QxLGBrW2bLYzbRhliIrqgZ0k+gF0LkQ1SNdeD06YE5eilV0MxZppFSxC8TfH0+B0cWCuebEnreIDgQ==}
+    engines: {node: '>=15.0.0'}
+
+  preact@10.22.1:
+    resolution: {integrity: sha512-jRYbDDgMpIb5LHq3hkI0bbl+l/TQ9UnkdQ0ww+lp+4MMOdqaUYdFc5qeyP+IV8FAd/2Em7drVPeKdQxsiWCf/A==}
+
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -5624,6 +5655,9 @@ packages:
 
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
+
+  rusha@0.8.14:
+    resolution: {integrity: sha512-cLgakCUf6PedEu15t8kbsjnwIFFR2D4RfL+W3iWFJ4iac7z4B0ZI8fxy4R3J956kAI68HclCFGL8MPoUVC3qVA==}
 
   sade@1.8.1:
     resolution: {integrity: sha512-xal3CZX1Xlo/k4ApwCFrHVACi9fBqJ7V+mwhBsuf/1IOKbBy098Fex+Wa/5QMubw09pSZ/u8EY8PWgevJsXp1A==}
@@ -6302,6 +6336,9 @@ packages:
 
   web-vitals@3.5.2:
     resolution: {integrity: sha512-c0rhqNcHXRkY/ogGDJQxZ9Im9D19hDihbzSQJrsioex+KnFgmMzBiy57Z1EjkhX/+OjyBpclDCzz2ITtjokFmg==}
+
+  web-vitals@4.2.1:
+    resolution: {integrity: sha512-U6bAxeudnhDqcXNl50JC4hLlqox9DZnngxfISZm3DMZnonW35xtJOVUc091L+DOY+6hVZVpKXoiCP0RiT6339Q==}
 
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
@@ -9405,6 +9442,14 @@ snapshots:
 
   axe-core@4.7.0: {}
 
+  axios@1.7.2:
+    dependencies:
+      follow-redirects: 1.15.6
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
   axobject-query@3.2.1:
     dependencies:
       dequal: 2.0.3
@@ -10275,6 +10320,8 @@ snapshots:
     dependencies:
       format: 0.2.2
 
+  fflate@0.4.8: {}
+
   file-entry-cache@6.0.1:
     dependencies:
       flat-cache: 3.2.0
@@ -10301,6 +10348,8 @@ snapshots:
   flat@5.0.2: {}
 
   flatted@3.3.1: {}
+
+  follow-redirects@1.15.6: {}
 
   for-each@0.3.3:
     dependencies:
@@ -10941,7 +10990,7 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  langchain@0.0.153(@pinecone-database/pinecone@1.1.3)(@planetscale/database@1.18.0)(encoding@0.1.13)(ignore@5.3.1)(pdf-parse@1.1.1):
+  langchain@0.0.153(@pinecone-database/pinecone@1.1.3)(@planetscale/database@1.18.0)(axios@1.7.2)(encoding@0.1.13)(ignore@5.3.1)(pdf-parse@1.1.1):
     dependencies:
       '@anthropic-ai/sdk': 0.6.8(encoding@0.1.13)
       ansi-styles: 5.2.0
@@ -10968,6 +11017,7 @@ snapshots:
     optionalDependencies:
       '@pinecone-database/pinecone': 1.1.3
       '@planetscale/database': 1.18.0
+      axios: 1.7.2
       ignore: 5.3.1
       pdf-parse: 1.1.1
     transitivePeerDependencies:
@@ -12206,6 +12256,21 @@ snapshots:
 
   postgres-range@1.1.4: {}
 
+  posthog-js@1.145.0:
+    dependencies:
+      fflate: 0.4.8
+      preact: 10.22.1
+      web-vitals: 4.2.1
+
+  posthog-node@4.0.1:
+    dependencies:
+      axios: 1.7.2
+      rusha: 0.8.14
+    transitivePeerDependencies:
+      - debug
+
+  preact@10.22.1: {}
+
   prelude-ls@1.2.1: {}
 
   prettier-plugin-tailwindcss@0.6.5(@ianvs/prettier-plugin-sort-imports@4.2.1(@vue/compiler-sfc@3.4.27)(prettier@3.3.2))(prettier@3.3.2):
@@ -12624,6 +12689,8 @@ snapshots:
   run-parallel@1.2.0:
     dependencies:
       queue-microtask: 1.2.3
+
+  rusha@0.8.14: {}
 
   sade@1.8.1:
     dependencies:
@@ -13431,6 +13498,8 @@ snapshots:
   web-streams-polyfill@4.0.0-beta.3: {}
 
   web-vitals@3.5.2: {}
+
+  web-vitals@4.2.1: {}
 
   webidl-conversions@3.0.1: {}
 

@@ -1,4 +1,5 @@
 import { Analytics } from '@/components/analytics';
+import { CSPostHogProvider } from '@/components/posthog-provider';
 import Providers from '@/components/providers';
 import { SentryFeedbackWidget } from '@/components/sentry-feedback';
 import { TailwindIndicator } from '@/components/ui/tailwind-indicator';
@@ -12,8 +13,13 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { type Metadata, type Viewport } from 'next';
+import dynamic from 'next/dynamic';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'simplebar-react/dist/simplebar.min.css';
+
+const PostHogPageView = dynamic(() => import('../components/posthog-page-view'), {
+  ssr: false,
+})
 
 export const viewport: Viewport = {
   themeColor: [
@@ -72,23 +78,26 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body
-          className={cn(
-            'min-h-screen bg-background font-sans antialiased',
-            fontSans.variable,
-            fontMono.variable
-          )}
-        >
-          <Providers attribute="class" defaultTheme="system" enableSystem>
-            {children}
-            <TailwindIndicator />
-            <Analytics />
-            <VercelAnalytics />
-            <SpeedInsights />
-            <SentryFeedbackWidget />
-          </Providers>
-          <Toaster />
-        </body>
+        <CSPostHogProvider>
+          <body
+            className={cn(
+              'min-h-screen bg-background font-sans antialiased',
+              fontSans.variable,
+              fontMono.variable
+            )}
+          >
+            <PostHogPageView />
+            <Providers attribute="class" defaultTheme="system" enableSystem>
+              {children}
+              <TailwindIndicator />
+              <Analytics />
+              <VercelAnalytics />
+              <SpeedInsights />
+              <SentryFeedbackWidget />
+            </Providers>
+            <Toaster />
+          </body>
+        </CSPostHogProvider>
       </html>
     </ClerkProvider>
   );
