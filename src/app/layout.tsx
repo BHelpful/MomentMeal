@@ -1,5 +1,6 @@
 import { Analytics } from '@/components/analytics';
 import Providers from '@/components/providers';
+import { SentryFeedbackWidget } from '@/components/sentry-feedback';
 import { TailwindIndicator } from '@/components/ui/tailwind-indicator';
 import { Toaster } from '@/components/ui/toaster';
 import { siteConfig } from '@/config/site';
@@ -84,6 +85,7 @@ export default function RootLayout({
             <Analytics />
             <VercelAnalytics />
             <SpeedInsights />
+            <SentryFeedbackWidget />
           </Providers>
           <Toaster />
         </body>
