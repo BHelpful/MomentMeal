@@ -2,13 +2,6 @@
 
 import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
@@ -32,9 +25,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { catchError } from '@/lib/utils';
 import { createRecipeInput } from '@/trpc/recipe/recipeRouter';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DragHandleDots2Icon, TrashIcon } from '@radix-ui/react-icons';
+import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 import * as React from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 export type RecipeFormInput = z.infer<typeof createRecipeInput>;
@@ -304,6 +297,16 @@ export function RecipeForm({
                       >
                         <Icons.Trash className="size-4" aria-hidden="true" />
                       </Button>
+                      <SortableDragHandle
+                        variant="outline"
+                        size="icon"
+                        className="mt-8 shrink-0"
+                      >
+                        <DragHandleDots2Icon
+                          className="size-4"
+                          aria-hidden="true"
+                        />
+                      </SortableDragHandle>
                     </div>
                   </SortableItem>
                 ))}
@@ -328,41 +331,71 @@ export function RecipeForm({
         <FormFieldArray
           control={form.control}
           name="steps"
-          render={({ fields, remove, append }) => (
+          render={({
+            fields: stepFields,
+            append: appendStep,
+            move: moveStep,
+            remove: removeStep,
+          }) => (
             <>
-              {fields.map((step, index) => (
-                <div key={step.id} className="flex w-full justify-center gap-4">
-                  <FormField
-                    control={form.control}
-                    name={`steps.${index}.content`}
-                    render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormLabel>Step</FormLabel>
-                        <FormControl>
-                          <Textarea placeholder="Type step here." {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button
-                    className="mt-8 bg-red-500/90 hover:bg-red-500"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      remove(index);
-                      form.setFocus(`steps.${index - 1}.content`);
-                    }}
-                    disabled={fields.length === 1}
-                  >
-                    <Icons.Trash className="size-4" aria-hidden="true" />
-                  </Button>
-                </div>
-              ))}
+              <Sortable
+                value={stepFields}
+                onMove={({ activeIndex, overIndex }) =>
+                  moveStep(activeIndex, overIndex)
+                }
+              >
+                {stepFields.map((step, index) => (
+                  <SortableItem key={step.id} value={step.id} asChild>
+                    <div
+                      key={step.id}
+                      className="flex w-full justify-center gap-4"
+                    >
+                      <FormField
+                        control={form.control}
+                        name={`steps.${index}.content`}
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Step</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                placeholder="Type step here."
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button
+                        className="mt-8 bg-red-500/90 hover:bg-red-500"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          removeStep(index);
+                          form.setFocus(`steps.${index - 1}.content`);
+                        }}
+                        disabled={stepFields.length === 1}
+                      >
+                        <Icons.Trash className="size-4" aria-hidden="true" />
+                      </Button>
+                      <SortableDragHandle
+                        variant="outline"
+                        size="icon"
+                        className="mt-8 shrink-0"
+                      >
+                        <DragHandleDots2Icon
+                          className="size-4"
+                          aria-hidden="true"
+                        />
+                      </SortableDragHandle>
+                    </div>
+                  </SortableItem>
+                ))}
+              </Sortable>
               <Button
                 className="mx-auto w-fit bg-cyan-600/90 hover:bg-cyan-600"
                 onClick={(event) => {
                   event.preventDefault();
-                  append([{ content: '' }]);
+                  appendStep([{ content: '' }]);
                 }}
               >
                 <Icons.Add className="size-4" aria-hidden="true" />
