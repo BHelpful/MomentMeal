@@ -2,6 +2,13 @@
 
 import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
@@ -16,12 +23,18 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import {
+  Sortable,
+  SortableDragHandle,
+  SortableItem,
+} from '@/components/ui/sortable';
 import { Textarea } from '@/components/ui/textarea';
 import { catchError } from '@/lib/utils';
 import { createRecipeInput } from '@/trpc/recipe/recipeRouter';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { DragHandleDots2Icon, TrashIcon } from '@radix-ui/react-icons';
 import * as React from 'react';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 export type RecipeFormInput = z.infer<typeof createRecipeInput>;
@@ -189,97 +202,120 @@ export function RecipeForm({
         <FormFieldArray
           control={form.control}
           name="ingredients"
-          render={({ fields, remove, append }) => (
+          render={({
+            fields: ingredientFields,
+            append: appendIngredient,
+            move: moveIngredient,
+            remove: removeIngredient,
+          }) => (
             <>
-              {fields.map((ingredient, index) => (
-                <div
-                  key={ingredient.id}
-                  className="flex w-full justify-center gap-4"
-                >
-                  <FormField
-                    control={form.control}
-                    name={`ingredients.${index}.ingredient.name`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Ingredient</FormLabel>
-                        <FormControl>
-                          <Input
-                            onKeyDown={(event) => {
-                              if (event.key === 'Enter') {
-                                event.preventDefault();
-                              }
-                            }}
-                            placeholder="Type ingredient name here."
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormItem>
-                    <FormLabel>Amount</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        inputMode="numeric"
-                        placeholder="Type amount here."
-                        {...form.register(`ingredients.${index}.quantity`, {
-                          valueAsNumber: true,
-                        })}
-                        onKeyDown={(event) => {
-                          if (event.key === 'Enter') {
-                            event.preventDefault();
-                          }
-                        }}
-                      />
-                    </FormControl>
-                    <UncontrolledFormMessage
-                      message={
-                        form.formState.errors.ingredients?.[index]?.quantity
-                          ?.message
-                      }
-                    />
-                  </FormItem>
-                  <FormField
-                    control={form.control}
-                    name={`ingredients.${index}.ingredient.unit`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Unit</FormLabel>
-                        <FormControl>
-                          <Input
-                            onKeyDown={(event) => {
-                              if (event.key === 'Enter') {
-                                event.preventDefault();
-                              }
-                            }}
-                            placeholder="Type unit here."
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button
-                    className="mt-8 bg-red-500/90 hover:bg-red-500"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      remove(index);
-                      form.setFocus(`ingredients.${index - 1}.ingredient.name`);
-                    }}
-                    disabled={fields.length === 1}
+              <Sortable
+                value={ingredientFields}
+                onMove={({ activeIndex, overIndex }) =>
+                  moveIngredient(activeIndex, overIndex)
+                }
+              >
+                {ingredientFields.map((ingredient, index) => (
+                  <SortableItem
+                    key={ingredient.id}
+                    value={ingredient.id}
+                    asChild
                   >
-                    <Icons.Trash className="size-4" aria-hidden="true" />
-                  </Button>
-                </div>
-              ))}
+                    <div
+                      key={ingredient.id}
+                      className="flex w-full justify-center gap-4"
+                    >
+                      <FormField
+                        control={form.control}
+                        name={`ingredients.${index}.ingredient.name`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Ingredient</FormLabel>
+                            <FormControl>
+                              <Input
+                                onKeyDown={(event) => {
+                                  if (event.key === 'Enter') {
+                                    event.preventDefault();
+                                  }
+                                }}
+                                placeholder="Type ingredient name here."
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormItem>
+                        <FormLabel>Amount</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="number"
+                            inputMode="numeric"
+                            placeholder="Type amount here."
+                            {...form.register(`ingredients.${index}.quantity`, {
+                              valueAsNumber: true,
+                            })}
+                            onKeyDown={(event) => {
+                              if (event.key === 'Enter') {
+                                event.preventDefault();
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <UncontrolledFormMessage
+                          message={
+                            form.formState.errors.ingredients?.[index]?.quantity
+                              ?.message
+                          }
+                        />
+                      </FormItem>
+                      <FormField
+                        control={form.control}
+                        name={`ingredients.${index}.ingredient.unit`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Unit</FormLabel>
+                            <FormControl>
+                              <Input
+                                onKeyDown={(event) => {
+                                  if (event.key === 'Enter') {
+                                    event.preventDefault();
+                                  }
+                                }}
+                                placeholder="Type unit here."
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button
+                        className="mt-8 bg-red-500/90 hover:bg-red-500"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          removeIngredient(index);
+                          form.setFocus(
+                            `ingredients.${index - 1}.ingredient.name`
+                          );
+                        }}
+                        disabled={ingredientFields.length === 1}
+                      >
+                        <Icons.Trash className="size-4" aria-hidden="true" />
+                      </Button>
+                    </div>
+                  </SortableItem>
+                ))}
+              </Sortable>
               <Button
                 className="mx-auto w-fit bg-cyan-600/90 hover:bg-cyan-600"
                 onClick={(event) => {
                   event.preventDefault();
-                  append({ ingredient: { name: '', unit: 'g' }, quantity: 1 });
+                  appendIngredient({
+                    ingredient: { name: '', unit: 'g' },
+                    quantity: 1,
+                  });
                 }}
               >
                 <Icons.Add className="size-4" aria-hidden="true" />
