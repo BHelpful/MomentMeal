@@ -45,7 +45,7 @@ For this app to work you need to setup clerk OAuth providers. You can find the s
 - Create local .env `cp .env.example .env` and fill in the values
 - Install dependencies `pnpm install` or just `pnpm i`
 - Start the database `pnpm db:dev` or if using a provider like Neon, you can skip this step
-- Run `pnpm db:push` to push the database schema to the database
+- Run `pnpm prisma:push` to push the database schema to the database
 - Run the development server `pnpm dev`
 
 # Development
