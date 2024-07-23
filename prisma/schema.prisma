@@ -8,8 +8,9 @@ generator client {
 
 // prisma/schema.prisma
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // uses connection pooling
+  directUrl = env("DIRECT_UNPOOLED_URL")
 }
 
 // Tables start here
