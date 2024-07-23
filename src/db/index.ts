@@ -11,17 +11,24 @@ declare global {
 
 // setup
 neonConfig.webSocketConstructor = ws;
-const poolConfig: PoolConfig = {
-  connectionString: process.env.DIRECT_UNPOOLED_URL,
-};
+const connectionString = process.env.DIRECT_UNPOOLED_URL;
 
-// instantiate
-const pool = new Pool(poolConfig);
-const adapter = new PrismaNeon(pool);
+let prisma: PrismaClient;
 
-const prisma =
-  global.prisma ||
-  new PrismaClient({ adapter, log: ['info', 'warn', 'error'] });
+if (connectionString?.includes('neon')) {
+  const poolConfig: PoolConfig = {
+    connectionString: connectionString,
+  };
+  // instantiate
+  const pool = new Pool(poolConfig);
+  const adapter = new PrismaNeon(pool);
+  prisma =
+    global.prisma ||
+    new PrismaClient({ adapter, log: ['info', 'warn', 'error'] });
+} else {
+  prisma =
+    global.prisma || new PrismaClient({ log: ['info', 'warn', 'error'] });
+}
 
 // cache on global for HOT RELOAD in dev
 if (process.env.NODE_ENV === 'development') global.prisma = prisma;
