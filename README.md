@@ -64,7 +64,7 @@ export default async function Home() {
 
   const flagEnabled = await posthog.getFeatureFlag(
     'testFeature',
-    'user distinct id'
+    <user distinct id>
   );
 ```
 
