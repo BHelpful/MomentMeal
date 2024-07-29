@@ -1,24 +1,24 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
-/.react-email/node_modules
-/.pnp
+node_modules
+.react-email/node_modules
+.pnp
 .pnp.js
 
 # testing
-/coverage
+coverage
 
 # database
 
 # next.js
-/.next/
-/.react-email/.next/
-/out/
+.next/
+kkeact-email/.next/
+out/
 next-env.d.ts
 
 # production
-/build
+build
 
 # misc
 .DS_Store
@@ -46,3 +46,6 @@ yarn-error.log*
 .contentlayer
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Turborepo
+.turbo
