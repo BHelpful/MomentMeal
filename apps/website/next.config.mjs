@@ -3,11 +3,6 @@ import { withContentlayer } from 'next-contentlayer2';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    ppr: 'incremental',
-    reactCompiler: true,
-    after: true,
-  },
   reactStrictMode: true,
   images: {
     domains: [
@@ -22,8 +17,6 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: false,
   },
-  // Automatically bundle external packages in the Pages Router:
-  bundlePagesRouterDependencies: true,
 };
 
 export default withSentryConfig(withContentlayer(nextConfig), {

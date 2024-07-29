@@ -9,5 +9,8 @@
   },
   "devDependencies": {
     "turbo": "^2.0.9"
+  },
+  "resolutions": {
+    "@opentelemetry/api": "1.9.0"
   }
 }

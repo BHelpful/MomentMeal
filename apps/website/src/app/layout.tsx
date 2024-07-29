@@ -17,9 +17,12 @@ import dynamic from 'next/dynamic';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'simplebar-react/dist/simplebar.min.css';
 
-const PostHogPageView = dynamic(() => import('../components/posthog-page-view'), {
-  ssr: false,
-})
+const PostHogPageView = dynamic(
+  () => import('../components/posthog-page-view'),
+  {
+    ssr: false,
+  }
+);
 
 export const viewport: Viewport = {
   themeColor: [
