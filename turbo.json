@@ -14,9 +14,20 @@
         ".env.production",
         ".env"
       ],
-
       "outputs": [".next/**", "!.next/cache/**"],
-      "cache": true
+      "cache": true,
+      "env": [
+        "NEXT_PUBLIC_APP_URL",
+        "DATABASE_URL",
+        "DIRECT_UNPOOLED_URL",
+        "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+        "CLERK_SECRET_KEY",
+        "SENTRY_AUTH_TOKEN",
+        "NEXT_PUBLIC_POSTHOG_KEY",
+        "NEXT_PUBLIC_POSTHOG_HOST",
+        "VERCEL",
+        "VERCEL_ENV"
+      ]
     },
     "check-types": {
       "dependsOn": ["^check-types"]
