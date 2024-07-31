@@ -3,7 +3,7 @@ import RecipeView from '@/components/recipeView';
 import { Shell } from '@/components/shells/shell';
 import { getCachedUser } from '@/lib/queries/user';
 import { toTitleCase } from '@/lib/utils';
-import { getRecipe } from '@/trpc/recipe/recipeRouter';
+import { getPublicRecipe } from '@/trpc/recipe/recipeRouter';
 import { notFound } from 'next/navigation';
 
 interface ProductPageProps {
@@ -17,7 +17,9 @@ export async function generateMetadata({ params }: ProductPageProps) {
     return {};
   }
 
-  const recipe = await getRecipe({ id: params.recipeId }).catch(() => null);
+  const recipe = await getPublicRecipe({ id: params.recipeId }).catch(
+    () => null
+  );
 
   if (!recipe) {
     return {};
@@ -36,7 +38,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const user = await getCachedUser();
 
-  const recipe = await getRecipe({ id: params.recipeId }).catch(() => null);
+  const recipe = await getPublicRecipe({ id: params.recipeId }).catch(
+    () => null
+  );
 
   if (!recipe) {
     notFound();
