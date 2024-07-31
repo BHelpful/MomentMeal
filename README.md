@@ -23,7 +23,7 @@ MomentMeal is an open source project. We welcome contributions from the communit
 - [Implement new features](https://github.com/BHelpful/MomentMeal/issues/new/choose) - If you want to implement a new feature, please create an issue in the issue tracker and describe the feature you want to implement. This will allow us to discuss the feature and make sure it fits with the project.
 - [Improve code quality](https://github.com/BHelpful/MomentMeal#repo-health-information) - We use SonarCloud and CodeScene to measure the code quality of our project. You can help us improve the code quality by fixing bugs and vulnerabilities.
 - Improve documentation - If you find any errors in the documentation or want to improve it, please contribute with a pull request.
-- In the future, we will want to implement translations of the app. If you are interested in helping us with this, please contact us at [momentmeal@gmail.com](mailto: 'momentmeal@gmail.com').
+- In the future, we will want to implement translations of the app. If you are interested in helping us with this, please contact us at [momentmeal@gmail.com](mailto: "momentmeal@gmail.com").
 
 # Getting started
 
@@ -42,7 +42,7 @@ For this app to work you need to setup clerk OAuth providers. You can find the s
 ## Installation and setup
 
 - Clone the repository
-- Create local .env `cp .env.example .env` and fill in the values
+- Create local .env `cp apps/web/.env.example apps/web/.env` and fill in the values
 - Install dependencies `pnpm install` or just `pnpm i`
 - Start the database `pnpm db:dev` or if using a provider like Neon, you can skip this step
 - Run `pnpm prisma:push` to push the database schema to the database
