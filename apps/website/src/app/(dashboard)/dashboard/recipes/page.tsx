@@ -106,7 +106,7 @@ export default async function RecipesPage() {
             <RecipeCard
               recipe={recipe}
               key={recipe.id}
-              href={`/recipe/${recipe.id}`}
+              href={`/dashboard/recipe/${recipe.id}`}
             />
           ))
         ) : (
