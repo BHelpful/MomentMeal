@@ -15,7 +15,7 @@ importers:
         specifier: ^2.0.9
         version: 2.0.9
 
-  apps/website:
+  apps/web:
     dependencies:
       '@clerk/nextjs':
         specifier: ^5.2.8
@@ -8529,7 +8529,7 @@ snapshots:
 
   '@types/pg-pool@2.0.4':
     dependencies:
-      '@types/pg': 8.6.1
+      '@types/pg': 8.11.6
 
   '@types/pg@8.11.6':
     dependencies:
@@ -9502,7 +9502,7 @@ snapshots:
   dot-case@3.0.4:
     dependencies:
       no-case: 3.0.4
-      tslib: 2.4.1
+      tslib: 2.6.3
 
   dotenv@16.4.5: {}
 
@@ -12462,7 +12462,7 @@ snapshots:
   snake-case@3.0.4:
     dependencies:
       dot-case: 3.0.4
-      tslib: 2.4.1
+      tslib: 2.6.3
 
   snakecase-keys@5.4.4:
     dependencies:
