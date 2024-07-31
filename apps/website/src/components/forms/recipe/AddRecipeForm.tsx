@@ -1,8 +1,8 @@
 'use client';
 
-import { trpc } from '@/app/_trpc/client';
 import { createRecipeRevalidate } from '@/app/actions';
 import { catchError } from '@/lib/utils';
+import { createRecipe } from '@/trpc/recipe/recipeRouter';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { RecipeForm, type RecipeFormInput } from './RecipeForm';
@@ -10,11 +10,9 @@ import { RecipeForm, type RecipeFormInput } from './RecipeForm';
 export function AddRecipeForm() {
   const router = useRouter();
 
-  const createRecipe = trpc.recipe.createRecipe.useMutation();
-
   async function handleSubmit(data: RecipeFormInput) {
     try {
-      await createRecipe.mutateAsync(data);
+      await createRecipe(data);
 
       toast.success('Recipe added successfully.');
       await createRecipeRevalidate();

@@ -1,9 +1,9 @@
-import { serverClient } from '@/app/_trpc/serverClient';
 import { Breadcrumbs } from '@/components/pagers/breadcrumbs';
 import RecipeView from '@/components/recipeView';
 import { Shell } from '@/components/shells/shell';
 import { getCachedUser } from '@/lib/queries/user';
 import { toTitleCase } from '@/lib/utils';
+import { getRecipe } from '@/trpc/recipe/recipeRouter';
 import { notFound } from 'next/navigation';
 
 interface ProductPageProps {
@@ -17,17 +17,15 @@ export async function generateMetadata({ params }: ProductPageProps) {
     return {};
   }
 
-  const recipe = await serverClient.recipe
-    .getPublicRecipe({ id: params.recipeId })
-    .catch(() => null);
+  const recipe = await getRecipe({ id: params.recipeId }).catch(() => null);
 
   if (!recipe) {
     return {};
   }
 
   return {
-    title: toTitleCase(recipe.title),
-    description: recipe.description ?? undefined,
+    title: toTitleCase(recipe?.data?.title ?? ''),
+    description: recipe?.data?.description ?? '',
   };
 }
 
@@ -38,9 +36,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const user = await getCachedUser();
 
-  const recipe = await serverClient.recipe
-    .getPublicRecipe({ id: params.recipeId })
-    .catch(() => null);
+  const recipe = await getRecipe({ id: params.recipeId }).catch(() => null);
 
   if (!recipe) {
     notFound();
@@ -51,20 +47,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <Breadcrumbs
         segments={[
           {
-            title: 'Recipes',
-            href: '/recipes',
+            title: 'My Recipes',
+            href: '/dashboard/recipes',
           },
           {
-            title: recipe.title,
-            href: `/recipe/${recipe.id}`,
+            title: recipe?.data?.title ?? '',
+            href: `/dashboard/recipe/${recipe?.data?.id}`,
           },
         ]}
       />
       <RecipeView
-        id={recipe.id}
         initialRecipe={recipe}
         userId={user?.id}
-        onDeleteHref="/recipes"
+        onDeleteHref="/dashboard/recipes"
       />
     </Shell>
   );

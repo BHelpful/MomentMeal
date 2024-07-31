@@ -1,20 +1,15 @@
 'use client';
 
-import { trpc } from '@/app/_trpc/client';
-import type { serverClient } from '@/app/_trpc/serverClient';
 import { updateRecipeRevalidate } from '@/app/actions';
 import { catchError } from '@/lib/utils';
-import type { createRecipeInput } from '@/trpc/recipe/recipeRouter';
+import { updateRecipe } from '@/trpc/recipe/recipeRouter';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import type { z } from 'zod';
 import { RecipeForm, type RecipeFormInput } from './RecipeForm';
 
 interface EditRecipeFormProps {
   recipeId: string;
-  initialRecipe: Awaited<
-    ReturnType<(typeof serverClient)['recipe']['getRecipe']>
-  >;
+  initialRecipe: RecipeFormInput;
 }
 
 export function EditRecipeForm({
@@ -23,20 +18,9 @@ export function EditRecipeForm({
 }: Readonly<EditRecipeFormProps>) {
   const router = useRouter();
 
-  const recipeQuery = trpc.recipe.getRecipe.useQuery(
-    { id: recipeId },
-    {
-      initialData: initialRecipe,
-      refetchOnMount: true,
-      refetchOnReconnect: true,
-      cacheTime: 0,
-    }
-  );
-  const updateRecipe = trpc.recipe.updateRecipe.useMutation();
-
   async function handleSubmit(data: RecipeFormInput) {
     try {
-      await updateRecipe.mutateAsync({ id: recipeId, ...data });
+      await updateRecipe({ id: recipeId, ...data });
 
       toast.success('Recipe updated successfully.');
       await updateRecipeRevalidate(recipeId);
@@ -47,14 +31,5 @@ export function EditRecipeForm({
     }
   }
 
-  if (recipeQuery.status === 'error') {
-    return <div>Error: {recipeQuery.error.message}</div>;
-  }
-
-  return (
-    <RecipeForm
-      initialData={recipeQuery.data satisfies z.infer<typeof createRecipeInput>}
-      onSubmit={handleSubmit}
-    />
-  );
+  return <RecipeForm initialData={initialRecipe} onSubmit={handleSubmit} />;
 }

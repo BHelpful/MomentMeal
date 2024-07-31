@@ -1,4 +1,3 @@
-import { serverClient } from '@/app/_trpc/serverClient';
 import {
   PageHeader,
   PageHeaderDescription,
@@ -6,9 +5,10 @@ import {
 } from '@/components/page-header';
 import RecipeList from '@/components/recipes';
 import { Shell } from '@/components/shells/shell';
+import { getPublicRecipes } from '@/trpc/recipe/recipeRouter';
 
 const Page = async () => {
-  const recipes = await serverClient.recipe.getPublicRecipes();
+  const recipes = await getPublicRecipes();
 
   return (
     <Shell className="gap-8">
@@ -21,7 +21,7 @@ const Page = async () => {
           A collection of recipes for you to try.
         </PageHeaderDescription>
       </PageHeader>
-      <RecipeList initialRecipes={recipes} />
+      <RecipeList recipes={recipes} />
     </Shell>
   );
 };

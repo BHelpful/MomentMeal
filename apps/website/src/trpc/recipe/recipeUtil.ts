@@ -1,7 +1,7 @@
+import { ACTION_ERROR_CODE_KEY, ActionError } from '@/lib/safe-action';
 import { type Ingredient, type IngredientsOnRecipes } from '@prisma/client';
-import { TRPCError } from '@trpc/server';
 import { z, type z as zodType } from 'zod';
-import { type ingredientsArrayForRecipe } from './recipeRouter';
+import { type ingredientsArrayForRecipe } from './test';
 
 // TODO Add tests and refactor
 export function computeIngredientsToAddAndKeep(
@@ -42,7 +42,8 @@ export function computeIngredientsToAddAndKeep(
         (dbIngredient) => dbIngredient.name === ingredient.ingredient.name
       );
 
-      if (!ingredientToConnect) throw new TRPCError({ code: 'NOT_FOUND' });
+      if (!ingredientToConnect)
+        throw new ActionError({ code: ACTION_ERROR_CODE_KEY.NOT_FOUND });
 
       return {
         id: ingredientToConnect.id,
@@ -96,7 +97,8 @@ export function computeIngredientsToAddAndKeep(
           ingredientOnRecipe.ingredient.unit === ingredient.ingredient.unit
       );
 
-      if (!ingredientToUpdate) throw new TRPCError({ code: 'NOT_FOUND' });
+      if (!ingredientToUpdate)
+        throw new ActionError({ code: ACTION_ERROR_CODE_KEY.NOT_FOUND });
 
       return {
         where: {

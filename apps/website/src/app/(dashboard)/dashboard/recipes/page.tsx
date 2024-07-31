@@ -1,4 +1,3 @@
-import { serverClient } from '@/app/_trpc/serverClient';
 import { RecipeCard } from '@/components/cards/recipe-card';
 import { GenerateButton } from '@/components/generate-button';
 import {
@@ -14,6 +13,7 @@ import { env } from '@/env.mjs';
 import { getCachedUser } from '@/lib/queries/user';
 import { getDashboardRedirectPath, getPlanFeatures } from '@/lib/subscription';
 import { cn } from '@/lib/utils';
+import { getRecipes } from '@/trpc/recipe/recipeRouter';
 import { type SubscriptionPlan, type UserSubscriptionPlan } from '@/types';
 import { RocketIcon } from '@radix-ui/react-icons';
 import type { Metadata } from 'next';
@@ -33,7 +33,7 @@ export default async function RecipesPage() {
     redirect('/signin');
   }
 
-  const recipes = await serverClient.recipe.getRecipes();
+  const recipes = await getRecipes();
 
   const subscriptionPlanStub: UserSubscriptionPlan = {
     ...(mealTimeSubscriptionPlans[0]! satisfies SubscriptionPlan),
@@ -60,7 +60,7 @@ export default async function RecipesPage() {
           <Link
             aria-label="Create recipe"
             href={getDashboardRedirectPath({
-              recipeCount: recipes.length,
+              recipeCount: recipes?.data?.length ?? 0,
               subscriptionPlan: subscriptionPlanStub,
             })}
             className={cn(
@@ -101,13 +101,19 @@ export default async function RecipesPage() {
         aria-labelledby="dashboard-recipes-page-recipes-heading"
         className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {recipes.map((recipe) => (
-          <RecipeCard
-            key={recipe.id}
-            recipe={recipe}
-            href={`/dashboard/recipe/${recipe.id}`}
-          />
-        ))}
+        {recipes?.data && recipes?.data?.length !== 0 ? (
+          recipes?.data.map((recipe) => (
+            <RecipeCard
+              recipe={recipe}
+              key={recipe.id}
+              href={`/recipe/${recipe.id}`}
+            />
+          ))
+        ) : (
+          <div className="flex h-32 items-center justify-center text-gray-500">
+            No recipes found
+          </div>
+        )}
       </section>
     </Shell>
   );

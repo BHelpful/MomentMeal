@@ -1,8 +1,8 @@
-import { serverClient } from '@/app/_trpc/serverClient';
 import { EditRecipeForm } from '@/components/forms/recipe/UpdateRecipeForm';
 import { Breadcrumbs } from '@/components/pagers/breadcrumbs';
 import { Shell } from '@/components/shells/shell';
 import { getCachedUser } from '@/lib/queries/user';
+import { getRecipe } from '@/trpc/recipe/recipeRouter';
 import { notFound } from 'next/navigation';
 
 interface ProductPageProps {
@@ -20,11 +20,9 @@ export default async function RecipeEditPage({
 
   const user = await getCachedUser();
 
-  const recipe = await serverClient.recipe
-    .getRecipe({ id: params.recipeId })
-    .catch(() => null);
+  const recipe = await getRecipe({ id: params.recipeId }).catch(() => null);
 
-  if (!recipe || !user || recipe.userId !== user.id) {
+  if (!recipe || !recipe?.data || !user || recipe.data.userId !== user.id) {
     notFound();
   }
 
@@ -37,12 +35,12 @@ export default async function RecipeEditPage({
             href: '/dashboard/recipes',
           },
           {
-            title: recipe.title,
-            href: `/dashboard/recipe/${recipe.id}`,
+            title: recipe?.data?.title ?? '',
+            href: `/dashboard/recipe/${recipe?.data?.id}`,
           },
         ]}
       />
-      <EditRecipeForm recipeId={recipe.id} initialRecipe={recipe} />
+      <EditRecipeForm initialRecipe={recipe.data} recipeId={recipe.data.id} />
     </Shell>
   );
 }

@@ -1,15 +1,16 @@
 'use client';
 
-import { trpc } from '@/app/_trpc/client';
-import { type serverClient } from '@/app/_trpc/serverClient';
 import { deleteRecipeRevalidate } from '@/app/actions';
 import { Icons } from '@/components/icons';
 import { Shell } from '@/components/shells/shell';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
+import type { getPublicRecipe } from '@/trpc/recipe/recipeRouter';
+import { deleteRecipe } from '@/trpc/recipe/recipeRouter';
 import { type RecipeRating } from '@prisma/client';
 import { Tooltip } from '@radix-ui/react-tooltip';
+import { useAction } from 'next-safe-action/hooks';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -18,66 +19,57 @@ import { Button, buttonVariants } from './ui/button';
 import { TooltipContent, TooltipTrigger } from './ui/tooltip';
 
 export default function RecipeView({
-  id,
   initialRecipe,
   userId,
   onDeleteHref,
 }: {
-  readonly id: string;
-  readonly initialRecipe: Awaited<
-    ReturnType<(typeof serverClient)['recipe']['getPublicRecipe']>
-  >;
+  initialRecipe: Awaited<ReturnType<typeof getPublicRecipe>>;
   readonly userId?: string;
   readonly onDeleteHref?: string;
 }) {
   const router = useRouter();
 
   const [currentServings, setCurrentServings] = useState(
-    initialRecipe.numberOfPeople
+    initialRecipe?.data?.numberOfPeople ?? 0
   );
   const [isAdjusted, setIsAdjusted] = useState(false);
 
   const adjustServings = (newServings: number) => {
     if (newServings >= 1 && newServings <= 20) {
       setCurrentServings(newServings);
-      setIsAdjusted(newServings !== initialRecipe.numberOfPeople);
+      setIsAdjusted(newServings !== initialRecipe?.data?.numberOfPeople);
     }
   };
 
   const resetServings = () => {
-    setCurrentServings(initialRecipe.numberOfPeople);
+    setCurrentServings(initialRecipe?.data?.numberOfPeople ?? 0);
     setIsAdjusted(false);
   };
 
   const scaleIngredientQuantity = (quantity: number) => {
-    const scale = currentServings / initialRecipe.numberOfPeople;
+    const scale = currentServings / (initialRecipe?.data?.numberOfPeople ?? 1);
     return quantity * scale;
   };
 
-  // TODO figure out a way to use fitting router based on the environment i.e. public or private
+  // TODO: figure out a way to use fitting router based on the environment i.e. public or private
   // In this case it is always fetching public recipe also for private recipes, which will result in 404
   // An idea is to create a wrapper component. One for public and one for private recipes. Then have the ui component be shared between them
-  const recipe = trpc.recipe.getPublicRecipe.useQuery(
-    { id },
-    {
-      initialData: initialRecipe,
-      refetchOnMount: true,
-      refetchOnReconnect: true,
-      cacheTime: 0,
-    }
-  );
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const deleteRecipe = trpc.recipe.deleteRecipe.useMutation({
-    onSettled: async () => {
+  const deleteAction = useAction(deleteRecipe, {
+    onSuccess: async ({ data }) => {
+      if (!data) throw new Error('No data returned');
       toast.success('Recipe deleted');
-
-      await deleteRecipeRevalidate(id);
+      await deleteRecipeRevalidate(data.id);
       router.push(onDeleteHref ?? '/');
       router.refresh();
     },
-    onError: (err) => {
-      toast.error(err.message);
+    onError: ({ error, input }) => {
+      if (error.fetchError) {
+        toast.error('Failed to delete recipe' + error.fetchError);
+      }
+      if (error.serverError) {
+        toast.error('Failed to delete recipe' + error.serverError);
+      }
     },
   });
 
@@ -88,6 +80,10 @@ export default function RecipeView({
     ).toFixed(1);
   }
 
+  if (!initialRecipe?.data) {
+    return null;
+  }
+  const recipe = initialRecipe?.data;
   return (
     <Shell>
       <div className="">
@@ -96,19 +92,19 @@ export default function RecipeView({
           <div className="flex flex-col gap-4 md:w-1/2">
             <section className="space-y-2">
               <h2 className="line-clamp-1 text-2xl font-bold">
-                {recipe.data.title}
+                {recipe.title}
               </h2>
               <div className="flex flex-wrap gap-2">
                 <div className="flex items-center space-x-2">
                   <Icons.star className="size-5 text-muted-foreground" />
                   <p className="text-base text-muted-foreground">
-                    Rating: {calculateRating(recipe.data.ratings)}
+                    Rating: {calculateRating(recipe.ratings)}
                   </p>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Icons.heart className="size-5 text-muted-foreground" />
                   <p className="text-base text-muted-foreground">
-                    {recipe.data.ratings.length} ratings
+                    {recipe.ratings.length} ratings
                   </p>
                 </div>
               </div>
@@ -123,7 +119,7 @@ export default function RecipeView({
                     <div className="flex items-center space-x-2">
                       <Icons.ChefHat className="size-5 text-muted-foreground" />
                       <p className="text-base text-muted-foreground">
-                        {recipe.data.timeInKitchen} min
+                        {recipe.timeInKitchen} min
                       </p>
                     </div>
                   </TooltipTrigger>
@@ -138,7 +134,7 @@ export default function RecipeView({
                     <div className="flex items-center space-x-2">
                       <Icons.Clock className="size-5 text-muted-foreground" />
                       <p className="text-base text-muted-foreground">
-                        {recipe.data.waitingTime} min
+                        {recipe.waitingTime} min
                       </p>
                     </div>
                   </TooltipTrigger>
@@ -152,23 +148,23 @@ export default function RecipeView({
                     <div className="flex items-center space-x-2">
                       <Icons.Users className="size-5 text-muted-foreground" />
                       <p className="text-base text-muted-foreground">
-                        {recipe.data.numberOfPeople} servings
+                        {recipe.numberOfPeople} servings
                       </p>
                     </div>
                   </TooltipTrigger>
                 </Tooltip>
               </div>
               <p className="text-base">
-                {recipe.data.description ??
+                {recipe.description ??
                   'No description is available for this recipe.'}
               </p>
             </section>
 
-            {userId && recipe.data.userId === userId && (
+            {userId && recipe.userId === userId && (
               <>
                 <Button
                   className="self-start bg-red-500 hover:bg-red-600"
-                  onClick={() => deleteRecipe.mutate({ id })}
+                  onClick={() => deleteAction.execute({ id: recipe.id })}
                 >
                   Delete Recipe
                 </Button>
@@ -178,7 +174,7 @@ export default function RecipeView({
                       size: 'sm',
                     })
                   )}
-                  href={`/dashboard/recipe/${recipe.data.id}/edit`}
+                  href={`/dashboard/recipe/${recipe.id}/edit`}
                 >
                   Edit Recipe
                 </Link>
@@ -234,7 +230,7 @@ export default function RecipeView({
               </div>
             </div>
             <ol className="list-inside list-decimal">
-              {recipe.data.ingredients.map((ingredient) => (
+              {recipe.ingredients.map((ingredient) => (
                 <li key={ingredient.ingredient.id} className="block">
                   <label
                     htmlFor={`checkbox-${ingredient.ingredient.id}`}
@@ -261,7 +257,7 @@ export default function RecipeView({
               Steps
             </h2>
             <ol className="list-inside list-decimal">
-              {recipe.data.steps.map((step) => (
+              {recipe.steps.map((step) => (
                 <li key={step.id} className="block">
                   <label
                     htmlFor={`checkbox-step-${step.id}`}
