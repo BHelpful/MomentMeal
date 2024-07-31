@@ -51,19 +51,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <Breadcrumbs
         segments={[
           {
-            title: 'My Recipes',
-            href: '/dashboard/recipes',
+            title: 'Recipes',
+            href: '/recipes',
           },
           {
             title: recipe?.data?.title ?? '',
-            href: `/dashboard/recipe/${recipe?.data?.id}`,
+            href: `/recipe/${recipe?.data?.id}`,
           },
         ]}
       />
       <RecipeView
         initialRecipe={recipe}
         userId={user?.id}
-        onDeleteHref="/dashboard/recipes"
+        onDeleteHref="/recipes"
       />
     </Shell>
   );
