@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useAuth } from "@clerk/nextjs";
-import * as Sentry from "@sentry/nextjs";
-import { useEffect, useState } from "react";
+import { useAuth } from '@clerk/nextjs';
+import * as Sentry from '@sentry/nextjs';
+import { useEffect, useState } from 'react';
 
 function createWidget() {
   return Sentry.getFeedback()?.createWidget();
@@ -10,7 +10,7 @@ function createWidget() {
 
 function useFeedbackWidget(shouldMount: boolean) {
   const [widget, setWidget] = useState<ReturnType<typeof createWidget> | null>(
-    null,
+    null
   );
   useEffect(() => {
     // Mount if true and no widget exists

@@ -1,9 +1,9 @@
+import { getPublicRecipe } from '@/backend/recipe/recipeActions';
 import { Breadcrumbs } from '@/components/pagers/breadcrumbs';
 import RecipeView from '@/components/recipeView';
 import { Shell } from '@/components/shells/shell';
 import { getCachedUser } from '@/lib/queries/user';
 import { toTitleCase } from '@/lib/utils';
-import { getPublicRecipe } from '@/backend/recipe/recipeActions';
 import { notFound } from 'next/navigation';
 
 interface ProductPageProps {

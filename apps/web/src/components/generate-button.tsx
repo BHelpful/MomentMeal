@@ -1,10 +1,10 @@
 'use client';
 
 import { generateRecipesRevalidate } from '@/app/actions';
+import { generateRecipes } from '@/backend/recipe/recipeActions';
 import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import { catchError } from '@/lib/utils';
-import { generateRecipes } from '@/backend/recipe/recipeActions';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { toast } from 'sonner';

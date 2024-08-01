@@ -1,8 +1,8 @@
+import { getRecipe } from '@/backend/recipe/recipeActions';
 import { EditRecipeForm } from '@/components/forms/recipe/UpdateRecipeForm';
 import { Breadcrumbs } from '@/components/pagers/breadcrumbs';
 import { Shell } from '@/components/shells/shell';
 import { getCachedUser } from '@/lib/queries/user';
-import { getRecipe } from '@/backend/recipe/recipeActions';
 import { notFound } from 'next/navigation';
 
 interface ProductPageProps {

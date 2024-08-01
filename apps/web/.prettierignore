@@ -33,6 +33,12 @@ node_modules/
 # Ignore all files in the .next directory
 .next/*
 
+# Ignore all files in the .contentlayer directory
+.contentlayer/*
+
+# Ignore all files in the .turbo directory
+.turbo/*
+
 # Ignore all files in the .cache directory
 .cache/*
 
