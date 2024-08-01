@@ -1,7 +1,7 @@
 import { ACTION_ERROR_CODE_KEY, ActionError } from '@/lib/safe-action';
 import { type Ingredient, type IngredientsOnRecipes } from '@prisma/client';
 import { z, type z as zodType } from 'zod';
-import { type ingredientsArrayForRecipe } from './test';
+import { type ingredientsArrayForRecipe } from './recipeDTOs';
 
 // TODO Add tests and refactor
 export function computeIngredientsToAddAndKeep(

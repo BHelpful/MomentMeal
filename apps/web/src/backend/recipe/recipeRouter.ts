@@ -9,12 +9,12 @@ import {
 } from '@/lib/safe-action';
 import { faker } from '@faker-js/faker';
 import { z } from 'zod';
-import { computeIngredientsToAddAndKeep } from './recipeUtil';
 import {
   createRecipeInput,
   generateRecipeInput,
   updateRecipeInput,
-} from './test';
+} from './recipeDTOs';
+import { computeIngredientsToAddAndKeep } from './recipeUtil';
 
 // TODO: move validation schemas to a separate file so they can be exported, as can only export async functions from use server file.
 

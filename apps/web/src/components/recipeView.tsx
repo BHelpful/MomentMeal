@@ -1,13 +1,13 @@
 'use client';
 
 import { deleteRecipeRevalidate } from '@/app/actions';
+import type { getPublicRecipe } from '@/backend/recipe/recipeRouter';
+import { deleteRecipe } from '@/backend/recipe/recipeRouter';
 import { Icons } from '@/components/icons';
 import { Shell } from '@/components/shells/shell';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
-import type { getPublicRecipe } from '@/backend/recipe/recipeRouter';
-import { deleteRecipe } from '@/backend/recipe/recipeRouter';
 import { type RecipeRating } from '@prisma/client';
 import { Tooltip } from '@radix-ui/react-tooltip';
 import { useAction } from 'next-safe-action/hooks';
@@ -63,7 +63,7 @@ export default function RecipeView({
       router.push(onDeleteHref ?? '/');
       router.refresh();
     },
-    onError: ({ error, input }) => {
+    onError: ({ error }) => {
       if (error.fetchError) {
         toast.error('Failed to delete recipe' + error.fetchError);
       }
