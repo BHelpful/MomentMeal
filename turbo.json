@@ -18,7 +18,7 @@
   },
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "typecheck"],
       "inputs": [
         "$TURBO_DEFAULT$",
         ".env.production.local",
@@ -29,8 +29,9 @@
       "outputs": [".next/**", "!.next/cache/**"],
       "cache": true
     },
-    "check-types": {
-      "dependsOn": ["^check-types"]
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "cache": true
     },
     "dev": {
       "inputs": [
@@ -42,6 +43,20 @@
       ],
       "persistent": true,
       "cache": false
+    },
+    "start": {
+      "dependsOn": ["^start"],
+      "persistent": true,
+      "cache": false
+    },
+    "format:check": {
+      "cache": true
+    },
+    "lint:check": {
+      "cache": true
+    },
+    "tidy": {
+      "cache": true
     }
   }
 }

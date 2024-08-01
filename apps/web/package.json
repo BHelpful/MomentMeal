@@ -15,6 +15,7 @@
     "lint:write": "next lint --fix",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
+    "tidy": "pnpm format:write && pnpm lint:write",
     "typecheck": "contentlayer2 build && tsc --noEmit",
     "postinstall": "prisma generate",
     "prisma": "prisma",

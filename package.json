@@ -5,7 +5,11 @@
   "packageManager": "pnpm@9.6.0",
   "scripts": {
     "dev": "turbo dev",
-    "build": "turbo build"
+    "build": "turbo build",
+    "start": "turbo start",
+    "lint:check": "turbo lint:check",
+    "format:check": "turbo format:check",
+    "tidy": "turbo tidy"
   },
   "devDependencies": {
     "turbo": "^2.0.9"
