@@ -209,7 +209,7 @@ const Page = async () => {
                           className: 'w-full',
                         })}
                       >
-                        Current Plan
+                        (Coming soon)
                       </Button>
                     )}
                   </div>
