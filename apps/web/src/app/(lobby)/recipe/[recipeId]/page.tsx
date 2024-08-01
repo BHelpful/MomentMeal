@@ -3,7 +3,7 @@ import RecipeView from '@/components/recipeView';
 import { Shell } from '@/components/shells/shell';
 import { getCachedUser } from '@/lib/queries/user';
 import { toTitleCase } from '@/lib/utils';
-import { getPublicRecipe } from '@/trpc/recipe/recipeRouter';
+import { getPublicRecipe } from '@/backend/recipe/recipeRouter';
 import { notFound } from 'next/navigation';
 
 interface ProductPageProps {

@@ -4,7 +4,7 @@ import { generateRecipesRevalidate } from '@/app/actions';
 import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import { catchError } from '@/lib/utils';
-import { generateRecipes } from '@/trpc/recipe/recipeRouter';
+import { generateRecipes } from '@/backend/recipe/recipeRouter';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { toast } from 'sonner';

@@ -2,7 +2,7 @@
 
 import { createRecipeRevalidate } from '@/app/actions';
 import { catchError } from '@/lib/utils';
-import { createRecipe } from '@/trpc/recipe/recipeRouter';
+import { createRecipe } from '@/backend/recipe/recipeRouter';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { RecipeForm, type RecipeFormInput } from './RecipeForm';

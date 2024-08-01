@@ -98,7 +98,6 @@ Here is the current overview of the code health of the repository measured by:
 - Component library: https://ui.shadcn.com/docs
 - Prisma docs: https://www.prisma.io/docs
 - Tailwind CSS docs: https://tailwindcss.com/docs
-- tRPC docs: https://trpc.io/docs
 
 ## Web Info
 

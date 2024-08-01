@@ -2,7 +2,7 @@ import { EditRecipeForm } from '@/components/forms/recipe/UpdateRecipeForm';
 import { Breadcrumbs } from '@/components/pagers/breadcrumbs';
 import { Shell } from '@/components/shells/shell';
 import { getCachedUser } from '@/lib/queries/user';
-import { getRecipe } from '@/trpc/recipe/recipeRouter';
+import { getRecipe } from '@/backend/recipe/recipeRouter';
 import { notFound } from 'next/navigation';
 
 interface ProductPageProps {
