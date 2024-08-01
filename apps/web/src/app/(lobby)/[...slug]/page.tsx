@@ -26,7 +26,7 @@ async function getPageFromParams(params: PageProps['params']) {
   const page = allPages.find((page) => page.slugAsParams === slug);
 
   if (!page) {
-    null;
+    notFound();
   }
 
   return page;

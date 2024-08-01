@@ -202,15 +202,6 @@ const Page = async () => {
                         {user ? 'Dashboard' : 'Sign up'}
                         <ArrowRight className="ml-1.5 size-5" />
                       </Link>
-                    ) : user ? (
-                      <Button
-                        disabled
-                        className={buttonVariants({
-                          className: 'w-full',
-                        })}
-                      >
-                        Comming Soon
-                      </Button>
                     ) : (
                       <Button
                         disabled
@@ -218,7 +209,7 @@ const Page = async () => {
                           className: 'w-full',
                         })}
                       >
-                        Comming Soon
+                        Current Plan
                       </Button>
                     )}
                   </div>
