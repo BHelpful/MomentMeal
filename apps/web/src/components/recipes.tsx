@@ -1,6 +1,6 @@
 'use client';
 
-import type { getPublicRecipes } from '@/backend/recipe/recipeRouter';
+import type { getPublicRecipes } from '@/backend/recipe/recipeActions';
 import { RecipeCard } from './cards/recipe-card';
 
 export default function RecipeList({

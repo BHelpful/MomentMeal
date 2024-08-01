@@ -336,7 +336,7 @@ export const generateRecipes = authAction
     }
   });
 
-// const recipeRouter = router({
+// const recipeActions = router({
 //   createRecipe: privateProcedure
 //     .input(createRecipeInput)
 //     .mutation(async ({ ctx, input }) => {

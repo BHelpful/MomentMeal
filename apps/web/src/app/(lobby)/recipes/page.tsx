@@ -5,7 +5,7 @@ import {
 } from '@/components/page-header';
 import RecipeList from '@/components/recipes';
 import { Shell } from '@/components/shells/shell';
-import { getPublicRecipes } from '@/backend/recipe/recipeRouter';
+import { getPublicRecipes } from '@/backend/recipe/recipeActions';
 
 const Page = async () => {
   const recipes = await getPublicRecipes();

@@ -13,7 +13,7 @@ import { env } from '@/env.mjs';
 import { getCachedUser } from '@/lib/queries/user';
 import { getDashboardRedirectPath, getPlanFeatures } from '@/lib/subscription';
 import { cn } from '@/lib/utils';
-import { getRecipes } from '@/backend/recipe/recipeRouter';
+import { getRecipes } from '@/backend/recipe/recipeActions';
 import { type SubscriptionPlan, type UserSubscriptionPlan } from '@/types';
 import { RocketIcon } from '@radix-ui/react-icons';
 import type { Metadata } from 'next';

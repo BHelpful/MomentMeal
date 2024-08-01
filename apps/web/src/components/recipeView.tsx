@@ -1,8 +1,8 @@
 'use client';
 
 import { deleteRecipeRevalidate } from '@/app/actions';
-import type { getPublicRecipe } from '@/backend/recipe/recipeRouter';
-import { deleteRecipe } from '@/backend/recipe/recipeRouter';
+import type { getPublicRecipe } from '@/backend/recipe/recipeActions';
+import { deleteRecipe } from '@/backend/recipe/recipeActions';
 import { Icons } from '@/components/icons';
 import { Shell } from '@/components/shells/shell';
 import { Checkbox } from '@/components/ui/checkbox';
