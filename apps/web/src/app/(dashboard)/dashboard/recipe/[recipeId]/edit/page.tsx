@@ -22,7 +22,7 @@ export default async function RecipeEditPage({
 
   const recipe = await getRecipe({ id: params.recipeId }).catch(() => null);
 
-  if (!recipe || !recipe?.data || !user || recipe.data.userId !== user.id) {
+  if (!recipe?.data || !user || recipe.data.userId !== user.id) {
     notFound();
   }
 

@@ -22,11 +22,11 @@ export default function RecipeView({
   initialRecipe,
   userId,
   onDeleteHref,
-}: {
+}: Readonly<{
   initialRecipe: Awaited<ReturnType<typeof getPublicRecipe>>;
-  readonly userId?: string;
-  readonly onDeleteHref?: string;
-}) {
+  userId?: string;
+  onDeleteHref?: string;
+}>) {
   const router = useRouter();
 
   const [currentServings, setCurrentServings] = useState(

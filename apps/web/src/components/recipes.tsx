@@ -5,9 +5,9 @@ import { RecipeCard } from './cards/recipe-card';
 
 export default function RecipeList({
   recipes,
-}: {
+}: Readonly<{
   recipes: Awaited<ReturnType<typeof getPublicRecipes>>;
-}) {
+}>) {
   return (
     <section className="flex flex-col space-y-6">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
