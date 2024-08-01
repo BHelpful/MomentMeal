@@ -9,7 +9,8 @@
     "start": "turbo start",
     "lint:check": "turbo lint:check",
     "format:check": "turbo format:check",
-    "tidy": "turbo tidy"
+    "tidy": "turbo tidy",
+    "db:dev": "docker-compose up -d"
   },
   "devDependencies": {
     "turbo": "^2.0.9"

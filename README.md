@@ -31,10 +31,14 @@ For this app to work you need to setup clerk OAuth providers. You can find the s
 ## Installation and setup
 
 - Clone the repository
-- Create local .env `cp apps/web/.env.example apps/web/.env` and fill in the values
+- Create local .env for the main app (./apps/web/.env). Do this by:
+  - `cp apps/web/.env.example apps/web/.env`
+  - And fill in the values
 - Install dependencies `pnpm install` or just `pnpm i`
 - Start the database `pnpm db:dev` or if using a provider like Neon, you can skip this step
-- Run `pnpm prisma:push` to push the database schema to the database
+- Push the database schema to the database
+  - From apps/web: `pnpm prisma:push`
+  - Or from the root: `pnpm run --filter=momentmeal prisma:push`
 - Run the development server `pnpm dev`
 
 # Open Source

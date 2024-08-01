@@ -24,8 +24,7 @@
     "prisma:studio": "prisma studio",
     "prisma:seed": "prisma db seed",
     "prisma:reset": "prisma db push --force-reset",
-    "prisma:push": "prisma db push",
-    "db:dev": "docker-compose up -d"
+    "prisma:push": "prisma db push"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.2.8",
