@@ -133,7 +133,7 @@ function Sortable<TData extends { id: UniqueIdentifier }>({
   overlay,
   children,
   ...props
-}: SortableProps<TData>) {
+}: Readonly<SortableProps<TData>>) {
   const [activeId, setActiveId] = React.useState<UniqueIdentifier | null>(null);
   const sensors = useSensors(
     useSensor(MouseSensor),
