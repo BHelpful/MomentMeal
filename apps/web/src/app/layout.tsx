@@ -1,4 +1,3 @@
-import { Analytics } from '@/components/analytics';
 import { CSPostHogProvider } from '@/components/posthog-provider';
 import Providers from '@/components/providers';
 import { SentryFeedbackWidget } from '@/components/sentry-feedback';
@@ -93,7 +92,6 @@ export default function RootLayout({
             <Providers attribute="class" defaultTheme="system" enableSystem>
               {children}
               <TailwindIndicator />
-              <Analytics />
               <VercelAnalytics />
               <SpeedInsights />
               <SentryFeedbackWidget />

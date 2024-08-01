@@ -36,7 +36,6 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@headlessui/tailwindcss": "^0.2.1",
     "@hookform/resolvers": "^3.9.0",
-    "@loglib/tracker": "^0.8.0",
     "@mantine/hooks": "^7.11.2",
     "@neondatabase/serverless": "^0.9.4",
     "@opentelemetry/api": "1.9.0",
