@@ -50,7 +50,6 @@ export default function Home() {
         </section>
       </Shell>
 
-      {/* value proposition section */}
       <div>
         <div className="relative isolate">
           <div
@@ -99,25 +98,20 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Feature section */}
       <div className="mx-auto my-32 max-w-5xl sm:mt-56">
         <div className="mb-12 px-6 lg:px-8">
           <div className="mx-auto max-w-2xl sm:text-center">
             <h2 className="mt-2 text-4xl font-bold sm:text-5xl">
-              {/* Start chatting in minutes */}
               Start sharing your recipes in minutes
             </h2>
             <p className="mt-4 text-lg">
-              {/* Chatting to your PDF files has never been easier
-							than with MomentMeal. */}
               With MomentMeal you can add your recipes and share them with the
-              world. You can also discover new recipes and even make money by
-              selling your own recipes.
+              world. You can also discover new recipes and meal plans from other
+              users.
             </p>
           </div>
         </div>
 
-        {/* steps */}
         <ol className="my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0">
           <li className="md:flex-1">
             <div className="flex flex-col space-y-2 border-l-4 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
@@ -126,44 +120,38 @@ export default function Home() {
                 Sign up for an account
               </span>
               <span className="mt-2">
-                Either starting out with a free plan or choose our{' '}
-                <Link
-                  href="/pricing"
-                  className="text-primary underline underline-offset-2"
-                >
-                  pro plan
-                </Link>
-                .
+                You can sign up for an account and have a look around.
               </span>
             </div>
           </li>
           <li className="md:flex-1">
             <div className="flex flex-col space-y-2 border-l-4 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
               <span className="text-sm font-medium">Step 2</span>
-              <span className="text-xl font-semibold">
-                {/* Upload your PDF file */}
-                Add your recipes
-              </span>
+              <span className="text-xl font-semibold">Add your recipes</span>
               <span className="mt-2">
-                {/* We&apos;ll process your file and make it ready
-								for you to chat with. */}
-                You can upload your recipes and we&apos;ll process them and make
-                them ready for you to share with the world.
+                You can add all your favourite recipes to your account, letting
+                you have them all in one place.
               </span>
             </div>
           </li>
           <li className="md:flex-1">
             <div className="flex flex-col space-y-2 border-l-4 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
               <span className="text-sm font-medium">Step 3</span>
+              <span className="text-xl font-semibold">Share your recipes</span>
+              <span className="mt-2">
+                You can share your recipes with the world and let others enjoy.
+              </span>
+            </div>
+          </li>
+          <li className="md:flex-1">
+            <div className="flex flex-col space-y-2 border-l-4 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
+              <span className="text-sm font-medium">Step 4</span>
               <span className="text-xl font-semibold">
-                {/* Start asking questions */}
-                Share your recipes
+                Fork other recipes (Coming soon)
               </span>
               <span className="mt-2">
-                {/* It&apos;s that simple. Try out Quill today - it
-								really takes less than a minute. */}
-                You can share your recipes with the world and if you&apos;re a
-                pro user you can even earn money from them.
+                See a recipe you like, but you always add a little extra garlic?
+                Fork it and make it your own version.
               </span>
             </div>
           </li>
