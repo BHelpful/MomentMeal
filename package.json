@@ -10,12 +10,16 @@
     "lint:check": "turbo lint:check",
     "format:check": "turbo format:check",
     "tidy": "turbo tidy",
-    "db:dev": "docker-compose up -d"
+    "db:dev": "docker-compose up -d",
+    "e2e:ci": "turbo e2e:ci"
   },
   "devDependencies": {
     "turbo": "^2.0.9"
   },
   "resolutions": {
     "@opentelemetry/api": "1.9.0"
+  },
+  "dependencies": {
+    "playwright": "^1.45.3"
   }
 }

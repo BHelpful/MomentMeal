@@ -18,7 +18,7 @@
   },
   "tasks": {
     "build": {
-      "dependsOn": ["^build", "typecheck"],
+      "dependsOn": ["^build"],
       "inputs": [
         "$TURBO_DEFAULT$",
         ".env.production.local",
@@ -30,7 +30,6 @@
       "cache": true
     },
     "typecheck": {
-      "dependsOn": ["^typecheck"],
       "cache": true
     },
     "dev": {
@@ -45,9 +44,16 @@
       "cache": false
     },
     "start": {
-      "dependsOn": ["^start"],
+      "dependsOn": ["^build"],
       "persistent": true,
       "cache": false
+    },
+    "e2e": {
+      "cache": false
+    },
+    "e2e:ci": {
+      "dependsOn": ["^build"],
+      "cache": true
     },
     "format:check": {
       "cache": true
