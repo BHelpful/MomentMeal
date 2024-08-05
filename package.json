@@ -18,5 +18,8 @@
   },
   "resolutions": {
     "@opentelemetry/api": "1.9.0"
+  },
+  "dependencies": {
+    "playwright": "^1.45.3"
   }
 }

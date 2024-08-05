@@ -10,6 +10,10 @@ overrides:
 importers:
 
   .:
+    dependencies:
+      playwright:
+        specifier: ^1.45.3
+        version: 1.45.3
     devDependencies:
       turbo:
         specifier: ^2.0.9
