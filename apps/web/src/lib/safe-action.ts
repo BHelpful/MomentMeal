@@ -153,7 +153,7 @@ export const action = createSafeActionClient({
   return result;
 });
 
-export const authAction = action.use(async ({ next }) => { 
+export const authAction = action.use(async ({ next }) => {
   const user = await currentUser();
 
   if (!user?.id) {
