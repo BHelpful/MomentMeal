@@ -17,6 +17,15 @@ jobs:
         run: npm install -g pnpm && pnpm install --prefer-offline --frozen-lockfile
       - name: Build
         run: pnpm build
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_UNPOOLED_URL: ${{ secrets.DIRECT_UNPOOLED_URL }}
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
+          NEXT_PUBLIC_POSTHOG_HOST: ${{ secrets.NEXT_PUBLIC_POSTHOG_HOST }}
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
       - name: Run e2e
