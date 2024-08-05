@@ -11,7 +11,7 @@
     "format:check": "turbo format:check",
     "tidy": "turbo tidy",
     "db:dev": "docker-compose up -d",
-    "web:e2e:ci": "turbo build && turbo e2e:ci"
+    "e2e:ci": "turbo e2e:ci"
   },
   "devDependencies": {
     "turbo": "^2.0.9"
