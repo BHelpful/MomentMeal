@@ -7,16 +7,14 @@ import { Icons } from '@/components/icons';
 import { Shell } from '@/components/shells/shell';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
 import { type RecipeRating } from '@prisma/client';
 import { Tooltip } from '@radix-ui/react-tooltip';
 import { useAction } from 'next-safe-action/hooks';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 import { DeleteDialog } from './dialogs/DeleteDialog';
-import { Button, buttonVariants } from './ui/button';
+import { Button } from './ui/button';
 import { TooltipContent, TooltipTrigger } from './ui/tooltip';
 
 export default function RecipeView({
