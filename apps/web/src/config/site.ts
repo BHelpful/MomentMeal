@@ -125,13 +125,13 @@ export const siteConfig = {
       title: 'Help',
       items: [
         {
-          title: 'Contact',
-          href: '/contact',
+          title: 'About',
+          href: '/about',
           external: false,
         },
         {
-          title: 'About',
-          href: '/about',
+          title: 'Contact',
+          href: '/contact',
           external: false,
         },
         {
