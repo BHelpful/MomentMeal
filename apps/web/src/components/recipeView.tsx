@@ -15,6 +15,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
+import { DeleteDialog } from './dialogs/DeleteDialog';
 import { Button, buttonVariants } from './ui/button';
 import { TooltipContent, TooltipTrigger } from './ui/tooltip';
 
@@ -161,24 +162,33 @@ export default function RecipeView({
             </section>
 
             {userId && recipe.userId === userId && (
-              <>
+              <div
+                className="mb-2 flex items-center space-x-2"
+                aria-labelledby="recipe-actions"
+              >
+                <DeleteDialog
+                  title="Delete Recipe"
+                  description="Are you sure you want to delete this recipe?"
+                  onConfirm={() => deleteAction.execute({ id: recipe.id })}
+                >
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="self-start hover:bg-red-500"
+                  >
+                    <Icons.Trash />
+                  </Button>
+                </DeleteDialog>
                 <Button
-                  className="self-start bg-red-500 hover:bg-red-600"
-                  onClick={() => deleteAction.execute({ id: recipe.id })}
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    router.push(`/dashboard/recipe/${recipe.id}/edit`)
+                  }
                 >
-                  Delete Recipe
+                  <Icons.edit />
                 </Button>
-                <Link
-                  className={cn(
-                    buttonVariants({
-                      size: 'sm',
-                    })
-                  )}
-                  href={`/dashboard/recipe/${recipe.id}/edit`}
-                >
-                  Edit Recipe
-                </Link>
-              </>
+              </div>
             )}
           </div>
           <div className="w-full md:w-1/2">
@@ -229,7 +239,7 @@ export default function RecipeView({
                 )}
               </div>
             </div>
-            <ol className="!-mt-[4.0px] list-inside list-decimal">
+            <ol className="!-mt-[3.0px] list-inside list-decimal">
               {recipe.ingredients.map((ingredient) => (
                 <li key={ingredient.ingredient.id} className="block">
                   <label
