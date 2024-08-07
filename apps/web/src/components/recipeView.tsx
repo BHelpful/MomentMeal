@@ -229,7 +229,7 @@ export default function RecipeView({
                 )}
               </div>
             </div>
-            <ol className="list-inside list-decimal">
+            <ol className="!-mt-[4.0px] list-inside list-decimal">
               {recipe.ingredients.map((ingredient) => (
                 <li key={ingredient.ingredient.id} className="block">
                   <label
