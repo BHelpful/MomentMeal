@@ -3,29 +3,13 @@ import { Breadcrumbs } from '@/components/pagers/breadcrumbs';
 import RecipeView from '@/components/recipeView';
 import { Shell } from '@/components/shells/shell';
 import { getCachedUser } from '@/lib/queries/user';
-import { toTitleCase } from '@/lib/utils';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
+import RecipeLoading from './loading';
 
 interface ProductPageProps {
   params: {
     recipeId: string;
-  };
-}
-
-export async function generateMetadata({ params }: ProductPageProps) {
-  if (!params.recipeId) {
-    return {};
-  }
-
-  const recipe = await getRecipe({ id: params.recipeId }).catch(() => null);
-
-  if (!recipe) {
-    return {};
-  }
-
-  return {
-    title: toTitleCase(recipe?.data?.title ?? ''),
-    description: recipe?.data?.description ?? '',
   };
 }
 
@@ -40,29 +24,31 @@ export default async function RecipeViewPage({
 
   const recipe = await getRecipe({ id: params.recipeId }).catch(() => null);
 
-  if (!recipe) {
+  if (!recipe?.data) {
     notFound();
   }
 
   return (
-    <Shell>
-      <Breadcrumbs
-        segments={[
-          {
-            title: 'My Recipes',
-            href: '/dashboard/recipes',
-          },
-          {
-            title: recipe?.data?.title ?? '',
-            href: `/dashboard/recipe/${recipe?.data?.id}`,
-          },
-        ]}
-      />
-      <RecipeView
-        initialRecipe={recipe}
-        userId={user?.id}
-        onDeleteHref="/dashboard/recipes"
-      />
-    </Shell>
+    <Suspense fallback={<RecipeLoading />}>
+      <Shell>
+        <Breadcrumbs
+          segments={[
+            {
+              title: 'My Recipes',
+              href: '/dashboard/recipes',
+            },
+            {
+              title: recipe.data.title,
+              href: `/recipe/${recipe.data.id}`,
+            },
+          ]}
+        />
+        <RecipeView
+          initialRecipe={recipe}
+          userId={user?.id}
+          onDeleteHref="/dashboard/recipes"
+        />
+      </Shell>
+    </Suspense>
   );
 }
