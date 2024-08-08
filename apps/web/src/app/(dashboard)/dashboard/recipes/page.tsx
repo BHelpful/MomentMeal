@@ -91,9 +91,10 @@ export default async function RecipesPage() {
           this plan.
         </AlertDescription>
         <AlertDescription className="mt-2">
-          <strong>MomentMeal is very much in the early stages</strong>, but soon
-          you will be able to create recipes from here!{' '}
-          <strong>Note: plans and pricing are subject to change.</strong>
+          <strong>
+            MomentMeal is very much in the early stages: plans and pricing are
+            subject to change.
+          </strong>
         </AlertDescription>
       </Alert>
       <section
