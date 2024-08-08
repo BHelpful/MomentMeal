@@ -18,7 +18,15 @@ jobs:
         id: check_diff
         run: |
           git fetch origin master
-          git diff --quiet origin/master..origin/prod || (echo "changes detected" && exit 0) || exit 1
+          git fetch origin prod
+          DIFF=$(git diff --name-only origin/master..origin/prod)
+          if [ "$DIFF" != "" ]; then
+            echo "changes detected"
+            echo "::set-output name=changes_detected::true"
+          else
+            echo "no changes detected"
+            echo "::set-output name=changes_detected::false"
+          fi
 
       - name: Reset sync branch
         run: |
@@ -27,6 +35,7 @@ jobs:
 
       - name: Create Pull Request
         id: cpr
+        if: steps.check_diff.outputs.changes_detected == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.MY_GITHUB_TOKEN }}
