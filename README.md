@@ -14,6 +14,13 @@ MomentMeal is a platform that connects food lovers and chefs. It allows users to
 
 </br>
 
+<!--centered discord server invite-->
+<div align="center">
+    <a href="https://discord.gg/KrFs324F6e">
+        <img src="https://img.shields.io/discord/755802968602968187?color=5865F2&label=Discord&logo=discord&logoColor=white" alt="Discord Server" />
+    </a>
+</div>
+
 # Getting started
 
 ## Pre-requisites
@@ -52,6 +59,18 @@ MomentMeal is an open source project. We welcome contributions from the communit
 - Improve documentation - If you find any errors in the documentation or want to improve it, please contribute with a pull request.
 - In the future, we will want to implement translations of the app. If you are interested in helping us with this, please contact us at [momentmeal@gmail.com](mailto: "momentmeal@gmail.com").
 
+## Get in contact with maintainers
+
+If you have any questions or want to get in contact with the maintainers, you can reach out to us on Discord or by email.
+
+<div align="center">
+  <iframe src="https://discord.com/widget?id=755802968602968187&theme=dark" width="400" height="300" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+</div>
+
+### Email
+
+- Andreas Petersen - [@Andreasgdp](https://github.com/andreasgdp): [andreasgdp@gmail.com](mailto:andreasgdp+momentmeal@gmail.com)
+
 # Development
 
 ## Feature Flags
@@ -88,7 +107,22 @@ function App() {
 
 # [Project Board](https://github.com/orgs/BHelpful/projects/4/views/23)
 
-For development management we are using [GitHub Projects](https://github.com/orgs/BHelpful/projects/4/views/23). In there you can see our backlog, issues sorted by priority and size. We are also working on creating a roadmap in there.
+For development management we are using [GitHub Projects](https://github.com/orgs/BHelpful/projects/4/views/23). In there you can see our backlog, issues sorted by priority and size.
+
+## How the board is used
+
+- [ **Main** ](https://github.com/orgs/BHelpful/projects/4/views/23): This is the main board where all issues that are ready to be picked up, or are in progress, are located.
+- [ **Actions Needed** ](https://github.com/orgs/BHelpful/projects/4/views/25): This is where issues that are blocked or need more detail are located.
+- [ **Good First Issue** ](https://github.com/orgs/BHelpful/projects/4/views/20): This is where issues that are good for new contributors are located.
+  - Issues with the label `good first issue` are automatically added to this board.
+- [ **Bugs** ](https://github.com/orgs/BHelpful/projects/4/views/19): This is where all bugs are located.
+  - Issues with the label `bug` are automatically added to this board.
+
+### As a contributor
+
+Feel free to pick up any issue that is in the main board. If you are new to the project, you can start by looking at the [Good First Issue](https://github.com/orgs/BHelpful/projects/4/views/25) board.
+
+In any case, if you have any questions, feel free to ask in the issue or in the Discord server, no matter what board the issue is in.
 
 # Repo health information
 
