@@ -12,25 +12,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: master
 
-      - name: Set up git
+      - name: Reset sync branch
         run: |
-          git config --global user.name 'Sync from prod'
-          git config --global user.email 'andreasgdp@gmail.com'
+          git fetch origin prod:prod
+          git reset --hard prod
 
-      - name: Check if there are changes between prod and master
-        id: check_diff
-        run: |
-          git fetch origin master
-          git diff --quiet origin/master..origin/prod || (echo "changes detected" && exit 0) || exit 1
-
-      - name: Create Pull Request from prod to master
-        uses: peter-evans/create-pull-request@v6.1.0
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.MY_GITHUB_TOKEN }}
+          branch: prod-sync
           base: master
-          branch: prod
           title: "Sync changes from prod to master"
           body: "This PR is automatically generated to sync changes from prod to master."
           labels: "sync,automated pr"
