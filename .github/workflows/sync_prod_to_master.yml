@@ -1,21 +1,21 @@
 name: Sync
 
-on: 
-  push: 
+on:
+  push:
     branches:
-      - prod 
+      - prod
 
-jobs: 
+jobs:
   branch-sync:
-    runs-on: ubuntu-latest 
-    steps: 
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout code
-        uses: actions/checkout@v4     
-        with: 
-          fetch-depth: 0 
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Set up git 
-        run: | 
+      - name: Set up git
+        run: |
           git config --global user.name 'Sync from prod'
           git config --global user.email 'andreasgdp@gmail.com'
 
@@ -23,11 +23,10 @@ jobs:
         id: check_diff
         run: |
           git fetch origin master
-          git diff --quiet origin/master..origin/prod || echo "changes detected"
-          
+          git diff --quiet origin/master..origin/prod || (echo "changes detected" && exit 0) || exit 1
+
       - name: Push changes to master when prod is updated
-        if: steps.check_diff.outputs.changes-detected == 'changes detected'
-        run: | 
+        run: |
           git checkout master 
           git merge prod
           git push origin master
