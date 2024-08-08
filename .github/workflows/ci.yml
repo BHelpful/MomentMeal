@@ -15,7 +15,9 @@ env:
 
 on:
   push:
+    branches: [prod, master]
   pull_request:
+    branches: [prod, master]
 
 jobs:
   format-and-lint:
