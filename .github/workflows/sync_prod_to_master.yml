@@ -25,8 +25,26 @@ jobs:
           git fetch origin master
           git diff --quiet origin/master..origin/prod || (echo "changes detected" && exit 0) || exit 1
 
-      - name: Push changes to master when prod is updated
-        run: |
-          git checkout master 
-          git merge prod
-          git push origin master
+      - name: Create Pull Request from prod to master
+        uses: peter-evans/create-pull-request@v6.1.0
+        with:
+          token: ${{ secrets.MY_GITHUB_TOKEN }}
+          base: master
+          branch: prod
+          title: "Sync changes from prod to master"
+          body: "This PR is automatically generated to sync changes from prod to master."
+          labels: "sync,automated pr"
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.MY_GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: merge
+
+      - name: Auto approve
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        run: gh pr review --approve "${{ steps.cpr.outputs.pull-request-number }}"
+        env:
+          GH_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
