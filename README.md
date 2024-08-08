@@ -14,7 +14,6 @@ MomentMeal is a platform that connects food lovers and chefs. It allows users to
 
 </br>
 
-<!--centered discord server invite-->
 <div align="center">
     <a href="https://discord.gg/KrFs324F6e">
         <img src="https://img.shields.io/discord/755802968602968187?color=5865F2&label=Discord&logo=discord&logoColor=white" alt="Discord Server" />
@@ -64,7 +63,9 @@ MomentMeal is an open source project. We welcome contributions from the communit
 If you have any questions or want to get in contact with the maintainers, you can reach out to us on Discord or by email.
 
 <div align="center">
-  <iframe src="https://discord.com/widget?id=755802968602968187&theme=dark" width="400" height="300" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+    <a href="https://discord.gg/KrFs324F6e">
+        <img src="https://img.shields.io/discord/755802968602968187?color=5865F2&label=Discord&logo=discord&logoColor=white" alt="Discord Server" />
+    </a>
 </div>
 
 ### Email
