@@ -14,6 +14,12 @@ jobs:
         with:
           ref: master
 
+      - name: Check if there are changes between prod and master
+        id: check_diff
+        run: |
+          git fetch origin master
+          git diff --quiet origin/master..origin/prod || (echo "changes detected" && exit 0) || exit 1
+
       - name: Reset sync branch
         run: |
           git fetch origin prod:prod
