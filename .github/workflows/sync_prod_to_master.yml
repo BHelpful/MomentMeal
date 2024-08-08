@@ -1,24 +1,33 @@
 name: Sync
-on:
-  push:
-    branches:
-      - prod
 
-jobs:
-  sync-branches:
-    runs-on: ubuntu-latest
-    name: Syncing branches
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - name: Opening pull request
-        id: pull
-        uses: tretuna/sync-branches@1.4.0
-        with:
-          GITHUB_TOKEN: ${{secrets.MY_GITHUB_TOKEN}}
-          FROM_BRANCH: "prod"
-          TO_BRANCH: "master"
+on: 
+  push: 
+    branches:
+      - prod 
+
+jobs: 
+  branch-sync:
+    runs-on: ubuntu-latest 
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v4     
+        with: 
+          fetch-depth: 0 
+
+      - name: Set up git 
+        run: | 
+          git config --global user.name 'Sync from prod'
+          git config --global user.email 'andreasgdp@gmail.com'
+
+      - name: Check if there are changes between prod and master
+        id: check_diff
+        run: |
+          git fetch origin master
+          git diff --quiet origin/master..origin/prod || echo "changes detected"
+          
+      - name: Push changes to master when prod is updated
+        if: steps.check_diff.outputs.changes-detected == 'changes detected'
+        run: | 
+          git checkout master 
+          git merge prod
+          git push origin master
