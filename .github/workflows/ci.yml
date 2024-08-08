@@ -15,9 +15,8 @@ env:
 
 on:
   push:
-    branches: [main, master]
   pull_request:
-    branches: [main, master]
+
 jobs:
   format-and-lint:
     runs-on: ubuntu-latest
