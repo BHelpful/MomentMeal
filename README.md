@@ -6,7 +6,7 @@
 
 # MomentMeal - A marketplace for food and recipes.
 
-MomentMeal is a platform that connects food lovers and chefs. It allows users to discover new recipes, share their own, and even sell their homemade meals.
+MomentMeal is a platform that connects food lovers and chefs. It allows users to discover new recipes, share their own, and modify existing ones to make it just right for them.
 
 <div align="center">
     <img align="center" width="600" alt="Project Image" src="https://github.com/BHelpful/MomentMeal/assets/39928082/74cb09ba-d29d-4ab2-a361-5a31e7e392bd" />
