@@ -22,10 +22,10 @@ jobs:
           DIFF=$(git diff --name-only origin/master..origin/prod)
           if [ "$DIFF" != "" ]; then
             echo "changes detected"
-            echo "::set-output name=changes_detected::true"
+            echo "changes_detected=true" >> "$GITHUB_OUTPUT"
           else
             echo "no changes detected"
-            echo "::set-output name=changes_detected::false"
+            echo "changes_detected=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Reset sync branch
