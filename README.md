@@ -93,6 +93,12 @@ The production environment is automatically deployed when changes get to the `pr
 
 # Development
 
+## UI Components
+
+Since we are making use of the [Shadcn UI](https://ui.shadcn.com/docs) library, we have a set of components that are already made for us. This means that we can focus on the business logic and not the UI. If you need a component that is not yet in the `/components/ui` folder, take a look at [Shadcn UI](https://ui.shadcn.com/docs) and see if the component is available there. Then you should be able to from the `/apps/web` directory run `pnpm dlx shadcn-ui@latest add ???` replacing `???` with the relevant component. This will automatically install add the component to the `ui` folder.
+
+If there is not yet a component in the Shadcn UI library, this typically means the component is a domain-specific component. These should be created in the `/components` folder, ideally in a relevant subfolder.
+
 ## Feature Flags
 
 Create the feature flag in PostHog and use the feature flag in your code.
