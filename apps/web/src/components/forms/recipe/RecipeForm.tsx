@@ -1,9 +1,19 @@
 'use client';
 
 import { createRecipeInput } from '@/backend/recipe/recipeDTOs';
+import { Files } from '@/components/Files';
+import { FileUploader } from '@/components/FileUploader';
 import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -23,14 +33,20 @@ import {
   SortableItem,
 } from '@/components/ui/sortable';
 import { Textarea } from '@/components/ui/textarea';
+import { useUploadFile } from '@/hooks/use-upload-file';
 import { catchError } from '@/lib/utils';
+import type { StoredFile } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-export type RecipeFormInput = z.infer<typeof createRecipeInput>;
+export type FormRecipeFormInput = z.infer<typeof createRecipeInput>;
+
+export type RecipeFormInput = Omit<FormRecipeFormInput, 'images'> & {
+  images: StoredFile[];
+};
 
 interface RecipeFormProps {
   initialData: RecipeFormInput;
@@ -50,10 +66,23 @@ export function RecipeForm({
     mode: 'onTouched',
   });
 
-  function handleSubmit(data: RecipeFormInput) {
-    startTransition(async () => {
+  const { uploadFiles, progresses, uploadedFiles, isUploading } = useUploadFile(
+    'recipeImage',
+    {
+      defaultUploadedFiles: initialData.images ?? [],
+    }
+  );
+
+  function handleSubmit(data: FormRecipeFormInput) {
+    startTransition(() => {
       try {
-        await onSubmit(data);
+        console.log('images', data.images);
+        void uploadFiles(data.images ?? []).then(async () => {
+          await onSubmit({
+            ...data,
+            images: JSON.stringify(uploadedFiles) as unknown as StoredFile[],
+          });
+        });
       } catch (err) {
         catchError(err);
       }
@@ -401,6 +430,44 @@ export function RecipeForm({
                 <Icons.Add className="size-4" aria-hidden="true" />
               </Button>
             </>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="images"
+          render={({ field }) => (
+            <div className="space-y-6">
+              <FormItem className="w-full">
+                <FormLabel>Images</FormLabel>
+                <FormControl>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="outline">Upload files</Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-xl">
+                      <DialogHeader>
+                        <DialogTitle>Upload files</DialogTitle>
+                        <DialogDescription>
+                          Drag and drop your files here or click to browse.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <FileUploader
+                        value={field.value ?? []}
+                        onValueChange={field.onChange}
+                        maxFiles={4}
+                        maxSize={4 * 1024 * 1024}
+                        progresses={progresses}
+                        disabled={isUploading}
+                      />
+                    </DialogContent>
+                  </Dialog>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+              {uploadedFiles.length > 0 ? (
+                <Files files={uploadedFiles} />
+              ) : null}
+            </div>
           )}
         />
         <Separator />

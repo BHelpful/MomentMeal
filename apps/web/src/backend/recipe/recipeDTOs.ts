@@ -23,6 +23,11 @@ export const createAndUpdateRecipeInput = z.object({
       content: z.string().min(1),
     })
   ),
+  images: z
+    .custom<File[] | undefined | null>()
+    .optional()
+    .nullable()
+    .default(null),
 });
 
 export const createRecipeInput = createAndUpdateRecipeInput;

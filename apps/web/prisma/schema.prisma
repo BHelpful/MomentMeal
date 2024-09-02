@@ -26,6 +26,15 @@ model Recipe {
   ratings        RecipeRating[]
   ingredients    IngredientsOnRecipes[]
   steps          Step[]
+  images StoredFile[]
+}
+
+model StoredFile {
+  id   String @id @default(cuid())
+  name String
+  url  String
+  recipe Recipe? @relation(fields: [recipeId], references: [id])
+  recipeId String?
 }
 
 model RecipeRating {
