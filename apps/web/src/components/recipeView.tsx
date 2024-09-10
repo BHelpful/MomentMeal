@@ -10,6 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { type RecipeRating } from '@prisma/client';
 import { Tooltip } from '@radix-ui/react-tooltip';
 import { useAction } from 'next-safe-action/hooks';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
@@ -191,10 +192,19 @@ export default function RecipeView({
           </div>
           <div className="w-full md:w-1/2">
             <section className="mb-4 flex h-96 w-full flex-1 items-center justify-center rounded-md bg-accent/30">
-              <Icons.placeholder
-                className="size-9 text-muted-foreground"
-                aria-hidden="true"
-              />
+              {recipe.images?.length === 0 ? (
+                <Icons.placeholder
+                  className="size-9 text-muted-foreground"
+                  aria-hidden="true"
+                />
+              ) : (
+                <Image
+                  src={recipe.images[0]?.url ?? '/placeholder.jpg'}
+                  alt={recipe.images[0]?.name ?? recipe.title}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
             </section>
           </div>
         </article>

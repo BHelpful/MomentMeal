@@ -34,6 +34,7 @@ export function AddRecipeForm() {
         waitingTime: 30,
         numberOfPeople: 2,
         isPublic: false,
+        images: [],
       }}
       onSubmit={handleSubmit}
     />
