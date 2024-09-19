@@ -1,5 +1,6 @@
 'use client';
 
+import type { OurFileRouter } from '@/app/api/uploadthing/core';
 import { createRecipeInput } from '@/backend/recipe/recipeDTOs';
 import { Files } from '@/components/Files';
 import { FileUploader } from '@/components/FileUploader';
@@ -38,10 +39,12 @@ import { catchError } from '@/lib/utils';
 import type { StoredFile } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DragHandleDots2Icon } from '@radix-ui/react-icons';
+import { generateUploadButton } from '@uploadthing/react';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
+export const UploadButton = generateUploadButton<OurFileRouter>();
 export type FormRecipeFormInput = z.infer<typeof createRecipeInput>;
 
 export type RecipeFormInput = Omit<FormRecipeFormInput, 'images'> & {
@@ -66,23 +69,17 @@ export function RecipeForm({
     mode: 'onTouched',
   });
 
-  const { uploadFiles, progresses, uploadedFiles, isUploading } = useUploadFile(
-    'recipeImage',
-    {
-      defaultUploadedFiles: initialData.images ?? [],
-    }
-  );
-
   function handleSubmit(data: FormRecipeFormInput) {
-    startTransition(() => {
+    startTransition(async () => {
       try {
         console.log('images', data.images);
-        void uploadFiles(data.images ?? []).then(async () => {
-          await onSubmit({
-            ...data,
-            images: JSON.stringify(uploadedFiles) as unknown as StoredFile[],
-          });
+        // Remove this line
+        // void uploadFiles(data.images ?? []).then(async () => {
+        await onSubmit({
+          ...data,
+          images: JSON.stringify(uploadedFiles) as unknown as StoredFile[],
         });
+        // });
       } catch (err) {
         catchError(err);
       }
@@ -451,13 +448,32 @@ export function RecipeForm({
                           Drag and drop your files here or click to browse.
                         </DialogDescription>
                       </DialogHeader>
-                      <FileUploader
-                        value={field.value ?? []}
-                        onValueChange={field.onChange}
-                        maxFiles={4}
-                        maxSize={4 * 1024 * 1024}
-                        progresses={progresses}
-                        disabled={isUploading}
+                      <UploadButton
+                        endpoint="recipeImage"
+                        onClientUploadComplete={(res) => {
+                          // Do something with the response
+                          console.log('Files: ', res);
+                          alert('Upload Completed');
+                          // Update the form field value with the uploaded files
+                          field.onChange(res);
+                        }}
+                        onUploadError={(error: Error) => {
+                          // Do something with the error.
+                          alert(`ERROR! ${error.message}`);
+                        }}
+                        onBeforeUploadBegin={(files) => {
+                          // Preprocess files before uploading (e.g. rename them)
+                          return files.map(
+                            (f) =>
+                              new File([f], 'renamed-' + f.name, {
+                                type: f.type,
+                              })
+                          );
+                        }}
+                        onUploadBegin={(name) => {
+                          // Do something once upload begins
+                          console.log('Uploading: ', name);
+                        }}
                       />
                     </DialogContent>
                   </Dialog>
