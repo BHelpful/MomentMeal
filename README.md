@@ -68,7 +68,36 @@ If you have any questions or want to get in contact with the maintainers, you ca
     </a>
 </div>
 
+# Branching strategy
+
+We are using two branches that are protected:
+
+- `prod` - This is the main branch where all the code that is in production is located.
+- `master` - This is the branch where all the code that is deployed to staging is located.
+  - `master` should always be deployable to staging thereby also prod.
+  - All changes from maintainers and contributers should go toward `master`.
+
+All other branches are dev branches that are created from `master` and merged back into `master` when the development is done.
+
+> **_NOTE:_** Dev branches meaning short-lived branches that are created for a specific feature or bug fix. If the feature cannot be completed in a short amount of time, it is recommended to surround the feature with a feature flag and merge the branch into `master` quickly to avoid merge conflicts.
+
+# Deployment
+
+## Staging ([staging.momentmeal.com](https://staging.momentmeal.com/))
+
+The staging environment is automatically deployed when changes get to the `master` branch. This is done frequently, as all development goes here. Stating is used to test the state of master, to see if we are ready to deploy to prod with new features/improvements.
+
+## Production ([momentmeal.com](https://momentmeal.com/))
+
+The production environment is automatically deployed when changes get to the `prod` branch. There is no strict cadence for this, but it is done when we have a set of features/improvements that are ready to be released. It will also happen, that there is a bug in production we need to address, then a `hotfix/some-name` is made toward `prod` to solve the issue, directly deploying to prod. But this should not happen often
+
 # Development
+
+## UI Components
+
+Since we are making use of the [Shadcn UI](https://ui.shadcn.com/docs) library, we have a set of components that are already made for us. This means that we can focus on the business logic and not the UI. If you need a component that is not yet in the `/components/ui` folder, take a look at [Shadcn UI](https://ui.shadcn.com/docs) and see if the component is available there. Then you should be able to from the `/apps/web` directory run `pnpm dlx shadcn-ui@latest add ???` replacing `???` with the relevant component. This will automatically install add the component to the `ui` folder.
+
+If there is not yet a component in the Shadcn UI library, this typically means the component is a domain-specific component. These should be created in the `/components` folder, ideally in a relevant subfolder.
 
 ## Feature Flags
 

@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 export function SiteFooter() {
   return (
-    <footer className="w-full border-t bg-background">
+    <footer className="w-full border-t bg-background pb-12">
       <Shell as="div">
         <section
           id="footer-content"
