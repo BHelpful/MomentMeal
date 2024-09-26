@@ -47,6 +47,27 @@ For this app to work you need to setup clerk OAuth providers. You can find the s
   - Or from the root: `pnpm run --filter=momentmeal prisma:push`
 - Run the development server `pnpm dev`
 
+## End-to-End Testing Setup
+
+To set up end-to-end (e2e) tests with Docker and Clerk, follow these steps:
+
+1. Ensure Docker is installed and running on your machine.
+2. Start the Dockerized Postgres database:
+   ```sh
+   pnpm db:dev
+   ```
+3. Set up the environment variables for Clerk in `apps/web/.env`:
+   ```sh
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your-clerk-publishable-key
+   CLERK_SECRET_KEY=your-clerk-secret-key
+   E2E_CLERK_USER_USERNAME=your-clerk-username
+   E2E_CLERK_USER_PASSWORD=your-clerk-password
+   ```
+4. Run the e2e tests:
+   ```sh
+   pnpm e2e:ci
+   ```
+
 # Open Source
 
 MomentMeal is an open source project. We welcome contributions from the community. There are many ways to contribute to the project, from writing tutorials or blog posts, submitting bug reports and feature requests or writing code which can be incorporated into MomentMeal itself. Here is a list of some of the ways you can contribute to the project:
