@@ -12,5 +12,8 @@ services:
       - '6033:5432'
     volumes:
       - dbdata:/var/lib/postgresql/data
+    depends_on:
+      - db
+    command: ["sh", "-c", "until pg_isready -h localhost -p 5432; do sleep 1; done;"]
 volumes:
   dbdata:
